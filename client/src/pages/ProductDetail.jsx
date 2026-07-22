@@ -17,10 +17,8 @@ function ProductDetail() {
   }
 
   const relatedProducts = products.filter(
-  (item) =>
-    item.viscosity === product.viscosity &&
-    item.id !== product.id
-);
+    (item) => item.viscosity === product.viscosity && item.id !== product.id,
+  );
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 md:p-10">
@@ -80,7 +78,7 @@ function ProductDetail() {
               </p>
 
               <a
-                href={`https://wa.me/989198334264?text=سلام، برای خرید ${product.name} با قیمت ${product.price} راهنمایی می‌خواهم`}
+                href={`https://wa.me/989198334264?text=سلام، برای خرید ${product.name} (${product.viscosity}) راهنمایی می‌خواهم`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl mt-6"
@@ -95,8 +93,9 @@ function ProductDetail() {
 
         {relatedProducts.length > 0 && (
           <div className="mt-10">
-            <h2 className="text-3xl font-bold mb-5">محصولات مشابه</h2>
-
+            <h2 className="text-3xl font-bold mb-5">
+              محصولات مشابه با گرید {product.viscosity}
+            </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {relatedProducts.map((item) => (
                 <ProductCard key={item.id} product={item} />

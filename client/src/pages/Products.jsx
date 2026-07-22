@@ -9,9 +9,14 @@ function Products() {
   const [selectedViscosity, setSelectedViscosity] = useState("");
   const { products } = useContext(ProductContext);
   const filteredProducts = products.filter((product) => {
-    const searchMatch = product.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
+    const searchText = search.toLowerCase();
+
+    const searchMatch =
+      product.name.toLowerCase().includes(searchText) ||
+      product.brand.toLowerCase().includes(searchText) ||
+      product.viscosity.toLowerCase().includes(searchText) ||
+      product.category.toLowerCase().includes(searchText) ||
+      product.volume.toLowerCase().includes(searchText);
 
     const viscosityMatch =
       selectedViscosity === "" || product.viscosity === selectedViscosity;

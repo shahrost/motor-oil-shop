@@ -1,73 +1,69 @@
+import { Link } from "react-router-dom";
+
 function About() {
   return (
     <div className="min-h-screen bg-gray-100 p-6 md:p-10">
-
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
-
-
+      <section className="bg-white rounded-xl shadow-lg p-8 md:p-12">
         <h1 className="text-4xl font-bold text-center text-gray-800">
-          درباره ما
+          درباره روغن موتور شهرام
         </h1>
 
-
-        <p className="mt-8 text-lg text-gray-700 leading-9">
-          مجموعه روغن موتور شهرام با هدف تامین و عرضه روغن موتورهای
-          با کیفیت سمن، فعالیت خود را در زمینه فروش و پخش محصولات
-          روغن موتور آغاز کرده است.
+        <p className="mt-8 text-lg leading-9 text-gray-700 text-center">
+          روغن موتور شهرام تامین کننده روغن موتورهای با کیفیت برای فروشگاه‌های
+          لوازم یدکی، تعویض روغنی‌ها و مصرف‌کنندگان عزیز است. هدف ما ارائه
+          محصولات مطمئن، قیمت مناسب و پشتیبانی سریع می‌باشد.
         </p>
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+          <div className="bg-gray-100 rounded-xl p-6 text-center">
+            <h2 className="text-xl font-bold">تامین محصولات</h2>
 
-        <p className="mt-5 text-lg text-gray-700 leading-9">
-          ما با همکاری فروشگاه‌های لوازم یدکی و تعویض روغنی‌ها،
-          تلاش می‌کنیم محصولات مورد نیاز مشتریان را با قیمت مناسب،
-          پشتیبانی مناسب و ارسال سریع تامین کنیم.
-        </p>
-
-
-
-        <div className="mt-8 grid md:grid-cols-3 gap-5">
-
-
-          <div className="bg-gray-100 rounded-lg p-5">
-            <h2 className="font-bold text-xl">
-              کیفیت
-            </h2>
-
-            <p className="mt-2 text-gray-600">
-              ارائه محصولات استاندارد و مناسب خودروهای مختلف
+            <p className="mt-3">
+              ارائه روغن موتور سمن و محصولات مورد نیاز بازار خودرو
             </p>
           </div>
 
+          <div className="bg-gray-100 rounded-xl p-6 text-center">
+            <h2 className="text-xl font-bold">همکاری با همکاران</h2>
 
-
-          <div className="bg-gray-100 rounded-lg p-5">
-            <h2 className="font-bold text-xl">
-              همکاری
-            </h2>
-
-            <p className="mt-2 text-gray-600">
-              همکاری مستقیم با فروشگاه‌ها و تعویض روغنی‌ها
-            </p>
+            <p className="mt-3">همکاری با لوازم یدکی‌ها و تعویض روغنی‌ها</p>
           </div>
 
+          <div className="bg-gray-100 rounded-xl p-6 text-center">
+            <h2 className="text-xl font-bold">پشتیبانی سریع</h2>
 
-
-          <div className="bg-gray-100 rounded-lg p-5">
-            <h2 className="font-bold text-xl">
-              پشتیبانی
-            </h2>
-
-            <p className="mt-2 text-gray-600">
-              پاسخگویی و راهنمایی قبل و بعد از خرید
-            </p>
+            <p className="mt-3">دریافت قیمت روز و ثبت سفارش از طریق واتساپ</p>
           </div>
-
-
         </div>
 
+        <div className="mt-10 text-center">
+          <h2 className="text-2xl font-bold">محدوده فعالیت</h2>
 
-      </div>
+          <p className="mt-4 text-gray-700">
+            سبزدشت،گلستان،بهارستان،پرند ، رباط‌کریم ، نسیم‌شهر،
+            نصیرشهر،خیرآباد،همدانک،اورین،آدران،صباشهر،شاهدشهر،کهنز،جاده
+            آدران،الارد{" "}
+          </p>
+        </div>
 
+        <div className="text-center mt-10">
+          <Link
+            to="/products"
+            className="inline-block bg-yellow-400 text-black px-8 py-3 rounded-lg font-bold"
+          >
+            مشاهده محصولات
+          </Link>
+
+          <a
+            href="https://wa.me/989198334264"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-bold mr-4"
+          >
+            سفارش واتساپ
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
