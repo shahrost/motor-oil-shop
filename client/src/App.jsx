@@ -8,6 +8,8 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Viscosity from "./pages/Viscosity";
 import ViscosityProducts from "./pages/ViscosityProducts";
+import Brands from "./pages/Brands";
+import BrandProducts from "./pages/BrandProducts";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/viscosity" element={<Viscosity />} />
         <Route path="/viscosity/:viscosity" element={<ViscosityProducts />} />
+        <Route path="/brands" element={<Brands />} />
+        <Route path="/brand/:brand" element={<BrandProducts />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
       </Routes>

@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom";
-import  logo  from "../assets/logo/1784245046047.jpg";
+import logo from "../assets/logo/1784245046047.jpg";
 function Header() {
   return (
-    <header className="bg-black text-white px-6 py-4 shadow-lg">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-5">
+    <header className="bg-black text-white px-6 py-4 shadow-lg" dir="rtl">
+      <div
+        className="max-w-6xl mx-auto flex justify-between items-center"
+        dir="rtl"
+      >
         {/* Logo */}
         <Link
           to="/"
           className="flex items-center gap-3 text-xl md:text-2xl font-bold text-yellow-400"
         >
-          <img src={logo} alt="لوگو" className="w-30 h-30 object-contain" />
-
+          <img
+            src={logo}
+            alt="روغن موتور شهرام"
+            className="w-14 h-14 object-contain"
+          />
           <span>روغن موتور شهرام</span>
         </Link>
 
@@ -32,13 +38,18 @@ function Header() {
               </Link>
             </li>
             <li>
-  <Link
-    to="/viscosity"
-    className="hover:text-yellow-400 transition"
-  >
-    گرید روغن
-  </Link>
-</li>
+              <Link
+                to="/viscosity"
+                className="hover:text-yellow-400 transition"
+              >
+                گرید روغن
+              </Link>
+            </li>
+            <li>
+              <Link to="/brands" className="hover:text-yellow-400 transition">
+                برندها
+              </Link>
+            </li>
             <li>
               <Link to="/" className="hover:text-yellow-400 transition">
                 خانه
