@@ -1,18 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
+import ProductContext from "../context/ProductContext";
 import ProductForm from "../components/ProductForm";
 
 function Admin() {
-  const [products, setProducts] = useState([]);
-
-  function addProduct(newProduct) {
-    setProducts([
-      ...products,
-      {
-        ...newProduct,
-        id: Date.now(),
-      },
-    ]);
-  }
+  const { products, addProduct } = useContext(ProductContext);
 
   return (
     <div className="p-10">
