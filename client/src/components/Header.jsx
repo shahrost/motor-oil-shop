@@ -32,6 +32,14 @@ function Header() {
               </Link>
             </li>
             <li>
+  <Link
+    to="/viscosity"
+    className="hover:text-yellow-400 transition"
+  >
+    گرید روغن
+  </Link>
+</li>
+            <li>
               <Link to="/" className="hover:text-yellow-400 transition">
                 خانه
               </Link>

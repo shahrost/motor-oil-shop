@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import ProductContext from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
-import products from "../data/products";
 
 function Products() {
   const [search, setSearch] = useState("");
   const [showFilter, setShowFilter] = useState(false);
   const [selectedViscosity, setSelectedViscosity] = useState("");
-
+  const { products } = useContext(ProductContext);
   const filteredProducts = products.filter((product) => {
     const searchMatch = product.name
       .toLowerCase()
