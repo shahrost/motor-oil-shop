@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
-
+import  logo  from "../assets/logo/1784245046047.jpg";
 function Header() {
   return (
     <header className="bg-black text-white px-6 py-4 shadow-lg">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-5">
         {/* Logo */}
-        <Link to="/" className="text-xl md:text-2xl font-bold text-yellow-400">
-          روغن موتور شهرام
+        <Link
+          to="/"
+          className="flex items-center gap-3 text-xl md:text-2xl font-bold text-yellow-400"
+        >
+          <img src={logo} alt="لوگو" className="w-30 h-30 object-contain" />
+
+          <span>روغن موتور شهرام</span>
         </Link>
 
         {/* Menu */}
