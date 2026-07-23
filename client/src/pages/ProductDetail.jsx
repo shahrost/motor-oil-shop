@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useContext } from "react";
 import ProductContext from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
+import OrderButtons from "../components/OrderButtons";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -33,6 +34,7 @@ function ProductDetail() {
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10">
           <div className="grid md:grid-cols-2 gap-10">
             {/* تصویر */}
+
             <div className="flex justify-center items-center">
               <img
                 src={product.image}
@@ -42,6 +44,7 @@ function ProductDetail() {
             </div>
 
             {/* اطلاعات */}
+
             <div>
               <h1 className="text-3xl font-bold text-gray-800">
                 {product.name}
@@ -54,21 +57,25 @@ function ProductDetail() {
               <div className="mt-6 border rounded-xl overflow-hidden">
                 <div className="grid grid-cols-2 p-3 border-b">
                   <span className="font-bold">برند</span>
+
                   <span>{product.brand}</span>
                 </div>
 
                 <div className="grid grid-cols-2 p-3 border-b">
                   <span className="font-bold">حجم</span>
+
                   <span>{product.volume}</span>
                 </div>
 
                 <div className="grid grid-cols-2 p-3 border-b">
                   <span className="font-bold">گرید</span>
+
                   <span>{product.viscosity}</span>
                 </div>
 
                 <div className="grid grid-cols-2 p-3">
                   <span className="font-bold">دسته</span>
+
                   <span>{product.category}</span>
                 </div>
               </div>
@@ -77,14 +84,7 @@ function ProductDetail() {
                 {product.price}
               </p>
 
-              <a
-                href={`https://wa.me/989198334264?text=سلام، برای خرید ${product.name} (${product.viscosity}) راهنمایی می‌خواهم`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl mt-6"
-              >
-                سفارش در واتساپ
-              </a>
+              <OrderButtons product={product} />
             </div>
           </div>
         </div>
@@ -96,6 +96,7 @@ function ProductDetail() {
             <h2 className="text-3xl font-bold mb-5">
               محصولات مشابه با گرید {product.viscosity}
             </h2>
+
             <div className="grid md:grid-cols-3 gap-6">
               {relatedProducts.map((item) => (
                 <ProductCard key={item.id} product={item} />
