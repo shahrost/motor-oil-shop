@@ -14,7 +14,7 @@ function ProductForm({ addProduct }) {
     "فیلتر لوکومبیل",
     "فیلتر البرز",
     "فیلتر میهن",
-    "فیلتر گیربکس ATF",
+    "فیلتر گیربکس ATFO",
     "بهران",
     "ایرانول",
     "پارس",
@@ -26,6 +26,8 @@ function ProductForm({ addProduct }) {
     "روغن موتور دیزلی",
     "روغن موتورسیکلت",
     "روغن گیربکس",
+    "روغن صنعتی",
+    "گریس",
     "مکمل سوخت",
     "محصولات دیگر",
   ];
@@ -34,7 +36,10 @@ function ProductForm({ addProduct }) {
     "300cc",
     "500cc",
     "1 لیتری",
+    "2 لیتری",
+    "3 لیتری",
     "4 لیتری",
+    "5 لیتری",
     "100 گرمی",
     "120 گرمی",
     "1 پوندی",
@@ -61,19 +66,19 @@ function ProductForm({ addProduct }) {
     "10W60",
   ];
 
-  const apis = [
+  const apiList = [
     "SL",
     "SN",
     "SM",
     "SJ",
     "SC",
-    "CH4",
-    "CI4",
-    "CK4",
-    "CF",
-    "GL4",
-    "GL5",
+    "CH-4",
+    "CI-4",
+    "CJ-4",
+    "CK-4",
   ];
+
+  const aceaList = ["A1/B1", "A3/B4", "A5/B5", "C2", "C3", "C4", "E7", "E9"];
 
   const [product, setProduct] = useState({
     brand: "",
@@ -81,8 +86,11 @@ function ProductForm({ addProduct }) {
     volume: "",
     viscosity: "",
     api: "",
+    acea: "",
+    oilType: "",
     description: "",
     price: "",
+    cartonCount: "",
     image: "",
   });
 
@@ -91,12 +99,13 @@ function ProductForm({ addProduct }) {
 
     let newValue = value;
 
-    if (name === "price") {
+    if (name === "price" || name === "cartonCount") {
       newValue = value.replace(/\D/g, "");
     }
 
     setProduct({
       ...product,
+
       [name]: newValue,
     });
   }
@@ -104,13 +113,19 @@ function ProductForm({ addProduct }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const newProduct = {
+    const finalProduct = {
       ...product,
 
       name: `${product.brand} ${product.viscosity} ${product.volume}`,
+
+      cartonCount: Number(product.cartonCount || 0),
+
+      id: Date.now(),
     };
 
-    addProduct(newProduct);
+    addProduct(finalProduct);
+
+    alert("محصول با موفقیت ثبت شد");
 
     setProduct({
       brand: "",
@@ -118,8 +133,11 @@ function ProductForm({ addProduct }) {
       volume: "",
       viscosity: "",
       api: "",
+      acea: "",
+      oilType: "",
       description: "",
       price: "",
+      cartonCount: "",
       image: "",
     });
   }
@@ -192,15 +210,44 @@ function ProductForm({ addProduct }) {
       >
         <option value="">انتخاب API</option>
 
-        {apis.map((item) => (
+        {apiList.map((item) => (
+          <option key={item}>{item}</option>
+        ))}
+      </select>
+
+      <select
+        name="acea"
+        value={product.acea}
+        onChange={handleChange}
+        className="border p-3 w-full rounded-lg mb-3"
+      >
+        <option value="">انتخاب ACEA</option>
+
+        {aceaList.map((item) => (
           <option key={item}>{item}</option>
         ))}
       </select>
 
       <input
+        name="oilType"
+        placeholder="نوع روغن"
+        value={product.oilType}
+        onChange={handleChange}
+        className="border p-3 w-full rounded-lg mb-3"
+      />
+
+      <input
         name="price"
         placeholder="قیمت"
         value={product.price}
+        onChange={handleChange}
+        className="border p-3 w-full rounded-lg mb-3"
+      />
+
+      <input
+        name="cartonCount"
+        placeholder="تعداد در کارتن مثلا 12"
+        value={product.cartonCount}
         onChange={handleChange}
         className="border p-3 w-full rounded-lg mb-3"
       />
@@ -225,7 +272,7 @@ function ProductForm({ addProduct }) {
         type="submit"
         className="bg-green-600 text-white px-6 py-3 rounded-lg"
       >
-        ذخیره محصول
+        ثبت محصول
       </button>
     </form>
   );

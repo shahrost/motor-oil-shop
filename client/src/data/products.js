@@ -7,7 +7,7 @@ const products = [
     volume: "4 لیتر",
     viscosity: "10W40",
     description: "روغن موتور چهار لیتری مناسب خودروهای سواری",
-    price: "450,000 تومان",
+    price: 450000,
     image: "/src/assets/products/seman-chimie/10W40 SM1L.png",
   },
 
@@ -19,7 +19,7 @@ const products = [
     volume: "4 لیتر",
     viscosity: "20W50",
     description: "مناسب خودروهای قدیمی و پرکار",
-    price: "700,000 تومان",
+    price: 700000,
     image: "/src/assets/products/seman-chimie/2050sj_prev_ui.png",
   },
 
@@ -31,7 +31,7 @@ const products = [
     volume: "4 لیتر",
     viscosity: "5W30",
     description: "روغن موتور تمام سنتتیک",
-    price: "1,200,000 تومان",
+    price: 1200000,
     image: "/src/assets/products/seman-chimie/5w30_prev_ui.png",
   },
 ];

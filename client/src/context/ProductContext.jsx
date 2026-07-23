@@ -13,24 +13,42 @@ export function ProductProvider({ children }) {
   function addProduct(product) {
     setProducts((prevProducts) => [
       ...prevProducts,
+
       {
         ...product,
         id: Date.now(),
+        stock: product.stock || 0,
       },
     ]);
   }
+
   function deleteProduct(id) {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id),
     );
   }
+
   function updateProduct(id, updatedProduct) {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.id === id ? { ...product, ...updatedProduct } : product,
+        product.id === id
+          ? {
+              ...product,
+              ...updatedProduct,
+            }
+          : product,
       ),
     );
   }
+
+  // بازنشانی محصولات از فایل اصلی
+
+  function resetProducts() {
+    setProducts(productsData);
+
+    localStorage.setItem("products", JSON.stringify(productsData));
+  }
+
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(products));
   }, [products]);
@@ -39,9 +57,14 @@ export function ProductProvider({ children }) {
     <ProductContext.Provider
       value={{
         products,
+
         addProduct,
+
         deleteProduct,
+
         updateProduct,
+
+        resetProducts,
       }}
     >
       {children}
