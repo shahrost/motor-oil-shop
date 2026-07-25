@@ -10,24 +10,27 @@ export function CartProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem(
-      "cart",
-
-      JSON.stringify(cart),
-    );
+    localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
   function addToCart(product) {
-    const exists = cart.find((item) => item.id === product.id);
+    const exists = cart.find(
+      (item) =>
+        item.id === product.id &&
+        item.orderType === product.orderType &&
+        item.paymentType === product.paymentType,
+    );
 
     if (exists) {
       setCart(
         cart.map((item) =>
-          item.id === product.id
+          item.id === product.id &&
+          item.orderType === product.orderType &&
+          item.paymentType === product.paymentType
             ? {
                 ...item,
 
-                quantity: item.quantity + 1,
+                quantity: Number(item.quantity) + Number(product.quantity),
               }
             : item,
         ),
@@ -39,39 +42,38 @@ export function CartProvider({ children }) {
         {
           ...product,
 
-          quantity: 1,
+          quantity: Number(product.quantity || 1),
 
-          orderType: "number",
+          orderType: product.orderType || "number",
+
+          paymentType: product.paymentType || "cash",
         },
       ]);
     }
   }
 
-  function removeFromCart(id) {
-    setCart(cart.filter((item) => item.id !== id));
+  function removeFromCart(id, index) {
+    setCart(cart.filter((_, i) => i !== index));
   }
-  function updateQuantity(id, quantity) {
-    const newQuantity = Number(quantity);
 
-    if (newQuantity < 1) return;
-
+  function updateQuantity(id, quantity, index) {
     setCart(
-      cart.map((item) =>
-        item.id === id
+      cart.map((item, i) =>
+        i === index
           ? {
               ...item,
 
-              quantity: newQuantity,
+              quantity: Number(quantity),
             }
           : item,
       ),
     );
   }
 
-  function changeOrderType(id, type) {
+  function changeOrderType(id, type, index) {
     setCart(
-      cart.map((item) =>
-        item.id === id
+      cart.map((item, i) =>
+        i === index
           ? {
               ...item,
 
@@ -82,18 +84,49 @@ export function CartProvider({ children }) {
     );
   }
 
+  function changePaymentType(id, type, index) {
+    setCart(
+      cart.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+
+              paymentType: type,
+            }
+          : item,
+      ),
+    );
+  }
+
+  function changeAllPaymentType(type) {
+    setCart(
+      cart.map((item) => ({
+        ...item,
+
+        paymentType: type,
+      })),
+    );
+  }
+
   function clearCart() {
     setCart([]);
   }
 
   const cartCount = cart.reduce(
-    (total, item) => total + item.quantity,
+    (total, item) => total + Number(item.quantity || 0),
 
     0,
   );
 
   const cartTotal = cart.reduce(
-    (total, item) => total + Number(item.price || 0) * item.quantity,
+    (total, item) => {
+      const count =
+        item.orderType === "carton"
+          ? Number(item.quantity) * Number(item.cartonCount || 1)
+          : Number(item.quantity);
+
+      return total + Number(item.price || 0) * count;
+    },
 
     0,
   );
@@ -110,6 +143,10 @@ export function CartProvider({ children }) {
         updateQuantity,
 
         changeOrderType,
+
+        changePaymentType,
+
+        changeAllPaymentType,
 
         clearCart,
 
