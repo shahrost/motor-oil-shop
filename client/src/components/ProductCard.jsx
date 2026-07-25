@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+
 import formatPrice from "../utils/formatPrice";
+import CartContext from "../context/CartContext";
 
 function ProductCard({ product }) {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
       <div className="p-5">
@@ -50,13 +55,6 @@ function ProductCard({ product }) {
             </p>
           )}
 
-          {product.api && (
-            <p>
-              <span className="font-bold text-gray-800">API:</span>{" "}
-              {product.api}
-            </p>
-          )}
-
           {product.volume && (
             <p>
               <span className="font-bold text-gray-800">حجم:</span>{" "}
@@ -85,12 +83,12 @@ function ProductCard({ product }) {
             مشاهده
           </Link>
 
-          <a
-            href={`tel:09198334264`}
-            className="flex-1 text-center bg-green-600 text-white px-4 py-3 rounded-lg"
+          <button
+            onClick={() => addToCart(product)}
+            className="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition"
           >
-            تماس برای سفارش
-          </a>
+            🛒 افزودن به سبد
+          </button>
         </div>
       </div>
     </div>

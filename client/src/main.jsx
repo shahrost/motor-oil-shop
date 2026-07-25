@@ -7,13 +7,16 @@ import "./index.css";
 
 import { ProductProvider } from "./context/ProductContext";
 import { OrderProvider } from "./context/OrderContext";
+import { CartProvider } from "./context/CartContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ProductProvider>
         <OrderProvider>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </OrderProvider>
       </ProductProvider>
     </BrowserRouter>
