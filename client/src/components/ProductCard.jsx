@@ -48,16 +48,16 @@ function ProductCard({ product }) {
       <div className="p-4">
         <div className="rounded-2xl overflow-hidden bg-white">
           <img
-            src={product.image}
+            src={product.image?.main || ""}
             alt={product.name}
             className="
-            w-full
-            h-52
-            object-contain
-            hover:scale-105
-            transition
-            duration-500
-            "
+  w-full
+  h-52
+  object-contain
+  hover:scale-105
+  transition
+  duration-500
+  "
           />
         </div>
 

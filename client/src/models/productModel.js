@@ -25,10 +25,12 @@ const productModel = {
 
   stock: 0,
 
-  image: "",
+  image: {
+    main: "",
+    gallery: [],
+  },
 
   isBestSeller: false,
 };
 
 export default productModel;
-

@@ -34,8 +34,8 @@ function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
         <option value="">انتخاب دسته بندی</option>
 
         {categories.map((item) => (
-          <option key={item} value={item}>
-            {item}
+          <option key={item.id} value={item.value}>
+            {item.title}
           </option>
         ))}
       </select>
@@ -101,6 +101,14 @@ function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
       </select>
 
       <input
+        name="oilType"
+        value={editForm.oilType || ""}
+        onChange={handleEditChange}
+        placeholder="نوع روغن"
+        className="border p-3 w-full rounded mb-3"
+      />
+
+      <input
         name="price"
         value={editForm.price || ""}
         onChange={handleEditChange}
@@ -109,10 +117,18 @@ function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
       />
 
       <input
+        name="cartonCount"
+        value={editForm.cartonCount || ""}
+        onChange={handleEditChange}
+        placeholder="تعداد در کارتن"
+        className="border p-3 w-full rounded mb-3"
+      />
+
+      <input
         name="image"
         value={editForm.image || ""}
         onChange={handleEditChange}
-        placeholder="آدرس تصویر"
+        placeholder="مسیر تصویر"
         className="border p-3 w-full rounded mb-3"
       />
 
@@ -124,19 +140,21 @@ function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
         className="border p-3 w-full rounded mb-3"
       />
 
-      <button
-        onClick={saveEdit}
-        className="bg-green-600 text-white px-6 py-3 rounded-lg"
-      >
-        ذخیره تغییرات
-      </button>
+      <div className="flex gap-3">
+        <button
+          onClick={saveEdit}
+          className="bg-green-600 text-white px-6 py-3 rounded-lg"
+        >
+          ذخیره تغییرات
+        </button>
 
-      <button
-        onClick={cancelEdit}
-        className="bg-gray-500 text-white px-6 py-3 rounded-lg mr-3"
-      >
-        انصراف
-      </button>
+        <button
+          onClick={cancelEdit}
+          className="bg-gray-500 text-white px-6 py-3 rounded-lg"
+        >
+          انصراف
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import createProduct from "../models/createProduct";
-import productsData from "../data/products";
 
-import { getProducts, saveProducts } from "../services/productStorage";
+import {
+  getProducts,
+  saveProducts,
+  clearProducts,
+} from "../services/productStorage";
 
 const ProductContext = createContext();
 
@@ -10,7 +13,7 @@ export function ProductProvider({ children }) {
   const [products, setProducts] = useState(() => {
     const savedProducts = getProducts();
 
-    return savedProducts ? savedProducts : productsData;
+    return savedProducts || [];
   });
   function addProduct(product) {
     const newProduct = createProduct(product);
@@ -39,7 +42,8 @@ export function ProductProvider({ children }) {
   }
 
   function resetProducts() {
-    setProducts(productsData);
+    setProducts([]);
+    clearProducts();
   }
 
   useEffect(() => {

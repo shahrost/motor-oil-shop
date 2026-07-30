@@ -6,13 +6,24 @@ function createProduct(data = {}) {
 
     ...data,
 
-    id: data.id || Date.now(),
+    id: data.id ?? Date.now(),
 
     price: Number(data.price || 0),
 
     cartonCount: Number(data.cartonCount || 0),
 
     stock: Number(data.stock || 0),
+
+    image:
+      typeof data.image === "string"
+        ? {
+            main: data.image,
+            gallery: [],
+          }
+        : {
+            main: data.image?.main || "",
+            gallery: data.image?.gallery || [],
+          },
   };
 }
 

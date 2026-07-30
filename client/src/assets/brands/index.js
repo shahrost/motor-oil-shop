@@ -15,7 +15,6 @@ import pars from "./pars.png";
 import caspian from "./caspian.png";
 import serkan from "./serkan.png";
 
-
 export {
   seman,
   petrolex,

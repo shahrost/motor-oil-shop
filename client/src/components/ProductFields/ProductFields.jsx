@@ -5,13 +5,13 @@ import viscosities from "../../data/productOptions/viscosities";
 import api from "../../data/productOptions/api";
 import acea from "../../data/productOptions/acea";
 
-function ProductFields({ product, handleChange }) {
+function ProductFields({ product, updateField }) {
   return (
     <>
       <select
         name="brand"
         value={product.brand || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       >
         <option value="">انتخاب برند</option>
@@ -26,7 +26,7 @@ function ProductFields({ product, handleChange }) {
       <select
         name="category"
         value={product.category || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       >
         <option value="">انتخاب دسته بندی</option>
@@ -41,7 +41,7 @@ function ProductFields({ product, handleChange }) {
       <select
         name="volume"
         value={product.volume || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       >
         <option value="">انتخاب حجم</option>
@@ -56,7 +56,7 @@ function ProductFields({ product, handleChange }) {
       <select
         name="viscosity"
         value={product.viscosity || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       >
         <option value="">انتخاب ویسکوزیته</option>
@@ -71,7 +71,7 @@ function ProductFields({ product, handleChange }) {
       <select
         name="api"
         value={product.api || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       >
         <option value="">انتخاب API</option>
@@ -86,7 +86,7 @@ function ProductFields({ product, handleChange }) {
       <select
         name="acea"
         value={product.acea || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       >
         <option value="">انتخاب ACEA</option>
@@ -102,7 +102,7 @@ function ProductFields({ product, handleChange }) {
         name="oilType"
         placeholder="نوع روغن"
         value={product.oilType || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       />
 
@@ -110,7 +110,7 @@ function ProductFields({ product, handleChange }) {
         name="price"
         placeholder="قیمت"
         value={product.price || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       />
 
@@ -118,7 +118,7 @@ function ProductFields({ product, handleChange }) {
         name="cartonCount"
         placeholder="تعداد در کارتن"
         value={product.cartonCount || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       />
 
@@ -126,16 +126,20 @@ function ProductFields({ product, handleChange }) {
         name="description"
         placeholder="توضیحات"
         value={product.description || ""}
-        onChange={handleChange}
+        onChange={(e) => updateField(e.target.name, e.target.value)}
         className="border p-3 w-full rounded-lg mb-3"
       />
 
       <input
         name="image"
         placeholder="آدرس تصویر"
-        value={product.image || ""}
-        onChange={handleChange}
-        className="border p-3 w-full rounded-lg mb-3"
+        value={product.image?.main || ""}
+        onChange={(e) =>
+          updateField("image", {
+            main: e.target.value,
+            gallery: product.image?.gallery || [],
+          })
+        }
       />
     </>
   );

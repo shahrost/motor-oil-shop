@@ -5,17 +5,22 @@ function ImageUploader({ product, updateField }) {
 
       <input
         type="text"
-        value={product.image}
-        onChange={(e) => updateField("image", e.target.value)}
-        placeholder="آدرس تصویر محصول"
+        value={product.image?.main || ""}
+        onChange={(e) =>
+          updateField("image", {
+            main: e.target.value,
+            gallery: product.image?.gallery || [],
+          })
+        }
+        placeholder="/products/brand/product-name.png"
         className="border p-3 rounded-lg w-full"
       />
 
-      {product.image && (
+      {product.image?.main && (
         <div className="flex justify-center bg-gray-100 p-5 rounded-lg">
           <img
-            src={product.image}
-            alt="preview"
+            src={product.image.main}
+            alt={product.name || "product"}
             className="w-48 h-48 object-contain"
           />
         </div>

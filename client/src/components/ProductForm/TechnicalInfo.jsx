@@ -1,39 +1,9 @@
+import api from "../../data/productOptions/api";
+import viscosities from "../../data/productOptions/viscosities";
+import acea from "../../data/productOptions/acea";
+
 function TechnicalInfo({ product, updateField }) {
-  const apiList = [
-    "SL",
-    "SM",
-    "SN",
-    "SP",
-    "SJ",
-    "SC",
-    "SD",
-    "SE",
-    "SF",
-    "SG",
-    "CH-4",
-    "CI-4",
-    "CJ-4",
-    "CK-4",
-  ];
-
-  const viscosityList = [
-    "SAE 40",
-    "SAE 50",
-    "20W50",
-    "10W40",
-    "10W50",
-    "10W30",
-    "5W30",
-    "5W40",
-    "0W20",
-    "15W40",
-    "25W50",
-    "10W60",
-  ];
-
   const oilTypes = ["مینرال", "نیمه سنتتیک", "تمام سنتتیک"];
-
-  const aceaList = ["ندارد", "A3/B4", "A5/B5", "C2", "C3", "C4", "E7", "E9"];
 
   return (
     <div className="space-y-4">
@@ -48,7 +18,7 @@ function TechnicalInfo({ product, updateField }) {
       >
         <option value="">انتخاب API</option>
 
-        {apiList.map((item) => (
+        {api.map((item) => (
           <option key={item} value={item}>
             API {item}
           </option>
@@ -64,7 +34,7 @@ function TechnicalInfo({ product, updateField }) {
       >
         <option value="">انتخاب ویسکوزیته</option>
 
-        {viscosityList.map((item) => (
+        {viscosities.map((item) => (
           <option key={item} value={item}>
             {item}
           </option>
@@ -96,7 +66,7 @@ function TechnicalInfo({ product, updateField }) {
       >
         <option value="">انتخاب استاندارد ACEA</option>
 
-        {aceaList.map((item) => (
+        {acea.map((item) => (
           <option key={item} value={item}>
             ACEA {item}
           </option>

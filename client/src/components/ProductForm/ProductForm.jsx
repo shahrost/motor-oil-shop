@@ -3,6 +3,7 @@ import { useState } from "react";
 import ProductFields from "../ProductFields/ProductFields";
 
 import createProduct from "../../models/createProduct";
+import ImageUploader from "./ImageUploader";
 
 function ProductForm({ addProduct }) {
   const initialState = {
@@ -20,21 +21,17 @@ function ProductForm({ addProduct }) {
   };
 
   const [product, setProduct] = useState(initialState);
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-
+  function updateField(name, value) {
     let newValue = value;
 
     if (name === "price" || name === "cartonCount") {
       newValue = value.replace(/\D/g, "");
     }
 
-    setProduct({
-      ...product,
-
+    setProduct((prev) => ({
+      ...prev,
       [name]: newValue,
-    });
+    }));
   }
 
   function handleSubmit(e) {
@@ -61,7 +58,9 @@ function ProductForm({ addProduct }) {
     >
       <h2 className="text-2xl font-bold mb-5">افزودن محصول جدید</h2>
 
-      <ProductFields product={product} handleChange={handleChange} />
+      <ProductFields product={product} updateField={updateField} />
+
+      <ImageUploader product={product} updateField={updateField} />
 
       <button
         type="submit"

@@ -1,65 +1,69 @@
+import brands from "../../data/brands";
+import categories from "../../data/productOptions/categories";
+import volumes from "../../data/productOptions/volumes";
+
 function BasicInfo({ product, updateField }) {
-  const brands = [
-    "سمن شیمی",
-    "Seman Chimie",
-    "پترولکس",
-    "Petrolex",
-    "وم اویل",
-    "Wom Oil",
-    "بهتام",
-    "Behtam",
-    "توتال",
-    "Total",
-    "ادینول",
-    "Addinol",
-    "ایدلوب",
-    "Aidlube",
-    "لوکینی",
-    "Lookini",
-    "ووفر",
-    "Woofer",
-    "فیلتر لوکومبیل",
-    "Locomobil Filter",
-    "فیلتر البرز",
-    "Alborz Filter",
-    "فیلتر میهن",
-    "Mihan Filter",
-    "فیلتر گیربکس ATF",
-    "بهران",
-    "Behran",
-    "ایرانول",
-    "Iranol",
-    "پارس",
-    "Pars",
-    "اسپیدی",
-    "Speedy",
-  ];
+  // const brands = [
+  //   "سمن شیمی",
+  //   "Seman Chimie",
+  //   "پترولکس",
+  //   "Petrolex",
+  //   "وم اویل",
+  //   "Wom Oil",
+  //   "بهتام",
+  //   "Behtam",
+  //   "توتال",
+  //   "Total",
+  //   "ادینول",
+  //   "Addinol",
+  //   "ایدلوب",
+  //   "Aidlube",
+  //   "لوکینی",
+  //   "Lookini",
+  //   "ووفر",
+  //   "Woofer",
+  //   "فیلتر لوکومبیل",
+  //   "Locomobil Filter",
+  //   "فیلتر البرز",
+  //   "Alborz Filter",
+  //   "فیلتر میهن",
+  //   "Mihan Filter",
+  //   "فیلتر گیربکس ATF",
+  //   "بهران",
+  //   "Behran",
+  //   "ایرانول",
+  //   "Iranol",
+  //   "پارس",
+  //   "Pars",
+  //   "اسپیدی",
+  //   "Speedy",
+  // ];
 
-  const categories = [
-    "روغن موتور بنزینی",
-    "روغن موتور دیزلی",
-    "روغن موتورسیکلت",
-    "مکمل سوخت",
-    "محصولات دیگر",
-  ];
+  // const categories = [
+  //   "روغن موتور بنزینی",
+  //   "روغن موتور دیزلی",
+  //   "روغن موتورسیکلت",
+  //   "مکمل سوخت",
+  //   "محصولات دیگر",
+  // ];
 
-  const volumes = [
-    "300cc",
-    "500cc",
-    "1 لیتری",
-    "4 لیتری",
-    "5 لیتری",
-    "20 لیتری",
-    "100 گرمی",
-    "120 گرمی",
-    "1 پوندی",
-    "2 پوندی",
-    "3 پوندی",
-    "5 پوندی",
-    "7 کیلویی",
-    "17 کیلویی",
-    "180 کیلویی",
-  ];
+  // const volumes = [
+  //   "300cc",
+  //   "500cc",
+  //   "1 لیتری",
+  //   "4 لیتری",
+  //   "5 لیتری",
+  //   "20 لیتری",
+  //   "100 گرمی",
+  //   "120 گرمی",
+  //   "1 پوندی",
+  //   "2 پوندی",
+  //   "3 پوندی",
+  //   "5 پوندی",
+  //   "7 کیلویی",
+  //   "17 کیلویی",
+  //   "180 کیلویی",
+  // ];
 
   return (
     <div className="space-y-4">
@@ -91,8 +95,8 @@ function BasicInfo({ product, updateField }) {
         <option value="">انتخاب دسته بندی</option>
 
         {categories.map((item) => (
-          <option key={item} value={item}>
-            {item}
+          <option key={item.id} value={item.value}>
+            {item.title}
           </option>
         ))}
       </select>
