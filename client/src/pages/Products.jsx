@@ -1,202 +1,209 @@
-import { useState, useContext } from "react";
-import ProductContext from "../context/ProductContext";
+import { useContext, useMemo, useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
-
+import ProductContext from "../context/ProductContext";
+import { getBrands, getViscosities, getVolumes } from "../utils/productFilters";
 function Products() {
   const { products } = useContext(ProductContext);
 
   const [search, setSearch] = useState("");
-  const [showFilter, setShowFilter] = useState(false);
+  const [brand, setBrand] = useState("همه");
+  const [viscosity, setViscosity] = useState("همه");
+  const [volume, setVolume] = useState("همه");
+  const [sort, setSort] = useState("default");
+  const [onlyAvailable, setOnlyAvailable] = useState(false);
+  const [showTop, setShowTop] = useState(false);
 
-  const [selectedViscosity, setSelectedViscosity] = useState("");
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedVolume, setSelectedVolume] = useState("");
+  useEffect(() => {
+    function handleScroll() {
+      if (window.scrollY > 500) {
+        setShowTop(true);
+      } else {
+        setShowTop(false);
+      }
+    }
 
-  const [sort, setSort] = useState("");
+    window.addEventListener("scroll", handleScroll);
 
-  const brands = [
-    ...new Set(products.map((product) => product.brand).filter(Boolean)),
-  ];
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-  const viscosities = [
-    ...new Set(products.map((product) => product.viscosity).filter(Boolean)),
-  ];
+  const brands = getBrands(products);
 
-  const volumes = [
-    ...new Set(products.map((product) => product.volume).filter(Boolean)),
-  ];
+  const viscosities = getViscosities(products);
 
-  const filteredProducts = products.filter((product) => {
-    const searchText = search.toLowerCase();
+  const volumes = getVolumes(products);
 
-    const searchMatch =
-      (product.name || "").toLowerCase().includes(searchText) ||
-      (product.brand || "").toLowerCase().includes(searchText) ||
-      (product.viscosity || "").toLowerCase().includes(searchText) ||
-      (product.category || "").toLowerCase().includes(searchText) ||
-      (product.volume || "").toLowerCase().includes(searchText);
+  const filteredProducts = useMemo(() => {
+    let result = [...products];
 
-    const viscosityMatch =
-      selectedViscosity === "" || product.viscosity === selectedViscosity;
+    if (search.trim()) {
+      result = result.filter((product) =>
+        `${product.name} ${product.brand} ${product.viscosity} ${product.volume}`
+          .toLowerCase()
+          .includes(search.toLowerCase()),
+      );
+    }
 
-    const brandMatch = selectedBrand === "" || product.brand === selectedBrand;
+    if (brand !== "همه") {
+      result = result.filter((product) => product.brand === brand);
+    }
 
-    const volumeMatch =
-      selectedVolume === "" || product.volume === selectedVolume;
+    if (viscosity !== "همه") {
+      result = result.filter((product) => product.viscosity === viscosity);
+    }
 
-    return searchMatch && viscosityMatch && brandMatch && volumeMatch;
-  });
+    if (volume !== "همه") {
+      result = result.filter((product) => product.volume === volume);
+    }
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (onlyAvailable) {
+      result = result.filter((product) => product.stock !== 0);
+    }
+
     if (sort === "cheap") {
-      return Number(a.price || 0) - Number(b.price || 0);
+      result.sort((a, b) => Number(a.price) - Number(b.price));
     }
 
     if (sort === "expensive") {
-      return Number(b.price || 0) - Number(a.price || 0);
-    }
-
-    if (sort === "name") {
-      return (a.name || "").localeCompare(b.name || "");
+      result.sort((a, b) => Number(b.price) - Number(a.price));
     }
 
     if (sort === "new") {
-      return b.id - a.id;
+      result.sort((a, b) => Number(b.id) - Number(a.id));
     }
 
-    return 0;
-  });
+    if (sort === "best") {
+      result.sort((a, b) => Number(b.isBestSeller) - Number(a.isBestSeller));
+    }
+
+    return result;
+  }, [products, search, brand, viscosity, volume, sort, onlyAvailable]);
 
   function clearFilters() {
     setSearch("");
-    setSelectedBrand("");
-    setSelectedViscosity("");
-    setSelectedVolume("");
-    setSort("");
+    setBrand("همه");
+    setViscosity("همه");
+    setVolume("همه");
+    setSort("default");
+    setOnlyAvailable(false);
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 md:p-10" dir="rtl">
-      <h1 className="text-4xl font-bold text-center text-gray-800">
-        محصولات روغن موتور
-      </h1>
+    <div className="min-h-screen bg-gray-100 p-5 md:p-10" dir="rtl">
+      <div className="max-w-7xl mx-auto">
+        {/* فیلترها */}
 
-      <p className="text-center mt-3 text-gray-600">
-        {sortedProducts.length} محصول موجود است
-      </p>
+        <section className="bg-white rounded-3xl shadow-md p-5 mb-8">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-xl font-extrabold">فیلتر محصولات</h2>
 
-      <div className="max-w-xl mx-auto mt-8">
-        <input
-          type="text"
-          placeholder="جستجوی روغن موتور..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-3 rounded-lg border"
-        />
+            <button
+              onClick={clearFilters}
+              className="bg-red-100 text-red-600 px-4 py-2 rounded-xl font-bold"
+            >
+              پاک کردن
+            </button>
+          </div>
+
+          <input
+            type="text"
+            placeholder="🔍 جستجوی محصول، برند، گرید..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full border border-gray-300 rounded-2xl p-4 text-black mb-5"
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <select
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              className="border rounded-2xl p-3 bg-white text-black"
+            >
+              {brands.map((item) => (
+                <option key={item}>{item}</option>
+              ))}
+            </select>
+
+            <select
+              value={viscosity}
+              onChange={(e) => setViscosity(e.target.value)}
+              className="border rounded-2xl p-3 bg-white text-black"
+            >
+              {viscosities.map((item) => (
+                <option key={item}>{item}</option>
+              ))}
+            </select>
+
+            <select
+              value={volume}
+              onChange={(e) => setVolume(e.target.value)}
+              className="border rounded-2xl p-3 bg-white text-black"
+            >
+              {volumes.map((item) => (
+                <option key={item}>{item}</option>
+              ))}
+            </select>
+
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="border rounded-2xl p-3 bg-white text-black"
+            >
+              <option value="default">مرتب سازی</option>
+
+              <option value="cheap">ارزان‌ترین</option>
+
+              <option value="expensive">گران‌ترین</option>
+
+              <option value="new">جدیدترین</option>
+
+              <option value="best">پرفروش‌ترین</option>
+            </select>
+          </div>
+
+          <label className="flex items-center gap-3 mt-5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={onlyAvailable}
+              onChange={(e) => setOnlyAvailable(e.target.checked)}
+              className="w-5 h-5"
+            />
+
+            <span className="font-bold">فقط محصولات موجود</span>
+          </label>
+        </section>
+
+        {/* محصولات */}
+
+        {filteredProducts.length === 0 ? (
+          <div className="bg-white rounded-3xl p-10 text-center shadow">
+            <p className="text-xl font-bold text-gray-700">محصولی پیدا نشد</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => (
+              <div key={product.id} className="animate-[fadeIn_0.4s_ease]">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      <div className="max-w-xs mt-6">
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="w-full p-3 rounded-lg border"
-        >
-          <option value="">مرتب سازی محصولات</option>
-
-          <option value="new">جدیدترین محصولات</option>
-
-          <option value="cheap">ارزان‌ترین</option>
-
-          <option value="expensive">گران‌ترین</option>
-
-          <option value="name">بر اساس نام</option>
-        </select>
-      </div>
-
-      <div className="text-center mt-5">
+      {showTop && (
         <button
-          onClick={() => setShowFilter(!showFilter)}
-          className="bg-yellow-400 px-5 py-2 rounded-lg font-bold"
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            })
+          }
+          className="fixed bottom-6 left-6 bg-black text-white w-12 h-12 rounded-full shadow-xl text-xl"
         >
-          {showFilter ? "بستن فیلترها" : "نمایش فیلترها"}
+          ↑
         </button>
-      </div>
-
-      {showFilter && (
-        <div className="bg-white max-w-4xl mx-auto mt-5 p-6 rounded-xl shadow">
-          <h3 className="font-bold mb-3">انتخاب برند</h3>
-
-          <div className="flex flex-wrap gap-3 mb-6">
-            {["", ...brands].map((item) => (
-              <button
-                key={item || "all"}
-                onClick={() => setSelectedBrand(item)}
-                className={
-                  selectedBrand === item
-                    ? "bg-yellow-400 px-4 py-2 rounded font-bold"
-                    : "bg-gray-200 px-4 py-2 rounded"
-                }
-              >
-                {item || "همه"}
-              </button>
-            ))}
-          </div>
-
-          <h3 className="font-bold mb-3">انتخاب گرید روغن</h3>
-
-          <div className="flex flex-wrap gap-3 mb-6">
-            {["", ...viscosities].map((item) => (
-              <button
-                key={item || "all"}
-                onClick={() => setSelectedViscosity(item)}
-                className={
-                  selectedViscosity === item
-                    ? "bg-yellow-400 px-4 py-2 rounded font-bold"
-                    : "bg-gray-200 px-4 py-2 rounded"
-                }
-              >
-                {item || "همه"}
-              </button>
-            ))}
-          </div>
-
-          <h3 className="font-bold mb-3">انتخاب حجم</h3>
-
-          <div className="flex flex-wrap gap-3">
-            {["", ...volumes].map((item) => (
-              <button
-                key={item || "all"}
-                onClick={() => setSelectedVolume(item)}
-                className={
-                  selectedVolume === item
-                    ? "bg-yellow-400 px-4 py-2 rounded font-bold"
-                    : "bg-gray-200 px-4 py-2 rounded"
-                }
-              >
-                {item || "همه"}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={clearFilters}
-            className="mt-6 bg-red-600 text-white px-5 py-2 rounded-lg"
-          >
-            پاک کردن همه فیلترها
-          </button>
-        </div>
-      )}
-
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {sortedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-
-      {sortedProducts.length === 0 && (
-        <p className="text-center mt-10 text-red-500 font-bold">
-          محصولی پیدا نشد
-        </p>
       )}
     </div>
   );

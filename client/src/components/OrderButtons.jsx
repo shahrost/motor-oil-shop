@@ -56,14 +56,14 @@ ${payment}
         </button>
 
         <button
-          onClick={() => setPayment("چکی")}
+          onClick={() => setPayment("اعتباری")}
           className={
-            payment === "چکی"
-              ? "bg-blue-600 text-white px-5 py-2 rounded-lg"
+            payment === "اعتباری"
+              ? "bg-blue-600 text-white px-5  rounded-lg"
               : "bg-gray-200 px-5 py-2 rounded-lg"
           }
         >
-          چکی
+          اعتباری{" "}
         </button>
       </div>
 

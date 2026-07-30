@@ -1,112 +1,359 @@
 @import "tailwindcss";
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* =========================
+      FONT
+========================= */
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./assets/fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-  direction: rtl;
-  background: #f3f4f6;
-  overflow-x: hidden;
-}
-
-#root {
-  width: 100%;
-  min-height: 100svh;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./assets/fonts/Vazirmatn-Medium.woff2") format("woff2");
   font-weight: 500;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./assets/fonts/Vazirmatn-SemiBold.woff2") format("woff2");
+  font-weight: 600;
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./assets/fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700;
 }
-p {
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./assets/fonts/Vazirmatn-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+}
+
+/* =========================
+      BRAND COLORS
+========================= */
+
+:root {
+  /* شهرام روغن */
+
+  --black-brand: #111111;
+
+  --yellow-brand: #facc15;
+
+  --green-brand: #16a34a;
+
+  --whatsapp: #25d366;
+
+  --blue-brand: #2563eb;
+
+  --red-brand: #dc2626;
+
+  /* backgrounds */
+
+  --bg-main: #f8fafc;
+
+  --card-bg: #ffffff;
+
+  /* text */
+
+  --text-main: #111827;
+
+  --text-muted: #6b7280;
+
+  /* border */
+
+  --border-light: #e5e7eb;
+}
+
+/* =========================
+      RESET
+========================= */
+
+/* * {
   margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+} */
+
+html {
+  scroll-behavior: smooth;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+body {
+  direction: rtl;
+
+  overflow-x: hidden;
+
+  background: var(--bg-main);
+
+  color: var(--text-main);
+
+  font-family: "Vazirmatn", sans-serif;
+
+  line-height: 1.8;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* =========================
+      ROOT
+========================= */
+
+#root {
+  width: 100%;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
 }
+
+/* =========================
+      TEXT
+========================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Vazirmatn", sans-serif;
+
+  font-weight: 800;
+
+  color: var(--text-main);
+}
+
+p,
+span,
+label,
+small,
+strong,
+b {
+  color: var(--text-main);
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: "Vazirmatn", sans-serif;
+}
+
+/* =========================
+      LINKS
+========================= */
+
+a {
+  text-decoration: none;
+}
+
+/* =========================
+      IMAGES
+========================= */
+
+img {
+  max-width: 100%;
+
+  display: block;
+}
+
+/* =========================
+      GLOBAL SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--yellow-brand);
+
+  border-radius: 20px;
+}
+
+/* =========================
+      COMMON DESIGN
+========================= */
+
+.brand-card {
+  background: var(--card-bg);
+
+  border: 1px solid var(--border-light);
+
+  border-radius: 24px;
+
+  transition: all 0.3s ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+  border-color: var(--yellow-brand);
+}
+
+.main-shadow {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+      BUTTON STYLE
+========================= */
+
+.btn-primary {
+  background: var(--yellow-brand);
+
+  color: #111;
+
+  font-weight: 800;
+
+  border-radius: 16px;
+
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #eab308;
+}
+
+.btn-buy {
+  background: var(--green-brand);
+
+  color: white;
+
+  font-weight: 800;
+
+  border-radius: 16px;
+}
+
+.btn-buy:hover {
+  background: #15803d;
+}
+
+.btn-contact {
+  background: var(--blue-brand);
+
+  color: white;
+
+  font-weight: 800;
+
+  border-radius: 16px;
+}
+
+.btn-sale {
+  background: var(--red-brand);
+
+  color: white;
+
+  font-weight: 800;
+
+  border-radius: 16px;
+}
+/* =========================
+   HEADER & FOOTER TEXT FIX
+========================= */
+
+/* جلوگیری از خراب شدن رنگ‌های Tailwind */
+header h1,
+header h2,
+header h3,
+header p,
+header span,
+header a,
+footer h1,
+footer h2,
+footer h3,
+footer p,
+footer span,
+footer a {
+  color: var;
+}
+
+/* برند هدر */
+header .text-yellow-400 {
+  color: #facc15 !important;
+}
+
+/* متن‌های سفید هدر */
+header .text-white {
+  color: #ffffff !important;
+}
+
+/* متن‌های فوتر */
+footer .text-white {
+  color: #ffffff !important;
+}
+
+footer .text-gray-300 {
+  color: #d1d5db !important;
+}
+
+footer .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+footer .text-yellow-400 {
+  color: #facc15 !important;
+}
+
+footer .text-green-400 {
+  color: #4ade80 !important;
+}
+
+
+
+/* =========================
+   SHAHRAM ROGHAN COLOR SYSTEM
+========================= */
+
+@layer base {
+
+  :root {
+
+    /* رنگ اصلی برند - زرد سمن شیمی */
+    --color-primary-900: 161, 98, 7;
+    --color-primary-800: 180, 110, 8;
+    --color-primary-700: 202, 138, 4;
+    --color-primary-600: 234, 179, 8;
+    --color-primary-500: 250, 204, 21;
+    --color-primary-400: 253, 224, 71;
+
+
+    /* رنگ صنعتی - مشکی و خاکستری */
+    --color-secondary-900: 17, 24, 39;
+    --color-secondary-800: 31, 41, 55;
+    --color-secondary-700: 55, 65, 81;
+    --color-secondary-600: 75, 85, 99;
+    --color-secondary-500: 107, 114, 128;
+    --color-secondary-400: 156, 163, 175;
+    --color-secondary-300: 209, 213, 219;
+    --color-secondary-200: 229, 231, 235;
+
+
+    /* رنگ عملکردی */
+    --color-success: 22, 163, 74;
+    --color-info: 37, 99, 235;
+    --color-warning: 245, 158, 11;
+    --color-error: 220, 38, 38;
+
+
+    /* پس زمینه */
+    --background-app-rgb: 248, 250, 252;
+
+  }
+
+}
+

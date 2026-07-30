@@ -85,9 +85,9 @@ function AdminOrders() {
 
           حجم: item.volume,
 
-          "نوع خرید": item.orderType === "carton" ? "کارتن" : "عدد",
+          "واحد خرید": item.orderType === "carton" ? "کارتن" : "عدد",
 
-          "نوع پرداخت": item.paymentType === "check" ? "چکی ۳ ماهه" : "نقدی",
+          "نوع پرداخت": item.paymentType === "check" ? "اعتباری" : "نقدی",
 
           تعداد: item.quantity,
 
@@ -156,8 +156,7 @@ function AdminOrders() {
         order.customer?.area?.toLowerCase().includes(text) ||
         productsText?.includes(text);
 
-      const statusMatch =
-        filterStatus === "همه" || order.status === filterStatus;
+      const statusMatch = filterStatus === "" || order.status === filterStatus;
 
       return searchMatch && statusMatch;
     })
@@ -210,7 +209,7 @@ function AdminOrders() {
         }
       });
 
-      // محاسبه مبلغ نقدی و چکی هر سفارش
+      // محاسبه مبلغ نقدی و اعتباری هر سفارش
       if (hasCash) {
         cashOrders++;
 
@@ -295,7 +294,7 @@ function AdminOrders() {
           </div>
 
           <div className="bg-blue-50 rounded-xl shadow p-5 text-center">
-            <p className="font-bold text-gray-600">📝 سفارش چکی</p>
+            <p className="font-bold text-gray-600">📝 سفارش اعتباری</p>
 
             <p className="text-3xl font-bold mt-3 text-blue-700">
               {dashboard.checkOrders}
@@ -437,7 +436,7 @@ function AdminOrders() {
                           </p>
 
                           <p className="mt-2">
-                            <b>نوع خرید:</b>{" "}
+                            <b>واحد خرید:</b>{" "}
                             {item.orderType === "carton" ? "کارتن" : "عدد"}
                           </p>
 
@@ -450,7 +449,7 @@ function AdminOrders() {
                           >
                             <b>پرداخت:</b>{" "}
                             {item.paymentType === "check"
-                              ? "📝 چکی ۳ ماهه"
+                              ? "📝 اعتباری"
                               : "💵 نقدی"}
                           </p>
 

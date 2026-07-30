@@ -74,9 +74,9 @@ function BasicInfo({ product, updateField }) {
       >
         <option value="">انتخاب برند</option>
 
-        {brands.map((brand) => (
-          <option key={brand} value={brand}>
-            {brand}
+        {brands.map((item) => (
+          <option key={item.name} value={item.name}>
+            {item.name}
           </option>
         ))}
       </select>

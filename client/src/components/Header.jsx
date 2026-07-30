@@ -1,143 +1,222 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState, useContext } from "react";
-
-import logo from "../assets/logo/1784245046047.jpg";
 import CartContext from "../context/CartContext";
-
+import menu from "../data/menu";
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { cartCount } = useContext(CartContext);
 
   const navClass = ({ isActive }) =>
-    isActive ? "text-yellow-400 font-bold" : "hover:text-yellow-400 transition";
+    isActive
+      ? "text-yellow-400 font-bold"
+      : "text-gray-200 hover:text-yellow-400 transition";
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="bg-black text-white shadow-lg" dir="rtl">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
+    <header
+      className="
+      bg-gray-950
+      sticky top-0
+      z-50
+      shadow-lg
+      border-b
+      border-gray-800
+      "
+      dir="rtl"
+    >
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div
+          className="
+        h-20
+        flex
+        items-center
+        justify-between
+        "
+        >
+          {/* BRAND */}
 
-          <Link
-            to="/"
-            className="flex items-center gap-3 text-xl md:text-2xl font-bold text-yellow-400"
-          >
-            <img
-              src={logo}
-              alt="روغن موتور شهرام"
-              className="w-14 h-14 object-contain"
-            />
+          <Link to="/" className="flex items-center gap-3">
+            <div
+              className="
+              w-12
+              h-12
+              rounded-xl
+              bg-yellow-400
+              text-black
+              flex
+              items-center
+              justify-center
+              font-black
+              text-2xl
+              shadow
+              "
+            >
+              ش
+            </div>
 
-            <span>روغن موتور شهرام</span>
+            <div>
+              <h1
+                className="
+                text-yellow-400
+                text-xl
+                md:text-2xl
+                font-black
+                "
+              >
+                شهرام روغن
+              </h1>
+
+              <p className="text-gray-400 text-xs">shahram_roghan</p>
+            </div>
           </Link>
 
-          {/* Cart Button */}
+          {/* MENU */}
 
-          <Link
-            to="/cart"
-            className="relative bg-yellow-400 text-black px-4 py-2 rounded-lg font-bold mr-auto ml-5"
-          >
-            🛒 سبد خرید
-            {cartCount > 0 && (
-              <span className="absolute -top-3 -right-3 bg-red-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-sm">
-                {cartCount}
-              </span>
-            )}
-          </Link>
+          {menu.map((item) => (
+            <Link key={item.path} to={item.path} className="font-bold">
+              {item.title}
+            </Link>
+          ))}
 
-          {/* Desktop Menu */}
+          {/* ACTIONS */}
 
-          <nav className="hidden md:block">
-            <ul className="flex items-center gap-6">
-              <li>
-                <NavLink to="/" end className={navClass}>
-                  خانه
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/products" className={navClass}>
-                  محصولات
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/brands" className={navClass}>
-                  برندها
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/viscosity" className={navClass}>
-                  گرید روغن
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/about" className={navClass}>
-                  درباره ما
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/contact" className={navClass}>
-                  تماس
-                </NavLink>
-              </li>
-
-              <li>
-                <a
-                  href="https://wa.me/989198334264"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition"
+          <div className="flex items-center gap-2">
+            <Link
+              to="/cart"
+              className="
+              relative
+              bg-yellow-400
+              text-black
+              px-4
+              py-2.5
+              rounded-xl
+              font-bold
+              hover:bg-yellow-300
+              transition
+              "
+            >
+              🛒
+              {cartCount > 0 && (
+                <span
+                  className="
+                  absolute
+                  -top-2
+                  -left-2
+                  bg-red-600
+                  text-white
+                  w-6
+                  h-6
+                  rounded-full
+                  text-xs
+                  flex
+                  items-center
+                  justify-center
+                  "
                 >
-                  واتساپ
-                </a>
-              </li>
-            </ul>
-          </nav>
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
-          {/* Mobile Button */}
+            <a
+              href="https://wa.me/989198334264"
+              target="_blank"
+              rel="noreferrer"
+              className="
+              hidden
+              md:flex
+              bg-green-600
+              hover:bg-green-700
+              text-white
+              px-4
+              py-2.5
+              rounded-xl
+              font-bold
+              "
+            >
+              💬
+            </a>
 
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-3xl"
-          >
-            {menuOpen ? "✕" : "☰"}
-          </button>
+            <a
+              href="tel:09198334264"
+              className="
+              hidden
+              md:flex
+              bg-blue-600
+              hover:bg-blue-700
+              text-white
+              px-4
+              py-2.5
+              rounded-xl
+              font-bold
+              "
+            >
+              📞
+            </a>
+
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="
+              lg:hidden
+              text-white
+              text-3xl
+              "
+            >
+              {menuOpen ? "✕" : "☰"}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu */}
-
         {menuOpen && (
-          <nav className="md:hidden mt-5 bg-gray-900 rounded-xl p-4">
-            <ul className="flex flex-col gap-4 text-center">
-              <li>
-                <Link to="/" onClick={() => setMenuOpen(false)}>
-                  خانه
-                </Link>
-              </li>
+          <div
+            className="
+            lg:hidden
+            bg-gray-900
+            rounded-2xl
+            p-5
+            mb-4
+            "
+          >
+            <ul
+              className="
+            flex
+            flex-col
+            gap-4
+            text-center
+            font-bold
+            "
+            >
+              {menu.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    to={item.path}
+                    onClick={closeMenu}
+                    className="text-gray-200 hover:text-yellow-400"
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
 
               <li>
-                <Link to="/products" onClick={() => setMenuOpen(false)}>
-                  محصولات
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/cart" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to="/cart"
+                  onClick={closeMenu}
+                  className="
+                  block
+                  bg-yellow-400
+                  text-black
+                  py-3
+                  rounded-xl
+                  "
+                >
                   🛒 سبد خرید ({cartCount})
                 </Link>
               </li>
-
-              <li>
-                <Link to="/contact" onClick={() => setMenuOpen(false)}>
-                  تماس
-                </Link>
-              </li>
             </ul>
-          </nav>
+          </div>
         )}
       </div>
     </header>

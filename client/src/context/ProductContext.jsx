@@ -1,25 +1,21 @@
 import { createContext, useState, useEffect } from "react";
+import createProduct from "../models/createProduct";
 import productsData from "../data/products";
+
+import { getProducts, saveProducts } from "../services/productStorage";
 
 const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState(() => {
-    const savedProducts = localStorage.getItem("products");
+    const savedProducts = getProducts();
 
-    return savedProducts ? JSON.parse(savedProducts) : productsData;
+    return savedProducts ? savedProducts : productsData;
   });
-
   function addProduct(product) {
-    setProducts((prevProducts) => [
-      ...prevProducts,
+    const newProduct = createProduct(product);
 
-      {
-        ...product,
-        id: Date.now(),
-        stock: product.stock || 0,
-      },
-    ]);
+    setProducts((prev) => [...prev, newProduct]);
   }
 
   function deleteProduct(id) {
@@ -32,25 +28,22 @@ export function ProductProvider({ children }) {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
         product.id === id
-          ? {
+          ? createProduct({
               ...product,
               ...updatedProduct,
-            }
+              id: product.id,
+            })
           : product,
       ),
     );
   }
 
-  // بازنشانی محصولات از فایل اصلی
-
   function resetProducts() {
     setProducts(productsData);
-
-    localStorage.setItem("products", JSON.stringify(productsData));
   }
 
   useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(products));
+    saveProducts(products);
   }, [products]);
 
   return (

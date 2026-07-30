@@ -108,7 +108,7 @@ function OrderForm({ product }) {
       >
         <option>نقدی</option>
 
-        <option>چک</option>
+        <option>اعتباری</option>
 
         <option>کارت به کارت</option>
       </select>

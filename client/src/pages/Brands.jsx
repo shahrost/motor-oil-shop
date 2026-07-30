@@ -1,14 +1,25 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+
 import ProductContext from "../context/ProductContext";
 
 function Brands() {
   const { products } = useContext(ProductContext);
 
-  const brands = [...new Set(products.map((product) => product.brand))];
+  const brands = [
+    ...new Set(
+      products
+        .map((product) =>
+          typeof product.brand === "object"
+            ? product.brand.name
+            : product.brand,
+        )
+        .filter(Boolean),
+    ),
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 md:p-10">
+    <div className="min-h-screen bg-gray-100 p-6 md:p-10" dir="rtl">
       <h1 className="text-4xl font-bold text-center">برندهای روغن موتور</h1>
 
       <p className="text-center mt-3 text-gray-600">انتخاب برند مورد نظر</p>
@@ -18,7 +29,17 @@ function Brands() {
           <Link
             key={brand}
             to={`/brand/${brand}`}
-            className="bg-white p-8 rounded-xl shadow text-center text-2xl font-bold hover:bg-yellow-400 transition"
+            className="
+            bg-white
+            p-8
+            rounded-xl
+            shadow
+            text-center
+            text-2xl
+            font-bold
+            hover:bg-yellow-400
+            transition
+            "
           >
             {brand}
           </Link>
