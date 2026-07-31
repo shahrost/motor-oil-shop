@@ -6,8 +6,20 @@ import api from "../../data/productOptions/api";
 import acea from "../../data/productOptions/acea";
 
 function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
+  function handleImageChange(e) {
+    handleEditChange({
+      target: {
+        name: "image",
+        value: {
+          main: e.target.value,
+          gallery: editForm.image?.gallery || [],
+        },
+      },
+    });
+  }
+
   return (
-    <div className="bg-white p-6 rounded-xl shadow mt-8">
+    <div className="bg-white p-6 rounded-xl shadow mt-8" dir="rtl">
       <h2 className="text-2xl font-bold mb-5">ویرایش محصول</h2>
 
       <select
@@ -125,12 +137,21 @@ function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
       />
 
       <input
-        name="image"
-        value={editForm.image || ""}
-        onChange={handleEditChange}
-        placeholder="مسیر تصویر"
+        value={editForm.image?.main || ""}
+        onChange={handleImageChange}
+        placeholder="مسیر تصویر اصلی"
         className="border p-3 w-full rounded mb-3"
       />
+
+      {editForm.image?.main && (
+        <div className="bg-gray-100 rounded-xl p-4 mb-3 flex justify-center">
+          <img
+            src={editForm.image.main}
+            alt={editForm.name}
+            className="w-40 h-40 object-contain"
+          />
+        </div>
+      )}
 
       <textarea
         name="description"

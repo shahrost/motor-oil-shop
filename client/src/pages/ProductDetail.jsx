@@ -59,12 +59,27 @@ function ProductDetail() {
         <div className="grid md:grid-cols-2 gap-10">
           {/* عکس */}
 
-          <div className="bg-gray-50 rounded-3xl p-5 flex items-center justify-center">
-            <img
-              src={product.image?.main || ""}
-              alt={product.name}
-              className="w-full h-80 object-contain hover:scale-105 transition"
-            />
+          <div>
+            <div className="bg-gray-50 rounded-3xl p-5 flex items-center justify-center">
+              <img
+                src={product.image?.main || ""}
+                alt={product.name}
+                className="w-full h-80 object-contain hover:scale-105 transition"
+              />
+            </div>
+
+            {product.image?.gallery?.length > 0 && (
+              <div className="flex gap-3 mt-4 overflow-x-auto">
+                {product.image.gallery.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`${product.name}-${index}`}
+                    className="w-24 h-24 object-contain border rounded-xl cursor-pointer hover:scale-105 transition"
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* اطلاعات */}
@@ -86,6 +101,17 @@ function ProductDetail() {
               <p>
                 <b className="text-green-700">حجم:</b> {product.volume}
               </p>
+              <p>
+                <b className="text-green-700">API:</b> {product.api}
+              </p>
+
+              <p>
+                <b className="text-green-700">ACEA:</b> {product.acea}
+              </p>
+
+              <p>
+                <b className="text-green-700">نوع روغن:</b> {product.oilType}
+              </p>
             </div>
 
             <div className="mt-6">
@@ -97,6 +123,15 @@ function ProductDetail() {
                 🟢 موجود
               </span>
             </div>
+            {product.description && (
+              <div className="mt-6 bg-gray-50 rounded-2xl p-5">
+                <h3 className="font-bold text-lg mb-3">توضیحات محصول</h3>
+
+                <p className="leading-8 text-gray-700 whitespace-pre-line">
+                  {product.description}
+                </p>
+              </div>
+            )}
 
             {/* خرید */}
 

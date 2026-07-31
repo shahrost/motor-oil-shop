@@ -58,9 +58,9 @@ function Products() {
       result = result.filter((product) => product.volume === volume);
     }
 
-    if (onlyAvailable) {
-      result = result.filter((product) => product.stock !== 0);
-    }
+    // if (onlyAvailable) {
+    //   result = result.filter((product) => product.stock !== 0);
+    // }
 
     if (sort === "cheap") {
       result.sort((a, b) => Number(a.price) - Number(b.price));

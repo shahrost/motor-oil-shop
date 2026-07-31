@@ -25,15 +25,15 @@ function OrderList() {
           >
             <div className="grid md:grid-cols-2 gap-3">
               <p>
-                <b>نام مشتری:</b> {order.customerName}
+                <b>نام مشتری:</b> {order.customer.Name}
               </p>
 
               <p>
-                <b>شماره تماس:</b> {order.phone}
+                <b>شماره تماس:</b> {order.customer.phone}
               </p>
 
               <p>
-                <b>شهر:</b> {order.city}
+                <b>شهر:</b> {order.customer.area}
               </p>
 
               <p>

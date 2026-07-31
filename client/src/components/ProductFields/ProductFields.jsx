@@ -5,6 +5,8 @@ import viscosities from "../../data/productOptions/viscosities";
 import api from "../../data/productOptions/api";
 import acea from "../../data/productOptions/acea";
 
+import ImageUploader from "../ProductForm/ImageUploader";
+
 function ProductFields({ product, updateField }) {
   return (
     <>
@@ -130,17 +132,7 @@ function ProductFields({ product, updateField }) {
         className="border p-3 w-full rounded-lg mb-3"
       />
 
-      <input
-        name="image"
-        placeholder="آدرس تصویر"
-        value={product.image?.main || ""}
-        onChange={(e) =>
-          updateField("image", {
-            main: e.target.value,
-            gallery: product.image?.gallery || [],
-          })
-        }
-      />
+      <ImageUploader product={product} updateField={updateField} />
     </>
   );
 }

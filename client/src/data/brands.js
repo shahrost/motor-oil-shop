@@ -15,55 +15,55 @@ const brands = [
   },
   {
     name: "بهتام",
-    image:brandImages. behtam,
+    image: brandImages.behtam,
   },
   {
     name: "توتال",
-    image:brandImages. total,
+    image: brandImages.total,
   },
   {
     name: "ایدلوب",
-    image:brandImages. aidlube,
+    image: brandImages.aidlube,
   },
   {
     name: "لوکینی",
-    image:brandImages. lookini,
+    image: brandImages.lookini,
   },
   {
     name: "ووفر",
-    image:brandImages. woofer,
+    image: brandImages.woofer,
   },
   {
     name: "فیلتر لوکومبیل",
-    image:brandImages. locomobil,
+    image: brandImages.locomobil,
   },
   {
     name: "فیلتر میهن",
-    image:brandImages. mihan,
+    image: brandImages.mihan,
   },
   {
     name: "فیلتر گیربکس ATFO",
-    image:brandImages. atfo,
+    image: brandImages.atfo,
   },
   {
     name: "بهران",
-    image:brandImages. behran,
+    image: brandImages.behran,
   },
   {
     name: "ایرانول",
-    image:brandImages. iranol,
+    image: brandImages.iranol,
   },
   {
     name: "پارس",
-    image:brandImages. pars,
+    image: brandImages.pars,
   },
   {
     name: "کاسپین",
-    image:brandImages. caspian,
+    image: brandImages.caspian,
   },
   {
     name: "سرکان",
-    image:brandImages. serkan,
+    image: brandImages.serkan,
   },
 ];
 

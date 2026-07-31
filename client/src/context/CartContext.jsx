@@ -6,7 +6,24 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
 
-    return savedCart ? JSON.parse(savedCart) : [];
+    if (!savedCart) return [];
+
+    const parsedCart = JSON.parse(savedCart);
+
+    return parsedCart.map((item) => ({
+      ...item,
+
+      image:
+        typeof item.image === "string"
+          ? {
+              main: item.image,
+              gallery: [],
+            }
+          : {
+              main: item.image?.main || "",
+              gallery: item.image?.gallery || [],
+            },
+    }));
   });
 
   useEffect(() => {

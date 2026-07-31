@@ -1,8 +1,8 @@
-
 import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
 import formatPrice from "../utils/formatPrice";
 import { Link } from "react-router-dom";
+import OrderContext from "../context/OrderContext";
 
 function Order() {
   const {
@@ -12,7 +12,10 @@ function Order() {
     changePaymentType,
     changeAllPaymentType,
     cartTotal,
+    clearCart,
   } = useContext(CartContext);
+
+  const { addOrder } = useContext(OrderContext);
 
   const [customer, setCustomer] = useState({
     name: "",
@@ -92,9 +95,8 @@ function Order() {
       date: new Date().toLocaleString("fa-IR"),
     };
 
-    const oldOrders = JSON.parse(localStorage.getItem("orders")) || [];
-
-    localStorage.setItem("orders", JSON.stringify([...oldOrders, order]));
+    addOrder(order);
+    clearCart();
 
     setSubmitted(true);
   }

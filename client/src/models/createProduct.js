@@ -8,6 +8,10 @@ function createProduct(data = {}) {
 
     id: data.id ?? Date.now(),
 
+    name:
+      data.name ||
+      `${data.brand || ""} ${data.viscosity || ""} ${data.volume || ""}`.trim(),
+
     price: Number(data.price || 0),
 
     cartonCount: Number(data.cartonCount || 0),

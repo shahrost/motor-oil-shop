@@ -13,8 +13,11 @@ export function ProductProvider({ children }) {
   const [products, setProducts] = useState(() => {
     const savedProducts = getProducts();
 
-    return savedProducts || [];
+    if (!savedProducts) return [];
+
+    return savedProducts.map((product) => createProduct(product));
   });
+
   function addProduct(product) {
     const newProduct = createProduct(product);
 
@@ -54,13 +57,9 @@ export function ProductProvider({ children }) {
     <ProductContext.Provider
       value={{
         products,
-
         addProduct,
-
         deleteProduct,
-
         updateProduct,
-
         resetProducts,
       }}
     >
