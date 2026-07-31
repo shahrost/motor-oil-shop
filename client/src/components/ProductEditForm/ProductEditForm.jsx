@@ -163,6 +163,7 @@ function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
 
       <div className="flex gap-3">
         <button
+          type="button"
           onClick={saveEdit}
           className="bg-green-600 text-white px-6 py-3 rounded-lg"
         >
@@ -170,6 +171,7 @@ function ProductEditForm({ editForm, handleEditChange, saveEdit, cancelEdit }) {
         </button>
 
         <button
+          type="button"
           onClick={cancelEdit}
           className="bg-gray-500 text-white px-6 py-3 rounded-lg"
         >

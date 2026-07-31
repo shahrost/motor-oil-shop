@@ -147,15 +147,24 @@ function ProductCard({ product }) {
               type="number"
               min="1"
               value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+
+                if (value === "") {
+                  setQuantity("");
+                  return;
+                }
+
+                setQuantity(Math.max(1, Number(value)));
+              }}
               className="
-              w-full
-              h-10
-              border
-              rounded-lg
-              px-2
-              text-sm
-              "
+    w-full
+    h-10
+    border
+    rounded-lg
+    px-2
+    text-sm
+  "
             />
           </div>
 

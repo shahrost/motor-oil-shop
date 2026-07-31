@@ -1,26 +1,30 @@
 import { useState } from "react";
-
+import ImageSelector from "./ImageSelector";
 import ProductFields from "../ProductFields/ProductFields";
-
-import createProduct from "../../models/createProduct";
 import ImageUploader from "./ImageUploader";
 
-function ProductForm({ addProduct }) {
-  const initialState = {
-    brand: "",
-    category: "",
-    volume: "",
-    viscosity: "",
-    api: "",
-    acea: "",
-    oilType: "",
-    description: "",
-    price: "",
-    cartonCount: "",
-    image: "",
-  };
+import createProduct from "../../models/createProduct";
 
+const initialState = {
+  brand: "",
+  category: "",
+  volume: "",
+  viscosity: "",
+  api: "",
+  acea: "",
+  oilType: "",
+  description: "",
+  price: "",
+  cartonCount: "",
+  image: {
+    main: "",
+    gallery: [],
+  },
+};
+
+function ProductForm({ addProduct }) {
   const [product, setProduct] = useState(initialState);
+
   function updateField(name, value) {
     let newValue = value;
 
@@ -30,6 +34,7 @@ function ProductForm({ addProduct }) {
 
     setProduct((prev) => ({
       ...prev,
+
       [name]: newValue,
     }));
   }
@@ -37,11 +42,7 @@ function ProductForm({ addProduct }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const finalProduct = createProduct({
-      ...product,
-
-      name: `${product.brand} ${product.viscosity} ${product.volume}`,
-    });
+    const finalProduct = createProduct(product);
 
     addProduct(finalProduct);
 
@@ -57,11 +58,9 @@ function ProductForm({ addProduct }) {
       dir="rtl"
     >
       <h2 className="text-2xl font-bold mb-5">افزودن محصول جدید</h2>
-
       <ProductFields product={product} updateField={updateField} />
-
+      <ImageSelector product={product} updateField={updateField} />{" "}
       <ImageUploader product={product} updateField={updateField} />
-
       <button
         type="submit"
         className="bg-green-600 text-white px-6 py-3 rounded-lg"

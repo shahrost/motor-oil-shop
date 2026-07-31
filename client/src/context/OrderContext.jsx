@@ -1,54 +1,88 @@
 import { createContext, useState, useEffect } from "react";
 
+import {
+  fetchOrders,
+  createOrder,
+  updateOrderStatusService,
+  deleteOrderService,
+} from "../services/orderService";
+
 const OrderContext = createContext();
 
 export function OrderProvider({ children }) {
-  const [orders, setOrders] = useState(() => {
-    const saved = localStorage.getItem("orders");
+  const [orders, setOrders] = useState([]);
 
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  function addOrder(order) {
-    setOrders((prev) => [
-      ...prev,
-
-      {
-        ...order,
-        id: Date.now(),
-        status: "جدید",
-        date: new Date().toLocaleDateString("fa-IR"),
-      },
-    ]);
-  }
-
-  function updateOrderStatus(id, status) {
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === id
-          ? {
-              ...order,
-              status,
-            }
-          : order,
-      ),
-    );
-  }
-
-  function deleteOrder(id) {
-    setOrders((prev) => prev.filter((order) => order.id !== id));
-  }
+  // دریافت سفارش‌ها
 
   useEffect(() => {
-    localStorage.setItem("orders", JSON.stringify(orders));
-  }, [orders]);
+    async function loadOrders() {
+      try {
+        const data = await fetchOrders();
+
+        setOrders(data);
+      } catch (error) {
+        console.log("خطا در دریافت سفارش‌ها", error);
+      }
+    }
+
+    loadOrders();
+  }, []);
+
+  // ثبت سفارش جدید
+
+  async function addOrder(order) {
+    const newOrder = {
+      ...order,
+
+      status: "جدید",
+
+      date: new Date().toLocaleDateString("fa-IR"),
+    };
+
+    try {
+      const savedOrder = await createOrder(newOrder);
+
+      setOrders((prev) => [...prev, savedOrder]);
+    } catch (error) {
+      console.log("خطا در ثبت سفارش", error);
+    }
+  }
+
+  // تغییر وضعیت سفارش
+
+  async function updateOrderStatus(id, status) {
+    try {
+      const updated = await updateOrderStatusService(id, status);
+
+      setOrders((prev) =>
+        prev.map((order) => (order.id === id ? updated : order)),
+      );
+    } catch (error) {
+      console.log("خطا در تغییر وضعیت", error);
+    }
+  }
+
+  // حذف سفارش
+
+  async function deleteOrder(id) {
+    try {
+      await deleteOrderService(id);
+
+      setOrders((prev) => prev.filter((order) => order.id !== id));
+    } catch (error) {
+      console.log("خطا در حذف سفارش", error);
+    }
+  }
 
   return (
     <OrderContext.Provider
       value={{
         orders,
+
         addOrder,
+
         updateOrderStatus,
+
         deleteOrder,
       }}
     >
