@@ -18,7 +18,7 @@ export function OrderProvider({ children }) {
     async function loadOrders() {
       try {
         const data = await fetchOrders();
-
+console.log("ORDERS FROM API:", data);
         setOrders(data);
       } catch (error) {
         console.log("خطا در دریافت سفارش‌ها", error);

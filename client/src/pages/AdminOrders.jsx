@@ -1,12 +1,12 @@
 import * as XLSX from "xlsx";
-import { useEffect, useState, useMemo } from "react";
+import { useContext, useState, useMemo } from "react";
+import OrderContext from "../context/OrderContext";
 
 function AdminOrders() {
-  const [orders, setOrders] = useState([]);
-
   const [search, setSearch] = useState("");
 
   const [filterStatus, setFilterStatus] = useState("همه");
+  const { orders, updateOrderStatus, deleteOrder } = useContext(OrderContext);
 
   const statuses = [
     "جدید",
@@ -15,44 +15,6 @@ function AdminOrders() {
     "ارسال شد",
     "تحویل شد",
   ];
-
-  useEffect(() => {
-    const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
-
-    const updatedOrders = savedOrders.map((order) => ({
-      ...order,
-
-      status: order.status || "جدید",
-
-      items: order.items || [
-        {
-          productName: order.productName,
-          brand: order.brand,
-          viscosity: order.viscosity,
-          volume: order.volume,
-          quantity: order.quantity,
-          orderType: order.orderType,
-          paymentType: order.paymentType,
-          totalCount: order.totalCount,
-          price: order.price,
-        },
-      ],
-    }));
-
-    setOrders(updatedOrders);
-  }, []);
-
-  function saveOrders(newOrders) {
-    setOrders(newOrders);
-
-    localStorage.setItem("orders", JSON.stringify(newOrders));
-  }
-
-  function deleteOrder(id) {
-    const newOrders = orders.filter((order) => order.id !== id);
-
-    saveOrders(newOrders);
-  }
 
   function exportOrders() {
     if (orders.length === 0) {
@@ -112,20 +74,6 @@ function AdminOrders() {
 
     XLSX.writeFile(workbook, "orders.xlsx");
   }
-  function changeStatus(id, status) {
-    const newOrders = orders.map((order) => {
-      if (order.id === id) {
-        return {
-          ...order,
-          status,
-        };
-      }
-
-      return order;
-    });
-
-    saveOrders(newOrders);
-  }
 
   function statusColor(status) {
     if (status === "جدید") return "bg-yellow-200";
@@ -156,8 +104,8 @@ function AdminOrders() {
         order.customer?.area?.toLowerCase().includes(text) ||
         productsText?.includes(text);
 
-      const statusMatch = filterStatus === "" || order.status === filterStatus;
-
+      const statusMatch =
+        filterStatus === "همه" || order.status === filterStatus;
       return searchMatch && statusMatch;
     })
     .reverse();
@@ -373,7 +321,9 @@ function AdminOrders() {
 
                   <select
                     value={order.status}
-                    onChange={(e) => changeStatus(order.id, e.target.value)}
+                    onChange={(e) =>
+                      updateOrderStatus(order.id, e.target.value)
+                    }
                     className="mr-3 p-2 rounded-lg border"
                   >
                     {statuses.map((status) => (
