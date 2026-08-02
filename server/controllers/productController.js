@@ -3,90 +3,87 @@ const {
   saveProducts,
 } = require("../repositories/productRepository");
 
-// خواندن محصولات از فایل JSON
-
-// ذخیره محصولات داخل JSON
+const Product = require("../models/Product");
 
 // دریافت همه محصولات
-function getProducts(req, res) {
-  const products = getAllProducts();
+async function getProducts(req, res) {
+  try {
+    const products = await getAllProducts();
 
-  res.json(products);
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // ساخت محصول جدید
-function createProduct(req, res) {
-  const products = getAllProducts();
+async function createProduct(req, res) {
+  try {
+    const newProduct = await Product.create(req.body);
 
-  const newProduct = {
-    id: Date.now(),
-
-    ...req.body,
-  };
-
-  products.push(newProduct);
-
-  saveProducts(products);
-
-  res.status(201).json(newProduct);
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // ویرایش محصول
-function updateProduct(req, res) {
-  const products = getAllProducts();
+async function updateProduct(req, res) {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      },
+    );
 
-  const id = Number(req.params.id);
-
-  const updatedProducts = products.map((product) => {
-    if (product.id === id) {
-      return {
-        ...product,
-        ...req.body,
-      };
-    }
-
-    return product;
-  });
-
-  saveProducts(updatedProducts);
-
-  const updatedProduct = updatedProducts.find((product) => product.id === id);
-
-  res.json(updatedProduct);
+    res.json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // حذف یک محصول
-function deleteProduct(req, res) {
-  const products = getAllProducts();
+async function deleteProduct(req, res) {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
 
-  const id = Number(req.params.id);
-
-  const filteredProducts = products.filter((product) => product.id !== id);
-
-  saveProducts(filteredProducts);
-
-  res.json({
-    message: "Product deleted",
-  });
+    res.json({
+      message: "Product deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // حذف همه محصولات
-function deleteAllProducts(req, res) {
-  saveProducts([]);
+async function deleteAllProducts(req, res) {
+  try {
+    await Product.deleteMany({});
 
-  res.json({
-    message: "All products deleted",
-  });
+    res.json({
+      message: "All products deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 module.exports = {
   getProducts,
-
   createProduct,
-
   updateProduct,
-
   deleteProduct,
-
   deleteAllProducts,
 };

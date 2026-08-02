@@ -7,7 +7,8 @@ import AdminOrders from "./pages/AdminOrders";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -26,10 +27,24 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/admin/orders" element={<AdminOrders />} />
-
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute>
+              <AdminOrders />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/" element={<Home />} />
 
         <Route path="/products" element={<Products />} />

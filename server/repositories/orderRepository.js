@@ -1,15 +1,13 @@
-const fs = require("fs");
-const path = require("path");
+const Order = require("../models/Order");
 
-const filePath = path.join(__dirname, "../data/orders.json");
-
-function getAllOrders() {
-  const data = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(data);
+// دریافت همه سفارش‌ها
+async function getAllOrders() {
+  return await Order.find();
 }
 
-function saveOrders(orders) {
-  fs.writeFileSync(filePath, JSON.stringify(orders, null, 2));
+// ذخیره سفارش‌ها
+async function saveOrders(orders) {
+  return await Order.insertMany(orders);
 }
 
 module.exports = {

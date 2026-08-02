@@ -1,15 +1,13 @@
-const fs = require("fs");
-const path = require("path");
+const Product = require("../models/Product");
 
-const filePath = path.join(__dirname, "../data/products.json");
-
-function getAllProducts() {
-  const data = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(data);
+// دریافت همه محصولات
+async function getAllProducts() {
+  return await Product.find();
 }
 
-function saveProducts(products) {
-  fs.writeFileSync(filePath, JSON.stringify(products, null, 2));
+// ذخیره محصولات
+async function saveProducts(products) {
+  return await Product.insertMany(products);
 }
 
 module.exports = {
