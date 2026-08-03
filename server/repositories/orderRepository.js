@@ -1,16 +1,11 @@
 const Order = require("../models/Order");
 
-// دریافت همه سفارش‌ها
 async function getAllOrders() {
-  return await Order.find();
-}
-
-// ذخیره سفارش‌ها
-async function saveOrders(orders) {
-  return await Order.insertMany(orders);
+  return await Order.find().sort({
+    createdAt: -1,
+  });
 }
 
 module.exports = {
   getAllOrders,
-  saveOrders,
 };

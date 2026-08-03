@@ -1,10 +1,10 @@
 require("dotenv").config();
 
-const connectDB = require("./config/db");
+const connectDB = require("../config/db");
 
-const Product = require("./models/Product");
+const Product = require("../models/Product");
 
-let products = require("./data/products.json");
+let products = require("../data/products.json");
 
 products = products.filter((product) => product.name && product.brand);
 async function importProducts() {

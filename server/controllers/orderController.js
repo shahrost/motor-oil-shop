@@ -1,87 +1,94 @@
-const { getAllOrders, saveOrders } = require("../repositories/orderRepository");
+const { getAllOrders } = require("../repositories/orderRepository");
+
+const Order = require("../models/Order");
 
 // دریافت همه سفارش‌ها
-function getOrders(req, res) {
-  const orders = getAllOrders();
+async function getOrders(req, res) {
+  try {
+    const orders = await getAllOrders();
 
-  res.json(orders);
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // ثبت سفارش جدید
-function createOrder(req, res) {
-  console.log("ORDER BODY:", req.body);
-  const orders = getAllOrders();
+async function createOrder(req, res) {
+  try {
+    console.log("MONGO ORDER CONTROLLER ACTIVE");
 
-  const newOrder = {
-    id: Date.now(),
+    const newOrder = await Order.create({
+      ...req.body,
+    });
 
-    ...req.body,
-  };
-
-  orders.push(newOrder);
-
-  saveOrders(orders);
-
-  res.status(201).json(newOrder);
+    res.status(201).json(newOrder);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // تغییر وضعیت سفارش
-function updateOrderStatus(req, res) {
-  const orders = getAllOrders();
+async function updateOrderStatus(req, res) {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
 
-  const id = Number(req.params.id);
-
-  const updatedOrders = orders.map((order) => {
-    if (order.id === id) {
-      return {
-        ...order,
-
+      {
         status: req.body.status,
-      };
-    }
+      },
 
-    return order;
-  });
+      {
+        new: true,
+      },
+    );
 
-  saveOrders(updatedOrders);
-
-  const updatedOrder = updatedOrders.find((order) => order.id === id);
-
-  res.json(updatedOrder);
+    res.json(updatedOrder);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // حذف یک سفارش
-function deleteOrder(req, res) {
-  const orders = getAllOrders();
+async function deleteOrder(req, res) {
+  try {
+    await Order.findByIdAndDelete(req.params.id);
 
-  const id = Number(req.params.id);
-
-  const filteredOrders = orders.filter((order) => order.id !== id);
-
-  saveOrders(filteredOrders);
-
-  res.json({
-    message: "Order deleted",
-  });
+    res.json({
+      message: "Order deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 // حذف همه سفارش‌ها
-function deleteAllOrders(req, res) {
-  saveOrders([]);
+async function deleteAllOrders(req, res) {
+  try {
+    await Order.deleteMany({});
 
-  res.json({
-    message: "All orders deleted",
-  });
+    res.json({
+      message: "All orders deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 module.exports = {
   getOrders,
-
   createOrder,
-
   updateOrderStatus,
-
   deleteOrder,
-
   deleteAllOrders,
 };
