@@ -57,12 +57,8 @@ async function deleteAllOrders(req, res, next) {
 
 module.exports = {
   getOrders,
-
   createOrder,
-
   updateOrderStatus,
-
   deleteOrder,
-
   deleteAllOrders,
 };
