@@ -30,14 +30,10 @@ const productModel = {
     gallery: [],
   },
 
-  // آینده
-  supplier: "",
-
-  warranty: "",
-
   tags: [],
 
   isBestSeller: false,
+  isActive: true,
 };
 
 export default productModel;

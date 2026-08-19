@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema(
   {
+    id: {
+      type: String,
+
+      required: true,
+
+      unique: true,
+    },
+
     customer: {
       name: {
         type: String,
@@ -15,54 +23,94 @@ const OrderSchema = new mongoose.Schema(
 
       area: {
         type: String,
+        default: "",
       },
 
       address: {
         type: String,
+        default: "",
       },
     },
 
     items: [
       {
-        productId: Number,
+        productId: {
+          type: String,
+          default: "",
+        },
 
-        productName: String,
+        productName: {
+          type: String,
+          default: "",
+        },
 
-        brand: String,
+        brand: {
+          type: String,
+          default: "",
+        },
 
-        viscosity: String,
+        viscosity: {
+          type: String,
+          default: "",
+        },
 
-        volume: String,
+        volume: {
+          type: String,
+          default: "",
+        },
 
-        orderType: String,
+        orderType: {
+          type: String,
+          default: "",
+        },
 
-        paymentType: String,
+        paymentType: {
+          type: String,
+          default: "",
+        },
 
-        quantity: Number,
+        quantity: {
+          type: Number,
+          default: 0,
+        },
 
-        totalCount: Number,
+        totalCount: {
+          type: Number,
+          default: 0,
+        },
 
-        price: Number,
+        price: {
+          type: Number,
+          default: 0,
+        },
       },
     ],
 
     totalPrice: {
       type: Number,
+
       default: 0,
     },
 
     status: {
       type: String,
+
       default: "جدید",
+
+      index: true,
     },
 
     date: {
       type: String,
+
+      default: "",
     },
   },
 
   {
     timestamps: true,
+
+    versionKey: false,
   },
 );
 

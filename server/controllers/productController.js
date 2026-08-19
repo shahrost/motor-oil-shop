@@ -1,89 +1,68 @@
-const {
-  getAllProducts,
-  saveProducts,
-} = require("../repositories/productRepository");
+const productService = require("../services/productService");
+const apiResponse = require("../utils/apiResponse");
 
-const Product = require("../models/Product");
-
-// دریافت همه محصولات
-async function getProducts(req, res) {
+async function getProducts(req, res, next) {
   try {
-    const products = await getAllProducts();
+    const products = await productService.getProducts();
 
-    res.json(products);
+    return apiResponse.success(res, products);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    next(error);
   }
 }
 
-// ساخت محصول جدید
-async function createProduct(req, res) {
+async function createProduct(req, res, next) {
   try {
-    const newProduct = await Product.create(req.body);
+    const product = await productService.createProduct(req.body, req.file);
 
-    res.status(201).json(newProduct);
+    return apiResponse.created(res, product);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    next(error);
   }
 }
 
-// ویرایش محصول
-async function updateProduct(req, res) {
+async function updateProduct(req, res, next) {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const product = await productService.updateProduct(
       req.params.id,
       req.body,
-      {
-        new: true,
-      },
+      req.file,
     );
 
-    res.json(updatedProduct);
+    return apiResponse.success(res, product);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    next(error);
   }
 }
 
-// حذف یک محصول
-async function deleteProduct(req, res) {
+async function deleteProduct(req, res, next) {
   try {
-    await Product.findByIdAndDelete(req.params.id);
+    await productService.deleteProduct(req.params.id);
 
-    res.json({
-      message: "Product deleted",
-    });
+    return apiResponse.success(res, null, "محصول حذف شد");
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    next(error);
   }
 }
 
-// حذف همه محصولات
-async function deleteAllProducts(req, res) {
+async function deleteAllProducts(req, res, next) {
   try {
-    await Product.deleteMany({});
+    await productService.deleteAllProducts();
 
-    res.json({
-      message: "All products deleted",
-    });
+    return apiResponse.success(res, null, "تمام محصولات حذف شدند");
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    next(error);
   }
 }
 
 module.exports = {
   getProducts,
+
   createProduct,
+
   updateProduct,
+
   deleteProduct,
+
   deleteAllProducts,
 };

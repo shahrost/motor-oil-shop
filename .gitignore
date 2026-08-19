@@ -13,3 +13,6 @@ server/.env
 # build
 dist/
 build/
+
+# uploads
+server/uploads/

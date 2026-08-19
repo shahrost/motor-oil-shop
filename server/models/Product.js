@@ -5,39 +5,50 @@ const ProductSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
 
     brand: {
       type: String,
       required: true,
+      trim: true,
+      index: true,
     },
 
     category: {
       type: String,
+      default: "",
+      index: true,
     },
 
     volume: {
       type: String,
+      default: "",
     },
 
     viscosity: {
       type: String,
+      default: "",
     },
 
     api: {
       type: String,
+      default: "",
     },
 
     acea: {
       type: String,
+      default: "",
     },
 
     oilType: {
       type: String,
+      default: "",
     },
 
     description: {
       type: String,
+      default: "",
     },
 
     price: {
@@ -56,22 +67,40 @@ const ProductSchema = new mongoose.Schema(
     },
 
     image: {
-      main: String,
+      main: {
+        type: String,
+        default: "",
+      },
 
-      gallery: [String],
+      gallery: {
+        type: [String],
+        default: [],
+      },
     },
 
     supplier: {
       type: String,
+      default: "",
     },
 
     warranty: {
       type: String,
+      default: "",
     },
 
     tags: {
       type: [String],
       default: [],
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+
+    slug: {
+      type: String,
+      default: "",
     },
 
     isBestSeller: {
@@ -82,6 +111,16 @@ const ProductSchema = new mongoose.Schema(
 
   {
     timestamps: true,
+
+    versionKey: false,
+
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id.toString();
+
+        delete ret._id;
+      },
+    },
   },
 );
 

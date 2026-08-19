@@ -1,16 +1,33 @@
 const Product = require("../models/Product");
 
-// دریافت همه محصولات
 async function getAllProducts() {
   return await Product.find();
 }
 
-// ذخیره محصولات
-async function saveProducts(products) {
-  return await Product.insertMany(products);
+async function createProduct(data) {
+  return await Product.create(data);
+}
+
+async function updateProduct(id, data) {
+  return await Product.findOneAndUpdate({ _id: id }, data, {
+    new: true,
+  });
+}
+
+async function deleteProduct(id) {
+  return await Product.findOneAndDelete({
+    _id: id,
+  });
+}
+
+async function deleteAllProducts() {
+  return await Product.deleteMany({});
 }
 
 module.exports = {
   getAllProducts,
-  saveProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  deleteAllProducts,
 };

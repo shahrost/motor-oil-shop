@@ -1,36 +1,22 @@
-const bcrypt = require("bcrypt");
+const authService = require("../services/authService");
 
-const { createToken } = require("../middleware/auth");
+const apiResponse = require("../utils/apiResponse");
 
-async function login(req, res) {
-  const { username, password } = req.body;
+async function login(req, res, next) {
+  try {
+    const result = await authService.login(req.body);
 
-  const PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
-  const admin = {
-    username: process.env.ADMIN_USERNAME,
-  };
-
-  if (username !== admin.username) {
-    return res.status(401).json({
-      message: "نام کاربری یا رمز عبور اشتباه است",
-    });
+    return apiResponse.success(res, result, "ورود موفق");
+  } catch (error) {
+    next(error);
   }
+}
 
-  const isValidPassword = await bcrypt.compare(password, PASSWORD_HASH);
-
-  if (!isValidPassword) {
-    return res.status(401).json({
-      message: "نام کاربری یا رمز عبور اشتباه است",
-    });
-  }
-
-  const token = createToken(admin);
-
-  res.json({
-    token,
-  });
+async function verify(req, res) {
+  return apiResponse.success(res, { admin: req.admin }, "توکن معتبر است");
 }
 
 module.exports = {
   login,
+  verify,
 };

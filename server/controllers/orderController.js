@@ -1,77 +1,58 @@
-const { getAllOrders, saveOrders } = require("../repositories/orderRepository");
+const orderService = require("../services/orderService");
 
-// دریافت همه سفارش‌ها
-function getOrders(req, res) {
-  const orders = getAllOrders();
+const apiResponse = require("../utils/apiResponse");
 
-  res.json(orders);
+async function getOrders(req, res, next) {
+  try {
+    const orders = await orderService.getOrders();
+
+    return apiResponse.success(res, orders);
+  } catch (error) {
+    next(error);
+  }
 }
 
-// ثبت سفارش جدید
-function createOrder(req, res) {
-  console.log("ORDER BODY:", req.body);
-  const orders = getAllOrders();
+async function createOrder(req, res, next) {
+  try {
+    const order = await orderService.createOrder(req.body);
 
-  const newOrder = {
-    id: Date.now(),
-
-    ...req.body,
-  };
-
-  orders.push(newOrder);
-
-  saveOrders(orders);
-
-  res.status(201).json(newOrder);
+    return apiResponse.created(res, order);
+  } catch (error) {
+    next(error);
+  }
 }
 
-// تغییر وضعیت سفارش
-function updateOrderStatus(req, res) {
-  const orders = getAllOrders();
+async function updateOrderStatus(req, res, next) {
+  try {
+    const order = await orderService.updateOrderStatus(
+      req.params.id,
+      req.body.status,
+    );
 
-  const id = Number(req.params.id);
-
-  const updatedOrders = orders.map((order) => {
-    if (order.id === id) {
-      return {
-        ...order,
-
-        status: req.body.status,
-      };
-    }
-
-    return order;
-  });
-
-  saveOrders(updatedOrders);
-
-  const updatedOrder = updatedOrders.find((order) => order.id === id);
-
-  res.json(updatedOrder);
+    return apiResponse.success(res, order);
+  } catch (error) {
+    next(error);
+  }
 }
 
-// حذف یک سفارش
-function deleteOrder(req, res) {
-  const orders = getAllOrders();
+async function deleteOrder(req, res, next) {
+  try {
+    await orderService.deleteOrder(req.params.id);
 
-  const id = Number(req.params.id);
-
-  const filteredOrders = orders.filter((order) => order.id !== id);
-
-  saveOrders(filteredOrders);
-
-  res.json({
-    message: "Order deleted",
-  });
+    return apiResponse.success(res, null, "سفارش حذف شد");
+  } catch (error) {
+    next(error);
+  }
 }
 
-// حذف همه سفارش‌ها
-function deleteAllOrders(req, res) {
-  saveOrders([]);
+async function deleteAllOrders(req, res, next) {
+  try {
+    await orderService.deleteAllOrders();
 
-  res.json({
-    message: "All orders deleted",
-  });
+    return apiResponse.success(res, null, "تمام سفارش‌ها حذف شدند");
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = {

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useCallback, useState } from "react";
 
 import {
   fetchOrders,
@@ -13,23 +13,18 @@ export function OrderProvider({ children }) {
   const [orders, setOrders] = useState([]);
 
   // دریافت سفارش‌ها
+  // مسئول دریافت و نگهداری سفارش‌ها در Context است.
+  const loadOrders = useCallback(async () => {
+    try {
+      const response = await fetchOrders();
 
-  useEffect(() => {
-    async function loadOrders() {
-      try {
-        const data = await fetchOrders();
-console.log("ORDERS FROM API:", data);
-        setOrders(data);
-      } catch (error) {
-        console.log("خطا در دریافت سفارش‌ها", error);
-      }
+      setOrders(response || []);
+    } catch (error) {
+      console.log("خطا در دریافت سفارش‌ها", error);
     }
-
-    loadOrders();
   }, []);
 
   // ثبت سفارش جدید
-
   async function addOrder(order) {
     const newOrder = {
       ...order,
@@ -49,7 +44,6 @@ console.log("ORDERS FROM API:", data);
   }
 
   // تغییر وضعیت سفارش
-
   async function updateOrderStatus(id, status) {
     try {
       const updated = await updateOrderStatusService(id, status);
@@ -63,7 +57,6 @@ console.log("ORDERS FROM API:", data);
   }
 
   // حذف سفارش
-
   async function deleteOrder(id) {
     try {
       await deleteOrderService(id);
@@ -78,6 +71,8 @@ console.log("ORDERS FROM API:", data);
     <OrderContext.Provider
       value={{
         orders,
+
+        loadOrders,
 
         addOrder,
 

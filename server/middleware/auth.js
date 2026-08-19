@@ -1,8 +1,5 @@
 const jwt = require("jsonwebtoken");
 
-const SECRET_KEY = process.env.JWT_SECRET;
-// بررسی ورود ادمین
-
 function auth(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -15,7 +12,7 @@ function auth(req, res, next) {
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.admin = decoded;
 
@@ -32,7 +29,9 @@ function createToken(admin) {
     {
       username: admin.username,
     },
-    SECRET_KEY,
+
+    process.env.JWT_SECRET,
+
     {
       expiresIn: "7d",
     },
@@ -41,5 +40,6 @@ function createToken(admin) {
 
 module.exports = {
   auth,
+
   createToken,
 };

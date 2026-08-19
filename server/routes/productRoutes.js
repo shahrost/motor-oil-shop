@@ -1,5 +1,5 @@
 const express = require("express");
-
+const upload = require("../middleware/upload");
 const router = express.Router();
 const { auth } = require("../middleware/auth");
 const {
@@ -14,10 +14,9 @@ const {
 router.get("/", getProducts);
 
 // ساخت محصول
-router.post("/", auth, createProduct);
-
+router.post("/", auth, upload.single("image"), createProduct);
 // ویرایش محصول
-router.put("/:id", auth, updateProduct);
+router.put("/:id", auth, upload.single("image"), updateProduct);
 
 // حذف یک محصول
 router.delete("/:id", auth, deleteProduct);

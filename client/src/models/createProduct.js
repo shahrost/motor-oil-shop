@@ -6,7 +6,7 @@ function createProduct(data = {}) {
 
     ...data,
 
-    id: data.id ?? Date.now(),
+    id: data.id || Date.now().toString(),
 
     name:
       data.name ||
@@ -26,6 +26,7 @@ function createProduct(data = {}) {
           }
         : {
             main: data.image?.main || "",
+
             gallery: data.image?.gallery || [],
           },
   };
