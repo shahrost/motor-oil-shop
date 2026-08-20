@@ -1,13 +1,21 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import CartContext from "../../context/CartContext";
+import CustomerAuthContext from "../../context/CustomerAuthContext";
+import ThemeContext from "../../context/ThemeContext";
+import LanguageContext from "../../context/LanguageContext";
 import menu from "../../data/menu";
-import ownerPhoto from "../../assets/shahram-logo.png";
+import ownerPhoto from "../../assets/logo/shahram-logo.png";
+import brandLogo from "../../assets/logo/shahram-monogram-yellow.svg";
+import whatsappLogo from "../../assets/social/whatsapp.svg";
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [photoOpen, setPhotoOpen] = useState(false);
 
   const { cartCount } = useContext(CartContext);
+  const { customer } = useContext(CustomerAuthContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { language, setLanguage, t } = useContext(LanguageContext);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -33,7 +41,6 @@ function Header() {
       border-b
       border-gray-800
       "
-      dir="rtl"
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div
@@ -46,35 +53,52 @@ function Header() {
         >
           {/* BRAND */}
 
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setPhotoOpen(true)}
-              aria-label="نمایش بزرگ عکس"
-              className="
-              w-12
-              h-12
-              rounded-xl
-              bg-yellow-400
-              overflow-hidden
-              flex-shrink-0
-              shadow
-              cursor-zoom-in
-              "
-            >
-              <img
-                src={ownerPhoto}
-                alt="شهرام"
-                className="w-full h-full object-cover"
-                style={{ objectPosition: "50% 12%" }}
-              />
-            </button>
+          <div className="flex items-center gap-2.5">
+            <div className="relative shrink-0">
+              <Link to="/" aria-label={t("nav.home")}>
+                <img
+                  src={brandLogo}
+                  alt="شهرام روغن"
+                  className="h-8 md:h-9 w-auto select-none"
+                  draggable="false"
+                />
+              </Link>
 
-            <Link to="/">
+              <button
+                type="button"
+                onClick={() => setPhotoOpen(true)}
+                aria-label={t("header.showPhoto")}
+                className="
+                hidden
+                sm:flex
+                absolute
+                -bottom-1.5
+                -right-1.5
+                w-6
+                h-6
+                rounded-full
+                ring-2
+                ring-gray-950
+                overflow-hidden
+                shadow
+                cursor-zoom-in
+                "
+              >
+                <img
+                  src={ownerPhoto}
+                  alt="شهرام"
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: "50% 12%" }}
+                />
+              </button>
+            </div>
+
+            <Link to="/" className="leading-tight">
               <h1
                 className="
                 text-yellow-400
-                text-xl
+                text-lg
+                sm:text-xl
                 md:text-2xl
                 font-black
                 "
@@ -82,7 +106,9 @@ function Header() {
                 شهرام روغن
               </h1>
 
-              <p className="text-gray-400 text-xs">shahram_roghan</p>
+              <p className="hidden sm:block text-gray-400 text-xs">
+                shahram_roghan
+              </p>
             </Link>
           </div>
 
@@ -100,7 +126,7 @@ function Header() {
       transition
       "
               >
-                {item.title}
+                {t(`nav.${item.key}`)}
               </Link>
             ))}
           </nav>
@@ -108,6 +134,103 @@ function Header() {
           {/* ACTIONS */}
 
           <div className="flex items-center gap-2">
+            <div
+              className="
+              flex
+              items-center
+              bg-gray-800
+              rounded-xl
+              p-1
+              text-xs
+              font-bold
+              "
+            >
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`px-2.5 py-1.5 rounded-lg transition ${
+                  language === "en"
+                    ? "bg-yellow-400 text-black"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                EN
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setLanguage("fa")}
+                className={`px-2.5 py-1.5 rounded-lg transition ${
+                  language === "fa"
+                    ? "bg-yellow-400 text-black"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                FA
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={t("header.toggleTheme")}
+              className="
+              relative
+              w-10
+              h-10
+              rounded-xl
+              bg-gray-800
+              hover:bg-gray-700
+              text-xl
+              flex
+              items-center
+              justify-center
+              transition
+              "
+            >
+              <span
+                className={`
+                absolute
+                transition-all
+                duration-300
+                ${theme === "dark" ? "opacity-0 rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"}
+                `}
+              >
+                🌙
+              </span>
+
+              <span
+                className={`
+                absolute
+                transition-all
+                duration-300
+                ${theme === "dark" ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-50"}
+                `}
+              >
+                ☀️
+              </span>
+            </button>
+
+            <Link
+              to={customer ? "/account" : "/register"}
+              className="
+              hidden
+              sm:flex
+              bg-indigo-600
+              hover:bg-indigo-700
+              text-white
+              px-4
+              py-2.5
+              rounded-xl
+              font-bold
+              transition
+              "
+            >
+              {customer
+                ? `👤 ${customer.name.split(" ")[0]}`
+                : t("header.register")}
+            </Link>
+
             <Link
               to="/cart"
               className="
@@ -159,9 +282,15 @@ function Header() {
               py-2.5
               rounded-xl
               font-bold
+              items-center
+              justify-center
               "
             >
-              💬
+              <img
+                src={whatsappLogo}
+                alt={t("header.whatsapp")}
+                className="w-6 h-6"
+              />
             </a>
 
             <a
@@ -220,7 +349,7 @@ function Header() {
                     onClick={closeMenu}
                     className="text-gray-200 hover:text-yellow-400"
                   >
-                    {item.title}
+                    {t(`nav.${item.key}`)}
                   </Link>
                 </li>
               ))}
@@ -237,8 +366,73 @@ function Header() {
                   rounded-xl
                   "
                 >
-                  🛒 سبد خرید ({cartCount})
+                  🛒 {t("header.cartLabel")} ({cartCount})
                 </Link>
+              </li>
+
+              <li>
+                <Link
+                  to={customer ? "/account" : "/register"}
+                  onClick={closeMenu}
+                  className="
+                  block
+                  bg-indigo-600
+                  text-white
+                  py-3
+                  rounded-xl
+                  "
+                >
+                  👤{" "}
+                  {customer
+                    ? customer.name.split(" ")[0]
+                    : t("header.register")}
+                </Link>
+              </li>
+
+              <li>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="
+                  w-full
+                  bg-gray-800
+                  text-gray-200
+                  py-3
+                  rounded-xl
+                  "
+                >
+                  {theme === "dark"
+                    ? `☀️ ${t("header.lightMode")}`
+                    : `🌙 ${t("header.darkMode")}`}
+                </button>
+              </li>
+
+              <li>
+                <div className="flex items-center justify-center gap-2 bg-gray-800 rounded-xl p-1">
+                  <button
+                    type="button"
+                    onClick={() => setLanguage("en")}
+                    className={`flex-1 py-2 rounded-lg transition ${
+                      language === "en"
+                        ? "bg-yellow-400 text-black"
+                        : "text-gray-300"
+                    }`}
+                  >
+                    EN
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setLanguage("fa")}
+                    className={`flex-1 py-2 rounded-lg transition ${
+                      language === "fa"
+                        ? "bg-yellow-400 text-black"
+                        : "text-gray-300"
+                    }`}
+                  >
+                    FA
+                  </button>
+                </div>
               </li>
             </ul>
           </div>
@@ -262,7 +456,7 @@ function Header() {
           <button
             type="button"
             onClick={() => setPhotoOpen(false)}
-            aria-label="بستن"
+            aria-label={t("header.close")}
             className="
             absolute
             top-5

@@ -1,5 +1,8 @@
+import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import PaymentSelector from "./PaymentSelector";
+import LanguageContext from "../../../context/LanguageContext";
+
 function OrderProductCard({
   item,
   index,
@@ -7,6 +10,8 @@ function OrderProductCard({
   changeOrderType,
   changePaymentType,
 }) {
+  const { language, t } = useContext(LanguageContext);
+
   const itemTotal =
     Number(item.price || 0) *
     (item.orderType === "carton"
@@ -19,36 +24,38 @@ function OrderProductCard({
 
       <div className="mt-3 space-y-2 text-gray-700">
         <p>
-          برند:
+          {t("common.brand")}
           <span className="font-bold text-black"> {item.brand}</span>
         </p>
 
         <p>
-          گرید:
+          {t("common.viscosity")}
           <span className="font-bold text-black"> {item.viscosity}</span>
         </p>
 
         <p>
-          حجم:
+          {t("common.volume")}
           <span className="font-bold text-black"> {item.volume}</span>
         </p>
       </div>
 
       <div className="mt-4 bg-white rounded-2xl p-4">
-        <label className="font-bold block mb-2">واحد سفارش</label>
+        <label className="font-bold block mb-2">
+          {t("order.productCard.orderUnitLabel")}
+        </label>
 
         <select
           value={item.orderType || "number"}
           onChange={(e) => changeOrderType(item.id, e.target.value, index)}
           className="w-full border rounded-xl p-3"
         >
-          <option value="number">عدد</option>
-          <option value="carton">کارتن</option>
+          <option value="number">{t("common.orderUnit.number")}</option>
+          <option value="carton">{t("common.orderUnit.carton")}</option>
         </select>
       </div>
 
       <div className="mt-4 bg-white rounded-2xl p-4">
-        <label className="font-bold block mb-2">تعداد</label>
+        <label className="font-bold block mb-2">{t("common.quantity")}</label>
 
         <input
           type="number"
@@ -65,10 +72,10 @@ function OrderProductCard({
       />
 
       <div className="mt-5 bg-green-50 border border-green-200 rounded-2xl p-4">
-        <p className="font-bold text-green-700">قیمت محصول:</p>
+        <p className="font-bold text-green-700">{t("order.productCard.price")}</p>
 
         <p className="text-2xl font-extrabold text-green-700 mt-2">
-          {formatPrice(itemTotal)}
+          {formatPrice(itemTotal, language)}
         </p>
       </div>
     </div>

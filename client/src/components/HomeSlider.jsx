@@ -1,25 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import LanguageContext from "../context/LanguageContext";
 
 function HomeSlider() {
+  const { t } = useContext(LanguageContext);
+
   const slides = [
     {
       icon: "🚚",
-      title: "ارسال سریع روغن موتور",
-      text: "تامین روغن موتور برای لوازم یدکی‌ها و تعویض روغنی‌ها در منطقه",
+      title: t("homeSlider.slide1.title"),
+      text: t("homeSlider.slide1.text"),
       color: "from-green-600 to-green-800",
     },
 
     {
       icon: "💳",
-      title: "شرایط همکاری ویژه",
-      text: "فروش عمده و تک  با شرایط پرداخت مناسب",
+      title: t("homeSlider.slide2.title"),
+      text: t("homeSlider.slide2.text"),
       color: "from-blue-600 to-blue-800",
     },
 
     {
       icon: "🔥",
-      title: "محصولات ویژه ",
-      text: "قیمت روز روغن موتور و تخفیف مخصوص همکاران",
+      title: t("homeSlider.slide3.title"),
+      text: t("homeSlider.slide3.text"),
       color: "from-yellow-500 to-yellow-700",
     },
   ];
@@ -70,14 +73,14 @@ function HomeSlider() {
             onClick={prevSlide}
             className="bg-white/20 hover:bg-white/30 px-5 py-2 rounded-xl font-bold"
           >
-            قبلی
+            {t("homeSlider.prev")}
           </button>
 
           <button
             onClick={nextSlide}
             className="bg-white/20 hover:bg-white/30 px-5 py-2 rounded-xl font-bold"
           >
-            بعدی
+            {t("homeSlider.next")}
           </button>
         </div>
 

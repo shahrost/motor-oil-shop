@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import whatsappLogo from "../../../assets/social/whatsapp.svg";
+import LanguageContext from "../../../context/LanguageContext";
+
 function FloatingActions() {
+  const { t } = useContext(LanguageContext);
+
   return (
     <>
       {/* دکمه شناور واتساپ */}
@@ -18,12 +24,11 @@ function FloatingActions() {
           flex
           items-center
           justify-center
-          text-2xl
           shadow-xl
           z-50
         "
       >
-        💬
+        <img src={whatsappLogo} alt={t("header.whatsapp")} className="w-8 h-8" />
       </a>
 
       {/* دکمه تماس */}

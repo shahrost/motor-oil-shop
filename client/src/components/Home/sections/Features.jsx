@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import LanguageContext from "../../../context/LanguageContext";
+
 function Features({ features }) {
+  const { t } = useContext(LanguageContext);
+
   return (
     <section className="px-5 mt-14">
       <div className="max-w-7xl mx-auto">
@@ -13,7 +18,7 @@ function Features({ features }) {
         >
           {features.map((item) => (
             <div
-              key={item.title}
+              key={item.key}
               className="
                 bg-white
                 rounded-3xl
@@ -31,7 +36,7 @@ function Features({ features }) {
                   mt-4
                 "
               >
-                {item.title}
+                {t(`home.features.${item.key}.title`)}
               </h3>
 
               <p
@@ -41,7 +46,7 @@ function Features({ features }) {
                   mt-3
                 "
               >
-                {item.description}
+                {t(`home.features.${item.key}.description`)}
               </p>
             </div>
           ))}

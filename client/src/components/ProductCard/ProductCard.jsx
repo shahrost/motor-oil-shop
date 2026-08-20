@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   ProductImage,
   ProductInfo,
@@ -6,8 +7,10 @@ import {
 } from "./sections";
 
 import useProductCard from "./hooks/useProductCard";
+import LanguageContext from "../../context/LanguageContext";
 
 function ProductCard({ product }) {
+  const { t } = useContext(LanguageContext);
   const {
     quantity,
     setQuantity,
@@ -49,7 +52,7 @@ function ProductCard({ product }) {
           font-bold
           "
         >
-          ✅ به سبد خرید اضافه شد
+          ✅ {t("common.addedToCart")}
         </div>
       )}
     </div>

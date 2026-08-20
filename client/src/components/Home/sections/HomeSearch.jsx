@@ -1,10 +1,15 @@
+import { useContext } from "react";
+import LanguageContext from "../../../context/LanguageContext";
+
 function HomeSearch() {
+  const { t } = useContext(LanguageContext);
+
   return (
     <section className="px-5 mt-8">
       <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow p-4">
         <input
           type="text"
-          placeholder="🔍 جستجوی سریع محصول، برند یا گرید..."
+          placeholder={t("home.search.placeholder")}
           className="
             w-full
             border

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ProductContext } from "../../../context";
+import LanguageContext from "../../../context/LanguageContext";
 import {
   getBrands,
   getViscosities,
@@ -11,6 +12,7 @@ import priceRanges from "../../../data/productOptions/priceRanges";
 
 function useProducts() {
   const { products } = useContext(ProductContext);
+  const { language } = useContext(LanguageContext);
   const [searchParams] = useSearchParams();
 
   const [search, setSearch] = useState("");
@@ -38,10 +40,10 @@ function useProducts() {
     };
   }, []);
 
-  const brands = getBrands();
-  const viscosities = getViscosities();
-  const volumes = getVolumes();
-  const priceOptions = getPriceOptions();
+  const brands = getBrands(language);
+  const viscosities = getViscosities(language);
+  const volumes = getVolumes(language);
+  const priceOptions = getPriceOptions(language);
 
   const priceOption =
     sort === "cheap"

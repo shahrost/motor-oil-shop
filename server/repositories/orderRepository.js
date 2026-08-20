@@ -4,6 +4,10 @@ async function getAllOrders() {
   return await Order.find().sort({ createdAt: -1 });
 }
 
+async function getOrdersByCustomer(customerId) {
+  return await Order.find({ customerId }).sort({ createdAt: -1 });
+}
+
 async function createOrder(data) {
   return await Order.create(data);
 }
@@ -34,6 +38,8 @@ async function deleteAllOrders() {
 
 module.exports = {
   getAllOrders,
+
+  getOrdersByCustomer,
 
   createOrder,
 

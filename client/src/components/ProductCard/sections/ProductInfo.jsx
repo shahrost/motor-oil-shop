@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
+import getBrandLabel from "../../../utils/brandLabel";
+import LanguageContext from "../../../context/LanguageContext";
 
 function ProductInfo({ product }) {
+  const { language, t } = useContext(LanguageContext);
+
   return (
     <>
       <h2
@@ -16,23 +21,25 @@ function ProductInfo({ product }) {
 
       <div className="mt-4 space-y-2 text-sm">
         <p>
-          <span className="font-bold text-green-700">برند:</span>{" "}
-          {product.brand}
+          <span className="font-bold text-green-700">{t("common.brand")}</span>{" "}
+          {getBrandLabel(product.brand, language)}
         </p>
 
         <p>
-          <span className="font-bold text-green-700">گرید:</span>{" "}
+          <span className="font-bold text-green-700">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>
 
         <p>
-          <span className="font-bold text-green-700">حجم:</span>{" "}
+          <span className="font-bold text-green-700">{t("common.volume")}</span>{" "}
           {product.volume}
         </p>
 
         <p>
-          <span className="font-bold text-green-700">تعداد در کارتن:</span>{" "}
-          {product.cartonCount || "-"} عدد
+          <span className="font-bold text-green-700">
+            {t("productCard.cartonCount")}
+          </span>{" "}
+          {product.cartonCount || "-"} {t("common.orderUnit.number")}
         </p>
       </div>
 
@@ -44,10 +51,10 @@ function ProductInfo({ product }) {
           text-green-700
           "
         >
-          {formatPrice(product.price)}
+          {formatPrice(product.price, language)}
         </p>
 
-        <p className="text-xs text-gray-500">قیمت هر عدد</p>
+        <p className="text-xs text-gray-500">{t("productCard.pricePerUnit")}</p>
       </div>
     </>
   );

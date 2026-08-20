@@ -14,6 +14,7 @@ import iranol from "./iranol.png";
 import pars from "./pars.png";
 import caspian from "./caspian.png";
 import serkan from "./serkan.png";
+import addinol from "./addinol.png";
 
 export {
   seman,
@@ -32,4 +33,5 @@ export {
   pars,
   caspian,
   serkan,
+  addinol,
 };

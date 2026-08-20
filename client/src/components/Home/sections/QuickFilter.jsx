@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LanguageContext from "../../../context/LanguageContext";
 import {
   getBrands,
   getViscosities,
@@ -7,13 +8,16 @@ import {
   getPriceOptions,
 } from "../../../utils/productFilters";
 
-const brands = getBrands().filter((item) => item !== "همه");
-const viscosities = getViscosities().filter((item) => item !== "همه");
-const volumes = getVolumes().filter((item) => item !== "همه");
-const priceOptions = getPriceOptions();
-
 function QuickFilter() {
   const navigate = useNavigate();
+  const { language, t } = useContext(LanguageContext);
+
+  const brands = getBrands(language).filter((item) => item.value !== "همه");
+  const viscosities = getViscosities(language).filter(
+    (item) => item.value !== "همه",
+  );
+  const volumes = getVolumes(language).filter((item) => item.value !== "همه");
+  const priceOptions = getPriceOptions(language);
 
   const [brand, setBrand] = useState("");
   const [viscosity, setViscosity] = useState("");
@@ -44,12 +48,14 @@ function QuickFilter() {
         onSubmit={handleSubmit}
         className="max-w-5xl mx-auto bg-white rounded-3xl shadow p-6"
       >
-        <h2 className="text-xl font-extrabold mb-5">فیلتر سریع محصولات</h2>
+        <h2 className="text-xl font-extrabold mb-5">
+          {t("home.quickFilter.title")}
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label className="block font-bold text-gray-700 mb-2">
-              برند
+              {t("common.brandLabel")}
             </label>
 
             <select
@@ -57,11 +63,11 @@ function QuickFilter() {
               onChange={(e) => setBrand(e.target.value)}
               className="w-full border border-gray-300 rounded-2xl p-3 text-black"
             >
-              <option value="">همه برندها</option>
+              <option value="">{t("home.quickFilter.allBrands")}</option>
 
               {brands.map((item) => (
-                <option key={item} value={item}>
-                  {item}
+                <option key={item.value} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -69,7 +75,7 @@ function QuickFilter() {
 
           <div>
             <label className="block font-bold text-gray-700 mb-2">
-              گرید
+              {t("common.viscosityLabel")}
             </label>
 
             <select
@@ -77,11 +83,11 @@ function QuickFilter() {
               onChange={(e) => setViscosity(e.target.value)}
               className="w-full border border-gray-300 rounded-2xl p-3 text-black"
             >
-              <option value="">همه گریدها</option>
+              <option value="">{t("home.quickFilter.allViscosities")}</option>
 
               {viscosities.map((item) => (
-                <option key={item} value={item}>
-                  {item}
+                <option key={item.value} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -89,7 +95,7 @@ function QuickFilter() {
 
           <div>
             <label className="block font-bold text-gray-700 mb-2">
-              لیتراژ
+              {t("common.volumeLabel")}
             </label>
 
             <select
@@ -97,11 +103,11 @@ function QuickFilter() {
               onChange={(e) => setVolume(e.target.value)}
               className="w-full border border-gray-300 rounded-2xl p-3 text-black"
             >
-              <option value="">همه لیتراژها</option>
+              <option value="">{t("home.quickFilter.allVolumes")}</option>
 
               {volumes.map((item) => (
-                <option key={item} value={item}>
-                  {item}
+                <option key={item.value} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -109,7 +115,7 @@ function QuickFilter() {
 
           <div>
             <label className="block font-bold text-gray-700 mb-2">
-              قیمت
+              {t("common.priceLabel")}
             </label>
 
             <select
@@ -130,7 +136,7 @@ function QuickFilter() {
           type="submit"
           className="w-full sm:w-auto mt-5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-3 rounded-2xl"
         >
-          نمایش محصولات
+          {t("home.quickFilter.submit")}
         </button>
       </form>
     </section>

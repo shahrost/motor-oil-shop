@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useAdminHeader from "./hooks/useAdminHeader";
 import menu from "../../../data/menu";
+import brandLogo from "../../../assets/logo/shahram-monogram-black.svg";
 
 function AdminHeader() {
   const { logout } = useAdminHeader();
@@ -24,14 +25,23 @@ function AdminHeader() {
         gap-3
         "
       >
-        <h1
-          className="
-          text-2xl
-          font-bold
-          "
-        >
-          پنل مدیریت محصولات
-        </h1>
+        <div className="flex items-center gap-3">
+          <img
+            src={brandLogo}
+            alt=""
+            className="h-7 w-auto select-none"
+            draggable="false"
+          />
+
+          <h1
+            className="
+            text-2xl
+            font-bold
+            "
+          >
+            پنل مدیریت محصولات
+          </h1>
+        </div>
 
         <button
           onClick={logout}
@@ -73,7 +83,7 @@ function AdminHeader() {
             transition
             "
           >
-            {item.title}
+            {item.titleFa}
           </Link>
         ))}
       </nav>

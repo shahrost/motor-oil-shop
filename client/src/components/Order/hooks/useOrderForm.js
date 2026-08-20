@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useContext } from "react";
 import OrderContext from "../../../context/OrderContext";
 import CartContext from "../../../context/CartContext";
+import CustomerAuthContext from "../../../context/CustomerAuthContext";
+import LanguageContext from "../../../context/LanguageContext";
 import buildOrderData from "../helpers/buildOrderData";
 
 function useOrderForm() {
@@ -16,6 +18,8 @@ function useOrderForm() {
   } = useContext(CartContext);
 
   const { addOrder } = useContext(OrderContext);
+  const { customer: account } = useContext(CustomerAuthContext);
+  const { t } = useContext(LanguageContext);
 
   const [customer, setCustomer] = useState({
     name: "",
@@ -37,11 +41,11 @@ function useOrderForm() {
     e.preventDefault();
 
     if (customer.phone.length !== 11 || !customer.phone.startsWith("09")) {
-      alert("لطفاً شماره موبایل معتبر وارد کنید");
+      alert(t("order.invalidPhone"));
       return;
     }
 
-    const order = buildOrderData(cart, customer, cartTotal);
+    const order = buildOrderData(cart, customer, cartTotal, account?.id);
 
     addOrder(order);
 

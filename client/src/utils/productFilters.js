@@ -2,27 +2,57 @@ import brands from "../data/brands";
 import viscosities from "../data/productOptions/viscosities";
 import volumes from "../data/productOptions/volumes";
 import priceRanges from "../data/productOptions/priceRanges";
+import translations from "../i18n/translations";
 
-export function getBrands() {
-  return ["همه", ...brands.map((brand) => brand.name)];
-}
-
-export function getViscosities() {
-  return ["همه", ...viscosities];
-}
-
-export function getVolumes() {
-  return ["همه", ...volumes];
-}
-
-export function getPriceOptions() {
+export function getBrands(language = "fa") {
   return [
-    { value: "", label: "همه" },
-    { value: "sort:cheap", label: "ارزان‌ترین به گران‌ترین" },
-    { value: "sort:expensive", label: "گران‌ترین به ارزان‌ترین" },
+    { value: "همه", label: language === "en" ? "All" : "همه" },
+    ...brands.map((brand) => ({
+      value: brand.name,
+      label: language === "en" ? brand.nameEn : brand.name,
+    })),
+  ];
+}
+
+export function getViscosities(language = "fa") {
+  return [
+    { value: "همه", label: language === "en" ? "All" : "همه" },
+    ...viscosities.map((item) => ({ value: item, label: item })),
+  ];
+}
+
+export function getVolumes(language = "fa") {
+  const volumeLabels = translations[language].common.volumeLabels;
+
+  return [
+    { value: "همه", label: language === "en" ? "All" : "همه" },
+    ...volumes.map((item) => ({
+      value: item,
+      label: volumeLabels[item] || item,
+    })),
+  ];
+}
+
+export function getPriceOptions(language = "fa") {
+  return [
+    { value: "", label: language === "en" ? "All" : "همه" },
+    {
+      value: "sort:cheap",
+      label:
+        language === "en"
+          ? "Cheapest to most expensive"
+          : "ارزان‌ترین به گران‌ترین",
+    },
+    {
+      value: "sort:expensive",
+      label:
+        language === "en"
+          ? "Most expensive to cheapest"
+          : "گران‌ترین به ارزان‌ترین",
+    },
     ...priceRanges.map((range) => ({
       value: `range:${range.id}`,
-      label: range.label,
+      label: language === "en" ? range.labelEn : range.label,
     })),
   ];
 }

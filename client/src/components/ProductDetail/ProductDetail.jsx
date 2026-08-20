@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import useProductDetail from "./hooks/useProductDetail";
 import ProductGallery from "./sections/ProductGallery";
 import ProductInfo from "./sections/ProductInfo";
 import ProductPurchase from "./sections/ProductPurchase";
+import LanguageContext from "../../context/LanguageContext";
 
 function ProductDetail() {
+  const { t } = useContext(LanguageContext);
   const {
     product,
     quantity,
@@ -20,7 +23,9 @@ function ProductDetail() {
   if (!product) {
     return (
       <div className="text-center py-20">
-        <p className="text-2xl font-bold text-gray-700">محصول پیدا نشد</p>
+        <p className="text-2xl font-bold text-gray-700">
+          {t("productDetail.notFound")}
+        </p>
       </div>
     );
   }

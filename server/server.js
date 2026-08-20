@@ -38,6 +38,8 @@ const loginLimiter = rateLimit({
 });
 
 app.use("/api/auth/login", loginLimiter);
+app.use("/api/customers/login", loginLimiter);
+app.use("/api/customers/register", loginLimiter);
 
 // Test API
 app.get("/", (req, res) => {

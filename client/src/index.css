@@ -1,7 +1,25 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================
+      EYE-COMFORT LIGHT THEME
+      نور شدید سفید خالص رو کم می‌کنه تا در حالت روز
+      برای چشم اذیت‌کننده نباشه؛ روی همه‌ی جاهایی که
+      از bg-white / bg-gray-50 / bg-gray-100 استفاده
+      شده به‌صورت خودکار اعمال می‌شه.
+========================= */
+
+@theme {
+  --color-white: #f7f6f2;
+  --color-gray-50: #f2f0ea;
+  --color-gray-100: #eae7de;
+}
+
 /* =========================
       FONT
+      فقط وزن‌هایی که واقعاً در پروژه استفاده
+      می‌شن (Regular تا ExtraBold) لود می‌شن.
 ========================= */
 
 @font-face {
@@ -35,68 +53,112 @@
 }
 
 /* =========================
-      BRAND COLORS
+      BRAND PALETTE
+      --yellow-brand عمداً با Tailwind yellow-400
+      (که مستقیم توی کامپوننت‌ها استفاده می‌شه)
+      یکسان نگه داشته شده تا اسکرول‌بار با بقیه‌ی
+      سایت هم‌رنگ بمونه. بقیه‌ی رنگ‌های معنایی
+      (موفقیت/اطلاعات/خطر) به‌عنوان مرجع مرکزی
+      و قوی‌تر تعریف شدن.
 ========================= */
 
 :root {
-  /* شهرام روغن */
-
-  --black-brand: #111111;
-
+  /* برند اصلی */
+  --black-brand: #0a0a0a;
   --yellow-brand: #facc15;
 
-  --green-brand: #16a34a;
-
+  /* رنگ‌های معنایی */
+  --green-brand: #15803d;
+  --blue-brand: #1d4ed8;
+  --red-brand: #b91c1c;
   --whatsapp: #25d366;
 
-  --blue-brand: #2563eb;
-
-  --red-brand: #dc2626;
-
-  /* backgrounds */
-
+  /* پس‌زمینه */
   --bg-main: #f8fafc;
-
   --card-bg: #ffffff;
 
-  /* text */
-
+  /* متن */
   --text-main: #111827;
-
   --text-muted: #6b7280;
 
-  /* border */
-
+  /* حاشیه */
   --border-light: #e5e7eb;
+}
+
+.dark {
+  --bg-main: #0f1115;
+  --card-bg: #1b1e25;
+
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+
+  --border-light: #2b2f38;
+}
+
+/* =========================
+      DARK MODE — utility overrides
+      این کلاس‌ها توی ~۴۰ فایل کامپوننت پروژه
+      به‌صورت هاردکد استفاده شدن؛ به‌جای اضافه
+      کردن dark: به تک‌تک فایل‌ها، همینجا برای
+      حالت شب بازتعریف می‌شن.
+========================= */
+
+.dark .bg-white {
+  background-color: var(--card-bg);
+}
+
+.dark .bg-gray-50 {
+  background-color: #15171c;
+}
+
+.dark .bg-gray-100 {
+  background-color: #20242c;
+}
+
+.dark .text-black,
+.dark .text-gray-800,
+.dark .text-gray-900 {
+  color: var(--text-main);
+}
+
+.dark .text-gray-600,
+.dark .text-gray-700 {
+  color: var(--text-muted);
+}
+
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: var(--border-light);
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: var(--card-bg);
+  color: var(--text-main);
+  border-color: var(--border-light);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-muted);
 }
 
 /* =========================
       RESET
 ========================= */
 
-/* * {
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-} */
-
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  direction: rtl;
-
   overflow-x: hidden;
 
   background: var(--bg-main);
-
   color: var(--text-main);
 
   font-family: "Vazirmatn", sans-serif;
-
   line-height: 1.8;
 }
 
@@ -106,11 +168,9 @@ body {
 
 #root {
   width: 100%;
-
   min-height: 100vh;
 
   display: flex;
-
   flex-direction: column;
 }
 
@@ -125,9 +185,7 @@ h4,
 h5,
 h6 {
   font-family: "Vazirmatn", sans-serif;
-
   font-weight: 800;
-
   color: var(--text-main);
 }
 
@@ -161,7 +219,6 @@ a {
 
 img {
   max-width: 100%;
-
   display: block;
 }
 
@@ -179,120 +236,23 @@ img {
 
 ::-webkit-scrollbar-thumb {
   background: var(--yellow-brand);
-
   border-radius: 20px;
 }
 
 /* =========================
-      COMMON DESIGN
+      HEADER & FOOTER TEXT FIX
+      جلوگیری از خراب شدن رنگ‌های Tailwind
+      در هدر/فوتر تیره
 ========================= */
 
-.brand-card {
-  background: var(--card-bg);
-
-  border: 1px solid var(--border-light);
-
-  border-radius: 24px;
-
-  transition: all 0.3s ease;
-}
-
-.brand-card:hover {
-  transform: translateY(-6px);
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-
-  border-color: var(--yellow-brand);
-}
-
-.main-shadow {
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-}
-
-/* =========================
-      BUTTON STYLE
-========================= */
-
-.btn-primary {
-  background: var(--yellow-brand);
-
-  color: #111;
-
-  font-weight: 800;
-
-  border-radius: 16px;
-
-  transition: 0.3s;
-}
-
-.btn-primary:hover {
-  background: #eab308;
-}
-
-.btn-buy {
-  background: var(--green-brand);
-
-  color: white;
-
-  font-weight: 800;
-
-  border-radius: 16px;
-}
-
-.btn-buy:hover {
-  background: #15803d;
-}
-
-.btn-contact {
-  background: var(--blue-brand);
-
-  color: white;
-
-  font-weight: 800;
-
-  border-radius: 16px;
-}
-
-.btn-sale {
-  background: var(--red-brand);
-
-  color: white;
-
-  font-weight: 800;
-
-  border-radius: 16px;
-}
-/* =========================
-   HEADER & FOOTER TEXT FIX
-========================= */
-
-/* جلوگیری از خراب شدن رنگ‌های Tailwind */
-header h1,
-header h2,
-header h3,
-header p,
-header span,
-header a,
-footer h1,
-footer h2,
-footer h3,
-footer p,
-footer span,
-footer a {
-  color: var;
-}
-
-/* برند هدر */
 header .text-yellow-400 {
   color: #facc15 !important;
 }
 
-/* متن‌های سفید هدر */
 header .text-white {
   color: #ffffff !important;
 }
 
-/* متن‌های فوتر */
 footer .text-white {
   color: #ffffff !important;
 }
@@ -312,48 +272,3 @@ footer .text-yellow-400 {
 footer .text-green-400 {
   color: #4ade80 !important;
 }
-
-
-
-/* =========================
-   SHAHRAM ROGHAN COLOR SYSTEM
-========================= */
-
-@layer base {
-
-  :root {
-
-    /* رنگ اصلی برند - زرد سمن شیمی */
-    --color-primary-900: 161, 98, 7;
-    --color-primary-800: 180, 110, 8;
-    --color-primary-700: 202, 138, 4;
-    --color-primary-600: 234, 179, 8;
-    --color-primary-500: 250, 204, 21;
-    --color-primary-400: 253, 224, 71;
-
-
-    /* رنگ صنعتی - مشکی و خاکستری */
-    --color-secondary-900: 17, 24, 39;
-    --color-secondary-800: 31, 41, 55;
-    --color-secondary-700: 55, 65, 81;
-    --color-secondary-600: 75, 85, 99;
-    --color-secondary-500: 107, 114, 128;
-    --color-secondary-400: 156, 163, 175;
-    --color-secondary-300: 209, 213, 219;
-    --color-secondary-200: 229, 231, 235;
-
-
-    /* رنگ عملکردی */
-    --color-success: 22, 163, 74;
-    --color-info: 37, 99, 235;
-    --color-warning: 245, 158, 11;
-    --color-error: 220, 38, 38;
-
-
-    /* پس زمینه */
-    --background-app-rgb: 248, 250, 252;
-
-  }
-
-}
-

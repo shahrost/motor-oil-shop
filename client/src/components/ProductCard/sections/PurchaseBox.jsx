@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import orderUnits from "../../../data/orderUnits";
 import paymentTypes from "../../../data/paymentTypes";
+import LanguageContext from "../../../context/LanguageContext";
 
 function PurchaseBox({
   orderType,
@@ -9,6 +11,8 @@ function PurchaseBox({
   paymentType,
   setPaymentType,
 }) {
+  const { t } = useContext(LanguageContext);
+
   return (
     <div
       className="
@@ -19,7 +23,9 @@ function PurchaseBox({
       "
     >
       <div>
-        <label className="text-xs font-bold block mb-1">واحد خرید</label>
+        <label className="text-xs font-bold block mb-1">
+          {t("common.orderUnitLabel")}
+        </label>
 
         <select
           value={orderType}
@@ -36,14 +42,16 @@ function PurchaseBox({
         >
           {orderUnits.map((item) => (
             <option key={item.value} value={item.value}>
-              {item.title}
+              {t(`common.orderUnit.${item.value}`)}
             </option>
           ))}
         </select>
       </div>
 
       <div>
-        <label className="text-xs font-bold block mb-1">تعداد</label>
+        <label className="text-xs font-bold block mb-1">
+          {t("common.quantity")}
+        </label>
 
         <input
           type="number"
@@ -71,7 +79,9 @@ function PurchaseBox({
       </div>
 
       <div>
-        <label className="text-xs font-bold block mb-1">پرداخت</label>
+        <label className="text-xs font-bold block mb-1">
+          {t("common.payment")}
+        </label>
 
         <select
           value={paymentType}
@@ -87,7 +97,7 @@ function PurchaseBox({
         >
           {paymentTypes.map((item) => (
             <option key={item.value} value={item.value}>
-              {item.icon} {item.title}
+              {item.icon} {t(`common.paymentType.${item.value}`)}
             </option>
           ))}
         </select>

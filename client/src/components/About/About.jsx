@@ -1,44 +1,41 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import whatsappLogo from "../../assets/social/whatsapp.svg";
+import LanguageContext from "../../context/LanguageContext";
 
 function About() {
+  const { t } = useContext(LanguageContext);
+
   return (
     <div>
       <section>
-        <h1>درباره روغن موتور شهرام</h1>
+        <h1>{t("about.title")}</h1>
 
         <p className="mt-8 text-lg leading-9 text-gray-700 text-center">
-          روغن موتور شهرام تامین کننده روغن موتورهای با کیفیت برای فروشگاه‌های
-          لوازم یدکی، تعویض روغنی‌ها و مصرف‌کنندگان عزیز است. هدف ما ارائه
-          محصولات مطمئن، قیمت مناسب و پشتیبانی سریع می‌باشد.
+          {t("about.intro")}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
           <div className="bg-gray-100 rounded-xl p-6 text-center">
-            <h2 className="text-xl font-bold">تامین محصولات</h2>
-            <p className="mt-3">
-              ارائه روغن موتور سمن و محصولات مورد نیاز بازار خودرو
-            </p>
+            <h2 className="text-xl font-bold">{t("about.supply.title")}</h2>
+            <p className="mt-3">{t("about.supply.text")}</p>
           </div>
 
           <div className="bg-gray-100 rounded-xl p-6 text-center">
-            <h2 className="text-xl font-bold">همکاری با همکاران</h2>
-            <p className="mt-3">همکاری با لوازم یدکی‌ها و تعویض روغنی‌ها</p>
+            <h2 className="text-xl font-bold">{t("about.partnership.title")}</h2>
+            <p className="mt-3">{t("about.partnership.text")}</p>
           </div>
 
           <div className="bg-gray-100 rounded-xl p-6 text-center">
-            <h2 className="text-xl font-bold">پشتیبانی سریع</h2>
-            <p className="mt-3">دریافت قیمت روز و ثبت سفارش از طریق واتساپ</p>
+            <h2 className="text-xl font-bold">{t("about.support.title")}</h2>
+            <p className="mt-3">{t("about.support.text")}</p>
           </div>
         </div>
 
         <div className="mt-10 text-center">
-          <h2 className="text-2xl font-bold">محدوده فعالیت</h2>
+          <h2 className="text-2xl font-bold">{t("about.serviceArea.title")}</h2>
 
-          <p className="mt-4 text-gray-700">
-            سبزدشت، گلستان، بهارستان، پرند، رباط‌کریم، نسیم‌شهر، نصیرشهر،
-            خیرآباد، همدانک، اورین، آدران، صباشهر، شاهدشهر، کهنز، جاده آدران،
-            الارد
-          </p>
+          <p className="mt-4 text-gray-700">{t("about.serviceArea.text")}</p>
         </div>
 
         <div className="text-center mt-10">
@@ -46,16 +43,17 @@ function About() {
             to="/products"
             className="inline-block bg-yellow-400 text-black px-8 py-3 rounded-lg font-bold"
           >
-            مشاهده محصولات
+            {t("common.viewProducts")}
           </Link>
 
           <a
             href="https://wa.me/989198334264"
             target="_blank"
             rel="noreferrer"
-            className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-bold mr-4"
+            className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-3 rounded-lg font-bold mr-4"
           >
-            سفارش واتساپ
+            <img src={whatsappLogo} alt="" className="w-5 h-5" />
+            {t("about.whatsappCta")}
           </a>
         </div>
       </section>

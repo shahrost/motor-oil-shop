@@ -8,17 +8,26 @@ import "./index.css";
 import { ProductProvider } from "./context/ProductContext";
 import { OrderProvider } from "./context/OrderContext";
 import { CartProvider } from "./context/CartContext";
+import { CustomerAuthProvider } from "./context/CustomerAuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { LanguageProvider } from "./context/LanguageContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ProductProvider>
-        <OrderProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </OrderProvider>
-      </ProductProvider>
+      <LanguageProvider>
+        <ThemeProvider>
+          <ProductProvider>
+            <OrderProvider>
+              <CartProvider>
+                <CustomerAuthProvider>
+                  <App />
+                </CustomerAuthProvider>
+              </CartProvider>
+            </OrderProvider>
+          </ProductProvider>
+        </ThemeProvider>
+      </LanguageProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );

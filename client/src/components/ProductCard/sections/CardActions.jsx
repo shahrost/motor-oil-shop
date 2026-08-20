@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import LanguageContext from "../../../context/LanguageContext";
 
 function CardActions({ product, handleAddCart }) {
+  const { t } = useContext(LanguageContext);
+
   return (
     <div
       className="
@@ -22,7 +26,7 @@ function CardActions({ product, handleAddCart }) {
         font-bold
         "
       >
-        مشاهده
+        {t("productCard.view")}
       </Link>
 
       <button
@@ -38,7 +42,7 @@ function CardActions({ product, handleAddCart }) {
         font-bold
         "
       >
-        🛒 افزودن
+        🛒 {t("common.add")}
       </button>
     </div>
   );

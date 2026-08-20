@@ -12,11 +12,15 @@ import Brands from "../pages/Brands";
 import BrandProducts from "../pages/BrandProducts";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
+import Register from "../pages/Register";
+import AccountLogin from "../pages/AccountLogin";
+import Account from "../pages/Account";
 
 import Admin from "../pages/Admin";
 import AdminOrders from "../pages/AdminOrders";
 
 import ProtectedRoute from "../components/ProtectedRoute";
+import CustomerProtectedRoute from "../components/CustomerProtectedRoute";
 
 function AppRoutes() {
   return (
@@ -45,6 +49,19 @@ function AppRoutes() {
         <Route path="/contact" element={<Contact />} />
 
         <Route path="/about" element={<About />} />
+
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/account-login" element={<AccountLogin />} />
+
+        <Route
+          path="/account"
+          element={
+            <CustomerProtectedRoute>
+              <Account />
+            </CustomerProtectedRoute>
+          }
+        />
       </Route>
 
       {/* Admin Routes جدا می‌ماند */}

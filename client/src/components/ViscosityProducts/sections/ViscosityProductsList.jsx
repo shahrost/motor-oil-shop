@@ -1,10 +1,14 @@
+import { useContext } from "react";
 import ProductCard from "../../ProductCard";
+import LanguageContext from "../../../context/LanguageContext";
 
 function ViscosityProductsList({ products }) {
+  const { t } = useContext(LanguageContext);
+
   if (products.length === 0) {
     return (
       <p className="text-center text-red-500 mt-10 font-bold">
-        محصولی با این گرید پیدا نشد
+        {t("viscosityProducts.notFound")}
       </p>
     );
   }

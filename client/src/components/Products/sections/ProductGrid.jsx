@@ -1,10 +1,14 @@
+import { useContext } from "react";
 import ProductCard from "../../ProductCard";
+import LanguageContext from "../../../context/LanguageContext";
 
 function ProductGrid({ products }) {
+  const { t } = useContext(LanguageContext);
+
   if (products.length === 0) {
     return (
       <div className="bg-white rounded-3xl p-10 text-center shadow">
-        <p className="text-xl font-bold text-gray-700">محصولی پیدا نشد</p>
+        <p className="text-xl font-bold text-gray-700">{t("products.notFound")}</p>
       </div>
     );
   }

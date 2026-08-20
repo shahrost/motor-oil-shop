@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import LanguageContext from "../../../context/LanguageContext";
+
 function ProductFilters({
   search,
   setSearch,
@@ -17,23 +20,25 @@ function ProductFilters({
   priceOptions,
   clearFilters,
 }) {
+  const { t } = useContext(LanguageContext);
+
   return (
     <section className="bg-white rounded-3xl shadow-md p-5 mb-8">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-xl font-extrabold">فیلتر محصولات</h2>
+        <h2 className="text-xl font-extrabold">{t("products.filters.title")}</h2>
 
         <button
           type="button"
           onClick={clearFilters}
           className="bg-red-100 text-red-600 px-4 py-2 rounded-xl font-bold"
         >
-          پاک کردن
+          {t("products.filters.clear")}
         </button>
       </div>
 
       <input
         type="text"
-        placeholder="🔍 جستجوی محصول، برند، گرید..."
+        placeholder={t("products.filters.searchPlaceholder")}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="w-full border border-gray-300 rounded-2xl p-4 text-black mb-5"
@@ -46,8 +51,8 @@ function ProductFilters({
           className="border rounded-2xl p-3 bg-white text-black"
         >
           {brands.map((item) => (
-            <option key={item} value={item}>
-              {item}
+            <option key={item.value} value={item.value}>
+              {item.label}
             </option>
           ))}
         </select>
@@ -58,8 +63,8 @@ function ProductFilters({
           className="border rounded-2xl p-3 bg-white text-black"
         >
           {viscosities.map((item) => (
-            <option key={item} value={item}>
-              {item}
+            <option key={item.value} value={item.value}>
+              {item.label}
             </option>
           ))}
         </select>
@@ -70,8 +75,8 @@ function ProductFilters({
           className="border rounded-2xl p-3 bg-white text-black"
         >
           {volumes.map((item) => (
-            <option key={item} value={item}>
-              {item}
+            <option key={item.value} value={item.value}>
+              {item.label}
             </option>
           ))}
         </select>
@@ -97,7 +102,7 @@ function ProductFilters({
           className="w-5 h-5"
         />
 
-        <span className="font-bold">فقط محصولات موجود</span>
+        <span className="font-bold">{t("products.filters.onlyAvailable")}</span>
       </label>
     </section>
   );

@@ -1,6 +1,6 @@
-function buildOrderData(cart, customer, cartTotal) {
+function buildOrderData(cart, customer, cartTotal, customerId) {
   return {
-    id: Date.now(),
+    customerId: customerId || "",
 
     customer,
 

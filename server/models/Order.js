@@ -10,6 +10,14 @@ const OrderSchema = new mongoose.Schema(
       unique: true,
     },
 
+    customerId: {
+      type: String,
+
+      default: "",
+
+      index: true,
+    },
+
     customer: {
       name: {
         type: String,

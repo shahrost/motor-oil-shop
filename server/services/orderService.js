@@ -18,12 +18,16 @@ async function createOrder(data) {
   }
 
   const order = {
-    id: crypto.randomUUID(),
-
     ...data,
+
+    id: crypto.randomUUID(),
   };
 
   return await orderRepository.createOrder(order);
+}
+
+async function getOrdersByCustomer(customerId) {
+  return await orderRepository.getOrdersByCustomer(customerId);
 }
 
 async function updateOrderStatus(id, status) {
@@ -54,6 +58,8 @@ module.exports = {
   getOrders,
 
   createOrder,
+
+  getOrdersByCustomer,
 
   updateOrderStatus,
 

@@ -1,23 +1,19 @@
 const features = [
   {
-    title: "ارسال سریع",
+    key: "fastDelivery",
     icon: "🚚",
-    description: "ارسال سریع سفارشات و هماهنگی از طریق واتساپ",
   },
   {
-    title: "همکاری عمده",
+    key: "wholesalePartnership",
     icon: "🤝",
-    description: "شرایط ویژه برای فروشگاه‌ها و تعویض روغنی‌ها",
   },
   {
-    title: "شرایط پرداخت",
+    key: "paymentTerms",
     icon: "💳",
-    description: "امکان همکاری با شرایط پرداخت متنوع",
   },
   {
-    title: "تنوع محصولات",
+    key: "productVariety",
     icon: "🛢️",
-    description: "ارائه انواع روغن موتور و محصولات مصرفی خودرو",
   },
 ];
 

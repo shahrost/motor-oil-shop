@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import useViscosityProducts from "./hooks/useViscosityProducts";
 import ViscosityProductsList from "./sections/ViscosityProductsList";
+import LanguageContext from "../../context/LanguageContext";
 
 function ViscosityProducts() {
+  const { t } = useContext(LanguageContext);
   const { viscosity, filteredProducts } = useViscosityProducts();
 
   return (
@@ -12,16 +15,17 @@ function ViscosityProducts() {
         to="/viscosity"
         className="inline-block mb-6 font-bold text-green-700 hover:text-green-900"
       >
-        ← بازگشت به گریدهای روغن
+        ← {t("viscosityProducts.back")}
       </Link>
 
       <div className="bg-white rounded-2xl shadow-lg p-6">
         <h1 className="text-4xl font-bold text-center text-gray-800">
-          خرید روغن موتور {viscosity}
+          {t("viscosityProducts.titlePrefix")} {viscosity}
         </h1>
 
         <p className="text-center mt-4 text-gray-600">
-          {filteredProducts.length} محصول با گرید {viscosity} موجود است
+          {filteredProducts.length} {t("viscosityProducts.countText")}{" "}
+          {viscosity} {t("common.available")}
         </p>
 
         <ViscosityProductsList products={filteredProducts} />

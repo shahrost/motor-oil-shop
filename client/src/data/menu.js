@@ -1,22 +1,27 @@
 const menu = [
   {
-    title: "خانه",
+    key: "home",
+    titleFa: "خانه",
     path: "/",
   },
   {
-    title: "محصولات",
+    key: "products",
+    titleFa: "محصولات",
     path: "/products",
   },
   {
-    title: "برندها",
+    key: "brands",
+    titleFa: "برندها",
     path: "/brands",
   },
   {
-    title: "سبد خرید",
+    key: "cart",
+    titleFa: "سبد خرید",
     path: "/cart",
   },
   {
-    title: "تماس با ما",
+    key: "contact",
+    titleFa: "تماس با ما",
     path: "/contact",
   },
 ];
