@@ -10,6 +10,10 @@ function ProductFilters({
   setViscosity,
   volume,
   setVolume,
+  api,
+  setApi,
+  productType,
+  setProductType,
   priceOption,
   setPriceOption,
   onlyAvailable,
@@ -17,6 +21,8 @@ function ProductFilters({
   brands,
   viscosities,
   volumes,
+  apiOptions,
+  productTypeOptions,
   priceOptions,
   clearFilters,
 }) {
@@ -58,6 +64,18 @@ function ProductFilters({
         </select>
 
         <select
+          value={productType}
+          onChange={(e) => setProductType(e.target.value)}
+          className="border rounded-2xl p-3 bg-white text-black"
+        >
+          {productTypeOptions.map((item) => (
+            <option key={item.value} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+
+        <select
           value={viscosity}
           onChange={(e) => setViscosity(e.target.value)}
           className="border rounded-2xl p-3 bg-white text-black"
@@ -77,6 +95,18 @@ function ProductFilters({
           {volumes.map((item) => (
             <option key={item.value} value={item.value}>
               {item.label}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={api}
+          onChange={(e) => setApi(e.target.value)}
+          className="border rounded-2xl p-3 bg-white text-black"
+        >
+          {apiOptions.map((item) => (
+            <option key={item.value} value={item.value}>
+              {item.value === "همه" ? item.label : `API ${item.label}`}
             </option>
           ))}
         </select>

@@ -253,6 +253,10 @@ header .text-white {
   color: #ffffff !important;
 }
 
+header .text-gray-400 {
+  color: #9ca3af !important;
+}
+
 footer .text-white {
   color: #ffffff !important;
 }

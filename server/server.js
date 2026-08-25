@@ -25,6 +25,7 @@ app.use(
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
+app.use("/templates", express.static("templates"));
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,

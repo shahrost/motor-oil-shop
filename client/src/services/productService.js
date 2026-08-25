@@ -101,3 +101,41 @@ export async function deleteProductService(id) {
 export async function removeAllProducts() {
   await apiClient.delete("/products");
 }
+
+// ایمپورت گروهی محصولات (فایل اکسل + عکس‌ها)
+
+export async function importProductsService(excelFile, imageFiles = []) {
+  const formData = new FormData();
+
+  formData.append("file", excelFile);
+
+  imageFiles.forEach((file) => formData.append("images", file));
+
+  const response = await apiClient.post("/products/import", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+}
+
+// بروزرسانی گروهی قیمت‌ها (فایل اکسل با ستون کد محصول و قیمت)
+
+export async function bulkUpdatePricesService(excelFile) {
+  const formData = new FormData();
+
+  formData.append("file", excelFile);
+
+  const response = await apiClient.post(
+    "/products/bulk-price-update",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
+
+  return response.data;
+}

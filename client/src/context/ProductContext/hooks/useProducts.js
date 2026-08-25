@@ -33,13 +33,29 @@ function useProducts() {
     loadProducts();
   }, []);
 
+  async function reloadProducts() {
+    try {
+      const response = await fetchProducts();
+
+      const productsData = response.data || [];
+
+      const formattedProducts = productsData.map((product) =>
+        createProduct(product),
+      );
+
+      setProducts(formattedProducts);
+    } catch (error) {
+      console.log("خطا در دریافت محصولات", error);
+    }
+  }
+
   async function addProduct(product) {
     try {
       const newProduct = await createProductService(product);
 
       setProducts((prev) => [...prev, createProduct(newProduct)]);
     } catch (error) {
-      console.log("خطا در ثبت محصول", error);
+      alert(error.response?.data?.message || "خطا در ثبت محصول");
     }
   }
 
@@ -49,7 +65,7 @@ function useProducts() {
 
       setProducts((prev) => prev.filter((product) => product.id !== id));
     } catch (error) {
-      console.log("خطا در حذف محصول", error);
+      alert(error.response?.data?.message || "خطا در حذف محصول");
     }
   }
 
@@ -63,7 +79,7 @@ function useProducts() {
         ),
       );
     } catch (error) {
-      console.log("خطا در ویرایش محصول", error);
+      alert(error.response?.data?.message || "خطا در ویرایش محصول");
     }
   }
 
@@ -83,6 +99,7 @@ function useProducts() {
     deleteProduct,
     updateProduct,
     resetProducts,
+    reloadProducts,
   };
 }
 

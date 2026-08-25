@@ -53,20 +53,20 @@ function BasicInfo({ product, updateField }) {
         ))}
       </select>
 
-      <select
+      <input
+        list="viscosity-options"
         name="viscosity"
         value={product.viscosity || ""}
         onChange={(e) => updateField("viscosity", e.target.value)}
+        placeholder="ویسکوزیته (مثلاً 5W40 یا ISO VG 22)"
         className="border p-3 rounded w-full"
-      >
-        <option value="">انتخاب ویسکوزیته</option>
+      />
 
+      <datalist id="viscosity-options">
         {viscosities.map((viscosity) => (
-          <option key={viscosity} value={viscosity}>
-            {viscosity}
-          </option>
+          <option key={viscosity} value={viscosity} />
         ))}
-      </select>
+      </datalist>
     </section>
   );
 }

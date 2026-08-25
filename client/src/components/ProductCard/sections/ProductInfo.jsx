@@ -10,7 +10,7 @@ function ProductInfo({ product }) {
     <>
       <h2
         className="
-        text-lg
+        text-xl
         font-extrabold
         mt-4
         text-gray-900
@@ -19,24 +19,24 @@ function ProductInfo({ product }) {
         {product.name}
       </h2>
 
-      <div className="mt-4 space-y-2 text-sm">
+      <div className="mt-4 space-y-3 text-lg font-bold text-gray-800">
         <p>
-          <span className="font-bold text-green-700">{t("common.brand")}</span>{" "}
+          <span className="text-green-700">{t("common.brand")}</span>{" "}
           {getBrandLabel(product.brand, language)}
         </p>
 
         <p>
-          <span className="font-bold text-green-700">{t("common.viscosity")}</span>{" "}
+          <span className="text-green-700">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>
 
         <p>
-          <span className="font-bold text-green-700">{t("common.volume")}</span>{" "}
+          <span className="text-green-700">{t("common.volume")}</span>{" "}
           {product.volume}
         </p>
 
         <p>
-          <span className="font-bold text-green-700">
+          <span className="text-green-700">
             {t("productCard.cartonCount")}
           </span>{" "}
           {product.cartonCount || "-"} {t("common.orderUnit.number")}
@@ -46,7 +46,7 @@ function ProductInfo({ product }) {
       <div className="mt-5">
         <p
           className="
-          text-xl
+          text-2xl
           font-extrabold
           text-green-700
           "
@@ -54,7 +54,7 @@ function ProductInfo({ product }) {
           {formatPrice(product.price, language)}
         </p>
 
-        <p className="text-xs text-gray-500">{t("productCard.pricePerUnit")}</p>
+        <p className="text-sm text-gray-500">{t("productCard.pricePerUnit")}</p>
       </div>
     </>
   );

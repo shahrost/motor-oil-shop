@@ -2,6 +2,7 @@ import brands from "../data/brands";
 import viscosities from "../data/productOptions/viscosities";
 import volumes from "../data/productOptions/volumes";
 import priceRanges from "../data/productOptions/priceRanges";
+import api from "../data/productOptions/api";
 import translations from "../i18n/translations";
 
 export function getBrands(language = "fa") {
@@ -30,6 +31,13 @@ export function getVolumes(language = "fa") {
       value: item,
       label: volumeLabels[item] || item,
     })),
+  ];
+}
+
+export function getApiOptions(language = "fa") {
+  return [
+    { value: "همه", label: language === "en" ? "All" : "همه" },
+    ...api.map((item) => ({ value: item, label: item })),
   ];
 }
 

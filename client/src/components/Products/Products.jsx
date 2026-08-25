@@ -19,6 +19,12 @@ function Products() {
     volume,
     setVolume,
 
+    api,
+    setApi,
+
+    productType,
+    setProductType,
+
     priceOption,
     setPriceOption,
 
@@ -28,6 +34,8 @@ function Products() {
     brands,
     viscosities,
     volumes,
+    apiOptions,
+    productTypeOptions,
     priceOptions,
 
     showTop,
@@ -47,6 +55,10 @@ function Products() {
         setViscosity={setViscosity}
         volume={volume}
         setVolume={setVolume}
+        api={api}
+        setApi={setApi}
+        productType={productType}
+        setProductType={setProductType}
         priceOption={priceOption}
         setPriceOption={setPriceOption}
         onlyAvailable={onlyAvailable}
@@ -54,6 +66,8 @@ function Products() {
         brands={brands}
         viscosities={viscosities}
         volumes={volumes}
+        apiOptions={apiOptions}
+        productTypeOptions={productTypeOptions}
         priceOptions={priceOptions}
         clearFilters={clearFilters}
       />

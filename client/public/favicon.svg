@@ -1,10 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="92 0 136 100" width="272" height="200">
- <g stroke="#1a1a1c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -112 324 324" width="100" height="100">
+ <g stroke="#e8b400" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none">
+  <line x1="32" y1="8" x2="288" y2="8"></line>
+  <line x1="32" y1="8" x2="32" y2="48"></line>
+  <line x1="32" y1="48" x2="100" y2="48"></line>
   <line x1="100" y1="8" x2="100" y2="92"></line>
   <line x1="220" y1="8" x2="220" y2="92"></line>
   <line x1="100" y1="8" x2="160" y2="66"></line>
   <line x1="220" y1="8" x2="160" y2="66"></line>
   <line x1="160" y1="66" x2="160" y2="92"></line>
   <line x1="100" y1="66" x2="220" y2="66"></line>
+  <line x1="8" y1="92" x2="100" y2="92"></line>
+  <line x1="220" y1="92" x2="312" y2="92"></line>
+  <line x1="288" y1="8" x2="288" y2="48"></line>
+  <line x1="288" y1="48" x2="220" y2="48"></line>
  </g>
 </svg>

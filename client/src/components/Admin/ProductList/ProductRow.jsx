@@ -32,7 +32,11 @@ function ProductRow({ product, startEdit, deleteProduct }) {
         </button>
 
         <button
-          onClick={() => deleteProduct(product.id)}
+          onClick={() => {
+            if (window.confirm(`محصول «${product.name}» حذف شود؟`)) {
+              deleteProduct(product.id);
+            }
+          }}
           className="
           bg-red-600
           text-white

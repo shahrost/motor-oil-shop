@@ -53,45 +53,15 @@ function Header() {
         >
           {/* BRAND */}
 
-          <div className="flex items-center gap-2.5">
-            <div className="relative shrink-0">
-              <Link to="/" aria-label={t("nav.home")}>
-                <img
-                  src={brandLogo}
-                  alt="شهرام روغن"
-                  className="h-8 md:h-9 w-auto select-none"
-                  draggable="false"
-                />
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => setPhotoOpen(true)}
-                aria-label={t("header.showPhoto")}
-                className="
-                hidden
-                sm:flex
-                absolute
-                -bottom-1.5
-                -right-1.5
-                w-6
-                h-6
-                rounded-full
-                ring-2
-                ring-gray-950
-                overflow-hidden
-                shadow
-                cursor-zoom-in
-                "
-              >
-                <img
-                  src={ownerPhoto}
-                  alt="شهرام"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: "50% 12%" }}
-                />
-              </button>
-            </div>
+          <div className="flex items-center gap-3">
+            <Link to="/" aria-label={t("nav.home")} className="shrink-0">
+              <img
+                src={brandLogo}
+                alt="شهرام روغن"
+                className="h-9 md:h-10 w-auto select-none"
+                draggable="false"
+              />
+            </Link>
 
             <Link to="/" className="leading-tight">
               <h1
@@ -110,6 +80,32 @@ function Header() {
                 shahram_roghan
               </p>
             </Link>
+
+            <button
+              type="button"
+              onClick={() => setPhotoOpen(true)}
+              aria-label={t("header.showPhoto")}
+              className="
+              hidden
+              sm:flex
+              w-8
+              h-8
+              rounded-full
+              ring-2
+              ring-gray-700
+              overflow-hidden
+              shadow
+              shrink-0
+              cursor-zoom-in
+              "
+            >
+              <img
+                src={ownerPhoto}
+                alt="شهرام"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "50% 12%" }}
+              />
+            </button>
           </div>
 
           {/* MENU */}
@@ -139,16 +135,16 @@ function Header() {
               flex
               items-center
               bg-gray-800
-              rounded-xl
-              p-1
-              text-xs
+              rounded-lg
+              p-0.5
+              text-[11px]
               font-bold
               "
             >
               <button
                 type="button"
                 onClick={() => setLanguage("en")}
-                className={`px-2.5 py-1.5 rounded-lg transition ${
+                className={`px-1.5 py-1 rounded-md transition ${
                   language === "en"
                     ? "bg-yellow-400 text-black"
                     : "text-gray-300 hover:text-white"
@@ -160,7 +156,7 @@ function Header() {
               <button
                 type="button"
                 onClick={() => setLanguage("fa")}
-                className={`px-2.5 py-1.5 rounded-lg transition ${
+                className={`px-1.5 py-1 rounded-md transition ${
                   language === "fa"
                     ? "bg-yellow-400 text-black"
                     : "text-gray-300 hover:text-white"
@@ -213,16 +209,24 @@ function Header() {
 
             <Link
               to={customer ? "/account" : "/register"}
+              title={customer ? customer.name : t("header.register")}
               className="
               hidden
               sm:flex
+              items-center
+              justify-center
               bg-indigo-600
               hover:bg-indigo-700
               text-white
-              px-4
-              py-2.5
+              w-11
+              h-11
               rounded-xl
               font-bold
+              text-[11px]
+              leading-tight
+              text-center
+              px-1
+              truncate
               transition
               "
             >
@@ -235,10 +239,13 @@ function Header() {
               to="/cart"
               className="
               relative
+              flex
+              items-center
+              justify-center
               bg-yellow-400
               text-black
-              px-4
-              py-2.5
+              w-11
+              h-11
               rounded-xl
               font-bold
               hover:bg-yellow-300
@@ -275,15 +282,15 @@ function Header() {
               className="
               hidden
               md:flex
+              items-center
+              justify-center
               bg-green-600
               hover:bg-green-700
               text-white
-              px-4
-              py-2.5
+              w-11
+              h-11
               rounded-xl
               font-bold
-              items-center
-              justify-center
               "
             >
               <img
@@ -298,11 +305,13 @@ function Header() {
               className="
               hidden
               md:flex
+              items-center
+              justify-center
               bg-blue-600
               hover:bg-blue-700
               text-white
-              px-4
-              py-2.5
+              w-11
+              h-11
               rounded-xl
               font-bold
               "

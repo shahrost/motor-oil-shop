@@ -5,20 +5,20 @@ import acea from "../../../data/productOptions/acea";
 function TechnicalEdit({ editForm, handleEditChange }) {
   return (
     <>
-      <select
+      <input
+        list="viscosity-options-edit"
         name="viscosity"
         value={editForm.viscosity || ""}
         onChange={handleEditChange}
+        placeholder="ویسکوزیته (مثلاً 5W40 یا ISO VG 22)"
         className="border p-3 w-full rounded mb-3"
-      >
-        <option value="">انتخاب ویسکوزیته</option>
+      />
 
+      <datalist id="viscosity-options-edit">
         {viscosities.map((item) => (
-          <option key={item} value={item}>
-            {item}
-          </option>
+          <option key={item} value={item} />
         ))}
-      </select>
+      </datalist>
 
       <select
         name="api"

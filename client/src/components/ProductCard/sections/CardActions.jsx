@@ -9,7 +9,6 @@ function CardActions({ product, handleAddCart }) {
     <div
       className="
       flex
-      justify-center
       gap-2
       mt-4
       "
@@ -17,13 +16,17 @@ function CardActions({ product, handleAddCart }) {
       <Link
         to={`/product/${product.id}`}
         className="
+        flex-1
+        text-center
         bg-black
+        hover:bg-gray-800
         text-white
-        px-4
-        py-2
+        px-3
+        py-2.5
         rounded-lg
-        text-xs
+        text-sm
         font-bold
+        transition
         "
       >
         {t("productCard.view")}
@@ -32,17 +35,19 @@ function CardActions({ product, handleAddCart }) {
       <button
         onClick={handleAddCart}
         className="
+        flex-1
         bg-green-600
         hover:bg-green-700
         text-white
-        px-4
-        py-2
+        px-3
+        py-2.5
         rounded-lg
-        text-xs
+        text-sm
         font-bold
+        transition
         "
       >
-        🛒 {t("common.add")}
+        🛒 {t("common.addToCart")}
       </button>
     </div>
   );

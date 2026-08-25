@@ -23,7 +23,7 @@ function PurchaseBox({
       "
     >
       <div>
-        <label className="text-xs font-bold block mb-1">
+        <label className="text-sm font-bold block mb-1">
           {t("common.orderUnitLabel")}
         </label>
 
@@ -32,11 +32,11 @@ function PurchaseBox({
           onChange={(e) => setOrderType(e.target.value)}
           className="
           w-full
-          h-10
+          h-11
           border
           rounded-lg
           px-2
-          text-sm
+          text-base
           bg-white
           "
         >
@@ -49,7 +49,7 @@ function PurchaseBox({
       </div>
 
       <div>
-        <label className="text-xs font-bold block mb-1">
+        <label className="text-sm font-bold block mb-1">
           {t("common.quantity")}
         </label>
 
@@ -69,17 +69,17 @@ function PurchaseBox({
           }}
           className="
           w-full
-          h-10
+          h-11
           border
           rounded-lg
           px-2
-          text-sm
+          text-base
           "
         />
       </div>
 
       <div>
-        <label className="text-xs font-bold block mb-1">
+        <label className="text-sm font-bold block mb-1">
           {t("common.payment")}
         </label>
 
@@ -88,11 +88,11 @@ function PurchaseBox({
           onChange={(e) => setPaymentType(e.target.value)}
           className="
           w-full
-          h-10
+          h-11
           border
           rounded-lg
           px-2
-          text-sm
+          text-base
           "
         >
           {paymentTypes.map((item) => (

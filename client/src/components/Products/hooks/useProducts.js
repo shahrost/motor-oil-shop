@@ -6,21 +6,35 @@ import {
   getBrands,
   getViscosities,
   getVolumes,
+  getApiOptions,
   getPriceOptions,
 } from "../../../utils/productFilters";
 import priceRanges from "../../../data/productOptions/priceRanges";
+import {
+  normalizeViscosity,
+  normalizeVolume,
+  normalizeApi,
+} from "../../../utils/normalizeSpec";
+import {
+  classifyProductType,
+  getProductTypeOptions,
+} from "../../../utils/classifyProductType";
 
 function useProducts() {
   const { products } = useContext(ProductContext);
   const { language } = useContext(LanguageContext);
   const [searchParams] = useSearchParams();
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("search") || "");
   const [brand, setBrand] = useState(searchParams.get("brand") || "همه");
   const [viscosity, setViscosity] = useState(
     searchParams.get("viscosity") || "همه",
   );
   const [volume, setVolume] = useState(searchParams.get("volume") || "همه");
+  const [api, setApi] = useState(searchParams.get("api") || "همه");
+  const [productType, setProductType] = useState(
+    searchParams.get("productType") || "همه",
+  );
   const [priceRange, setPriceRange] = useState(
     searchParams.get("priceRange") || "همه",
   );
@@ -43,6 +57,8 @@ function useProducts() {
   const brands = getBrands(language);
   const viscosities = getViscosities(language);
   const volumes = getVolumes(language);
+  const apiOptions = getApiOptions(language);
+  const productTypeOptions = getProductTypeOptions(language);
   const priceOptions = getPriceOptions(language);
 
   const priceOption =
@@ -71,11 +87,13 @@ function useProducts() {
     let result = [...products];
 
     if (search.trim()) {
-      result = result.filter((product) =>
-        `${product.name} ${product.brand} ${product.viscosity} ${product.volume}`
-          .toLowerCase()
-          .includes(search.toLowerCase()),
-      );
+      const words = search.toLowerCase().trim().split(/\s+/);
+
+      result = result.filter((product) => {
+        const haystack = `${product.name} ${product.brand} ${product.sku || ""} ${product.category} ${product.viscosity} ${product.volume} ${product.oilType || ""}`.toLowerCase();
+
+        return words.every((word) => haystack.includes(word));
+      });
     }
 
     if (brand !== "همه") {
@@ -83,11 +101,33 @@ function useProducts() {
     }
 
     if (viscosity !== "همه") {
-      result = result.filter((product) => product.viscosity === viscosity);
+      const target = normalizeViscosity(viscosity);
+
+      result = result.filter(
+        (product) => normalizeViscosity(product.viscosity) === target,
+      );
     }
 
     if (volume !== "همه") {
-      result = result.filter((product) => product.volume === volume);
+      const target = normalizeVolume(volume);
+
+      result = result.filter(
+        (product) => normalizeVolume(product.volume) === target,
+      );
+    }
+
+    if (api !== "همه") {
+      const target = normalizeApi(api);
+
+      result = result.filter((product) =>
+        normalizeApi(product.api).includes(target),
+      );
+    }
+
+    if (productType !== "همه") {
+      result = result.filter(
+        (product) => classifyProductType(product.category) === productType,
+      );
     }
 
     if (priceRange !== "همه") {
@@ -129,6 +169,8 @@ function useProducts() {
     brand,
     viscosity,
     volume,
+    api,
+    productType,
     priceRange,
     sort,
     onlyAvailable,
@@ -139,6 +181,8 @@ function useProducts() {
     setBrand("همه");
     setViscosity("همه");
     setVolume("همه");
+    setApi("همه");
+    setProductType("همه");
     setPriceRange("همه");
     setSort("default");
     setOnlyAvailable(false);
@@ -161,6 +205,10 @@ function useProducts() {
     setViscosity,
     volume,
     setVolume,
+    api,
+    setApi,
+    productType,
+    setProductType,
     priceOption,
     setPriceOption,
     onlyAvailable,
@@ -169,6 +217,8 @@ function useProducts() {
     brands,
     viscosities,
     volumes,
+    apiOptions,
+    productTypeOptions,
     priceOptions,
     filteredProducts,
     clearFilters,

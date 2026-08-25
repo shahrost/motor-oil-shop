@@ -15,14 +15,18 @@ const storage = multer.diskStorage({
 });
 
 function fileFilter(req, file, cb) {
-  const allowed = [".jpg", ".jpeg", ".png", ".webp"];
+  const allowed = [".jpg", ".jpeg", ".png", ".webp", ".jfif", ".gif", ".bmp"];
 
   const ext = path.extname(file.originalname).toLowerCase();
 
   if (allowed.includes(ext)) {
     cb(null, true);
   } else {
-    cb(new Error("فرمت فایل مجاز نیست"));
+    cb(
+      new Error(
+        `فرمت فایل «${file.originalname}» مجاز نیست (فرمت آن: ${ext || "نامشخص"}). فرمت‌های مجاز: jpg, jpeg, png, webp, jfif, gif, bmp`,
+      ),
+    );
   }
 }
 

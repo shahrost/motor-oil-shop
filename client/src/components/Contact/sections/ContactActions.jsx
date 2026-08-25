@@ -7,12 +7,12 @@ function ContactActions() {
   const { t } = useContext(LanguageContext);
 
   return (
-    <div className="text-center mt-10">
+    <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
       <a
         href="https://wa.me/989198334264"
         target="_blank"
         rel="noreferrer"
-        className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-3 rounded-lg font-bold"
+        className="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3 rounded-lg font-bold"
       >
         <img src={whatsappLogo} alt="" className="w-5 h-5" />
         {t("contact.actions.whatsapp")}
@@ -20,7 +20,7 @@ function ContactActions() {
 
       <Link
         to="/products"
-        className="inline-block bg-yellow-400 text-black px-8 py-3 rounded-lg font-bold mr-4"
+        className="inline-flex items-center justify-center bg-yellow-400 text-black px-8 py-3 rounded-lg font-bold"
       >
         {t("common.viewProducts")}
       </Link>

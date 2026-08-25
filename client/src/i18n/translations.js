@@ -22,7 +22,7 @@ const translations = {
 
     footer: {
       tagline:
-        "تامین و فروش انواع روغن موتور برای فروشگاه‌های لوازم یدکی، تعویض روغنی‌ها و مشتریان عمده.",
+        "تامین و فروش انواع روغن موتور و فیلتر و اسپری‌جات و انواع اکتان برای فروشگاه‌های لوازم یدکی، اتوسرویس‌ها و مشتریان عمده.",
       rights: "تمامی حقوق محفوظ است",
       social: {
         telegram: "تلگرام",
@@ -44,6 +44,8 @@ const translations = {
       brandLabel: "برند",
       viscosityLabel: "گرید",
       volumeLabel: "لیتراژ",
+      apiLabel: "استاندارد API",
+      productTypeLabel: "نوع محصول",
       priceLabel: "قیمت",
       orderUnit: {
         number: "عدد",
@@ -91,6 +93,8 @@ const translations = {
         allBrands: "همه برندها",
         allViscosities: "همه گریدها",
         allVolumes: "همه لیتراژها",
+        allApis: "همه استانداردهای API",
+        allTypes: "همه انواع محصولات",
         submit: "نمایش محصولات",
       },
       brandList: {
@@ -106,6 +110,7 @@ const translations = {
       },
       search: {
         placeholder: "🔍 جستجوی سریع محصول، برند یا گرید...",
+        button: "جستجو",
       },
       features: {
         fastDelivery: {
@@ -114,7 +119,7 @@ const translations = {
         },
         wholesalePartnership: {
           title: "همکاری عمده",
-          description: "شرایط ویژه برای فروشگاه‌ها و تعویض روغنی‌ها",
+          description: "شرایط ویژه برای فروشگاه‌ها و اتوسرویس‌ها",
         },
         paymentTerms: {
           title: "شرایط پرداخت",
@@ -141,7 +146,7 @@ const translations = {
     productCard: {
       cartonCount: "تعداد در کارتن:",
       pricePerUnit: "قیمت هر عدد",
-      view: "مشاهده",
+      view: "مشخصات",
     },
 
     productDetail: {
@@ -250,7 +255,7 @@ const translations = {
         whatsappTitle: "واتساپ سفارش",
         whatsappText: "پاسخگویی سریع و دریافت لیست قیمت",
         salesTitle: "همکاری فروش",
-        salesText: "ویژه لوازم یدکی‌ها و تعویض روغنی‌ها",
+        salesText: "ویژه لوازم یدکی‌ها و اتوسرویس‌ها",
         areaTitle: "محدوده فعالیت",
         areaText:
           "سبزدشت، گلستان، بهارستان، پرند، رباط‌کریم، نسیم‌شهر، نصیرشهر، خیرآباد، همدانک، اورین، آدران، صباشهر، شاهدشهر، کهنز، جاده آدران، الارد",
@@ -260,14 +265,14 @@ const translations = {
     about: {
       title: "درباره روغن موتور شهرام",
       intro:
-        "روغن موتور شهرام تامین کننده روغن موتورهای با کیفیت برای فروشگاه‌های لوازم یدکی، تعویض روغنی‌ها و مصرف‌کنندگان عزیز است. هدف ما ارائه محصولات مطمئن، قیمت مناسب و پشتیبانی سریع می‌باشد.",
+        "تامین و فروش انواع روغن موتور و فیلتر و اسپری‌جات و انواع اکتان برای فروشگاه‌های لوازم یدکی، اتوسرویس‌ها و مشتریان عمده.",
       supply: {
         title: "تامین محصولات",
         text: "ارائه روغن موتور سمن و محصولات مورد نیاز بازار خودرو",
       },
       partnership: {
         title: "همکاری با همکاران",
-        text: "همکاری با لوازم یدکی‌ها و تعویض روغنی‌ها",
+        text: "همکاری با لوازم یدکی‌ها و اتوسرویس‌ها",
       },
       support: {
         title: "پشتیبانی سریع",
@@ -308,7 +313,7 @@ const translations = {
       next: "بعدی",
       slide1: {
         title: "ارسال سریع روغن موتور",
-        text: "تامین روغن موتور برای لوازم یدکی‌ها و تعویض روغنی‌ها در منطقه",
+        text: "تامین روغن موتور برای لوازم یدکی‌ها و اتوسرویس‌ها در منطقه",
       },
       slide2: {
         title: "شرایط همکاری ویژه",
@@ -344,7 +349,7 @@ const translations = {
 
     footer: {
       tagline:
-        "Supplying and selling all kinds of engine oil for auto-parts stores, oil-change shops, and wholesale customers.",
+        "Supplying and selling all kinds of engine oil, filters, sprays, and octane boosters for auto-parts stores, auto service centers, and wholesale customers.",
       rights: "All rights reserved",
       social: {
         telegram: "Telegram",
@@ -366,6 +371,8 @@ const translations = {
       brandLabel: "Brand",
       viscosityLabel: "Grade",
       volumeLabel: "Volume",
+      apiLabel: "API Standard",
+      productTypeLabel: "Product Type",
       priceLabel: "Price",
       orderUnit: {
         number: "Pcs",
@@ -413,6 +420,8 @@ const translations = {
         allBrands: "All Brands",
         allViscosities: "All Grades",
         allVolumes: "All Volumes",
+        allApis: "All API Standards",
+        allTypes: "All Product Types",
         submit: "Show Products",
       },
       brandList: {
@@ -428,6 +437,7 @@ const translations = {
       },
       search: {
         placeholder: "🔍 Quick search for a product, brand, or grade...",
+        button: "Search",
       },
       features: {
         fastDelivery: {
@@ -437,7 +447,7 @@ const translations = {
         wholesalePartnership: {
           title: "Wholesale Partnership",
           description:
-            "Special terms for auto-parts stores and oil-change shops",
+            "Special terms for auto-parts stores and auto service centers",
         },
         paymentTerms: {
           title: "Payment Terms",
@@ -464,7 +474,7 @@ const translations = {
     productCard: {
       cartonCount: "Items per Carton:",
       pricePerUnit: "Price per Unit",
-      view: "View",
+      view: "Specs",
     },
 
     productDetail: {
@@ -573,7 +583,7 @@ const translations = {
         whatsappTitle: "WhatsApp Orders",
         whatsappText: "Fast response and price list",
         salesTitle: "Sales Partnership",
-        salesText: "For auto-parts stores and oil-change shops",
+        salesText: "For auto-parts stores and auto service centers",
         areaTitle: "Service Area",
         areaText:
           "Sabzdasht, Golestan, Baharestan, Parand, Robat Karim, Nasim Shahr, Nasirshahr, Kheirabad, Hamedanak, Owrin, Adran, Sabashahr, Shahedshahr, Kohnooz, Adran Road, Alard",
@@ -583,14 +593,14 @@ const translations = {
     about: {
       title: "About Shahram Motor Oil",
       intro:
-        "Shahram Motor Oil supplies quality engine oil to auto-parts stores, oil-change shops, and valued customers. Our goal is to offer reliable products, fair prices, and fast support.",
+        "Supplying and selling all kinds of engine oil, filters, sprays, and octane boosters for auto-parts stores, auto service centers, and wholesale customers.",
       supply: {
         title: "Product Supply",
         text: "Providing Seman motor oil and other products the auto market needs",
       },
       partnership: {
         title: "Partner Collaboration",
-        text: "Working with auto-parts stores and oil-change shops",
+        text: "Working with auto-parts stores and auto service centers",
       },
       support: {
         title: "Fast Support",
@@ -631,7 +641,7 @@ const translations = {
       next: "Next",
       slide1: {
         title: "Fast Engine Oil Delivery",
-        text: "Supplying engine oil to auto-parts stores and oil-change shops in the area",
+        text: "Supplying engine oil to auto-parts stores and auto service centers in the area",
       },
       slide2: {
         title: "Special Partnership Terms",

@@ -1,6 +1,7 @@
 import ProductForm from "../../ProductForm";
 import ProductEditForm from "../../ProductEditForm";
 import ProductList from "../ProductList";
+import BulkTools from "./BulkTools/BulkTools";
 
 import useProductManager from "./hooks/useProductManager";
 
@@ -18,6 +19,8 @@ function ProductManager() {
 
   return (
     <section>
+      <BulkTools />
+
       <ProductForm addProduct={addProduct} />
 
       {editingProduct && (
