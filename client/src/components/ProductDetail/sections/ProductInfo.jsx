@@ -2,12 +2,21 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
 import LanguageContext from "../../../context/LanguageContext";
+import {
+  hasActivePromotion,
+  getPromotionRuleLines,
+} from "../../../utils/promotionCalc";
+import PromotionBadge from "../../common/PromotionBadge";
 
 function ProductInfo({ product }) {
   const { language, t } = useContext(LanguageContext);
 
+  const promoActive = hasActivePromotion(product.promotion);
+
   return (
     <div>
+      {promoActive && <PromotionBadge className="mb-3" />}
+
       <h1 className="text-3xl font-extrabold text-black">{product.name}</h1>
 
       <div className="mt-6 space-y-3 text-black">
@@ -47,6 +56,28 @@ function ProductInfo({ product }) {
           🟢 {t("productDetail.inStock")}
         </span>
       </div>
+
+      {promoActive && (
+        <div className="mt-6 bg-amber-50 border border-amber-300 rounded-2xl p-5">
+          <h3 className="font-bold text-lg mb-3 text-amber-800">
+            🎁 {t("common.promotion.badge")}
+          </h3>
+
+          <div className="space-y-1">
+            {getPromotionRuleLines(product.promotion, t).map((line, i) => (
+              <p key={i} className="text-amber-800 font-bold">
+                {line}
+              </p>
+            ))}
+          </div>
+
+          {product.promotion?.note && (
+            <p className="mt-3 text-sm text-amber-700">
+              {product.promotion.note}
+            </p>
+          )}
+        </div>
+      )}
 
       {product.description && (
         <div className="mt-6 bg-gray-50 rounded-2xl p-5">

@@ -19,6 +19,14 @@ const initialState = {
 
   isBestSeller: false,
   isActive: true,
+
+  promotion: {
+    isActive: false,
+    buyQty: "",
+    giftQtyCash: "",
+    giftQtyCheck: "",
+    note: "",
+  },
 };
 
 function useProductForm(addProduct) {
@@ -34,6 +42,19 @@ function useProductForm(addProduct) {
     setProduct((prev) => ({
       ...prev,
       [name]: newValue,
+    }));
+  }
+
+  function updatePromotionField(field, value) {
+    const isNumericField = field === "buyQty" || field.startsWith("giftQty");
+
+    const newValue = isNumericField
+      ? String(value).replace(/\D/g, "")
+      : value;
+
+    setProduct((prev) => ({
+      ...prev,
+      promotion: { ...prev.promotion, [field]: newValue },
     }));
   }
 
@@ -53,6 +74,7 @@ function useProductForm(addProduct) {
   return {
     product,
     updateField,
+    updatePromotionField,
     submitProduct,
   };
 }

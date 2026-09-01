@@ -2,6 +2,7 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import PaymentSelector from "./PaymentSelector";
 import LanguageContext from "../../../context/LanguageContext";
+import { calcPromotionGift } from "../../../utils/promotionCalc";
 
 function OrderProductCard({
   item,
@@ -17,6 +18,13 @@ function OrderProductCard({
     (item.orderType === "carton"
       ? Number(item.quantity) * Number(item.cartonCount || 1)
       : Number(item.quantity));
+
+  const giftQty = calcPromotionGift(
+    item.promotion,
+    item.orderType,
+    item.quantity,
+    item.paymentType,
+  );
 
   return (
     <div className="border border-gray-200 rounded-2xl p-5 bg-gray-50">
@@ -78,6 +86,15 @@ function OrderProductCard({
           {formatPrice(itemTotal, language)}
         </p>
       </div>
+
+      {giftQty > 0 && (
+        <div className="mt-3 bg-amber-50 border border-amber-300 rounded-2xl p-3 text-center">
+          <p className="font-bold text-amber-800">
+            🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
+            {t("common.orderUnit.carton")}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

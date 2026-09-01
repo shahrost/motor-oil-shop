@@ -10,6 +10,7 @@ import Viscosity from "../pages/Viscosity";
 import ViscosityProducts from "../pages/ViscosityProducts";
 import Brands from "../pages/Brands";
 import BrandProducts from "../pages/BrandProducts";
+import Promotions from "../pages/Promotions";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
 import Register from "../pages/Register";
@@ -45,6 +46,8 @@ function AppRoutes() {
         <Route path="/brands" element={<Brands />} />
 
         <Route path="/brand/:brand" element={<BrandProducts />} />
+
+        <Route path="/promotions" element={<Promotions />} />
 
         <Route path="/contact" element={<Contact />} />
 

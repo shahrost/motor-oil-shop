@@ -4,6 +4,7 @@ const translations = {
       home: "خانه",
       products: "محصولات",
       brands: "برندها",
+      promotions: "طرح‌های فروش",
       cart: "سبد خرید",
       contact: "تماس با ما",
     },
@@ -54,6 +55,12 @@ const translations = {
       paymentType: {
         cash: "نقدی",
         check: "اعتباری",
+      },
+      promotion: {
+        badge: "طرح فروش ویژه",
+        every: "هر",
+        gift: "هدیه",
+        giftEarned: "هدیه این خرید:",
       },
       viewProducts: "مشاهده محصولات",
       continueShopping: "ادامه خرید",
@@ -301,6 +308,12 @@ const translations = {
       viewGrade: "مشاهده روغن‌های",
     },
 
+    promotions: {
+      title: "طرح‌های فروش",
+      subtitle: "طرح‌های ویژه هدیه‌دار روی محصولات منتخب",
+      notFound: "در حال حاضر طرح فروش فعالی وجود ندارد",
+    },
+
     viscosityProducts: {
       back: "بازگشت به گریدهای روغن",
       titlePrefix: "خرید روغن موتور",
@@ -331,6 +344,7 @@ const translations = {
       home: "Home",
       products: "Products",
       brands: "Brands",
+      promotions: "Sales Promotions",
       cart: "Cart",
       contact: "Contact Us",
     },
@@ -381,6 +395,12 @@ const translations = {
       paymentType: {
         cash: "Cash",
         check: "Credit",
+      },
+      promotion: {
+        badge: "Special Offer",
+        every: "Every",
+        gift: "free",
+        giftEarned: "Gift for this order:",
       },
       viewProducts: "View Products",
       continueShopping: "Continue Shopping",
@@ -627,6 +647,12 @@ const translations = {
       title: "Engine Oil Categories",
       subtitle: "Choose the right oil grade",
       viewGrade: "View",
+    },
+
+    promotions: {
+      title: "Sales Promotions",
+      subtitle: "Special gift-with-purchase offers on selected products",
+      notFound: "There are no active sales promotions right now",
     },
 
     viscosityProducts: {

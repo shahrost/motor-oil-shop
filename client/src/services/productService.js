@@ -45,6 +45,8 @@ export async function createProductService(product) {
 
   formData.append("isActive", product.isActive ?? true);
 
+  formData.append("promotion", JSON.stringify(product.promotion || {}));
+
   // ارسال عکس واقعی
 
   if (product.image?.file) {
@@ -73,6 +75,11 @@ export async function updateProductService(id, product) {
 
   Object.entries(product).forEach(([key, value]) => {
     if (key === "image") return;
+
+    if (key === "promotion") {
+      formData.append(key, JSON.stringify(value || {}));
+      return;
+    }
 
     if (value !== undefined && value !== null) {
       formData.append(key, value);

@@ -116,6 +116,33 @@ const ProductSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    promotion: {
+      isActive: {
+        type: Boolean,
+        default: false,
+      },
+
+      buyQty: {
+        type: Number,
+        default: 0,
+      },
+
+      giftQtyCash: {
+        type: Number,
+        default: 0,
+      },
+
+      giftQtyCheck: {
+        type: Number,
+        default: 0,
+      },
+
+      note: {
+        type: String,
+        default: "",
+      },
+    },
   },
 
   {

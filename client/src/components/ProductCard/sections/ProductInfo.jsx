@@ -2,12 +2,18 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
 import LanguageContext from "../../../context/LanguageContext";
+import { hasActivePromotion } from "../../../utils/promotionCalc";
+import PromotionBadge from "../../common/PromotionBadge";
 
 function ProductInfo({ product }) {
   const { language, t } = useContext(LanguageContext);
 
   return (
     <>
+      {hasActivePromotion(product.promotion) && (
+        <PromotionBadge className="mt-3" />
+      )}
+
       <h2
         className="
         text-xl

@@ -3,6 +3,7 @@ import formatPrice from "../../../utils/formatPrice";
 import getImageUrl from "../../../utils/getImageUrl";
 import getBrandLabel from "../../../utils/brandLabel";
 import LanguageContext from "../../../context/LanguageContext";
+import { calcPromotionGift } from "../../../utils/promotionCalc";
 
 function CartItem({
   item,
@@ -13,6 +14,13 @@ function CartItem({
   changePaymentType,
 }) {
   const { language, t } = useContext(LanguageContext);
+
+  const giftQty = calcPromotionGift(
+    item.promotion,
+    item.orderType,
+    item.quantity,
+    item.paymentType,
+  );
 
   return (
     <div className="bg-white rounded-3xl shadow p-5 grid md:grid-cols-4 gap-5">
@@ -87,6 +95,13 @@ function CartItem({
         <p className="text-green-700 text-2xl font-extrabold">
           {formatPrice(item.price, language)}
         </p>
+
+        {giftQty > 0 && (
+          <p className="bg-amber-50 border border-amber-300 text-amber-800 rounded-lg p-2 text-sm font-bold text-center">
+            🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
+            {t("common.orderUnit.carton")}
+          </p>
+        )}
 
         <button
           onClick={() => removeFromCart(item.id, index)}

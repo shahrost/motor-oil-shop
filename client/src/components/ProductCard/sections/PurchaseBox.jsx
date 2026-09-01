@@ -2,8 +2,10 @@ import { useContext } from "react";
 import orderUnits from "../../../data/orderUnits";
 import paymentTypes from "../../../data/paymentTypes";
 import LanguageContext from "../../../context/LanguageContext";
+import { calcPromotionGift } from "../../../utils/promotionCalc";
 
 function PurchaseBox({
+  product,
   orderType,
   setOrderType,
   quantity,
@@ -12,6 +14,13 @@ function PurchaseBox({
   setPaymentType,
 }) {
   const { t } = useContext(LanguageContext);
+
+  const giftQty = calcPromotionGift(
+    product?.promotion,
+    orderType,
+    quantity,
+    paymentType,
+  );
 
   return (
     <div
@@ -102,6 +111,27 @@ function PurchaseBox({
           ))}
         </select>
       </div>
+
+      {giftQty > 0 && (
+        <div
+          className="
+          col-span-3
+          mt-1
+          bg-amber-50
+          border
+          border-amber-300
+          rounded-lg
+          p-2
+          text-amber-800
+          text-sm
+          font-bold
+          text-center
+          "
+        >
+          🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
+          {t("common.orderUnit.carton")}
+        </div>
+      )}
     </div>
   );
 }

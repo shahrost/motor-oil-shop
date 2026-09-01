@@ -4,12 +4,14 @@ import {
   ProductStatus,
   TechnicalInfo,
   ImageSection,
+  PromotionSection,
 } from "./sections";
 
 import useProductForm from "./hooks/useProductForm";
 
 function ProductForm({ addProduct }) {
-  const { product, updateField, submitProduct } = useProductForm(addProduct);
+  const { product, updateField, updatePromotionField, submitProduct } =
+    useProductForm(addProduct);
 
   return (
     <form
@@ -26,6 +28,11 @@ function ProductForm({ addProduct }) {
       <Description product={product} updateField={updateField} />
 
       <ProductStatus product={product} updateField={updateField} />
+
+      <PromotionSection
+        product={product}
+        updatePromotionField={updatePromotionField}
+      />
 
       <ImageSection product={product} updateField={updateField} />
 

@@ -6,14 +6,17 @@ import {
   DescriptionEdit,
   StatusEdit,
   ImageEdit,
+  PromotionEdit,
 } from "./sections";
 
 function ProductEditForm({ product, updateProduct, closeEdit }) {
-  const { editForm, handleEditChange, saveEdit, cancelEdit } = useProductEdit(
-    product,
-    updateProduct,
-    closeEdit,
-  );
+  const {
+    editForm,
+    handleEditChange,
+    handlePromotionChange,
+    saveEdit,
+    cancelEdit,
+  } = useProductEdit(product, updateProduct, closeEdit);
   return (
     <div>
       <h2 className="text-xl font-bold mb-5">ویرایش محصول</h2>
@@ -28,6 +31,11 @@ function ProductEditForm({ product, updateProduct, closeEdit }) {
       />
 
       <StatusEdit editForm={editForm} handleEditChange={handleEditChange} />
+
+      <PromotionEdit
+        editForm={editForm}
+        handlePromotionChange={handlePromotionChange}
+      />
 
       <ImageEdit editForm={editForm} handleEditChange={handleEditChange} />
 

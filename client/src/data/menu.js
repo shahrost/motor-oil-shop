@@ -15,6 +15,11 @@ const menu = [
     path: "/brands",
   },
   {
+    key: "promotions",
+    titleFa: "طرح‌های فروش",
+    path: "/promotions",
+  },
+  {
     key: "cart",
     titleFa: "سبد خرید",
     path: "/cart",

@@ -13,8 +13,19 @@ async function getProducts() {
 
 
 
+function parsePromotion(data) {
+  if (typeof data.promotion === "string") {
+    try {
+      data.promotion = JSON.parse(data.promotion);
+    } catch {
+      delete data.promotion;
+    }
+  }
+}
+
 async function createProduct(data, file) {
 
+  parsePromotion(data);
 
   const validation = validateProduct(data);
 
@@ -53,6 +64,8 @@ async function updateProduct(id, data, file) {
   if (!mongoose.isValidObjectId(id)) {
     throw new AppError("شناسه محصول نامعتبر است", 400);
   }
+
+  parsePromotion(data);
 
   const validation = validateProduct(data);
 

@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
+import { calcPromotionGift } from "../../../utils/promotionCalc";
 
 function ProductPurchase({
+  product,
   quantity,
   setQuantity,
   orderType,
@@ -13,6 +15,13 @@ function ProductPurchase({
   added,
 }) {
   const { t } = useContext(LanguageContext);
+
+  const giftQty = calcPromotionGift(
+    product?.promotion,
+    orderType,
+    quantity,
+    paymentType,
+  );
 
   return (
     <div className="mt-8">
@@ -69,6 +78,15 @@ function ProductPurchase({
           {finalCount()} {t("common.orderUnit.number")}
         </p>
       </div>
+
+      {giftQty > 0 && (
+        <div className="mt-5 bg-amber-50 border border-amber-300 rounded-2xl p-5 text-center">
+          <p className="font-bold text-amber-800">
+            🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
+            {t("common.orderUnit.carton")}
+          </p>
+        </div>
+      )}
 
       <button
         type="button"

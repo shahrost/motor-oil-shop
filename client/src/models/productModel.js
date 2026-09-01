@@ -34,6 +34,14 @@ const productModel = {
 
   isBestSeller: false,
   isActive: true,
+
+  promotion: {
+    isActive: false,
+    buyQty: 0,
+    giftQtyCash: 0,
+    giftQtyCheck: 0,
+    note: "",
+  },
 };
 
 export default productModel;

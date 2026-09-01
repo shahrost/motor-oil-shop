@@ -1,3 +1,5 @@
+import { calcPromotionGift } from "../../../utils/promotionCalc";
+
 function buildOrderData(cart, customer, cartTotal, customerId) {
   return {
     customerId: customerId || "",
@@ -27,6 +29,13 @@ function buildOrderData(cart, customer, cartTotal, customerId) {
           : Number(item.quantity),
 
       price: item.price,
+
+      giftQty: calcPromotionGift(
+        item.promotion,
+        item.orderType || "number",
+        item.quantity,
+        item.paymentType || "cash",
+      ),
     })),
 
     totalPrice: cartTotal,

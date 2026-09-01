@@ -39,6 +39,7 @@ function ProductDetail() {
           <ProductInfo product={product} />
 
           <ProductPurchase
+            product={product}
             quantity={quantity}
             setQuantity={setQuantity}
             orderType={orderType}

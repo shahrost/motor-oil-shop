@@ -13,6 +13,13 @@ function useProductEdit(product, updateProduct, closeEdit) {
     }));
   }
 
+  function handlePromotionChange(field, value) {
+    setEditForm((prev) => ({
+      ...prev,
+      promotion: { ...prev.promotion, [field]: value },
+    }));
+  }
+
   async function saveEdit() {
     const finalProduct = buildEditProductData(editForm);
 
@@ -28,6 +35,7 @@ function useProductEdit(product, updateProduct, closeEdit) {
   return {
     editForm,
     handleEditChange,
+    handlePromotionChange,
     saveEdit,
     cancelEdit,
   };

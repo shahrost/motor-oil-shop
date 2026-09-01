@@ -29,6 +29,7 @@ function ProductCard({ product }) {
       <ProductInfo product={product} />
 
       <PurchaseBox
+        product={product}
         orderType={orderType}
         setOrderType={setOrderType}
         quantity={quantity}
