@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const productRepository = require("../repositories/productRepository");
 const validateProduct = require("../validations/productValidation");
 const AppError = require("../utils/AppError");
+const { removeProductImages } = require("../utils/removeUploadedImage");
 
 
 async function getProducts() {
@@ -67,7 +68,17 @@ async function updateProduct(id, data, file) {
 
 
 
+  let previousImages = null;
+
   if (file) {
+
+    const existing = await productRepository.getProductById(id);
+
+    if (!existing) {
+      throw new AppError("محصول یافت نشد", 404);
+    }
+
+    previousImages = existing.image;
 
     data.image = {
       main: `/uploads/products/${file.filename}`,
@@ -85,6 +96,10 @@ async function updateProduct(id, data, file) {
 
   if (!product) {
     throw new AppError("محصول یافت نشد", 404);
+  }
+
+  if (previousImages) {
+    removeProductImages(previousImages);
   }
 
   return product;
@@ -105,6 +120,8 @@ async function deleteProduct(id) {
   if (!product) {
     throw new AppError("محصول یافت نشد", 404);
   }
+
+  removeProductImages(product.image);
 
   return product;
 
