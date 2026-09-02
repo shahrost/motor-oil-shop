@@ -6,6 +6,7 @@ on:
       - design-home-page
     paths:
       - 'server/**'
+  workflow_dispatch: {}
 
 jobs:
   deploy:
