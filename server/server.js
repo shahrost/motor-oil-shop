@@ -71,3 +71,5 @@ app.listen(PORT, () => {
 // retry: npm registry override via env var
 
 // retry: disable read-only fs for uploads dir
+
+// retry: custom DNS for MongoDB Atlas SRV lookup
