@@ -1,0 +1,33 @@
+name: Deploy Client to Liara
+
+on:
+  push:
+    branches:
+      - design-home-page
+    paths:
+      - 'client/**'
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install & Build
+        working-directory: ./client
+        run: |
+          npm install
+          npm run build
+        env:
+          VITE_API_URL: https://shoil-server.liara.run/api
+
+      - name: Deploy to Liara
+        run: |
+          npm install -g @liara/cli
+          liara deploy --app=shoil-client --path=./client/dist --platform=static --api-token=${{ secrets.LIARA_API_TOKEN }} --detach
