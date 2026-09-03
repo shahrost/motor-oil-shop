@@ -33,3 +33,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 );
 
 // deploy trigger: initial Liara client deployment
+
+// retry: switched to Liara react platform deploy
