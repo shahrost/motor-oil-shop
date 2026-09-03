@@ -75,3 +75,5 @@ app.listen(PORT, () => {
 // retry: custom DNS for MongoDB Atlas SRV lookup
 
 // retry: updated MongoDB auth credentials
+
+// retry: add shoil-client.liara.run to CORS_ORIGIN
