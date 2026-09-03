@@ -77,3 +77,5 @@ app.listen(PORT, () => {
 // retry: updated MongoDB auth credentials
 
 // retry: add shoil-client.liara.run to CORS_ORIGIN
+
+// retry: reset ADMIN_PASSWORD_HASH
