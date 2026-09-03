@@ -1,5 +1,11 @@
 {
   "node": {
     "mirror": false
-  }
+  },
+  "disks": [
+    {
+      "name": "uploads",
+      "mountTo": "/app/uploads"
+    }
+  ]
 }
