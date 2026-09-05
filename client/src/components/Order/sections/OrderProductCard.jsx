@@ -3,6 +3,7 @@ import formatPrice from "../../../utils/formatPrice";
 import PaymentSelector from "./PaymentSelector";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
+import { getProductPrice } from "../../../utils/productPrice";
 
 function OrderProductCard({
   item,
@@ -14,7 +15,7 @@ function OrderProductCard({
   const { language, t } = useContext(LanguageContext);
 
   const itemTotal =
-    Number(item.price || 0) *
+    getProductPrice(item, item.paymentType) *
     (item.orderType === "carton"
       ? Number(item.quantity) * Number(item.cartonCount || 1)
       : Number(item.quantity));

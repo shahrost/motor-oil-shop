@@ -56,7 +56,17 @@ function TechnicalInfo({ product, updateField }) {
         name="price"
         value={product.price || ""}
         onChange={(e) => updateField("price", e.target.value)}
-        placeholder="قیمت (تومان)"
+        placeholder="قیمت نقدی (تومان)"
+        className="border p-3 rounded w-full mt-3"
+      />
+
+      <input
+        type="text"
+        inputMode="numeric"
+        name="priceCheck"
+        value={product.priceCheck || ""}
+        onChange={(e) => updateField("priceCheck", e.target.value)}
+        placeholder="قیمت اعتباری (تومان)"
         className="border p-3 rounded w-full mt-3"
       />
     </section>

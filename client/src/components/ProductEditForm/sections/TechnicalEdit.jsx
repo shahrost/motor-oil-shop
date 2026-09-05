@@ -62,7 +62,15 @@ function TechnicalEdit({ editForm, handleEditChange }) {
         name="price"
         value={editForm.price || ""}
         onChange={handleEditChange}
-        placeholder="قیمت"
+        placeholder="قیمت نقدی"
+        className="border p-3 w-full rounded mb-3"
+      />
+
+      <input
+        name="priceCheck"
+        value={editForm.priceCheck || ""}
+        onChange={handleEditChange}
+        placeholder="قیمت اعتباری"
         className="border p-3 w-full rounded mb-3"
       />
 

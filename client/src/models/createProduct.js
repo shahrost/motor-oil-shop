@@ -13,6 +13,7 @@ function createProduct(data = {}) {
       `${data.brand || ""} ${data.viscosity || ""} ${data.volume || ""}`.trim(),
 
     price: Number(data.price || 0),
+    priceCheck: Number(data.priceCheck || 0),
 
     cartonCount: Number(data.cartonCount || 0),
 

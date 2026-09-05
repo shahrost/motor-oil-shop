@@ -37,6 +37,8 @@ export async function createProductService(product) {
 
   formData.append("price", Number(product.price || 0));
 
+  formData.append("priceCheck", Number(product.priceCheck || 0));
+
   formData.append("cartonCount", Number(product.cartonCount || 0));
 
   formData.append("stock", Number(product.stock || 0));

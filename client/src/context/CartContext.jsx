@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { getCart, saveCart, clearCartStorage } from "../services/cartStorage";
+import { getProductPrice } from "../utils/productPrice";
 
 const CartContext = createContext();
 
@@ -140,7 +141,7 @@ export function CartProvider({ children }) {
           ? Number(item.quantity) * Number(item.cartonCount || 1)
           : Number(item.quantity);
 
-      return total + Number(item.price || 0) * count;
+      return total + getProductPrice(item, item.paymentType) * count;
     },
 
     0,

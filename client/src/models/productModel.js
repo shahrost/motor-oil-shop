@@ -20,6 +20,7 @@ const productModel = {
   description: "",
 
   price: 0,
+  priceCheck: 0,
 
   cartonCount: 0,
 

@@ -4,6 +4,7 @@ import getImageUrl from "../../../utils/getImageUrl";
 import getBrandLabel from "../../../utils/brandLabel";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
+import { getProductPrice } from "../../../utils/productPrice";
 
 function CartItem({
   item,
@@ -93,7 +94,7 @@ function CartItem({
 
       <div className="flex flex-col justify-between">
         <p className="text-green-700 text-2xl font-extrabold">
-          {formatPrice(item.price, language)}
+          {formatPrice(getProductPrice(item, item.paymentType), language)}
         </p>
 
         {giftQty > 0 && (

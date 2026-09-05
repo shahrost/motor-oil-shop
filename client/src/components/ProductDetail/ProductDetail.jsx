@@ -36,7 +36,7 @@ function ProductDetail() {
         <ProductGallery product={product} />
 
         <div>
-          <ProductInfo product={product} />
+          <ProductInfo product={product} paymentType={paymentType} />
 
           <ProductPurchase
             product={product}

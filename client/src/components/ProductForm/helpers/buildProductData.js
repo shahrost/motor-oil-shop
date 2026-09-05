@@ -14,6 +14,7 @@ function buildProductData(product) {
     description: product.description || "",
 
     price: Number(product.price || 0),
+    priceCheck: Number(product.priceCheck || 0),
     cartonCount: Number(product.cartonCount || 0),
 
     stock: Number(product.stock || 0),

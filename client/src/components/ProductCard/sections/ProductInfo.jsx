@@ -3,9 +3,10 @@ import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
 import LanguageContext from "../../../context/LanguageContext";
 import { hasActivePromotion } from "../../../utils/promotionCalc";
+import { getProductPrice } from "../../../utils/productPrice";
 import PromotionBadge from "../../common/PromotionBadge";
 
-function ProductInfo({ product }) {
+function ProductInfo({ product, paymentType }) {
   const { language, t } = useContext(LanguageContext);
 
   return (
@@ -57,7 +58,7 @@ function ProductInfo({ product }) {
           text-green-700
           "
         >
-          {formatPrice(product.price, language)}
+          {formatPrice(getProductPrice(product, paymentType), language)}
         </p>
 
         <p className="text-sm text-gray-500">{t("productCard.pricePerUnit")}</p>

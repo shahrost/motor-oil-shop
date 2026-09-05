@@ -65,6 +65,11 @@ const ProductSchema = new mongoose.Schema(
       default: 0,
     },
 
+    priceCheck: {
+      type: Number,
+      default: 0,
+    },
+
     cartonCount: {
       type: Number,
       default: 1,

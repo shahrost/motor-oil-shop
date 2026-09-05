@@ -36,6 +36,8 @@ const COLUMN_MAP = {
   "نوع روغن": "oilType",
   توضیحات: "description",
   "قیمت (تومان)": "price",
+  "قیمت نقدی (تومان)": "price",
+  "قیمت اعتباری (تومان)": "priceCheck",
   "تعداد در کارتن": "cartonCount",
   موجودی: "stock",
   "تامین‌کننده": "supplier",
@@ -227,6 +229,12 @@ async function importProducts(excelFile, imageFiles = []) {
           isBestSeller: toBoolean(row.isBestSeller),
         };
 
+        const priceCheck = toNumber(row.priceCheck);
+
+        if (!isNaN(priceCheck)) {
+          doc.priceCheck = priceCheck;
+        }
+
         if (row.mainImage) {
           const mainFile = imagesByName.get(row.mainImage);
 
@@ -257,7 +265,7 @@ async function importProducts(excelFile, imageFiles = []) {
         const existing = await Product.findOne({ sku: doc.sku });
 
         if (existing) {
-          await Product.updateOne({ _id: existing._id }, doc);
+          await Product.updateOne({ _id: existing._id }, { $set: doc });
           results.updated += 1;
         } else {
           await Product.create(doc);
@@ -305,6 +313,12 @@ async function bulkUpdatePrices(excelFile) {
       }
 
       const update = { price };
+
+      const priceCheck = toNumber(row.priceCheck);
+
+      if (!isNaN(priceCheck)) {
+        update.priceCheck = priceCheck;
+      }
 
       const stock = toNumber(row.stock);
 

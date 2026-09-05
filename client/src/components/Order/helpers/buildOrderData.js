@@ -1,4 +1,5 @@
 import { calcPromotionGift } from "../../../utils/promotionCalc";
+import { getProductPrice } from "../../../utils/productPrice";
 
 function buildOrderData(cart, customer, cartTotal, customerId) {
   return {
@@ -28,7 +29,7 @@ function buildOrderData(cart, customer, cartTotal, customerId) {
           ? Number(item.quantity) * Number(item.cartonCount || 1)
           : Number(item.quantity),
 
-      price: item.price,
+      price: getProductPrice(item, item.paymentType || "cash"),
 
       giftQty: calcPromotionGift(
         item.promotion,

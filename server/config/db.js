@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const RETRY_DELAY_MS = 5000;
+
 async function connectDB() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
@@ -8,8 +10,9 @@ async function connectDB() {
   } catch (error) {
     console.log("MongoDB Connection Error ❌");
     console.log(error.message);
+    console.log(`Retrying in ${RETRY_DELAY_MS / 1000}s...`);
 
-    process.exit(1);
+    setTimeout(connectDB, RETRY_DELAY_MS);
   }
 }
 

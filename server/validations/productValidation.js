@@ -13,6 +13,10 @@ function validateProduct(data) {
     errors.push("قیمت باید عدد باشد");
   }
 
+  if (data.priceCheck && isNaN(data.priceCheck)) {
+    errors.push("قیمت اعتباری باید عدد باشد");
+  }
+
   if (data.stock && isNaN(data.stock)) {
     errors.push("موجودی باید عدد باشد");
   }
