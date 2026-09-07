@@ -60,6 +60,19 @@ const productTypes = [
     ],
   },
   {
+    id: "motorcycle",
+    label: "موتورسیکلت",
+    labelEn: "Motorcycle",
+    keywords: [
+      "موتورسیکلت",
+      "موتور سیکلت",
+      "موتورسکلت",
+      "موتو سیکلت",
+      "motorcycle",
+      "motorbike",
+    ],
+  },
+  {
     id: "engineOil",
     label: "روغن موتور",
     labelEn: "Engine Oil",

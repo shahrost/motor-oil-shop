@@ -106,7 +106,9 @@ function ProductFilters({
         >
           {apiOptions.map((item) => (
             <option key={item.value} value={item.value}>
-              {item.value === "همه" ? item.label : `API ${item.label}`}
+              {item.value === "همه" || item.label.startsWith("JASO")
+                ? item.label
+                : `API ${item.label}`}
             </option>
           ))}
         </select>
