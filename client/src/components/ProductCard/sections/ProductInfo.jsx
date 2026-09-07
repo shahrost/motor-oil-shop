@@ -32,12 +32,12 @@ function ProductInfo({ product, paymentType }) {
           {getBrandLabel(product.brand, language)}
         </p>
 
-        <p>
+        <p className="line-clamp-2 break-words" title={product.viscosity}>
           <span className="text-green-700">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>
 
-        <p>
+        <p className="line-clamp-2 break-words" title={product.volume}>
           <span className="text-green-700">{t("common.volume")}</span>{" "}
           {product.volume}
         </p>
