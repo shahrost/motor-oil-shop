@@ -29,8 +29,6 @@ function BrandRow({ brand, items, language, t }) {
           flex
           gap-3
           overflow-x-auto
-          snap-x
-          snap-mandatory
           pb-2
           scrollbar-hide
           cursor-grab
@@ -42,7 +40,6 @@ function BrandRow({ brand, items, language, t }) {
             key={product.id}
             className="
               flex-none
-              snap-start
               w-[calc((100%_-_1.5rem)*0.3334)]
               sm:w-[calc((100%_-_2.25rem)*0.25)]
               lg:w-[calc((100%_-_3rem)*0.2)]
