@@ -2,7 +2,13 @@ import { useRef } from "react";
 
 function useDragScroll() {
   const rowRef = useRef(null);
-  const state = useRef({ dragging: false, startX: 0, startScrollLeft: 0, moved: false });
+  const state = useRef({
+    dragging: false,
+    startX: 0,
+    startScrollLeft: 0,
+    moved: false,
+    rtlSign: 1,
+  });
 
   const handlePointerDown = (e) => {
     // only a held-down left mouse button starts a drag — leave touch/pen
@@ -16,6 +22,11 @@ function useDragScroll() {
     state.current.moved = false;
     state.current.startX = e.clientX;
     state.current.startScrollLeft = row.scrollLeft;
+    // Chrome/Firefox flip the sign of scrollLeft for rtl containers (0 at
+    // the start/right edge, negative as you scroll further in) — figure
+    // out which convention applies so the content always follows the
+    // mouse the same way regardless of text direction.
+    state.current.rtlSign = getComputedStyle(row).direction === "rtl" ? 1 : -1;
 
     row.setPointerCapture(e.pointerId);
     row.classList.add("cursor-grabbing");
@@ -39,7 +50,7 @@ function useDragScroll() {
 
     if (Math.abs(delta) > 3) state.current.moved = true;
 
-    row.scrollLeft = state.current.startScrollLeft - delta;
+    row.scrollLeft = state.current.startScrollLeft + state.current.rtlSign * delta;
   };
 
   const stopDragging = (e) => {
