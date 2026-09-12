@@ -19,7 +19,7 @@ function HomeSearch() {
     <section className="px-5 mt-8">
       <form
         onSubmit={handleSubmit}
-        className="max-w-5xl mx-auto bg-white rounded-3xl shadow p-4 flex gap-3"
+        className="max-w-5xl sm:max-w-md mx-auto bg-white rounded-3xl shadow p-3 sm:p-2 flex gap-2"
       >
         <input
           type="text"
@@ -32,7 +32,8 @@ function HomeSearch() {
             border
             border-gray-300
             rounded-2xl
-            p-4
+            p-3
+            sm:p-2
             text-black
             outline-none
             focus:ring-2
@@ -45,7 +46,8 @@ function HomeSearch() {
           aria-label={t("home.search.button")}
           className="
             shrink-0
-            w-14
+            w-12
+            sm:w-10
             rounded-2xl
             bg-yellow-400
             hover:bg-yellow-500
@@ -63,7 +65,7 @@ function HomeSearch() {
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-6 h-6"
+            className="w-5 h-5 sm:w-4 sm:h-4"
           >
             <circle cx="11" cy="11" r="7" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />

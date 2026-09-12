@@ -2,14 +2,9 @@ import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
 
-import brands from "../../data/brands";
-import features from "../../data/features";
-
 import HomeSearch from "./sections/HomeSearch";
 import QuickFilter from "./sections/QuickFilter";
-import BrandList from "./sections/BrandList";
 import BrandProductRows from "./sections/BrandProductRows";
-import Features from "./sections/Features";
 import SalesBanner from "./sections/SalesBanner";
 import FloatingActions from "./sections/FloatingActions";
 
@@ -19,8 +14,6 @@ function Home() {
   return (
     <div>
       <HomeSearch />
-
-      <QuickFilter />
 
       <section className="px-5 mt-12">
         <div className="max-w-7xl mx-auto">
@@ -34,13 +27,11 @@ function Home() {
         </div>
       </section>
 
-      <BrandList brands={brands} />
-
       <BrandProductRows />
 
       <SalesBanner />
 
-      <Features features={features} />
+      <QuickFilter />
 
       <FloatingActions />
     </div>
