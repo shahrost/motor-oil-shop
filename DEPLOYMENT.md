@@ -53,7 +53,7 @@
 
 1. یه App استاتیک (Static Site) دیگه تو Liara بساز، به پوشه‌ی `client` وصلش کن.
 2. Environment Variable: `VITE_API_URL` = آدرس سرور مرحله‌ی قبل + `/api` (مثلاً `https://api.shahramoil.ir/api`)
-3. دستور build: `npm run build`، پوشه‌ی خروجی: `dist`
+3. دستور build: `npm run build`، پوشه‌ی خروجی: `build` (طبق `outDir` در vite.config.js)
 
 ## مرحله ۴ — وصل کردن دامنه
 
