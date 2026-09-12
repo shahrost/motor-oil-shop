@@ -14,6 +14,8 @@ function ProductRowCard({ product }) {
   return (
     <Link
       to={`/product/${product.id}`}
+      draggable={false}
+      onDragStart={(e) => e.preventDefault()}
       className="
         h-full
         block
