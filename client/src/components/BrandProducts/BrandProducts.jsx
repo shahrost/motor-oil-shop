@@ -27,7 +27,7 @@ function BrandProducts() {
           {filteredProducts.length} {t("common.productsAvailable")}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-3 mt-10">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
