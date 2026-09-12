@@ -53,10 +53,10 @@ function BrandProductRows() {
                   className="
                     flex-none
                     snap-start
-                    w-[calc((100%-1.5rem)/3)]
-                    sm:w-[calc((100%-2.25rem)/4)]
-                    lg:w-[calc((100%-3rem)/5)]
-                    xl:w-[calc((100%-4.5rem)/7)]
+                    w-[calc((100%_-_1.5rem)*0.3334)]
+                    sm:w-[calc((100%_-_2.25rem)*0.25)]
+                    lg:w-[calc((100%_-_3rem)*0.2)]
+                    xl:w-[calc((100%_-_4.5rem)*0.14286)]
                   "
                 >
                   <ProductRowCard product={product} />
