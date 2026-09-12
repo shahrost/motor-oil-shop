@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import LanguageContext from "../../../context/LanguageContext";
+import useDragScroll from "./hooks/useDragScroll";
 
 function BrandList({ brands }) {
   const { language, t } = useContext(LanguageContext);
+  const { rowRef, dragHandlers } = useDragScroll();
 
   return (
     <section className="px-5 mt-12">
@@ -13,6 +15,8 @@ function BrandList({ brands }) {
         </h2>
 
         <div
+          ref={rowRef}
+          {...dragHandlers}
           className="
             flex
             gap-4
@@ -20,6 +24,8 @@ function BrandList({ brands }) {
             mt-8
             pb-4
             scrollbar-hide
+            cursor-grab
+            select-none
           "
         >
           {brands.map((brand) => {
@@ -29,6 +35,8 @@ function BrandList({ brands }) {
               <Link
                 key={brand.name}
                 to={`/brand/${brand.name}`}
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
                 className="
                   min-w-35
                   bg-white
@@ -52,6 +60,7 @@ function BrandList({ brands }) {
                     <img
                       src={brand.image}
                       alt={label}
+                      draggable={false}
                       className="
                         max-h-16
                         object-contain

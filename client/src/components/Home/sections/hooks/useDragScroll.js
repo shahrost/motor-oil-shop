@@ -10,7 +10,6 @@ function useDragScroll() {
     startX: 0,
     startScrollLeft: 0,
     moved: false,
-    rtlSign: 1,
   });
 
   const handlePointerDown = (e) => {
@@ -31,11 +30,6 @@ function useDragScroll() {
     state.current.moved = false;
     state.current.startX = e.clientX;
     state.current.startScrollLeft = row.scrollLeft;
-    // Chrome/Firefox flip the sign of scrollLeft for rtl containers (0 at
-    // the start/right edge, negative as you scroll further in) — figure
-    // out which convention applies so the content always follows the
-    // mouse the same way regardless of text direction.
-    state.current.rtlSign = getComputedStyle(row).direction === "rtl" ? 1 : -1;
   };
 
   const handlePointerMove = (e) => {
@@ -63,7 +57,7 @@ function useDragScroll() {
       row.classList.add("cursor-grabbing");
     }
 
-    row.scrollLeft = state.current.startScrollLeft + state.current.rtlSign * delta;
+    row.scrollLeft = state.current.startScrollLeft - delta;
   };
 
   const stopDragging = (e) => {
