@@ -1,8 +1,11 @@
 import { useRef } from "react";
 
+const DRAG_THRESHOLD = 3;
+
 function useDragScroll() {
   const rowRef = useRef(null);
   const state = useRef({
+    pressed: false,
     dragging: false,
     startX: 0,
     startScrollLeft: 0,
@@ -18,7 +21,13 @@ function useDragScroll() {
     const row = rowRef.current;
     if (!row) return;
 
-    state.current.dragging = true;
+    // don't capture the pointer yet — capturing immediately retargets the
+    // eventual click event away from whatever was actually pressed (e.g. a
+    // product link), silently breaking plain taps that never turn into a
+    // drag. Capture is deferred to the first move that crosses the
+    // threshold, once we know it's a genuine drag.
+    state.current.pressed = true;
+    state.current.dragging = false;
     state.current.moved = false;
     state.current.startX = e.clientX;
     state.current.startScrollLeft = row.scrollLeft;
@@ -27,13 +36,10 @@ function useDragScroll() {
     // out which convention applies so the content always follows the
     // mouse the same way regardless of text direction.
     state.current.rtlSign = getComputedStyle(row).direction === "rtl" ? 1 : -1;
-
-    row.setPointerCapture(e.pointerId);
-    row.classList.add("cursor-grabbing");
   };
 
   const handlePointerMove = (e) => {
-    if (!state.current.dragging) return;
+    if (!state.current.pressed) return;
 
     // self-heal if the button was released without a pointerup ever
     // reaching us (e.g. focus lost mid-drag) — otherwise a stray drag
@@ -48,22 +54,33 @@ function useDragScroll() {
 
     const delta = e.clientX - state.current.startX;
 
-    if (Math.abs(delta) > 3) state.current.moved = true;
+    if (!state.current.dragging) {
+      if (Math.abs(delta) <= DRAG_THRESHOLD) return;
+
+      state.current.dragging = true;
+      state.current.moved = true;
+      row.setPointerCapture(e.pointerId);
+      row.classList.add("cursor-grabbing");
+    }
 
     row.scrollLeft = state.current.startScrollLeft + state.current.rtlSign * delta;
   };
 
   const stopDragging = (e) => {
-    if (!state.current.dragging) return;
-
-    state.current.dragging = false;
+    if (!state.current.pressed) return;
 
     const row = rowRef.current;
-    row?.classList.remove("cursor-grabbing");
 
-    if (row && e && row.hasPointerCapture(e.pointerId)) {
-      row.releasePointerCapture(e.pointerId);
+    if (state.current.dragging) {
+      row?.classList.remove("cursor-grabbing");
+
+      if (row && e && row.hasPointerCapture(e.pointerId)) {
+        row.releasePointerCapture(e.pointerId);
+      }
     }
+
+    state.current.pressed = false;
+    state.current.dragging = false;
   };
 
   const handleClickCapture = (e) => {
