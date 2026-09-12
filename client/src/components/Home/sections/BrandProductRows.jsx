@@ -1,11 +1,9 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 
 import { ProductContext } from "../../../context";
 import LanguageContext from "../../../context/LanguageContext";
 import brandsData from "../../../data/brands";
-import getBrandLabel from "../../../utils/brandLabel";
-import ProductRowCard from "../../ProductCard/ProductRowCard";
+import BrandRow from "./BrandRow";
 
 function BrandProductRows() {
   const { products } = useContext(ProductContext);
@@ -22,48 +20,13 @@ function BrandProductRows() {
     <section className="px-5 mt-14">
       <div className="max-w-7xl mx-auto space-y-10">
         {rows.map(({ brand, items }) => (
-          <div key={brand.name}>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-extrabold">
-                {getBrandLabel(brand.name, language)}
-              </h2>
-
-              <Link
-                to={`/brand/${brand.name}`}
-                className="text-green-700 font-bold text-sm"
-              >
-                {t("home.featured.viewAll")}
-              </Link>
-            </div>
-
-            <div
-              className="
-                flex
-                gap-3
-                overflow-x-auto
-                snap-x
-                snap-mandatory
-                pb-2
-                scrollbar-hide
-              "
-            >
-              {items.map((product) => (
-                <div
-                  key={product.id}
-                  className="
-                    flex-none
-                    snap-start
-                    w-[calc((100%_-_1.5rem)*0.3334)]
-                    sm:w-[calc((100%_-_2.25rem)*0.25)]
-                    lg:w-[calc((100%_-_3rem)*0.2)]
-                    xl:w-[calc((100%_-_4.5rem)*0.14286)]
-                  "
-                >
-                  <ProductRowCard product={product} />
-                </div>
-              ))}
-            </div>
-          </div>
+          <BrandRow
+            key={brand.name}
+            brand={brand}
+            items={items}
+            language={language}
+            t={t}
+          />
         ))}
       </div>
     </section>
