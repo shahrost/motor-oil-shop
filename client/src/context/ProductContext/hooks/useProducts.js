@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import createProduct from "../../../models/createProduct";
+import { sortProductsDefault } from "../../../utils/sortProducts";
 
 import {
   fetchProducts,
@@ -24,7 +25,7 @@ function useProducts() {
           createProduct(product),
         );
 
-        setProducts(formattedProducts);
+        setProducts(sortProductsDefault(formattedProducts));
       } catch (error) {
         console.log("خطا در دریافت محصولات", error);
       }
@@ -43,7 +44,7 @@ function useProducts() {
         createProduct(product),
       );
 
-      setProducts(formattedProducts);
+      setProducts(sortProductsDefault(formattedProducts));
     } catch (error) {
       console.log("خطا در دریافت محصولات", error);
     }
@@ -53,7 +54,9 @@ function useProducts() {
     try {
       const newProduct = await createProductService(product);
 
-      setProducts((prev) => [...prev, createProduct(newProduct)]);
+      setProducts((prev) =>
+        sortProductsDefault([...prev, createProduct(newProduct)]),
+      );
     } catch (error) {
       alert(error.response?.data?.message || "خطا در ثبت محصول");
     }
@@ -74,8 +77,10 @@ function useProducts() {
       const updated = await updateProductService(id, updatedProduct);
 
       setProducts((prev) =>
-        prev.map((product) =>
-          product.id === id ? createProduct(updated) : product,
+        sortProductsDefault(
+          prev.map((product) =>
+            product.id === id ? createProduct(updated) : product,
+          ),
         ),
       );
     } catch (error) {
