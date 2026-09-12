@@ -31,6 +31,7 @@ function ProductRowCard({ product }) {
       <img
         src={getImageUrl(product.image?.main)}
         alt={product.name}
+        draggable={false}
         className="w-full h-24 sm:h-32 object-contain"
       />
 
