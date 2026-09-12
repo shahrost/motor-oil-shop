@@ -70,6 +70,11 @@ const ProductSchema = new mongoose.Schema(
       default: 0,
     },
 
+    discountPercent: {
+      type: Number,
+      default: 0,
+    },
+
     cartonCount: {
       type: Number,
       default: 1,

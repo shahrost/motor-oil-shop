@@ -21,6 +21,7 @@ const productModel = {
 
   price: 0,
   priceCheck: 0,
+  discountPercent: 0,
 
   cartonCount: 0,
 

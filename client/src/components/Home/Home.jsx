@@ -1,7 +1,5 @@
 import { useContext } from "react";
 
-import ProductCard from "../ProductCard";
-import { ProductContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
 
 import brands from "../../data/brands";
@@ -10,13 +8,12 @@ import features from "../../data/features";
 import HomeSearch from "./sections/HomeSearch";
 import QuickFilter from "./sections/QuickFilter";
 import BrandList from "./sections/BrandList";
-import FeaturedProducts from "./sections/FeaturedProducts";
+import BrandProductRows from "./sections/BrandProductRows";
 import Features from "./sections/Features";
 import SalesBanner from "./sections/SalesBanner";
 import FloatingActions from "./sections/FloatingActions";
 
 function Home() {
-  const { products } = useContext(ProductContext);
   const { t } = useContext(LanguageContext);
 
   return (
@@ -39,7 +36,7 @@ function Home() {
 
       <BrandList brands={brands} />
 
-      <FeaturedProducts products={products} ProductCard={ProductCard} />
+      <BrandProductRows />
 
       <SalesBanner />
 

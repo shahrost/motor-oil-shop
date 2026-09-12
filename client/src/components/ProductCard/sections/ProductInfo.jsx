@@ -5,6 +5,7 @@ import LanguageContext from "../../../context/LanguageContext";
 import { hasActivePromotion } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
 import PromotionBadge from "../../common/PromotionBadge";
+import DiscountBadge from "../../common/DiscountBadge";
 
 function ProductInfo({ product, paymentType }) {
   const { language, t } = useContext(LanguageContext);
@@ -50,7 +51,11 @@ function ProductInfo({ product, paymentType }) {
         </p>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-3 text-right">
+        <DiscountBadge percent={product.discountPercent || 0} />
+      </div>
+
+      <div className="mt-2">
         <p
           className="
           text-2xl
