@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
+import { getProductNameLabel } from "../../utils/productNameLabel";
 import formatPrice from "../../utils/formatPrice";
 import getImageUrl from "../../utils/getImageUrl";
 import { getProductPrice } from "../../utils/productPrice";
@@ -10,6 +11,7 @@ import DiscountBadge from "../common/DiscountBadge";
 
 function ProductRowCard({ product }) {
   const { language, t } = useContext(LanguageContext);
+  const name = getProductNameLabel(product.name, language);
 
   return (
     <Link
@@ -32,13 +34,13 @@ function ProductRowCard({ product }) {
     >
       <img
         src={getImageUrl(product.image?.main)}
-        alt={product.name}
+        alt={name}
         draggable={false}
         className="w-full h-24 sm:h-32 object-contain"
       />
 
       <h3 className="hidden sm:block mt-2 text-sm font-bold text-gray-900 line-clamp-2">
-        {product.name}
+        {name}
       </h3>
 
       <div className="mt-2 text-xs sm:text-sm font-bold text-gray-700 space-y-1">

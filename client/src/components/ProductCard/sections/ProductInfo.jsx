@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
+import { getProductNameLabel } from "../../../utils/productNameLabel";
 import LanguageContext from "../../../context/LanguageContext";
 import { hasActivePromotion } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
@@ -24,7 +25,7 @@ function ProductInfo({ product, paymentType }) {
         text-gray-900
         "
       >
-        {product.name}
+        {getProductNameLabel(product.name, language)}
       </h2>
 
       <div className="mt-4 space-y-3 text-lg font-bold text-gray-800">

@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
+import { getProductNameLabel } from "../../../utils/productNameLabel";
 import PaymentSelector from "./PaymentSelector";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
@@ -29,7 +30,9 @@ function OrderProductCard({
 
   return (
     <div className="border border-gray-200 rounded-2xl p-5 bg-gray-50">
-      <h3 className="text-xl font-extrabold text-black">{item.name}</h3>
+      <h3 className="text-xl font-extrabold text-black">
+        {getProductNameLabel(item.name, language)}
+      </h3>
 
       <div className="mt-3 space-y-2 text-gray-700">
         <p>

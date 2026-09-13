@@ -1,12 +1,18 @@
+import { useContext } from "react";
 import getImageUrl from "../../../utils/getImageUrl";
+import { getProductNameLabel } from "../../../utils/productNameLabel";
+import LanguageContext from "../../../context/LanguageContext";
 
 function ProductGallery({ product }) {
+  const { language } = useContext(LanguageContext);
+  const name = getProductNameLabel(product.name, language);
+
   return (
     <div>
       <div className="bg-gray-50 rounded-3xl p-5 flex items-center justify-center">
         <img
           src={getImageUrl(product.image?.main)}
-          alt={product.name}
+          alt={name}
           className="w-full h-80 object-contain hover:scale-105 transition"
         />
       </div>
@@ -17,7 +23,7 @@ function ProductGallery({ product }) {
             <img
               key={index}
               src={getImageUrl(img)}
-              alt={`${product.name}-${index}`}
+              alt={`${name}-${index}`}
               className="w-24 h-24 object-contain border rounded-xl cursor-pointer hover:scale-105 transition"
             />
           ))}

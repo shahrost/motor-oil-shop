@@ -2,6 +2,7 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getImageUrl from "../../../utils/getImageUrl";
 import getBrandLabel from "../../../utils/brandLabel";
+import { getProductNameLabel } from "../../../utils/productNameLabel";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
@@ -15,6 +16,7 @@ function CartItem({
   changePaymentType,
 }) {
   const { language, t } = useContext(LanguageContext);
+  const name = getProductNameLabel(item.name, language);
 
   const giftQty = calcPromotionGift(
     item.promotion,
@@ -28,13 +30,13 @@ function CartItem({
       <div className="bg-gray-50 rounded-2xl p-3">
         <img
           src={getImageUrl(item.image?.main)}
-          alt={item.name}
+          alt={name}
           className="w-full h-32 object-contain"
         />
       </div>
 
       <div>
-        <h2 className="text-xl font-bold text-black">{item.name}</h2>
+        <h2 className="text-xl font-bold text-black">{name}</h2>
 
         <p className="mt-2">
           {t("common.brand")}

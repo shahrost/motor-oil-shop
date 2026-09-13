@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
+import { getProductNameLabel } from "../../../utils/productNameLabel";
 import LanguageContext from "../../../context/LanguageContext";
 import {
   hasActivePromotion,
@@ -18,7 +19,9 @@ function ProductInfo({ product, paymentType }) {
     <div>
       {promoActive && <PromotionBadge className="mb-3" />}
 
-      <h1 className="text-3xl font-extrabold text-black">{product.name}</h1>
+      <h1 className="text-3xl font-extrabold text-black">
+        {getProductNameLabel(product.name, language)}
+      </h1>
 
       <div className="mt-6 space-y-3 text-black">
         <p>
