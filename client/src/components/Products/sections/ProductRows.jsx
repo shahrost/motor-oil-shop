@@ -1,12 +1,10 @@
 import { useContext } from "react";
 
-import { ProductContext } from "../../../context";
 import LanguageContext from "../../../context/LanguageContext";
 import brandsData from "../../../data/brands";
 import BrandRow from "../../common/BrandRow";
 
-function BrandProductRows() {
-  const { products } = useContext(ProductContext);
+function ProductRows({ products }) {
   const { t } = useContext(LanguageContext);
 
   const rows = brandsData
@@ -16,15 +14,21 @@ function BrandProductRows() {
     }))
     .filter((row) => row.items.length > 0);
 
-  return (
-    <section className="px-5 mt-14">
-      <div className="max-w-7xl mx-auto space-y-10">
-        {rows.map(({ brand, items }) => (
-          <BrandRow key={brand.name} brand={brand} items={items} t={t} />
-        ))}
+  if (rows.length === 0) {
+    return (
+      <div className="bg-white rounded-3xl p-10 text-center shadow">
+        <p className="text-xl font-bold text-gray-700">{t("products.notFound")}</p>
       </div>
-    </section>
+    );
+  }
+
+  return (
+    <div className="space-y-10">
+      {rows.map(({ brand, items }) => (
+        <BrandRow key={brand.name} brand={brand} items={items} t={t} />
+      ))}
+    </div>
   );
 }
 
-export default BrandProductRows;
+export default ProductRows;

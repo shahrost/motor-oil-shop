@@ -1,6 +1,7 @@
 import useProducts from "./hooks/useProducts";
+import ProductSearch from "./sections/ProductSearch";
+import ProductRows from "./sections/ProductRows";
 import ProductFilters from "./sections/ProductFilters";
-import ProductGrid from "./sections/ProductGrid";
 import ScrollTopButton from "./sections/ScrollTopButton";
 
 function Products() {
@@ -46,10 +47,12 @@ function Products() {
 
   return (
     <div className="px-5 mt-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <ProductSearch search={search} setSearch={setSearch} />
+
+        <ProductRows products={filteredProducts} />
+
         <ProductFilters
-          search={search}
-          setSearch={setSearch}
           brand={brand}
           setBrand={setBrand}
           viscosity={viscosity}
@@ -72,8 +75,6 @@ function Products() {
           priceOptions={priceOptions}
           clearFilters={clearFilters}
         />
-
-        <ProductGrid products={filteredProducts} />
       </div>
 
       <ScrollTopButton show={showTop} onClick={scrollToTop} />
