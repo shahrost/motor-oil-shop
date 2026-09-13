@@ -8,10 +8,27 @@ import formatPrice from "../../utils/formatPrice";
 import getImageUrl from "../../utils/getImageUrl";
 import { getProductPrice } from "../../utils/productPrice";
 import DiscountBadge from "../common/DiscountBadge";
+import useProductCard from "./hooks/useProductCard";
+
+// آزمایشی: فقط روی همین یک محصول (روغن ترمز لاکی سمن شیمی) فعاله تا قبل از
+// اضافه‌کردن به همه‌ی کارت‌ها، ببینیم خرید مستقیم از کارت چه شکلی می‌شه.
+const TEST_PRODUCT_ID = "6a9c65bd773c7c6890f2670a";
 
 function ProductRowCard({ product }) {
   const { language, t } = useContext(LanguageContext);
   const name = getProductNameLabel(product.name, language);
+  const isTestCard = product.id === TEST_PRODUCT_ID;
+
+  const {
+    quantity,
+    setQuantity,
+    orderType,
+    setOrderType,
+    paymentType,
+    setPaymentType,
+    added,
+    handleAddCart,
+  } = useProductCard(product);
 
   return (
     <Link
@@ -67,6 +84,50 @@ function ProductRowCard({ product }) {
       <p className="mt-1 text-sm sm:text-lg font-extrabold text-green-700">
         {formatPrice(getProductPrice(product), language)}
       </p>
+
+      {isTestCard && (
+        <div className="mt-2 space-y-1" onClick={(e) => e.preventDefault()}>
+          <select
+            value={orderType}
+            onChange={(e) => setOrderType(e.target.value)}
+            className="w-full border rounded-lg p-1 text-xs bg-white text-black"
+          >
+            <option value="number">{t("common.orderUnit.number")}</option>
+            <option value="carton">{t("common.orderUnit.carton")}</option>
+          </select>
+
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            className="w-full border rounded-lg p-1 text-xs text-black"
+          />
+
+          <select
+            value={paymentType}
+            onChange={(e) => setPaymentType(e.target.value)}
+            className="w-full border rounded-lg p-1 text-xs bg-white text-black"
+          >
+            <option value="cash">💵 {t("common.paymentType.cash")}</option>
+            <option value="check">📝 {t("common.paymentType.check")}</option>
+          </select>
+
+          <button
+            type="button"
+            onClick={handleAddCart}
+            className="w-full mt-1 bg-green-600 hover:bg-green-700 text-white py-1.5 rounded-lg text-xs font-bold transition"
+          >
+            🛒 {t("common.addToCart")}
+          </button>
+
+          {added && (
+            <p className="text-[11px] text-green-700 font-bold text-center">
+              ✅ {t("common.addedToCart")}
+            </p>
+          )}
+        </div>
+      )}
     </Link>
   );
 }
