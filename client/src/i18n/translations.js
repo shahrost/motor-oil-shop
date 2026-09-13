@@ -299,6 +299,10 @@ const translations = {
       notFound: "محصولی از این برند پیدا نشد",
     },
 
+    categoryProducts: {
+      notFound: "محصولی توی این دسته پیدا نشد",
+    },
+
     viscosity: {
       title: "دسته بندی روغن موتور",
       subtitle: "انتخاب گرید مناسب روغن",
@@ -635,6 +639,10 @@ const translations = {
     brandProducts: {
       title: "Products of",
       notFound: "No products found for this brand",
+    },
+
+    categoryProducts: {
+      notFound: "No products found in this category",
     },
 
     viscosity: {

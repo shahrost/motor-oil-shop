@@ -5,19 +5,24 @@ import CustomerAuthContext from "../../context/CustomerAuthContext";
 import ThemeContext from "../../context/ThemeContext";
 import LanguageContext from "../../context/LanguageContext";
 import menu from "../../data/menu";
+import menuCategories from "../../data/menuCategories";
 import ownerPhoto from "../../assets/logo/shahram-logo.png";
 import brandLogo from "../../assets/logo/shahram-monogram-yellow.svg";
 import whatsappLogo from "../../assets/social/whatsapp.svg";
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [photoOpen, setPhotoOpen] = useState(false);
+  const [mobileCategoriesOpen, setMobileCategoriesOpen] = useState(false);
 
   const { cartCount } = useContext(CartContext);
   const { customer } = useContext(CustomerAuthContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { language, setLanguage, t } = useContext(LanguageContext);
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setMobileCategoriesOpen(false);
+  };
 
   useEffect(() => {
     if (!photoOpen) return;
@@ -111,20 +116,77 @@ function Header() {
           {/* MENU */}
 
           <nav className="hidden lg:flex items-center gap-6">
-            {menu.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="
+            {menu.map((item) =>
+              item.key === "products" ? (
+                <div key={item.path} className="relative group py-2">
+                  <Link
+                    to={item.path}
+                    className="
+                    flex
+                    items-center
+                    gap-1
+                    font-bold
+                    text-gray-200
+                    hover:text-yellow-400
+                    transition
+                    "
+                  >
+                    {t(`nav.${item.key}`)}
+                    <span className="text-xs">▾</span>
+                  </Link>
+
+                  <div
+                    className="
+                    absolute
+                    top-full
+                    right-0
+                    hidden
+                    group-hover:grid
+                    grid-cols-2
+                    gap-x-4
+                    gap-y-1
+                    bg-gray-900
+                    border
+                    border-gray-800
+                    rounded-xl
+                    shadow-xl
+                    p-4
+                    w-104
+                    z-50
+                    "
+                  >
+                    {menuCategories.map((category) => (
+                      <Link
+                        key={category.slug}
+                        to={`/category/${category.slug}`}
+                        className="
+                        text-sm
+                        text-gray-200
+                        hover:text-yellow-400
+                        py-1.5
+                        transition
+                        "
+                      >
+                        {language === "en" ? category.labelEn : category.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="
       font-bold
       text-gray-200
       hover:text-yellow-400
       transition
       "
-              >
-                {t(`nav.${item.key}`)}
-              </Link>
-            ))}
+                >
+                  {t(`nav.${item.key}`)}
+                </Link>
+              ),
+            )}
           </nav>
 
           {/* ACTIONS */}
@@ -351,17 +413,56 @@ function Header() {
             font-bold
             "
             >
-              {menu.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    to={item.path}
-                    onClick={closeMenu}
-                    className="text-gray-200 hover:text-yellow-400"
-                  >
-                    {t(`nav.${item.key}`)}
-                  </Link>
-                </li>
-              ))}
+              {menu.map((item) =>
+                item.key === "products" ? (
+                  <li key={item.path}>
+                    <div className="flex items-center justify-center gap-2">
+                      <Link
+                        to={item.path}
+                        onClick={closeMenu}
+                        className="text-gray-200 hover:text-yellow-400"
+                      >
+                        {t(`nav.${item.key}`)}
+                      </Link>
+
+                      <button
+                        type="button"
+                        onClick={() => setMobileCategoriesOpen((v) => !v)}
+                        aria-label={t(`nav.${item.key}`)}
+                        className="text-gray-400"
+                      >
+                        {mobileCategoriesOpen ? "▴" : "▾"}
+                      </button>
+                    </div>
+
+                    {mobileCategoriesOpen && (
+                      <ul className="mt-3 grid grid-cols-2 gap-2">
+                        {menuCategories.map((category) => (
+                          <li key={category.slug}>
+                            <Link
+                              to={`/category/${category.slug}`}
+                              onClick={closeMenu}
+                              className="block text-sm text-gray-300 hover:text-yellow-400 bg-gray-800 rounded-lg py-2"
+                            >
+                              {language === "en" ? category.labelEn : category.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ) : (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path}
+                      onClick={closeMenu}
+                      className="text-gray-200 hover:text-yellow-400"
+                    >
+                      {t(`nav.${item.key}`)}
+                    </Link>
+                  </li>
+                ),
+              )}
 
               <li>
                 <Link

@@ -2,9 +2,9 @@ import { useContext } from "react";
 
 import LanguageContext from "../../../context/LanguageContext";
 import brandsData from "../../../data/brands";
-import BrandRow from "../../common/BrandRow";
+import BrandRow from "../BrandRow";
 
-function ProductRows({ products }) {
+function ProductRows({ products, notFoundKey = "products.notFound" }) {
   const { t } = useContext(LanguageContext);
 
   const rows = brandsData
@@ -17,7 +17,7 @@ function ProductRows({ products }) {
   if (rows.length === 0) {
     return (
       <div className="bg-white rounded-3xl p-10 text-center shadow">
-        <p className="text-xl font-bold text-gray-700">{t("products.notFound")}</p>
+        <p className="text-xl font-bold text-gray-700">{t(notFoundKey)}</p>
       </div>
     );
   }

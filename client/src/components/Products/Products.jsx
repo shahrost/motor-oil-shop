@@ -1,6 +1,6 @@
 import useProducts from "./hooks/useProducts";
 import ProductSearch from "./sections/ProductSearch";
-import ProductRows from "./sections/ProductRows";
+import ProductRows from "../common/ProductRows";
 import ProductFilters from "./sections/ProductFilters";
 import ScrollTopButton from "./sections/ScrollTopButton";
 
