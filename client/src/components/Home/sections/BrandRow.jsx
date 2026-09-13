@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
 
-import getBrandLabel from "../../../utils/brandLabel";
 import ProductRowCard from "../../ProductCard/ProductRowCard";
 import useDragScroll from "./hooks/useDragScroll";
 
-function BrandRow({ brand, items, language, t }) {
+function BrandRow({ brand, items, t }) {
   const { rowRef, dragHandlers } = useDragScroll();
 
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-extrabold">
-          {getBrandLabel(brand.name, language)}
-        </h2>
+        <img
+          src={brand.image}
+          alt={brand.name}
+          className="h-10 object-contain"
+        />
 
         <Link
           to={`/brand/${brand.name}`}

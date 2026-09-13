@@ -7,7 +7,7 @@ import BrandRow from "./BrandRow";
 
 function BrandProductRows() {
   const { products } = useContext(ProductContext);
-  const { language, t } = useContext(LanguageContext);
+  const { t } = useContext(LanguageContext);
 
   const rows = brandsData
     .map((brand) => ({
@@ -20,13 +20,7 @@ function BrandProductRows() {
     <section className="px-5 mt-14">
       <div className="max-w-7xl mx-auto space-y-10">
         {rows.map(({ brand, items }) => (
-          <BrandRow
-            key={brand.name}
-            brand={brand}
-            items={items}
-            language={language}
-            t={t}
-          />
+          <BrandRow key={brand.name} brand={brand} items={items} t={t} />
         ))}
       </div>
     </section>
