@@ -12,7 +12,7 @@ function BrandRow({ brand, items, t }) {
         <img
           src={brand.image}
           alt={brand.name}
-          className="h-16 object-contain"
+          className="h-16 max-w-45 object-contain"
         />
 
         <Link
