@@ -42,7 +42,7 @@ const socialLinks = [
 ];
 
 function Footer() {
-  const { t } = useContext(LanguageContext);
+  const { language, t } = useContext(LanguageContext);
 
   return (
     <footer className="bg-black text-white mt-10">
@@ -57,7 +57,7 @@ function Footer() {
             />
 
             <h2 className="text-yellow-400 text-2xl md:text-3xl font-extrabold">
-              شهرام روغن
+              {language === "en" ? "Shahram Roghan" : "شهرام روغن"}
             </h2>
           </div>
 
@@ -126,7 +126,9 @@ function Footer() {
           text-sm
         "
         >
-          © {new Date().getFullYear()} شهرام روغن - {t("footer.rights")}
+          © {new Date().getFullYear()}{" "}
+          {language === "en" ? "Shahram Roghan" : "شهرام روغن"} -{" "}
+          {t("footer.rights")}
         </div>
       </div>
     </footer>

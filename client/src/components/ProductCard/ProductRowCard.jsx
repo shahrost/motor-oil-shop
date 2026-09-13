@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
 import { getProductNameLabel } from "../../utils/productNameLabel";
+import { formatVolume } from "../../utils/formatVolume";
 import formatPrice from "../../utils/formatPrice";
 import getImageUrl from "../../utils/getImageUrl";
 import { getBrandLogo } from "../../utils/brandLogo";
@@ -73,7 +74,7 @@ function ProductRowCard({ product }) {
 
         <p className="line-clamp-1">
           <span className="text-green-700">{t("common.volume")}</span>{" "}
-          {product.volume}
+          {formatVolume(product.volume, language)}
         </p>
       </div>
 

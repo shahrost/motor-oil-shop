@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
+import { formatVolume } from "../../../utils/formatVolume";
 import PaymentSelector from "./PaymentSelector";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
@@ -47,7 +48,10 @@ function OrderProductCard({
 
         <p>
           {t("common.volume")}
-          <span className="font-bold text-black"> {item.volume}</span>
+          <span className="font-bold text-black">
+            {" "}
+            {formatVolume(item.volume, language)}
+          </span>
         </p>
       </div>
 

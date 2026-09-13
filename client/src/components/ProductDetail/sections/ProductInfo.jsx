@@ -2,6 +2,7 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
+import { formatVolume } from "../../../utils/formatVolume";
 import LanguageContext from "../../../context/LanguageContext";
 import {
   hasActivePromotion,
@@ -49,7 +50,8 @@ function ProductInfo({
         </p>
 
         <p>
-          <b className="text-green-700">{t("common.volume")}</b> {product.volume}
+          <b className="text-green-700">{t("common.volume")}</b>{" "}
+          {formatVolume(product.volume, language)}
         </p>
 
         <div className="flex items-center gap-2">

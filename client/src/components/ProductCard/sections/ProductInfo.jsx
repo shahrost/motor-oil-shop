@@ -2,6 +2,7 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
+import { formatVolume } from "../../../utils/formatVolume";
 import LanguageContext from "../../../context/LanguageContext";
 import { hasActivePromotion } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
@@ -39,9 +40,12 @@ function ProductInfo({ product, paymentType }) {
           {product.viscosity}
         </p>
 
-        <p className="line-clamp-2 break-words" title={product.volume}>
+        <p
+          className="line-clamp-2 break-words"
+          title={formatVolume(product.volume, language)}
+        >
           <span className="text-green-700">{t("common.volume")}</span>{" "}
-          {product.volume}
+          {formatVolume(product.volume, language)}
         </p>
 
         <p>
