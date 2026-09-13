@@ -6,6 +6,7 @@ import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
 import { getProductNameLabel } from "../../utils/productNameLabel";
 import getImageUrl from "../../utils/getImageUrl";
+import { getBrandLogo } from "../../utils/brandLogo";
 import {
   hasActivePromotion,
   getPromotionRuleLines,
@@ -48,6 +49,10 @@ function Promotions() {
                   <img
                     src={getImageUrl(product.image?.main)}
                     alt={name}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = getBrandLogo(product.brand);
+                    }}
                     className="w-20 h-20 object-contain bg-white rounded-xl p-2"
                   />
 

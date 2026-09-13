@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import getImageUrl from "../../../utils/getImageUrl";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
+import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
 
 function ProductImage({ product }) {
@@ -9,11 +10,17 @@ function ProductImage({ product }) {
   const src = getImageUrl(product.image?.main);
   const name = getProductNameLabel(product.name, language);
 
+  function handleImageError(e) {
+    e.target.onerror = null;
+    e.target.src = getBrandLogo(product.brand);
+  }
+
   return (
     <>
       <img
         src={src}
         alt={name}
+        onError={handleImageError}
         onClick={() => setZoomed(true)}
         className="
         w-full
@@ -58,6 +65,7 @@ function ProductImage({ product }) {
           <img
             src={src}
             alt={name}
+            onError={handleImageError}
             onClick={(e) => e.stopPropagation()}
             className="max-h-[90vh] max-w-[90vw] object-contain rounded-xl"
           />

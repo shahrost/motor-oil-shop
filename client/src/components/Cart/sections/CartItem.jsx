@@ -3,6 +3,7 @@ import formatPrice from "../../../utils/formatPrice";
 import getImageUrl from "../../../utils/getImageUrl";
 import getBrandLabel from "../../../utils/brandLabel";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
+import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
@@ -31,6 +32,10 @@ function CartItem({
         <img
           src={getImageUrl(item.image?.main)}
           alt={name}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = getBrandLogo(item.brand);
+          }}
           className="w-full h-32 object-contain"
         />
       </div>

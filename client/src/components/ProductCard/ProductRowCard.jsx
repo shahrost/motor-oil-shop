@@ -6,6 +6,7 @@ import getBrandLabel from "../../utils/brandLabel";
 import { getProductNameLabel } from "../../utils/productNameLabel";
 import formatPrice from "../../utils/formatPrice";
 import getImageUrl from "../../utils/getImageUrl";
+import { getBrandLogo } from "../../utils/brandLogo";
 import { getProductPrice } from "../../utils/productPrice";
 import DiscountBadge from "../common/DiscountBadge";
 import useProductCard from "./hooks/useProductCard";
@@ -48,6 +49,10 @@ function ProductRowCard({ product }) {
         src={getImageUrl(product.image?.main)}
         alt={name}
         draggable={false}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = getBrandLogo(product.brand);
+        }}
         className="w-full h-24 sm:h-32 object-contain"
       />
 
