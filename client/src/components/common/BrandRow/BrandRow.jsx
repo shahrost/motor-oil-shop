@@ -37,10 +37,11 @@ function BrandRow({ brand, items, t }) {
           select-none
         "
       >
-        {items.map((product) => (
+        {items.map((product, index) => (
           <div
             key={product.id}
             className="
+              relative
               flex-none
               w-[calc((100%_-_1.5rem)*0.3334)]
               sm:w-[calc((100%_-_2.25rem)*0.25)]
@@ -49,6 +50,32 @@ function BrandRow({ brand, items, t }) {
             "
           >
             <ProductRowCard product={product} />
+
+            {index === 2 && items.length > 3 && (
+              <span
+                className="
+                  sm:hidden
+                  pointer-events-none
+                  absolute
+                  top-10
+                  -left-3
+                  z-10
+                  flex
+                  items-center
+                  justify-center
+                  w-7
+                  h-7
+                  rounded-full
+                  bg-black/60
+                  text-white
+                  text-sm
+                  shadow-lg
+                  animate-pulse
+                "
+              >
+                ‹
+              </span>
+            )}
           </div>
         ))}
       </div>
