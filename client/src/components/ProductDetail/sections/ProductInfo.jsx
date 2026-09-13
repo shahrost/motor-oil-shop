@@ -6,14 +6,29 @@ import LanguageContext from "../../../context/LanguageContext";
 import {
   hasActivePromotion,
   getPromotionRuleLines,
+  calcPromotionGift,
 } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
 import PromotionBadge from "../../common/PromotionBadge";
 
-function ProductInfo({ product, paymentType }) {
+function ProductInfo({
+  product,
+  quantity,
+  setQuantity,
+  orderType,
+  setOrderType,
+  paymentType,
+  setPaymentType,
+}) {
   const { language, t } = useContext(LanguageContext);
 
   const promoActive = hasActivePromotion(product.promotion);
+  const giftQty = calcPromotionGift(
+    product.promotion,
+    orderType,
+    quantity,
+    paymentType,
+  );
 
   return (
     <div>
@@ -36,6 +51,44 @@ function ProductInfo({ product, paymentType }) {
         <p>
           <b className="text-green-700">{t("common.volume")}</b> {product.volume}
         </p>
+
+        <div className="flex items-center gap-2">
+          <b className="text-green-700 shrink-0">{t("common.orderUnitLabel")}</b>
+
+          <select
+            value={orderType}
+            onChange={(e) => setOrderType(e.target.value)}
+            className="border rounded-lg p-1 bg-white text-black"
+          >
+            <option value="number">{t("common.orderUnit.number")}</option>
+            <option value="carton">{t("common.orderUnit.carton")}</option>
+          </select>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <b className="text-green-700 shrink-0">{t("common.quantity")}</b>
+
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            className="w-24 border rounded-lg p-1 text-black"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <b className="text-green-700 shrink-0">{t("common.payment")}</b>
+
+          <select
+            value={paymentType}
+            onChange={(e) => setPaymentType(e.target.value)}
+            className="border rounded-lg p-1 bg-white text-black"
+          >
+            <option value="cash">💵 {t("common.paymentType.cash")}</option>
+            <option value="check">📝 {t("common.paymentType.check")}</option>
+          </select>
+        </div>
 
         <p>
           <b className="text-green-700">API:</b> {product.api}
@@ -76,6 +129,15 @@ function ProductInfo({ product, paymentType }) {
               {product.promotion.note}
             </p>
           )}
+        </div>
+      )}
+
+      {giftQty > 0 && (
+        <div className="mt-5 bg-amber-50 border border-amber-300 rounded-2xl p-5 text-center">
+          <p className="font-bold text-amber-800">
+            🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
+            {t("common.orderUnit.carton")}
+          </p>
         </div>
       )}
 

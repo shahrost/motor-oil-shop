@@ -160,7 +160,6 @@ const translations = {
       oilType: "نوع روغن:",
       description: "توضیحات محصول",
       notFound: "محصول پیدا نشد",
-      finalCount: "تعداد نهایی:",
     },
 
     cart: {
@@ -499,7 +498,6 @@ const translations = {
       oilType: "Oil Type:",
       description: "Product Description",
       notFound: "Product not found",
-      finalCount: "Final Quantity:",
     },
 
     cart: {

@@ -15,7 +15,6 @@ function ProductDetail() {
     setOrderType,
     paymentType,
     setPaymentType,
-    finalCount,
     handleCart,
     added,
   } = useProductDetail();
@@ -36,9 +35,7 @@ function ProductDetail() {
         <ProductGallery product={product} />
 
         <div>
-          <ProductInfo product={product} paymentType={paymentType} />
-
-          <ProductPurchase
+          <ProductInfo
             product={product}
             quantity={quantity}
             setQuantity={setQuantity}
@@ -46,10 +43,9 @@ function ProductDetail() {
             setOrderType={setOrderType}
             paymentType={paymentType}
             setPaymentType={setPaymentType}
-            finalCount={finalCount}
-            handleCart={handleCart}
-            added={added}
           />
+
+          <ProductPurchase handleCart={handleCart} added={added} />
         </div>
       </div>
     </div>

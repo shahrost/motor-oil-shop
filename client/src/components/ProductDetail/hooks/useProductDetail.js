@@ -17,14 +17,6 @@ function useProductDetail() {
   const [paymentType, setPaymentType] = useState("cash");
   const [added, setAdded] = useState(false);
 
-  function finalCount() {
-    if (orderType === "carton") {
-      return Number(quantity) * Number(product?.cartonCount || 1);
-    }
-
-    return Number(quantity);
-  }
-
   function handleCart() {
     if (!product) return;
 
@@ -50,7 +42,6 @@ function useProductDetail() {
     setOrderType,
     paymentType,
     setPaymentType,
-    finalCount,
     handleCart,
     added,
   };
