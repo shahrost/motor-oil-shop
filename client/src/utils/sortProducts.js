@@ -4,16 +4,17 @@ import {
   compareVolumes,
 } from "./normalizeSpec";
 
-// Products with the same brand + grade (viscosity) + standards belong to the
+// Products of the same brand + category (e.g. motorcycle oil, gear oil) form a
+// visual cluster; within that cluster, same grade + standards belong to the
 // same "line" and should be listed together, ordered by volume.
 export function getProductGroupKey(product) {
   return [
     product.brand,
+    (product.category || "").trim().toLowerCase(),
     normalizeViscosity(product.viscosity),
     normalizeApi(product.api),
     normalizeApi(product.acea),
     (product.oilType || "").trim().toLowerCase(),
-    (product.category || "").trim().toLowerCase(),
   ].join("|");
 }
 
