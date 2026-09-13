@@ -52,10 +52,6 @@ function ProductInfo({ product, paymentType }) {
         <p className="text-4xl font-extrabold text-green-700">
           {formatPrice(getProductPrice(product, paymentType), language)}
         </p>
-
-        <span className="inline-block mt-3 bg-green-100 text-green-700 px-5 py-2 rounded-full font-bold">
-          🟢 {t("productDetail.inStock")}
-        </span>
       </div>
 
       {promoActive && (

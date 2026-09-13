@@ -158,7 +158,6 @@ const translations = {
 
     productDetail: {
       oilType: "نوع روغن:",
-      inStock: "موجود",
       description: "توضیحات محصول",
       notFound: "محصول پیدا نشد",
       finalCount: "تعداد نهایی:",
@@ -498,7 +497,6 @@ const translations = {
 
     productDetail: {
       oilType: "Oil Type:",
-      inStock: "In Stock",
       description: "Product Description",
       notFound: "Product not found",
       finalCount: "Final Quantity:",

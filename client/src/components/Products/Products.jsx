@@ -45,34 +45,36 @@ function Products() {
   } = useProducts();
 
   return (
-    <div>
-      <ProductFilters
-        search={search}
-        setSearch={setSearch}
-        brand={brand}
-        setBrand={setBrand}
-        viscosity={viscosity}
-        setViscosity={setViscosity}
-        volume={volume}
-        setVolume={setVolume}
-        api={api}
-        setApi={setApi}
-        productType={productType}
-        setProductType={setProductType}
-        priceOption={priceOption}
-        setPriceOption={setPriceOption}
-        onlyAvailable={onlyAvailable}
-        setOnlyAvailable={setOnlyAvailable}
-        brands={brands}
-        viscosities={viscosities}
-        volumes={volumes}
-        apiOptions={apiOptions}
-        productTypeOptions={productTypeOptions}
-        priceOptions={priceOptions}
-        clearFilters={clearFilters}
-      />
+    <div className="px-5 mt-8">
+      <div className="max-w-7xl mx-auto">
+        <ProductFilters
+          search={search}
+          setSearch={setSearch}
+          brand={brand}
+          setBrand={setBrand}
+          viscosity={viscosity}
+          setViscosity={setViscosity}
+          volume={volume}
+          setVolume={setVolume}
+          api={api}
+          setApi={setApi}
+          productType={productType}
+          setProductType={setProductType}
+          priceOption={priceOption}
+          setPriceOption={setPriceOption}
+          onlyAvailable={onlyAvailable}
+          setOnlyAvailable={setOnlyAvailable}
+          brands={brands}
+          viscosities={viscosities}
+          volumes={volumes}
+          apiOptions={apiOptions}
+          productTypeOptions={productTypeOptions}
+          priceOptions={priceOptions}
+          clearFilters={clearFilters}
+        />
 
-      <ProductGrid products={filteredProducts} />
+        <ProductGrid products={filteredProducts} />
+      </div>
 
       <ScrollTopButton show={showTop} onClick={scrollToTop} />
     </div>
