@@ -93,8 +93,8 @@ const translations = {
     },
 
     home: {
-      productsTitle: "محصولات روغن موتور",
-      productsSubtitle: "جدیدترین محصولات فروشگاه شهرام روغن",
+      productsTitle: "محصولات روغن موتور و فیلتر",
+      productsSubtitle: "محصولات فروشگاه شهرام روغن",
       quickFilter: {
         title: "فیلتر سریع محصولات",
         allBrands: "همه برندها",
@@ -257,15 +257,14 @@ const translations = {
         "برای دریافت قیمت روز، مشاوره انتخاب روغن و ثبت سفارش با ما در ارتباط باشید.",
       actions: {
         whatsapp: "پیام در واتساپ",
+        callUs: "تماس با ما",
       },
       info: {
-        whatsappTitle: "واتساپ سفارش",
-        whatsappText: "پاسخگویی سریع و دریافت لیست قیمت",
         salesTitle: "همکاری فروش",
         salesText: "ویژه لوازم یدکی‌ها و اتوسرویس‌ها",
         areaTitle: "محدوده فعالیت",
         areaText:
-          "سبزدشت، گلستان، بهارستان، پرند، رباط‌کریم، نسیم‌شهر، نصیرشهر، خیرآباد، همدانک، اورین، آدران، صباشهر، شاهدشهر، کهنز، جاده آدران، الارد",
+          "سبزدشت، گلستان، بهارستان، پرند، رباط‌کریم، نسیم‌شهر، نصیرشهر، خیرآباد، همدانک، اورین، آدران، صباشهر، شاهدشهر، کهنز، جاده آدران، الارد، فردوسیه، حصارک، صالحیه، شترخوار",
       },
     },
 
@@ -433,8 +432,8 @@ const translations = {
     },
 
     home: {
-      productsTitle: "Engine Oil Products",
-      productsSubtitle: "The latest products from Shahram Oil Shop",
+      productsTitle: "Engine Oil & Filter Products",
+      productsSubtitle: "Products from Shahram Oil Shop",
       quickFilter: {
         title: "Quick Product Filter",
         allBrands: "All Brands",
@@ -598,15 +597,14 @@ const translations = {
         "Contact us for today's pricing, oil selection advice, and placing an order.",
       actions: {
         whatsapp: "Message on WhatsApp",
+        callUs: "Call Us",
       },
       info: {
-        whatsappTitle: "WhatsApp Orders",
-        whatsappText: "Fast response and price list",
         salesTitle: "Sales Partnership",
         salesText: "For auto-parts stores and auto service centers",
         areaTitle: "Service Area",
         areaText:
-          "Sabzdasht, Golestan, Baharestan, Parand, Robat Karim, Nasim Shahr, Nasirshahr, Kheirabad, Hamedanak, Owrin, Adran, Sabashahr, Shahedshahr, Kohnooz, Adran Road, Alard",
+          "Sabzdasht, Golestan, Baharestan, Parand, Robat Karim, Nasim Shahr, Nasirshahr, Kheirabad, Hamedanak, Owrin, Adran, Sabashahr, Shahedshahr, Kohnooz, Adran Road, Alard, Ferdosieh, Hesarak, Salehieh, Shotorkhar",
       },
     },
 
