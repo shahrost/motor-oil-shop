@@ -1,7 +1,6 @@
 import AdminHeader from "./AdminHeader";
 import Dashboard from "./Dashboard";
 import ProductManager from "./ProductManager";
-import OrderManager from "./OrderManager";
 
 function AdminPanel() {
   return (
@@ -11,8 +10,6 @@ function AdminPanel() {
       <Dashboard />
 
       <ProductManager />
-
-      <OrderManager />
     </main>
   );
 }
