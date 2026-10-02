@@ -4,6 +4,7 @@ const { auth } = require("../middleware/auth");
 const {
   getVehicles,
   importVehicles,
+  getImportStatus,
   uploadVehicleImages,
 } = require("../controllers/vehicleController");
 
@@ -30,5 +31,8 @@ router.post(
   ]),
   importVehicles,
 );
+
+// وضعیت ایمپورت در حال اجرا
+router.get("/import/:jobId", auth, getImportStatus);
 
 module.exports = router;

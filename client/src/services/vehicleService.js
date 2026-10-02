@@ -42,11 +42,18 @@ export async function uploadVehicleImagesService(imageFiles, onProgress) {
 }
 
 // ایمپورت گروهی خودروها (فایل اکسل + عکس‌های آپلودشده)
+// سرور ایمپورت رو پس‌زمینه اجرا می‌کنه و فوراً jobId برمی‌گردونه؛ بعدش وضعیت
+// هر چند ثانیه چک می‌شه تا درخواست طولانی توسط پروکسی قطع نشه.
+
+const POLL_INTERVAL_MS = 2000;
+const POLL_MAX_MS = 15 * 60 * 1000;
+const POLL_MAX_FAILURES = 5;
 
 export async function importVehiclesService(
   excelFile,
   uploadedImages = {},
   removeMissing = false,
+  onStage,
 ) {
   const formData = new FormData();
 
@@ -56,11 +63,47 @@ export async function importVehiclesService(
 
   formData.append("uploadedImages", JSON.stringify(uploadedImages));
 
-  const response = await apiClient.post("/vehicles/import", formData, {
+  const start = await apiClient.post("/vehicles/import", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
 
-  return response.data;
+  const { jobId } = start.data.data;
+
+  const startedAt = Date.now();
+  let failures = 0;
+
+  while (Date.now() - startedAt < POLL_MAX_MS) {
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+
+    let job;
+
+    try {
+      const response = await apiClient.get(`/vehicles/import/${jobId}`);
+
+      job = response.data.data;
+      failures = 0;
+    } catch (error) {
+      if (error.response?.status === 404) throw error;
+
+      failures += 1;
+
+      if (failures >= POLL_MAX_FAILURES) throw error;
+
+      continue;
+    }
+
+    if (onStage) onStage(job.stage);
+
+    if (job.status === "done") return { data: job.results };
+
+    if (job.status === "error") {
+      const error = new Error(job.error);
+      error.response = { data: { message: job.error } };
+      throw error;
+    }
+  }
+
+  throw new Error("ایمپورت بیش از حد طول کشید");
 }

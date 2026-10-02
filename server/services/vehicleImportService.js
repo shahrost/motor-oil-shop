@@ -144,10 +144,14 @@ function buildLinksMap(linkRows) {
 }
 
 async function importVehicles(excelFile, imageFiles = [], options = {}) {
+  const log = options.onStage || (() => {});
+
   try {
+    log("خواندن فایل اکسل");
     const workbook = await loadWorkbook(excelFile);
     const isFullFormat = Boolean(workbook.getWorksheet(LIST_SHEET));
 
+    log("پردازش ردیف‌ها");
     const rows = isFullFormat
       ? readSheetRows(workbook, LIST_COLUMN_MAP, ["sku", "brand"], LIST_SHEET)
       : readSheetRows(workbook, SIMPLE_COLUMN_MAP, ["sku", "name", "brand"]);
@@ -228,6 +232,7 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
 
     // یک درخواست گروهی به‌جای صدها رفت‌وبرگشت جدا به دیتابیس (سرعت و جلوگیری از timeout)
     if (bulkOps.length) {
+      log("ثبت خودروها در دیتابیس");
       const bulkResult = await Vehicle.bulkWrite(bulkOps, { ordered: false });
 
       results.created = bulkResult.upsertedCount || 0;
@@ -235,6 +240,7 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
     }
 
     if (linkedSkus.size) {
+      log("بررسی کد محصول‌های متصل");
       const found = await Product.find({
         sku: { $in: [...linkedSkus].map((s) => s.toUpperCase()) },
       }).select("sku");

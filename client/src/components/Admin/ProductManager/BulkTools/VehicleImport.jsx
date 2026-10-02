@@ -54,6 +54,7 @@ function VehicleImport() {
         file,
         uploaded,
         removeMissing,
+        (stage) => setProgress(`در حال ایمپورت: ${stage}...`),
       );
       setResult(response.data);
       await reloadVehicles();

@@ -55,6 +55,18 @@ function resolveUploadedImages(rawMap) {
     .filter((f) => fs.existsSync(f.path));
 }
 
+// ایمپورت ممکنه از زمان مجاز پروکسی بیشتر طول بکشه، پس به‌صورت job پس‌زمینه
+// اجرا می‌شه: درخواست فوراً jobId برمی‌گردونه و کلاینت وضعیت رو پیگیری می‌کنه.
+const jobs = new Map();
+
+function pruneJobs() {
+  const limit = Date.now() - 60 * 60 * 1000;
+
+  jobs.forEach((job, id) => {
+    if (job.startedAt < limit) jobs.delete(id);
+  });
+}
+
 async function importVehicles(req, res, next) {
   try {
     const excelFile = req.files && req.files.file && req.files.file[0];
@@ -68,14 +80,72 @@ async function importVehicles(req, res, next) {
       ...resolveUploadedImages(req.body?.uploadedImages),
     ];
 
-    const results = await vehicleService.importVehicles(excelFile, imageFiles, {
-      removeMissing: req.body?.removeMissing === "true",
-    });
+    pruneJobs();
 
-    return apiResponse.success(res, results, "ایمپورت خودروها انجام شد");
+    const jobId = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    const job = {
+      status: "running",
+      stage: "شروع",
+      startedAt: Date.now(),
+      results: null,
+      error: "",
+    };
+
+    jobs.set(jobId, job);
+
+    console.log(`[vehicle-import ${jobId}] started (${imageFiles.length} images)`);
+
+    vehicleService
+      .importVehicles(excelFile, imageFiles, {
+        removeMissing: req.body?.removeMissing === "true",
+        onStage: (stage) => {
+          job.stage = stage;
+          console.log(
+            `[vehicle-import ${jobId}] ${stage} (+${Date.now() - job.startedAt}ms)`,
+          );
+        },
+      })
+      .then((results) => {
+        job.status = "done";
+        job.results = results;
+        console.log(
+          `[vehicle-import ${jobId}] done in ${Date.now() - job.startedAt}ms`,
+        );
+      })
+      .catch((error) => {
+        job.status = "error";
+        job.error = error.message || "خطا در ایمپورت خودروها";
+        console.log(`[vehicle-import ${jobId}] ERROR: ${job.error}`);
+      });
+
+    return apiResponse.success(res, { jobId }, "ایمپورت شروع شد");
   } catch (error) {
     next(error);
   }
 }
 
-module.exports = { getVehicles, importVehicles, uploadVehicleImages };
+async function getImportStatus(req, res, next) {
+  try {
+    const job = jobs.get(req.params.jobId);
+
+    if (!job) {
+      throw new AppError("ایمپورت پیدا نشد (ممکنه سرور ریستارت شده باشه)", 404);
+    }
+
+    return apiResponse.success(res, {
+      status: job.status,
+      stage: job.stage,
+      results: job.results,
+      error: job.error,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = {
+  getVehicles,
+  importVehicles,
+  getImportStatus,
+  uploadVehicleImages,
+};
