@@ -14,7 +14,16 @@ function ProductRow({ product, startEdit, deleteProduct }) {
       <div>
         <h3 className="font-bold">{product.name}</h3>
 
-        <p className="text-sm text-gray-500">{product.brand}</p>
+        <p className="text-sm text-gray-500">
+          {[
+            product.sku && `کد: ${product.sku}`,
+            product.brand && `برند: ${product.brand}`,
+            product.viscosity && `گرید: ${product.viscosity}`,
+            product.volume && `حجم: ${product.volume}`,
+          ]
+            .filter(Boolean)
+            .join(" | ")}
+        </p>
       </div>
 
       <div className="flex gap-2">
