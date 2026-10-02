@@ -183,7 +183,7 @@ function toBoolean(value) {
   return ["بله", "yes", "true", "1"].includes(String(value).trim().toLowerCase());
 }
 
-async function importProducts(excelFile, imageFiles = []) {
+async function importProducts(excelFile, imageFiles = [], options = {}) {
   try {
     const rows = await readWorkbookFile(excelFile, [
       "sku",
@@ -199,7 +199,7 @@ async function importProducts(excelFile, imageFiles = []) {
     const imagesByName = new Map(imageFiles.map((f) => [f.originalname, f]));
     const usedFilenames = new Set();
 
-    const results = { created: 0, updated: 0, failed: [] };
+    const results = { created: 0, updated: 0, failed: [], removed: [] };
 
     for (const row of rows) {
       try {
@@ -273,6 +273,22 @@ async function importProducts(excelFile, imageFiles = []) {
         }
       } catch (err) {
         results.failed.push({ row: row.__row, sku: row.sku || "-", error: err.message });
+      }
+    }
+
+    if (options.removeMissing) {
+      const skusInFile = rows
+        .map((row) => String(row.sku || "").trim().toUpperCase())
+        .filter(Boolean);
+
+      const stale = await Product.find({
+        sku: { $exists: true, $nin: ["", ...skusInFile] },
+      }).select("sku name");
+
+      if (stale.length) {
+        await Product.deleteMany({ _id: { $in: stale.map((p) => p._id) } });
+
+        results.removed = stale.map((p) => ({ sku: p.sku, name: p.name }));
       }
     }
 

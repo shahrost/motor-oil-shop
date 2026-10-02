@@ -12,7 +12,11 @@ async function importProducts(req, res, next) {
 
     const imageFiles = (req.files && req.files.images) || [];
 
-    const results = await productImportService.importProducts(excelFile, imageFiles);
+    const results = await productImportService.importProducts(
+      excelFile,
+      imageFiles,
+      { removeMissing: req.body?.removeMissing === "true" },
+    );
 
     return apiResponse.success(res, results, "ایمپورت محصولات انجام شد");
   } catch (error) {

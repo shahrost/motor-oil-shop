@@ -17,6 +17,8 @@ function BulkTools() {
   const {
     setImportFile,
     setImportImages,
+    removeMissing,
+    setRemoveMissing,
     importResult,
     importLoading,
     importError,
@@ -68,6 +70,15 @@ function BulkTools() {
           className="block w-full mb-4 text-sm"
         />
 
+        <label className="flex items-center gap-2 text-sm mb-4">
+          <input
+            type="checkbox"
+            checked={removeMissing}
+            onChange={(e) => setRemoveMissing(e.target.checked)}
+          />
+          حذف محصولاتی که در این اکسل نیستند
+        </label>
+
         <button
           type="submit"
           disabled={importLoading}
@@ -84,6 +95,20 @@ function BulkTools() {
           <ResultBox title="نتیجه ایمپورت">
             <p>محصول جدید ایجاد شد: {importResult.created}</p>
             <p>محصول موجود بروزرسانی شد: {importResult.updated}</p>
+            {importResult.removed?.length > 0 && (
+              <div className="mt-2">
+                <p className="text-amber-600">
+                  محصولات حذف‌شده (در اکسل نبودند): {importResult.removed.length}
+                </p>
+                <ul className="list-disc pr-5">
+                  {importResult.removed.map((r) => (
+                    <li key={r.sku}>
+                      {r.sku}: {r.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {importResult.failed?.length > 0 && (
               <div className="mt-2">
                 <p className="text-red-600">ردیف‌های ناموفق:</p>

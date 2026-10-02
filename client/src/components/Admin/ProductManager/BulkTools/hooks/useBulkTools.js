@@ -10,6 +10,7 @@ function useBulkTools() {
 
   const [importFile, setImportFile] = useState(null);
   const [importImages, setImportImages] = useState([]);
+  const [removeMissing, setRemoveMissing] = useState(false);
   const [importResult, setImportResult] = useState(null);
   const [importLoading, setImportLoading] = useState(false);
   const [importError, setImportError] = useState("");
@@ -27,12 +28,25 @@ function useBulkTools() {
       return;
     }
 
+    if (
+      removeMissing &&
+      !window.confirm(
+        "همه‌ی محصولاتی که در این فایل اکسل نیستند برای همیشه حذف می‌شوند. ادامه می‌دهید؟",
+      )
+    ) {
+      return;
+    }
+
     setImportLoading(true);
     setImportError("");
     setImportResult(null);
 
     try {
-      const response = await importProductsService(importFile, importImages);
+      const response = await importProductsService(
+        importFile,
+        importImages,
+        removeMissing,
+      );
       setImportResult(response.data);
       await reloadProducts();
     } catch (error) {
@@ -74,6 +88,8 @@ function useBulkTools() {
     setImportFile,
     importImages,
     setImportImages,
+    removeMissing,
+    setRemoveMissing,
     importResult,
     importLoading,
     importError,

@@ -113,10 +113,16 @@ export async function removeAllProducts() {
 
 // ایمپورت گروهی محصولات (فایل اکسل + عکس‌ها)
 
-export async function importProductsService(excelFile, imageFiles = []) {
+export async function importProductsService(
+  excelFile,
+  imageFiles = [],
+  removeMissing = false,
+) {
   const formData = new FormData();
 
   formData.append("file", excelFile);
+
+  formData.append("removeMissing", String(removeMissing));
 
   imageFiles.forEach((file) => formData.append("images", file));
 
