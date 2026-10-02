@@ -28,7 +28,8 @@ async function sanitizeXlsx(buffer) {
     return buffer;
   }
 
-  const removedRelIds = new Set();
+  // شناسه‌ی رابطه‌ها (rId) فقط داخل هر شیت یکتاست، پس جدا برای هر شیت نگه‌داری می‌شن
+  const removedRelIdsBySheet = new Map();
   let touched = false;
 
   Object.keys(zip.files).forEach((filePath) => {
@@ -43,6 +44,12 @@ async function sanitizeXlsx(buffer) {
   );
 
   for (const relsPath of relsFiles) {
+    const removedRelIds = new Set();
+    removedRelIdsBySheet.set(
+      relsPath.replace("_rels/", "").replace(/\.rels$/, ""),
+      removedRelIds,
+    );
+
     const original = await zip.file(relsPath).async("string");
 
     const cleaned = original.replace(RELATIONSHIP_TAG_RE, (tag) => {
@@ -75,7 +82,9 @@ async function sanitizeXlsx(buffer) {
       .replace(/<legacyDrawingHF\b[^>]*\/>/g, "")
       .replace(/<extLst>[\s\S]*?<\/extLst>/g, "");
 
-    if (removedRelIds.size) {
+    const removedRelIds = removedRelIdsBySheet.get(sheetPath);
+
+    if (removedRelIds && removedRelIds.size) {
       removedRelIds.forEach((id) => {
         cleaned = cleaned.split(`r:id="${id}"`).join("");
       });

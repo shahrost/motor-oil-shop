@@ -1,11 +1,16 @@
 const Vehicle = require("../models/Vehicle");
+const Product = require("../models/Product");
 const AppError = require("../utils/AppError");
+const vehicleBrandsEn = require("../data/vehicleBrandsEn");
 const {
-  readWorkbookFile,
+  loadWorkbook,
+  readSheetRows,
   removeFileQuietly,
+  toNumber,
 } = require("../utils/excelReader");
 
-const COLUMN_MAP = {
+// فرمت ساده (یک شیت)
+const SIMPLE_COLUMN_MAP = {
   "کد خودرو": "sku",
   "نام خودرو": "name",
   "نام انگلیسی خودرو": "nameEn",
@@ -22,6 +27,36 @@ const COLUMN_MAP = {
   "نام فایل عکس": "image",
 };
 
+// فرمت کامل (چند شیت): «لیست خودروها» + «ارتباط محصولات»
+const LIST_SHEET = "لیست خودروها";
+const LINKS_SHEET = "ارتباط محصولات";
+
+const LIST_COLUMN_MAP = {
+  "کد خودرو": "sku",
+  برند: "brand",
+  "کشور برند": "country",
+  مدل: "model",
+  "تیپ / نسخه": "variant",
+  "نام کامل خودرو": "fullName",
+  موتور: "engine",
+  "حجم موتور (لیتر)": "engineSize",
+  سوخت: "fuel",
+  گیربکس: "gearbox",
+  بدنه: "body",
+  "گروه خودروسازی / واردکننده": "maker",
+  وضعیت: "status",
+  "نام فایل عکس": "image",
+  "ویسکوزیته پیشنهادی (اصلی)": "viscosity",
+  "ویسکوزیته جایگزین": "viscosityAlt",
+};
+
+const LINKS_COLUMN_MAP = {
+  "کد خودرو": "vehicleSku",
+  "کد محصول": "productSku",
+  "اولویت نمایش": "priority",
+  "نوع توصیه": "kind",
+};
+
 function parseViscosities(raw) {
   return String(raw || "")
     .split(/[,،/\n]+/)
@@ -29,44 +64,137 @@ function parseViscosities(raw) {
     .filter(Boolean);
 }
 
+function cleanDash(value) {
+  const str = String(value || "").trim();
+
+  return str === "—" || str === "-" ? "" : str;
+}
+
+function simpleRowToDoc(row) {
+  if (!row.name) throw new Error("نام خودرو خالی است");
+  if (!row.brand) throw new Error("برند خودرو خالی است");
+
+  return {
+    sku: row.sku,
+    name: row.name,
+    nameEn: row.nameEn || row.name,
+    brand: row.brand,
+    brandEn: row.brandEn || vehicleBrandsEn[row.brand] || row.brand,
+    years: row.years || "",
+    yearsEn: row.yearsEn || row.years || "",
+    engine: row.engine || "",
+    engineEn: row.engineEn || row.engine || "",
+    oilCapacity: row.oilCapacity || "",
+    viscosities: parseViscosities(row.viscosities),
+    api: row.api || "",
+    interval: row.interval || "",
+  };
+}
+
+function listRowToDoc(row) {
+  if (!row.brand) throw new Error("برند خودرو خالی است");
+
+  const variant = cleanDash(row.variant);
+  const name = [row.model, variant].filter(Boolean).join(" ") || row.fullName;
+
+  if (!name) throw new Error("نام خودرو (مدل) خالی است");
+
+  return {
+    sku: row.sku,
+    name,
+    nameEn: name,
+    brand: row.brand,
+    brandEn: vehicleBrandsEn[row.brand] || row.brand,
+    country: row.country || "",
+    engine: cleanDash(row.engine),
+    engineEn: cleanDash(row.engine),
+    engineSize: cleanDash(row.engineSize),
+    fuel: cleanDash(row.fuel),
+    gearbox: cleanDash(row.gearbox),
+    body: cleanDash(row.body),
+    maker: cleanDash(row.maker),
+    status: cleanDash(row.status),
+    viscosities: parseViscosities(row.viscosity),
+    altViscosities: parseViscosities(row.viscosityAlt),
+  };
+}
+
+// ارتباط خودرو ↔ محصول: { "C10001": [{ sku, priority, kind }, ...] }
+function buildLinksMap(linkRows) {
+  const map = new Map();
+
+  linkRows.forEach((row) => {
+    const vehicleSku = String(row.vehicleSku || "").trim().toUpperCase();
+    const productSku = String(row.productSku || "").trim();
+
+    if (!vehicleSku || !productSku) return;
+
+    if (!map.has(vehicleSku)) map.set(vehicleSku, []);
+
+    map.get(vehicleSku).push({
+      sku: productSku,
+      priority: toNumber(row.priority) || 0,
+      kind: String(row.kind || "اصلی").trim(),
+    });
+  });
+
+  map.forEach((links) => links.sort((a, b) => a.priority - b.priority));
+
+  return map;
+}
+
 async function importVehicles(excelFile, imageFiles = [], options = {}) {
   try {
-    const rows = await readWorkbookFile(excelFile, COLUMN_MAP, [
-      "sku",
-      "name",
-      "brand",
-    ]);
+    const workbook = await loadWorkbook(excelFile);
+    const isFullFormat = Boolean(workbook.getWorksheet(LIST_SHEET));
+
+    const rows = isFullFormat
+      ? readSheetRows(workbook, LIST_COLUMN_MAP, ["sku", "brand"], LIST_SHEET)
+      : readSheetRows(workbook, SIMPLE_COLUMN_MAP, ["sku", "name", "brand"]);
 
     if (!rows.length) {
       throw new AppError("هیچ ردیف قابل خواندنی در فایل پیدا نشد", 400);
     }
 
+    const linksMap =
+      isFullFormat && workbook.getWorksheet(LINKS_SHEET)
+        ? buildLinksMap(
+            readSheetRows(
+              workbook,
+              LINKS_COLUMN_MAP,
+              ["vehicleSku", "productSku"],
+              LINKS_SHEET,
+            ),
+          )
+        : null;
+
     const imagesByName = new Map(imageFiles.map((f) => [f.originalname, f]));
     const usedFilenames = new Set();
 
-    const results = { created: 0, updated: 0, failed: [], removed: [] };
+    const results = {
+      created: 0,
+      updated: 0,
+      failed: [],
+      removed: [],
+      linksCount: 0,
+      missingProducts: [],
+    };
+
+    const linkedSkus = new Set();
 
     for (const row of rows) {
       try {
         if (!row.sku) throw new Error("کد خودرو خالی است");
-        if (!row.name) throw new Error("نام خودرو خالی است");
-        if (!row.brand) throw new Error("برند خودرو خالی است");
 
-        const doc = {
-          sku: row.sku,
-          name: row.name,
-          nameEn: row.nameEn || row.name,
-          brand: row.brand,
-          brandEn: row.brandEn || row.brand,
-          years: row.years || "",
-          yearsEn: row.yearsEn || row.years || "",
-          engine: row.engine || "",
-          engineEn: row.engineEn || row.engine || "",
-          oilCapacity: row.oilCapacity || "",
-          viscosities: parseViscosities(row.viscosities),
-          api: row.api || "",
-          interval: row.interval || "",
-        };
+        const doc = isFullFormat ? listRowToDoc(row) : simpleRowToDoc(row);
+
+        doc.sku = row.sku.toUpperCase();
+
+        if (linksMap) {
+          doc.productLinks = linksMap.get(doc.sku) || [];
+          results.linksCount += doc.productLinks.length;
+          doc.productLinks.forEach((link) => linkedSkus.add(link.sku));
+        }
 
         if (row.image) {
           const imageFile = imagesByName.get(row.image);
@@ -81,8 +209,7 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
           doc.image = `/uploads/products/${imageFile.filename}`;
         }
 
-        const key = doc.sku.toUpperCase();
-        const existing = await Vehicle.findOne({ sku: key });
+        const existing = await Vehicle.findOne({ sku: doc.sku });
 
         if (existing) {
           await Vehicle.updateOne({ _id: existing._id }, { $set: doc });
@@ -98,6 +225,17 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
           error: err.message,
         });
       }
+    }
+
+    if (linkedSkus.size) {
+      const found = await Product.find({
+        sku: { $in: [...linkedSkus].map((s) => s.toUpperCase()) },
+      }).select("sku");
+      const foundSet = new Set(found.map((p) => p.sku));
+
+      results.missingProducts = [...linkedSkus].filter(
+        (s) => !foundSet.has(s.toUpperCase()),
+      );
     }
 
     if (options.removeMissing) {
@@ -129,7 +267,11 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
 }
 
 async function getVehicles() {
-  return Vehicle.find().sort({ brand: 1, name: 1 });
+  return Vehicle.find().sort({ sku: 1 });
 }
 
-module.exports = { COLUMN_MAP, importVehicles, getVehicles };
+module.exports = {
+  COLUMN_MAP: SIMPLE_COLUMN_MAP,
+  importVehicles,
+  getVehicles,
+};

@@ -43,10 +43,12 @@ function VehicleCard({ vehicle }) {
           {vehicle.viscosities.join(" / ")}
         </p>
 
-        <p className="line-clamp-1">
-          <span className="text-green-700">{t("vehicles.oilCapacity")}</span>{" "}
-          {vehicle.oilCapacity} {t("vehicles.liter")}
-        </p>
+        {vehicle.oilCapacity && (
+          <p className="line-clamp-1">
+            <span className="text-green-700">{t("vehicles.oilCapacity")}</span>{" "}
+            {vehicle.oilCapacity} {t("vehicles.liter")}
+          </p>
+        )}
       </div>
 
       <span className="mt-3 block w-full bg-green-600 text-white py-2 rounded-lg text-sm font-bold text-center">

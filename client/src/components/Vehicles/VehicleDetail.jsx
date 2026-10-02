@@ -25,7 +25,7 @@ function VehicleDetail() {
 
   const en = language === "en";
   const name = en ? vehicle.nameEn || vehicle.name : vehicle.name;
-  const oils = getRecommendedOils(vehicle, products);
+  const { main: oils, alt: altOils } = getRecommendedOils(vehicle, products);
 
   const specs = [
     [t("common.brand"), en ? vehicle.brandEn || vehicle.brand : vehicle.brand],
@@ -35,12 +35,24 @@ function VehicleDetail() {
       en ? vehicle.engineEn || vehicle.engine : vehicle.engine,
     ],
     [
+      t("vehicles.engineSize"),
+      vehicle.engineSize && `${vehicle.engineSize} ${t("vehicles.liter")}`,
+    ],
+    [t("vehicles.fuel"), vehicle.fuel],
+    [t("vehicles.gearbox"), vehicle.gearbox],
+    [t("vehicles.body"), vehicle.body],
+    [t("vehicles.status"), vehicle.status],
+    [
       t("vehicles.oilCapacity"),
-      `${vehicle.oilCapacity} ${t("vehicles.liter")}`,
+      vehicle.oilCapacity && `${vehicle.oilCapacity} ${t("vehicles.liter")}`,
     ],
     [t("vehicles.viscosity"), vehicle.viscosities.join(" / ")],
+    [t("vehicles.altViscosity"), (vehicle.altViscosities || []).join(" / ")],
     [t("vehicles.api"), vehicle.api],
-    [t("vehicles.changeInterval"), `${vehicle.interval} ${t("vehicles.km")}`],
+    [
+      t("vehicles.changeInterval"),
+      vehicle.interval && `${vehicle.interval} ${t("vehicles.km")}`,
+    ],
   ].filter(([, value]) => value && String(value).trim());
 
   return (
@@ -86,6 +98,20 @@ function VehicleDetail() {
         <p className="text-center text-red-500 mt-6 font-bold">
           {t("vehicles.noOils")}
         </p>
+      )}
+
+      {altOils.length > 0 && (
+        <>
+          <h2 className="text-2xl font-extrabold text-center mt-10">
+            {t("vehicles.alternativeOils")}
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-3 mt-6">
+            {altOils.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </>
       )}
     </section>
   );

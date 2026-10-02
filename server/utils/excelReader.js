@@ -51,15 +51,7 @@ function normalizeHeader(str) {
     .replace(/ي/g, "ی");
 }
 
-async function readWorkbookFile(excelFile, columnMap, requiredKeys = []) {
-  const NORMALIZED_COLUMN_MAP = Object.fromEntries(
-    Object.entries(columnMap).map(([label, key]) => [normalizeHeader(label), key]),
-  );
-
-  const COLUMN_LABEL_BY_KEY = Object.fromEntries(
-    Object.entries(columnMap).map(([label, key]) => [key, label]),
-  );
-
+async function loadWorkbook(excelFile) {
   const buffer = await fs.readFile(excelFile.path);
   const cleanBuffer = await sanitizeXlsx(buffer);
 
@@ -74,7 +66,22 @@ async function readWorkbookFile(excelFile, columnMap, requiredKeys = []) {
     );
   }
 
-  const sheet = workbook.worksheets[0];
+  return workbook;
+}
+
+// ردیف‌های یک شیت رو با نگاشت ستون‌ها می‌خونه. اگه sheetName داده نشه یا پیدا
+// نشه، اولین شیت خونده می‌شه.
+function readSheetRows(workbook, columnMap, requiredKeys = [], sheetName) {
+  const NORMALIZED_COLUMN_MAP = Object.fromEntries(
+    Object.entries(columnMap).map(([label, key]) => [normalizeHeader(label), key]),
+  );
+
+  const COLUMN_LABEL_BY_KEY = Object.fromEntries(
+    Object.entries(columnMap).map(([label, key]) => [key, label]),
+  );
+
+  const sheet =
+    (sheetName && workbook.getWorksheet(sheetName)) || workbook.worksheets[0];
 
   if (!sheet) {
     throw new AppError("فایل ورودی خالی است", 400);
@@ -126,6 +133,12 @@ async function readWorkbookFile(excelFile, columnMap, requiredKeys = []) {
   return rows;
 }
 
+async function readWorkbookFile(excelFile, columnMap, requiredKeys = []) {
+  const workbook = await loadWorkbook(excelFile);
+
+  return readSheetRows(workbook, columnMap, requiredKeys);
+}
+
 async function removeFileQuietly(filePath) {
   try {
     await fs.unlink(filePath);
@@ -135,6 +148,8 @@ async function removeFileQuietly(filePath) {
 }
 
 module.exports = {
+  loadWorkbook,
+  readSheetRows,
   readWorkbookFile,
   removeFileQuietly,
   toNumber,
