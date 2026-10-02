@@ -1,7 +1,25 @@
 # Shahram Roghan Project State
 
 آخرین بروزرسانی:
-Session Update 2026-08-20 — Logo/Branding + Full Site Translation Completion ✅
+Session Update 2026-10-02 — Migration to Runflare ✅
+
+---
+
+# Session Update — 2026-10-02
+
+## انتقال هاست از Liara به Runflare
+
+Status: Completed ✅
+
+Changes:
+
+✅ کل پروژه (سرور، کلاینت، دیتابیس) روی Runflare دیپلوی شده؛ پروژه‌ی `shoil-client` (id: 34043) با دو سرویس: `frontend` (80267) و `backend` (80422)
+✅ همه‌ی فایل‌ها و تنظیمات Liara حذف شدن: `liara.json` (client، client/public، server)، دو workflow گیت‌هاب (`deploy-client.yml`, `deploy-server.yml`) و کامنت‌های «deploy trigger/retry» ته `main.jsx` و `server.js`
+✅ `client/vite.config.js`: با ست بودن `RUNFLARE` خروجی build به `dist` می‌ره، وگرنه `build`
+✅ دیپلوی دیگه با push خودکار نیست؛ دستی با Runflare CLI (`runflare deploy --project-id ... --item-id ... --yes` از داخل پوشه‌ی هر سرویس) — جزئیات تو `DEPLOYMENT.md`
+✅ `DEPLOYMENT.md` کامل برای Runflare بازنویسی شد
+
+⚠️ بعد از هر تغییر `VITE_API_URL` باید کلاینت دوباره build/deploy بشه (مقدار موقع build داخل کد قرار می‌گیره)
 
 ---
 
