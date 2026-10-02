@@ -11,6 +11,9 @@ import ViscosityProducts from "../pages/ViscosityProducts";
 import Brands from "../pages/Brands";
 import BrandProducts from "../pages/BrandProducts";
 import CategoryProducts from "../pages/CategoryProducts";
+import Vehicles from "../pages/Vehicles";
+import VehicleBrand from "../pages/VehicleBrand";
+import VehicleDetail from "../pages/VehicleDetail";
 import Promotions from "../pages/Promotions";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
@@ -49,6 +52,12 @@ function AppRoutes() {
         <Route path="/brand/:brand" element={<BrandProducts />} />
 
         <Route path="/category/:category" element={<CategoryProducts />} />
+
+        <Route path="/vehicles" element={<Vehicles />} />
+
+        <Route path="/vehicles/:brand" element={<VehicleBrand />} />
+
+        <Route path="/vehicle/:id" element={<VehicleDetail />} />
 
         <Route path="/promotions" element={<Promotions />} />
 

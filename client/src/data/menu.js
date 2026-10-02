@@ -10,6 +10,11 @@ const menu = [
     path: "/products",
   },
   {
+    key: "vehicles",
+    titleFa: "خودروها",
+    path: "/vehicles",
+  },
+  {
     key: "brands",
     titleFa: "برندها",
     path: "/brands",
