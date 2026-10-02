@@ -143,6 +143,110 @@ function buildLinksMap(linkRows) {
   return map;
 }
 
+// ذخیره‌ی خودروهای آماده (بعد از پردازش اکسل): entries = [{ row, doc, imageName }]
+async function persistVehicles(entries, failed, imageFiles, options, log) {
+  const imagesByName = new Map(imageFiles.map((f) => [f.originalname, f]));
+  const usedFilenames = new Set();
+
+  const results = {
+    created: 0,
+    updated: 0,
+    failed: [...failed],
+    removed: [],
+    linksCount: 0,
+    missingProducts: [],
+  };
+
+  const linkedSkus = new Set();
+  const bulkOps = [];
+
+  entries.forEach(({ row, doc, imageName }) => {
+    try {
+      doc.sku = String(doc.sku || "").trim().toUpperCase();
+
+      if (!doc.sku) throw new Error("کد خودرو خالی است");
+      if (!doc.name) throw new Error("نام خودرو خالی است");
+      if (!doc.brand) throw new Error("برند خودرو خالی است");
+
+      if (imageName) {
+        const imageFile = imagesByName.get(imageName);
+
+        if (!imageFile) {
+          throw new Error(
+            `فایل عکس «${imageName}» در بین عکس‌های ارسالی پیدا نشد`,
+          );
+        }
+
+        usedFilenames.add(imageFile.filename);
+        doc.image = `/uploads/products/${imageFile.filename}`;
+      }
+
+      (doc.productLinks || []).forEach((link) => linkedSkus.add(link.sku));
+      results.linksCount += (doc.productLinks || []).length;
+
+      bulkOps.push({
+        updateOne: {
+          filter: { sku: doc.sku },
+          update: { $set: doc },
+          upsert: true,
+        },
+      });
+    } catch (err) {
+      results.failed.push({
+        row,
+        sku: (doc && doc.sku) || "-",
+        error: err.message,
+      });
+    }
+  });
+
+  // یک درخواست گروهی به‌جای صدها رفت‌وبرگشت جدا به دیتابیس (سرعت و جلوگیری از timeout)
+  if (bulkOps.length) {
+    log("ثبت خودروها در دیتابیس");
+    const bulkResult = await Vehicle.bulkWrite(bulkOps, { ordered: false });
+
+    results.created = bulkResult.upsertedCount || 0;
+    results.updated = bulkOps.length - results.created;
+  }
+
+  if (linkedSkus.size) {
+    log("بررسی کد محصول‌های متصل");
+    const found = await Product.find({
+      sku: { $in: [...linkedSkus].map((s) => s.toUpperCase()) },
+    }).select("sku");
+    const foundSet = new Set(found.map((p) => p.sku));
+
+    results.missingProducts = [...linkedSkus].filter(
+      (s) => !foundSet.has(s.toUpperCase()),
+    );
+  }
+
+  if (options.removeMissing) {
+    const skusInFile = entries
+      .map(({ doc }) => String((doc && doc.sku) || "").trim().toUpperCase())
+      .filter(Boolean);
+
+    const stale = await Vehicle.find({ sku: { $nin: skusInFile } }).select(
+      "sku name",
+    );
+
+    if (stale.length) {
+      await Vehicle.deleteMany({ _id: { $in: stale.map((v) => v._id) } });
+
+      results.removed = stale.map((v) => ({ sku: v.sku, name: v.name }));
+    }
+  }
+
+  await Promise.all(
+    imageFiles
+      .filter((f) => !usedFilenames.has(f.filename))
+      .map((f) => removeFileQuietly(f.path)),
+  );
+
+  return results;
+}
+
+// ایمپورت از فایل اکسل روی سرور (فایل‌های کوچک / فرمت ساده)
 async function importVehicles(excelFile, imageFiles = [], options = {}) {
   const log = options.onStage || (() => {});
 
@@ -172,22 +276,10 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
           )
         : null;
 
-    const imagesByName = new Map(imageFiles.map((f) => [f.originalname, f]));
-    const usedFilenames = new Set();
+    const entries = [];
+    const failed = [];
 
-    const results = {
-      created: 0,
-      updated: 0,
-      failed: [],
-      removed: [],
-      linksCount: 0,
-      missingProducts: [],
-    };
-
-    const linkedSkus = new Set();
-    const bulkOps = [];
-
-    for (const row of rows) {
+    rows.forEach((row) => {
       try {
         if (!row.sku) throw new Error("کد خودرو خالی است");
 
@@ -195,88 +287,38 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
 
         doc.sku = row.sku.toUpperCase();
 
-        if (linksMap) {
-          doc.productLinks = linksMap.get(doc.sku) || [];
-          results.linksCount += doc.productLinks.length;
-          doc.productLinks.forEach((link) => linkedSkus.add(link.sku));
-        }
+        if (linksMap) doc.productLinks = linksMap.get(doc.sku) || [];
 
-        if (row.image) {
-          const imageFile = imagesByName.get(row.image);
-
-          if (!imageFile) {
-            throw new Error(
-              `فایل عکس «${row.image}» در بین عکس‌های ارسالی پیدا نشد`,
-            );
-          }
-
-          usedFilenames.add(imageFile.filename);
-          doc.image = `/uploads/products/${imageFile.filename}`;
-        }
-
-        bulkOps.push({
-          updateOne: {
-            filter: { sku: doc.sku },
-            update: { $set: doc },
-            upsert: true,
-          },
-        });
+        entries.push({ row: row.__row, doc, imageName: row.image });
       } catch (err) {
-        results.failed.push({
-          row: row.__row,
-          sku: row.sku || "-",
-          error: err.message,
-        });
+        failed.push({ row: row.__row, sku: row.sku || "-", error: err.message });
       }
-    }
+    });
 
-    // یک درخواست گروهی به‌جای صدها رفت‌وبرگشت جدا به دیتابیس (سرعت و جلوگیری از timeout)
-    if (bulkOps.length) {
-      log("ثبت خودروها در دیتابیس");
-      const bulkResult = await Vehicle.bulkWrite(bulkOps, { ordered: false });
-
-      results.created = bulkResult.upsertedCount || 0;
-      results.updated = bulkOps.length - results.created;
-    }
-
-    if (linkedSkus.size) {
-      log("بررسی کد محصول‌های متصل");
-      const found = await Product.find({
-        sku: { $in: [...linkedSkus].map((s) => s.toUpperCase()) },
-      }).select("sku");
-      const foundSet = new Set(found.map((p) => p.sku));
-
-      results.missingProducts = [...linkedSkus].filter(
-        (s) => !foundSet.has(s.toUpperCase()),
-      );
-    }
-
-    if (options.removeMissing) {
-      const skusInFile = rows
-        .map((row) => String(row.sku || "").trim().toUpperCase())
-        .filter(Boolean);
-
-      const stale = await Vehicle.find({ sku: { $nin: skusInFile } }).select(
-        "sku name",
-      );
-
-      if (stale.length) {
-        await Vehicle.deleteMany({ _id: { $in: stale.map((v) => v._id) } });
-
-        results.removed = stale.map((v) => ({ sku: v.sku, name: v.name }));
-      }
-    }
-
-    await Promise.all(
-      imageFiles
-        .filter((f) => !usedFilenames.has(f.filename))
-        .map((f) => removeFileQuietly(f.path)),
-    );
-
-    return results;
+    return await persistVehicles(entries, failed, imageFiles, options, log);
   } finally {
     await removeFileQuietly(excelFile.path);
   }
+}
+
+// ایمپورت از داده‌ی آماده: مرورگر اکسل رو پردازش می‌کنه و فقط JSON می‌فرسته
+// (پردازش اکسل روی سرور CPU زیادی می‌گیره). vehicles = [{ row, image, ...doc }]
+async function importParsedVehicles(vehicles, imageFiles = [], options = {}) {
+  const log = options.onStage || (() => {});
+
+  if (!Array.isArray(vehicles) || !vehicles.length) {
+    throw new AppError("لیست خودروها خالی است", 400);
+  }
+
+  log("آماده‌سازی داده‌ها");
+
+  const entries = vehicles.map(({ row, image, ...doc }) => ({
+    row,
+    doc,
+    imageName: image,
+  }));
+
+  return persistVehicles(entries, [], imageFiles, options, log);
 }
 
 async function getVehicles() {
@@ -286,5 +328,6 @@ async function getVehicles() {
 module.exports = {
   COLUMN_MAP: SIMPLE_COLUMN_MAP,
   importVehicles,
+  importParsedVehicles,
   getVehicles,
 };

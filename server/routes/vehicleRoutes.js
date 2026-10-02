@@ -4,6 +4,7 @@ const { auth } = require("../middleware/auth");
 const {
   getVehicles,
   importVehicles,
+  importParsedVehicles,
   getImportStatus,
   uploadVehicleImages,
 } = require("../controllers/vehicleController");
@@ -30,6 +31,14 @@ router.post(
     { name: "images", maxCount: 1500 },
   ]),
   importVehicles,
+);
+
+// ایمپورت از داده‌ی آماده (JSON) — اکسل توی مرورگر پردازش می‌شه
+router.post(
+  "/import-parsed",
+  auth,
+  express.json({ limit: "10mb" }),
+  importParsedVehicles,
 );
 
 // وضعیت ایمپورت در حال اجرا

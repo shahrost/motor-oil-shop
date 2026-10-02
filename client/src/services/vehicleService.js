@@ -1,4 +1,5 @@
 import apiClient from "../api/apiClient";
+import parseVehicleExcel from "../utils/parseVehicleExcel";
 
 // دریافت همه خودروها
 
@@ -55,18 +56,17 @@ export async function importVehiclesService(
   removeMissing = false,
   onStage,
 ) {
-  const formData = new FormData();
+  // اکسل توی مرورگر پردازش می‌شه و فقط JSON به سرور می‌ره (سرور CPU کمی داره)
+  if (onStage) onStage("پردازش فایل اکسل در مرورگر");
 
-  formData.append("file", excelFile);
+  const vehicles = await parseVehicleExcel(excelFile);
 
-  formData.append("removeMissing", String(removeMissing));
+  if (onStage) onStage("ارسال اطلاعات به سرور");
 
-  formData.append("uploadedImages", JSON.stringify(uploadedImages));
-
-  const start = await apiClient.post("/vehicles/import", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+  const start = await apiClient.post("/vehicles/import-parsed", {
+    vehicles,
+    uploadedImages,
+    removeMissing,
   });
 
   const { jobId } = start.data.data;

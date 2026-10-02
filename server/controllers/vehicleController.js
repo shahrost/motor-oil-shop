@@ -67,6 +67,44 @@ function pruneJobs() {
   });
 }
 
+function startJob(runner, imageCount) {
+  pruneJobs();
+
+  const jobId = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+  const job = {
+    status: "running",
+    stage: "شروع",
+    startedAt: Date.now(),
+    results: null,
+    error: "",
+  };
+
+  jobs.set(jobId, job);
+
+  console.log(`[vehicle-import ${jobId}] started (${imageCount} images)`);
+
+  runner((stage) => {
+    job.stage = stage;
+    console.log(
+      `[vehicle-import ${jobId}] ${stage} (+${Date.now() - job.startedAt}ms)`,
+    );
+  })
+    .then((results) => {
+      job.status = "done";
+      job.results = results;
+      console.log(
+        `[vehicle-import ${jobId}] done in ${Date.now() - job.startedAt}ms`,
+      );
+    })
+    .catch((error) => {
+      job.status = "error";
+      job.error = error.message || "خطا در ایمپورت خودروها";
+      console.log(`[vehicle-import ${jobId}] ERROR: ${job.error}`);
+    });
+
+  return jobId;
+}
+
 async function importVehicles(req, res, next) {
   try {
     const excelFile = req.files && req.files.file && req.files.file[0];
@@ -80,43 +118,36 @@ async function importVehicles(req, res, next) {
       ...resolveUploadedImages(req.body?.uploadedImages),
     ];
 
-    pruneJobs();
+    const jobId = startJob(
+      (onStage) =>
+        vehicleService.importVehicles(excelFile, imageFiles, {
+          removeMissing: req.body?.removeMissing === "true",
+          onStage,
+        }),
+      imageFiles.length,
+    );
 
-    const jobId = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    const job = {
-      status: "running",
-      stage: "شروع",
-      startedAt: Date.now(),
-      results: null,
-      error: "",
-    };
+    return apiResponse.success(res, { jobId }, "ایمپورت شروع شد");
+  } catch (error) {
+    next(error);
+  }
+}
 
-    jobs.set(jobId, job);
+// ایمپورت از JSON آماده (اکسل توی مرورگر پردازش شده)
+async function importParsedVehicles(req, res, next) {
+  try {
+    const imageFiles = resolveUploadedImages(
+      JSON.stringify(req.body?.uploadedImages || {}),
+    );
 
-    console.log(`[vehicle-import ${jobId}] started (${imageFiles.length} images)`);
-
-    vehicleService
-      .importVehicles(excelFile, imageFiles, {
-        removeMissing: req.body?.removeMissing === "true",
-        onStage: (stage) => {
-          job.stage = stage;
-          console.log(
-            `[vehicle-import ${jobId}] ${stage} (+${Date.now() - job.startedAt}ms)`,
-          );
-        },
-      })
-      .then((results) => {
-        job.status = "done";
-        job.results = results;
-        console.log(
-          `[vehicle-import ${jobId}] done in ${Date.now() - job.startedAt}ms`,
-        );
-      })
-      .catch((error) => {
-        job.status = "error";
-        job.error = error.message || "خطا در ایمپورت خودروها";
-        console.log(`[vehicle-import ${jobId}] ERROR: ${job.error}`);
-      });
+    const jobId = startJob(
+      (onStage) =>
+        vehicleService.importParsedVehicles(req.body?.vehicles, imageFiles, {
+          removeMissing: req.body?.removeMissing === true,
+          onStage,
+        }),
+      imageFiles.length,
+    );
 
     return apiResponse.success(res, { jobId }, "ایمپورت شروع شد");
   } catch (error) {
@@ -146,6 +177,7 @@ async function getImportStatus(req, res, next) {
 module.exports = {
   getVehicles,
   importVehicles,
+  importParsedVehicles,
   getImportStatus,
   uploadVehicleImages,
 };
