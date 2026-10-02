@@ -29,7 +29,14 @@ app.use(
   }),
 );
 
-app.use(express.json());
+// ایمپورت خودرو JSON حجیم‌تری می‌فرسته و parser اختصاصی خودش (limit بزرگ‌تر) رو داره
+const jsonParser = express.json();
+
+app.use((req, res, next) => {
+  if (req.path === "/api/vehicles/import-parsed") return next();
+
+  return jsonParser(req, res, next);
+});
 
 app.use("/uploads", express.static("uploads"));
 app.use("/templates", express.static("templates"));
