@@ -181,6 +181,7 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
     };
 
     const linkedSkus = new Set();
+    const bulkOps = [];
 
     for (const row of rows) {
       try {
@@ -209,15 +210,13 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
           doc.image = `/uploads/products/${imageFile.filename}`;
         }
 
-        const existing = await Vehicle.findOne({ sku: doc.sku });
-
-        if (existing) {
-          await Vehicle.updateOne({ _id: existing._id }, { $set: doc });
-          results.updated += 1;
-        } else {
-          await Vehicle.create(doc);
-          results.created += 1;
-        }
+        bulkOps.push({
+          updateOne: {
+            filter: { sku: doc.sku },
+            update: { $set: doc },
+            upsert: true,
+          },
+        });
       } catch (err) {
         results.failed.push({
           row: row.__row,
@@ -225,6 +224,14 @@ async function importVehicles(excelFile, imageFiles = [], options = {}) {
           error: err.message,
         });
       }
+    }
+
+    // یک درخواست گروهی به‌جای صدها رفت‌وبرگشت جدا به دیتابیس (سرعت و جلوگیری از timeout)
+    if (bulkOps.length) {
+      const bulkResult = await Vehicle.bulkWrite(bulkOps, { ordered: false });
+
+      results.created = bulkResult.upsertedCount || 0;
+      results.updated = bulkOps.length - results.created;
     }
 
     if (linkedSkus.size) {
