@@ -1,11 +1,15 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
+import { VehicleContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
-import { vehicleBrands, getVehiclesByBrand } from "../../data/vehicles";
+import getVehicleBrands from "../../utils/vehicleBrands";
 
 function Vehicles() {
   const { language, t } = useContext(LanguageContext);
+  const { vehicles } = useContext(VehicleContext);
+
+  const vehicleBrands = getVehicleBrands(vehicles);
 
   return (
     <section className="px-5 mt-8">
@@ -18,12 +22,11 @@ function Vehicles() {
       <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
         {vehicleBrands.map((brand) => {
           const label = language === "en" ? brand.nameEn : brand.name;
-          const count = getVehiclesByBrand(brand.key).length;
 
           return (
             <Link
-              key={brand.key}
-              to={`/vehicles/${brand.key}`}
+              key={brand.name}
+              to={`/vehicles/${encodeURIComponent(brand.name)}`}
               className="
                 bg-white
                 rounded-3xl
@@ -44,7 +47,7 @@ function Vehicles() {
               <h3 className="font-bold mt-4">{label}</h3>
 
               <p className="text-sm text-gray-500 mt-1">
-                {count} {t("vehicles.modelsCount")}
+                {brand.count} {t("vehicles.modelsCount")}
               </p>
             </Link>
           );

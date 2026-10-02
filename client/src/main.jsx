@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import "./index.css";
 
 import { ProductProvider } from "./context/ProductContext";
+import { VehicleProvider } from "./context";
 import { OrderProvider } from "./context/OrderContext";
 import { CartProvider } from "./context/CartContext";
 import { CustomerAuthProvider } from "./context/CustomerAuthContext";
@@ -18,13 +19,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <LanguageProvider>
         <ThemeProvider>
           <ProductProvider>
-            <OrderProvider>
-              <CartProvider>
-                <CustomerAuthProvider>
-                  <App />
-                </CustomerAuthProvider>
-              </CartProvider>
-            </OrderProvider>
+            <VehicleProvider>
+              <OrderProvider>
+                <CartProvider>
+                  <CustomerAuthProvider>
+                    <App />
+                  </CustomerAuthProvider>
+                </CartProvider>
+              </OrderProvider>
+            </VehicleProvider>
           </ProductProvider>
         </ThemeProvider>
       </LanguageProvider>

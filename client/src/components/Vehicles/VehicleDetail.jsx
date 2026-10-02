@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { ProductContext } from "../../context";
+import { ProductContext, VehicleContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
-import { getVehicleById, getVehicleBrand } from "../../data/vehicles";
 import getRecommendedOils from "../../utils/vehicleOils";
 import ProductCard from "../ProductCard";
 import VehicleImage from "./VehicleImage";
@@ -11,9 +10,10 @@ import VehicleImage from "./VehicleImage";
 function VehicleDetail() {
   const { id } = useParams();
   const { products } = useContext(ProductContext);
+  const { vehicles } = useContext(VehicleContext);
   const { language, t } = useContext(LanguageContext);
 
-  const vehicle = getVehicleById(id);
+  const vehicle = vehicles.find((v) => v.id === id);
 
   if (!vehicle) {
     return (
@@ -24,14 +24,16 @@ function VehicleDetail() {
   }
 
   const en = language === "en";
-  const name = en ? vehicle.nameEn : vehicle.name;
-  const brand = getVehicleBrand(vehicle.brand);
+  const name = en ? vehicle.nameEn || vehicle.name : vehicle.name;
   const oils = getRecommendedOils(vehicle, products);
 
   const specs = [
-    [t("common.brand"), en ? brand?.nameEn : brand?.name],
-    [t("vehicles.years"), en ? vehicle.yearsEn : vehicle.years],
-    [t("vehicles.engine"), en ? vehicle.engineEn : vehicle.engine],
+    [t("common.brand"), en ? vehicle.brandEn || vehicle.brand : vehicle.brand],
+    [t("vehicles.years"), en ? vehicle.yearsEn || vehicle.years : vehicle.years],
+    [
+      t("vehicles.engine"),
+      en ? vehicle.engineEn || vehicle.engine : vehicle.engine,
+    ],
     [
       t("vehicles.oilCapacity"),
       `${vehicle.oilCapacity} ${t("vehicles.liter")}`,
@@ -39,12 +41,12 @@ function VehicleDetail() {
     [t("vehicles.viscosity"), vehicle.viscosities.join(" / ")],
     [t("vehicles.api"), vehicle.api],
     [t("vehicles.changeInterval"), `${vehicle.interval} ${t("vehicles.km")}`],
-  ];
+  ].filter(([, value]) => value && String(value).trim());
 
   return (
     <section className="px-5 mt-8 max-w-7xl mx-auto">
       <Link
-        to={`/vehicles/${vehicle.brand}`}
+        to={`/vehicles/${encodeURIComponent(vehicle.brand)}`}
         className="text-green-700 font-bold text-sm"
       >
         ← {t("vehicles.back")}

@@ -1,18 +1,20 @@
 import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import { VehicleContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
-import { getVehicleBrand, getVehiclesByBrand } from "../../data/vehicles";
 import VehicleCard from "./VehicleCard";
 
 function VehicleBrand() {
-  const { brand: brandKey } = useParams();
+  const { brand: brandName } = useParams();
   const { language, t } = useContext(LanguageContext);
+  const { vehicles } = useContext(VehicleContext);
   const [search, setSearch] = useState("");
 
-  const brand = getVehicleBrand(brandKey);
+  const brandVehicles = vehicles.filter((v) => v.brand === brandName);
+  const first = brandVehicles[0];
 
-  if (!brand) {
+  if (!first) {
     return (
       <p className="text-center text-red-500 mt-10 font-bold">
         {t("vehicles.notFoundBrand")}
@@ -22,11 +24,11 @@ function VehicleBrand() {
 
   const query = search.trim().toLowerCase();
 
-  const filtered = getVehiclesByBrand(brand.key).filter(
+  const filtered = brandVehicles.filter(
     (vehicle) =>
       !query ||
       vehicle.name.toLowerCase().includes(query) ||
-      vehicle.nameEn.toLowerCase().includes(query),
+      (vehicle.nameEn || "").toLowerCase().includes(query),
   );
 
   return (
@@ -36,7 +38,7 @@ function VehicleBrand() {
       </Link>
 
       <h1 className="text-3xl font-extrabold text-center mt-4">
-        {language === "en" ? brand.nameEn : brand.name}
+        {language === "en" ? first.brandEn || first.brand : first.brand}
       </h1>
 
       <input

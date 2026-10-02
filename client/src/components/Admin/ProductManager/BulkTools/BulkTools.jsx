@@ -1,4 +1,5 @@
 import useBulkTools from "./hooks/useBulkTools";
+import VehicleImport from "./VehicleImport";
 
 const SERVER_ORIGIN = (
   import.meta.env.VITE_API_URL || "http://localhost:5000/api"
@@ -186,6 +187,8 @@ function BulkTools() {
           </ResultBox>
         )}
       </form>
+
+      <VehicleImport />
     </div>
   );
 }

@@ -1,25 +1,15 @@
-// دیتای خودروها برای بخش «خودروها». مقادیر (حجم روغن، ویسکوزیته، استاندارد)
-// تقریبی و بر اساس توصیه‌ی عمومی سازنده‌ان؛ برای اصلاح فقط همین فایل رو ادیت کنید.
-// برای عکس واقعی خودرو، فیلد `image` (آدرس یا import) رو به هر خودرو اضافه کنید؛
-// اگه نباشه یه تصویر پیش‌فرض نشون داده می‌شه.
+// دیتای پیش‌فرض خودروها؛ فقط وقتی استفاده می‌شه که هنوز هیچ خودرویی از طریق
+// ایمپورت ادمین (اکسل) توی دیتابیس ثبت نشده باشه. مقادیر (حجم روغن، ویسکوزیته، استاندارد)
+// تقریبی و بر اساس توصیه‌ی عمومی سازنده‌ان. برای مدیریت اصلی خودروها از
+// «ایمپورت گروهی خودروها» توی پنل ادمین استفاده کنید.
 // `viscosities` باید با فرمت ویسکوزیته‌ی محصولات (مثل 10W40) باشه.
-
-export const vehicleBrands = [
-  { key: "iran-khodro", name: "ایران‌خودرو", nameEn: "Iran Khodro" },
-  { key: "saipa", name: "سایپا", nameEn: "Saipa" },
-  { key: "peugeot", name: "پژو", nameEn: "Peugeot" },
-  { key: "renault", name: "رنو", nameEn: "Renault" },
-  { key: "hyundai", name: "هیوندای", nameEn: "Hyundai" },
-  { key: "kia", name: "کیا", nameEn: "Kia" },
-  { key: "toyota", name: "تویوتا", nameEn: "Toyota" },
-  { key: "chery", name: "چری", nameEn: "Chery" },
-];
 
 export const vehicles = [
   // ایران‌خودرو
   {
     id: "samand-lx",
-    brand: "iran-khodro",
+    brand: "ایران‌خودرو",
+    brandEn: "Iran Khodro",
     name: "سمند LX",
     nameEn: "Samand LX",
     years: "۱۳۸۰ تا ۱۴۰۳",
@@ -33,7 +23,8 @@ export const vehicles = [
   },
   {
     id: "dena",
-    brand: "iran-khodro",
+    brand: "ایران‌خودرو",
+    brandEn: "Iran Khodro",
     name: "دنا",
     nameEn: "Dena",
     years: "۱۳۹۰ تا امروز",
@@ -47,7 +38,8 @@ export const vehicles = [
   },
   {
     id: "runna",
-    brand: "iran-khodro",
+    brand: "ایران‌خودرو",
+    brandEn: "Iran Khodro",
     name: "رانا",
     nameEn: "Runna",
     years: "۱۳۹۴ تا امروز",
@@ -61,7 +53,8 @@ export const vehicles = [
   },
   {
     id: "peugeot-pars",
-    brand: "iran-khodro",
+    brand: "ایران‌خودرو",
+    brandEn: "Iran Khodro",
     name: "پژو پارس",
     nameEn: "Peugeot Pars",
     years: "۱۳۸۴ تا امروز",
@@ -77,7 +70,8 @@ export const vehicles = [
   // سایپا
   {
     id: "pride-131",
-    brand: "saipa",
+    brand: "سایپا",
+    brandEn: "Saipa",
     name: "پراید ۱۳۱",
     nameEn: "Pride 131",
     years: "۱۳۷۲ تا ۱۳۹۹",
@@ -91,7 +85,8 @@ export const vehicles = [
   },
   {
     id: "tiba",
-    brand: "saipa",
+    brand: "سایپا",
+    brandEn: "Saipa",
     name: "تیبا",
     nameEn: "Tiba",
     years: "۱۳۸۸ تا ۱۴۰۳",
@@ -105,7 +100,8 @@ export const vehicles = [
   },
   {
     id: "quick",
-    brand: "saipa",
+    brand: "سایپا",
+    brandEn: "Saipa",
     name: "کوییک",
     nameEn: "Quick",
     years: "۱۳۹۶ تا امروز",
@@ -119,7 +115,8 @@ export const vehicles = [
   },
   {
     id: "shahin",
-    brand: "saipa",
+    brand: "سایپا",
+    brandEn: "Saipa",
     name: "شاهین",
     nameEn: "Shahin",
     years: "۱۴۰۱ تا امروز",
@@ -135,7 +132,8 @@ export const vehicles = [
   // پژو
   {
     id: "peugeot-206",
-    brand: "peugeot",
+    brand: "پژو",
+    brandEn: "Peugeot",
     name: "پژو ۲۰۶",
     nameEn: "Peugeot 206",
     years: "۱۳۷۹ تا امروز",
@@ -149,7 +147,8 @@ export const vehicles = [
   },
   {
     id: "peugeot-405",
-    brand: "peugeot",
+    brand: "پژو",
+    brandEn: "Peugeot",
     name: "پژو ۴۰۵",
     nameEn: "Peugeot 405",
     years: "۱۳۷۱ تا امروز",
@@ -163,7 +162,8 @@ export const vehicles = [
   },
   {
     id: "peugeot-207",
-    brand: "peugeot",
+    brand: "پژو",
+    brandEn: "Peugeot",
     name: "پژو ۲۰۷",
     nameEn: "Peugeot 207",
     years: "۱۳۸۷ تا امروز",
@@ -179,7 +179,8 @@ export const vehicles = [
   // رنو
   {
     id: "renault-l90",
-    brand: "renault",
+    brand: "رنو",
+    brandEn: "Renault",
     name: "ال ۹۰ (تندر ۹۰)",
     nameEn: "Renault L90 (Tondar 90)",
     years: "۱۳۸۵ تا امروز",
@@ -193,7 +194,8 @@ export const vehicles = [
   },
   {
     id: "renault-sandero",
-    brand: "renault",
+    brand: "رنو",
+    brandEn: "Renault",
     name: "ساندرو",
     nameEn: "Sandero",
     years: "۱۳۸۷ تا امروز",
@@ -209,7 +211,8 @@ export const vehicles = [
   // هیوندای
   {
     id: "hyundai-elantra",
-    brand: "hyundai",
+    brand: "هیوندای",
+    brandEn: "Hyundai",
     name: "النترا",
     nameEn: "Elantra",
     years: "۲۰۱۱ تا ۲۰۲۰",
@@ -223,7 +226,8 @@ export const vehicles = [
   },
   {
     id: "hyundai-sonata",
-    brand: "hyundai",
+    brand: "هیوندای",
+    brandEn: "Hyundai",
     name: "سوناتا",
     nameEn: "Sonata",
     years: "۲۰۱۰ تا ۲۰۲۰",
@@ -237,7 +241,8 @@ export const vehicles = [
   },
   {
     id: "hyundai-tucson",
-    brand: "hyundai",
+    brand: "هیوندای",
+    brandEn: "Hyundai",
     name: "توسان",
     nameEn: "Tucson",
     years: "۲۰۱۰ تا ۲۰۲۰",
@@ -253,7 +258,8 @@ export const vehicles = [
   // کیا
   {
     id: "kia-cerato",
-    brand: "kia",
+    brand: "کیا",
+    brandEn: "Kia",
     name: "سراتو",
     nameEn: "Cerato",
     years: "۲۰۱۰ تا ۲۰۲۰",
@@ -267,7 +273,8 @@ export const vehicles = [
   },
   {
     id: "kia-sportage",
-    brand: "kia",
+    brand: "کیا",
+    brandEn: "Kia",
     name: "اسپورتیج",
     nameEn: "Sportage",
     years: "۲۰۱۰ تا ۲۰۲۰",
@@ -283,7 +290,8 @@ export const vehicles = [
   // تویوتا
   {
     id: "toyota-camry",
-    brand: "toyota",
+    brand: "تویوتا",
+    brandEn: "Toyota",
     name: "کمری",
     nameEn: "Camry",
     years: "۲۰۰۷ تا ۲۰۲۰",
@@ -297,7 +305,8 @@ export const vehicles = [
   },
   {
     id: "toyota-corolla",
-    brand: "toyota",
+    brand: "تویوتا",
+    brandEn: "Toyota",
     name: "کرولا",
     nameEn: "Corolla",
     years: "۲۰۰۸ تا ۲۰۲۰",
@@ -313,7 +322,8 @@ export const vehicles = [
   // چری
   {
     id: "chery-tiggo5",
-    brand: "chery",
+    brand: "چری",
+    brandEn: "Chery",
     name: "تیگو ۵",
     nameEn: "Tiggo 5",
     years: "۱۳۹۴ تا امروز",
@@ -327,7 +337,8 @@ export const vehicles = [
   },
   {
     id: "chery-arrizo5",
-    brand: "chery",
+    brand: "چری",
+    brandEn: "Chery",
     name: "آریزو ۵",
     nameEn: "Arrizo 5",
     years: "۱۳۹۷ تا امروز",
@@ -341,14 +352,4 @@ export const vehicles = [
   },
 ];
 
-export function getVehicleBrand(key) {
-  return vehicleBrands.find((brand) => brand.key === key);
-}
-
-export function getVehicleById(id) {
-  return vehicles.find((vehicle) => vehicle.id === id);
-}
-
-export function getVehiclesByBrand(brandKey) {
-  return vehicles.filter((vehicle) => vehicle.brand === brandKey);
-}
+export default vehicles;

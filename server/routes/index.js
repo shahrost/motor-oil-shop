@@ -1,10 +1,13 @@
 const productRoutes = require("./productRoutes");
+const vehicleRoutes = require("./vehicleRoutes");
 const orderRoutes = require("./orderRoutes");
 const authRoutes = require("./authRoutes");
 const customerRoutes = require("./customerRoutes");
 
 function routes(app) {
   app.use("/api/products", productRoutes);
+
+  app.use("/api/vehicles", vehicleRoutes);
 
   app.use("/api/orders", orderRoutes);
 

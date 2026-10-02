@@ -2,15 +2,13 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import LanguageContext from "../../context/LanguageContext";
-import { getVehicleBrand } from "../../data/vehicles";
 import VehicleImage from "./VehicleImage";
 
 function VehicleCard({ vehicle }) {
   const { language, t } = useContext(LanguageContext);
   const en = language === "en";
 
-  const name = en ? vehicle.nameEn : vehicle.name;
-  const brand = getVehicleBrand(vehicle.brand);
+  const name = en ? vehicle.nameEn || vehicle.name : vehicle.name;
 
   return (
     <Link
@@ -37,7 +35,7 @@ function VehicleCard({ vehicle }) {
       <div className="mt-2 text-sm font-bold text-gray-700 space-y-1">
         <p className="line-clamp-1">
           <span className="text-green-700">{t("common.brand")}</span>{" "}
-          {en ? brand?.nameEn : brand?.name}
+          {en ? vehicle.brandEn || vehicle.brand : vehicle.brand}
         </p>
 
         <p className="line-clamp-1">

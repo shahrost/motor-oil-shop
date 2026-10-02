@@ -1,8 +1,10 @@
+import getImageUrl from "../../utils/getImageUrl";
+
 function VehicleImage({ vehicle, name, className = "" }) {
   if (vehicle.image) {
     return (
       <img
-        src={vehicle.image}
+        src={getImageUrl(vehicle.image)}
         alt={name}
         draggable={false}
         className={`object-contain ${className}`}
