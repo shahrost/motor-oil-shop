@@ -4,12 +4,21 @@ const { auth } = require("../middleware/auth");
 const {
   getVehicles,
   importVehicles,
+  uploadVehicleImages,
 } = require("../controllers/vehicleController");
 
 const router = express.Router();
 
 // دریافت همه خودروها
 router.get("/", getVehicles);
+
+// آپلود دسته‌ای عکس خودروها (قبل از ایمپورت)
+router.post(
+  "/images",
+  auth,
+  importUpload.fields([{ name: "images", maxCount: 100 }]),
+  uploadVehicleImages,
+);
 
 // ایمپورت گروهی خودروها (اکسل + عکس‌ها)
 router.post(

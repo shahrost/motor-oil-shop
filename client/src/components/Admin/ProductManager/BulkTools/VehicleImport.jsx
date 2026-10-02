@@ -1,6 +1,9 @@
 import { useContext, useState } from "react";
 import { VehicleContext } from "../../../../context";
-import { importVehiclesService } from "../../../../services/vehicleService";
+import {
+  importVehiclesService,
+  uploadVehicleImagesService,
+} from "../../../../services/vehicleService";
 
 const SERVER_ORIGIN = (
   import.meta.env.VITE_API_URL || "http://localhost:5000/api"
@@ -15,6 +18,7 @@ function VehicleImport() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [progress, setProgress] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -38,12 +42,30 @@ function VehicleImport() {
     setResult(null);
 
     try {
-      const response = await importVehiclesService(file, images, removeMissing);
+      setProgress("");
+
+      const uploaded = await uploadVehicleImagesService(images, (done) =>
+        setProgress(`در حال آپلود عکس‌ها: ${done} از ${images.length}`),
+      );
+
+      setProgress("در حال خواندن اکسل و ثبت خودروها...");
+
+      const response = await importVehiclesService(
+        file,
+        uploaded,
+        removeMissing,
+      );
       setResult(response.data);
       await reloadVehicles();
     } catch (err) {
-      setError(err.response?.data?.message || "خطا در ایمپورت خودروها");
+      const status = err.response?.status;
+
+      setError(
+        err.response?.data?.message ||
+          `خطا در ایمپورت خودروها (${status ? `کد ${status}` : err.message})`,
+      );
     } finally {
+      setProgress("");
       setLoading(false);
     }
   }
@@ -106,6 +128,10 @@ function VehicleImport() {
       >
         {loading ? "در حال ایمپورت..." : "اجرای ایمپورت خودرو"}
       </button>
+
+      {loading && progress && (
+        <p className="text-gray-600 text-sm mt-3">{progress}</p>
+      )}
 
       {error && <p className="text-red-600 text-sm mt-3">{error}</p>}
 
