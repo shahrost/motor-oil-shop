@@ -29,7 +29,7 @@ export async function uploadVehicleImagesService(imageFiles, onProgress) {
       },
     });
 
-    response.data.forEach((item) => {
+    (response.data.data || []).forEach((item) => {
       uploaded[item.name] = item.filename;
     });
 
