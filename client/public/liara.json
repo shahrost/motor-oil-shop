@@ -1,6 +1,0 @@
-{
-  "static": {
-    "compress": true,
-    "fallback": "index.html"
-  }
-}

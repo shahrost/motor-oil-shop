@@ -3,7 +3,6 @@
 آخرین بروزرسانی: 2026-10-02
 
 پلتفرم دیپلوی: **Runflare** ([runflare.com](https://runflare.com)) برای هم سرور، هم کلاینت و هم دیتابیس.
-پروژه دیگه به Liara وصل نیست و از اون سرویس نباید استفاده بشه (بخش «تغییر پلتفرم» پایین‌تر رو ببین).
 
 ## پیش‌نیازها (کارهایی که باید خودت انجام بدی)
 
@@ -72,9 +71,3 @@
 
 ### ۳. هیچ‌وقت `npm install` یا `npm init` رو تو ریشه‌ی ریپو اجرا نکن
 یه `package.json` اضافی تو ریشه (با دیپندنسی خراب `xlsx@0.18.5` که npm روش خطای 402 می‌ده) قبلاً باعث fail شدن بیلدها شد و حذف شد. فقط داخل `client/` یا `server/` نصب کن.
-
-## تغییر پلتفرم: Liara → Runflare (مهر ۱۴۰۵)
-
-- Liara دیگه استفاده نمی‌شه. همه‌ی سرویس‌ها (سرور، کلاینت، دیتابیس) روی Runflare هستن.
-- آدرس‌های `*.liara.run` و دامنه‌های وابسته به اون دیگه معتبر نیستن؛ `CORS_ORIGIN` و `VITE_API_URL` باید به آدرس‌های Runflare/دامنه‌ی نهایی اشاره کنن.
-- workflowهای گیت‌هاب [deploy-client.yml](.github/workflows/deploy-client.yml) و [deploy-server.yml](.github/workflows/deploy-server.yml) و فایل `client/liara.json` مخصوص Liara بودن و دیگه کاربردی ندارن. دیپلوی از طریق Runflare انجام می‌شه.

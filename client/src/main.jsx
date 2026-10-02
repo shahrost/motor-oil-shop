@@ -31,8 +31,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </React.StrictMode>,
 );
-
-// deploy trigger: initial Liara client deployment
-
-// retry: switched to Liara react platform deploy
-// retry: added NPM_CONFIG_REGISTRY override for react platform build

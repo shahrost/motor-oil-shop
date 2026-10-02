@@ -65,17 +65,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-// deploy trigger: initial Liara deployment
-
-// retry: npm registry override via env var
-
-// retry: disable read-only fs for uploads dir
-
-// retry: custom DNS for MongoDB Atlas SRV lookup
-
-// retry: updated MongoDB auth credentials
-
-// retry: add shoil-client.liara.run to CORS_ORIGIN
-
-// retry: reset ADMIN_PASSWORD_HASH
