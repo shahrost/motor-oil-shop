@@ -6,7 +6,7 @@
 
 ## پیش‌نیازها (کارهایی که باید خودت انجام بدی)
 
-- [ ] ثبت دامنه `.ir` (مثلاً `shahramoil.ir`) از یه رجیسترار معتبر ایرانی — [ایران‌سرور](https://www.iranserver.com/domains/ir/) یا [پارس‌پک](https://parspack.com/domain/ir) پیشنهاد می‌شن
+- [ ] ثبت دامنه `.ir` (مثلاً `shoil.ir`) از یه رجیسترار معتبر ایرانی — [ایران‌سرور](https://www.iranserver.com/domains/ir/) یا [پارس‌پک](https://parspack.com/domain/ir) پیشنهاد می‌شن
 - [ ] حساب روی Runflare با اعتبار کافی
 - [ ] دسترسی به دیتابیس قبلی (برای کوچ داده، اگه هنوز انجام نشده)
 - [ ] (اختیاری) نصب Runflare CLI روی ویندوز با [client/install.bat](client/install.bat) — به‌صورت Administrator اجرا بشه
@@ -34,7 +34,7 @@
      ```
      node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
      ```
-   - `CORS_ORIGIN` → آدرس نهایی سایت (مثلاً `https://shahramoil.ir`)؛ چند آدرس با کاما
+   - `CORS_ORIGIN` → آدرس نهایی سایت (مثلاً `https://shoil.ir`)؛ چند آدرس با کاما
    - `ADMIN_USERNAME` و `ADMIN_PASSWORD_HASH` → با `server/scripts/hashPassword.js` یه پسورد قوی بساز
    - `PORT` → اگه پلتفرم خودش ست نکرد، `5000`
 4. دستور استارت: `npm start`
@@ -43,7 +43,7 @@
 ## مرحله ۳ — دیپلوی کلاینت (React build)
 
 1. یه سرویس استاتیک/React تو Runflare بساز و پوشه‌ی `client/` رو دیپلوی کن.
-2. Environment Variable: `VITE_API_URL` = آدرس سرور + `/api` (مثلاً `https://api.shahramoil.ir/api`)
+2. Environment Variable: `VITE_API_URL` = آدرس سرور + `/api` (مثلاً `https://api.shoil.ir/api`)
 3. دستور build: `npm run build`
 4. پوشه‌ی خروجی: [client/vite.config.js](client/vite.config.js) وقتی متغیر محیطی `RUNFLARE` ست باشه خروجی رو تو **`dist`** می‌ریزه، وگرنه تو `build`. پس موقع build روی Runflare باید `RUNFLARE=1` ست باشه.
 

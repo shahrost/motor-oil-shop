@@ -1,10 +1,35 @@
 # Shahram Roghan Project State
 
 آخرین بروزرسانی:
-Session Update 2026-10-02 — Migration to Runflare ✅
+Session Update 2026-10-02 (بخش دوم) — بخش خودروها + ایمپورت خودرو ✅
 
 ---
 
+# Session Update — 2026-10-02 (بخش دوم)
+
+## بخش «خودروها» + ایمپورت گروهی خودرو (اکسل + عکس)
+
+Status: Completed ✅ (روی shoil.ir و api.shoil.ir دیپلوی شد؛ `/api/vehicles` جواب می‌ده)
+
+Changes:
+
+✅ دکمه‌ی «خودروها» توی منوی هدر بین «خانه» و «محصولات» (`data/menu.js` + کلید `nav.vehicles`؛ منوی ادمین هم از همین فایل می‌خونه)
+✅ مسیرها: `/vehicles` (لیست برندهای خودرو) ← `/vehicles/:brand` (مدل‌ها + جستجو) ← `/vehicle/:id` (عکس، کارت مشخصات، روغن‌های مناسب). کامپوننت‌ها توی `components/Vehicles/`
+✅ کارت خودرو هم‌استایل کارت روغن‌هاست؛ روغن‌های مناسب با همون `ProductCard` (قالب و قیمت فعلی) نمایش داده می‌شن
+✅ منطق روغن مناسب (`utils/vehicleOils.js`): روغن موتور بنزینیِ فعال که ویسکوزیته‌اش جزو `viscosities` خودرو باشه
+✅ ترجمه‌ی EN/FA (namespace `vehicles` + `nav.vehicles`)
+✅ سرور: مدل `Vehicle` (کلید یکتا `sku`)، `GET /api/vehicles` (عمومی)، `POST /api/vehicles/import` (ادمین، اکسل + عکس‌ها، گزینه‌ی حذف خودروهای غایب در اکسل) — `routes/vehicleRoutes.js`, `controllers/vehicleController.js`, `services/vehicleImportService.js`
+✅ توابع خوندن اکسل مشترک شد: `server/utils/excelReader.js` (ایمپورت محصولات هم ازش استفاده می‌کنه)
+✅ ادمین: فرم «ایمپورت گروهی خودروها» توی `BulkTools` (`VehicleImport.jsx`) با لینک دانلود `templates/vehicle-import-template.xlsx` (ساخته‌شده با `server/scripts/generateVehicleTemplate.js` از `client/src/data/vehicles.js`)
+✅ ستون‌های اکسل: کد خودرو، نام خودرو، برند خودرو، سال ساخت، موتور، حجم روغن موتور (لیتر)، ویسکوزیته‌های پیشنهادی (با ویرگول)، استاندارد API، فاصله تعویض روغن، نام فایل عکس (+ ستون‌های انگلیسی اختیاری)
+✅ تا وقتی هیچ خودرویی توی دیتابیس نیست، سایت لیست پیش‌فرض ۲۲ خودرو (`data/vehicles.js`) رو نشون می‌ده؛ بعد از اولین ایمپورت فقط خودروهای دیتابیس نمایش داده می‌شن (`VehicleProvider`)
+✅ آدرس‌های اشتباه `shahramoil.ir` توی `DEPLOYMENT.md` به آدرس واقعی `shoil.ir` (و `api.shoil.ir`) اصلاح شد
+
+⚠️ داده‌ی پیش‌فرض خودروها (حجم روغن، ویسکوزیته، API) تقریبی و ساخته‌ی خودمونه، نه از منبع رسمی — قبل از اتکا بررسی بشه
+⚠️ ایمپورت خودرو و ایمپورت محصول بعد از refactor روی دیتابیس واقعی تست نشدن — بعد از اولین استفاده چک بشه
+⚠️ عکس و لوگوی برند خودرو فعلاً placeholder (حرف اول برند)؛ دیپلوی همچنان دستی با Runflare CLI
+
+---
 # Session Update — 2026-10-02
 
 ## انتقال هاست از Liara به Runflare
