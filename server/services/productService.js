@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const productRepository = require("../repositories/productRepository");
+const Product = require("../models/Product");
+const productRepository =require("../repositories/productRepository");
 const validateProduct = require("../validations/productValidation");
 const AppError = require("../utils/AppError");
 const { removeProductImages } = require("../utils/removeUploadedImage");
@@ -51,6 +52,23 @@ async function createProduct(data, file) {
   }
 
 
+
+  const twin = await Product.findOne({
+    brand: data.brand,
+    name: data.name,
+    category: data.category || "",
+    volume: data.volume || "",
+    viscosity: data.viscosity || "",
+    api: data.api || "",
+    description: data.description || "",
+  }).select("sku");
+
+  if (twin) {
+    throw new AppError(
+      `این محصول قبلاً ثبت شده است${twin.sku ? ` (کد ${twin.sku})` : ""}`,
+      409
+    );
+  }
 
   return await productRepository.createProduct(data);
 

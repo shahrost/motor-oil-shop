@@ -50,6 +50,20 @@ const COLUMN_MAP = {
   "نام فایل‌های گالری": "galleryImages",
 };
 
+// همان محصول با کد (sku) دیگر — دلیل اصلی تکراری‌شدن محصولات هنگام ایمپورت
+async function findSameProductWithOtherSku(doc) {
+  return Product.findOne({
+    sku: { $ne: doc.sku },
+    brand: doc.brand,
+    name: doc.name,
+    category: doc.category,
+    volume: doc.volume,
+    viscosity: doc.viscosity,
+    api: doc.api,
+    description: doc.description,
+  }).select("sku");
+}
+
 function toBoolean(value) {
   return ["بله", "yes", "true", "1"].includes(String(value).trim().toLowerCase());
 }
@@ -134,6 +148,16 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
         }
 
         const existing = await Product.findOne({ sku: doc.sku });
+
+        if (!existing) {
+          const twin = await findSameProductWithOtherSku(doc);
+
+          if (twin) {
+            throw new Error(
+              `این محصول قبلاً با کد «${twin.sku}» ثبت شده است (مشخصات یکسان). کد را در اکسل به «${twin.sku}» برگردانید تا تکراری ساخته نشود`,
+            );
+          }
+        }
 
         if (existing) {
           await Product.updateOne({ _id: existing._id }, { $set: doc });
