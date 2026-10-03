@@ -23,6 +23,7 @@ function BulkTools() {
     importResult,
     importLoading,
     importError,
+    importProgress,
     submitImport,
 
     setPriceFile,
@@ -87,6 +88,10 @@ function BulkTools() {
         >
           {importLoading ? "در حال ایمپورت..." : "اجرای ایمپورت"}
         </button>
+
+        {importLoading && importProgress && (
+          <p className="text-gray-600 text-sm mt-3">{importProgress}</p>
+        )}
 
         {importError && (
           <p className="text-red-600 text-sm mt-3">{importError}</p>

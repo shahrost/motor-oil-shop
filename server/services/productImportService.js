@@ -70,7 +70,11 @@ function toBoolean(value) {
 }
 
 async function importProducts(excelFile, imageFiles = [], options = {}) {
+  const onStage = options.onStage || (() => {});
+
   try {
+    onStage("خواندن فایل اکسل");
+
     const rows = await readWorkbookFile(excelFile, COLUMN_MAP, [
       "sku",
       "name",
@@ -99,9 +103,13 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
         .forEach((n) => neededNames.add(n));
     });
 
+    onStage("انتقال عکس‌ها به فضای ابری");
+
     const urlsByFilename = await persistImages(
       [...neededNames].map((n) => imagesByName.get(n)).filter(Boolean),
     );
+
+    onStage("ثبت محصولات در دیتابیس");
 
     for (const row of rows) {
       try {

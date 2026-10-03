@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { ProductContext } from "../../../../../context";
 import {
+  uploadProductImagesService,
   importProductsService,
   bulkUpdatePricesService,
 } from "../../../../../services/productService";
@@ -14,6 +15,7 @@ function useBulkTools() {
   const [importResult, setImportResult] = useState(null);
   const [importLoading, setImportLoading] = useState(false);
   const [importError, setImportError] = useState("");
+  const [importProgress, setImportProgress] = useState("");
 
   const [priceFile, setPriceFile] = useState(null);
   const [priceResult, setPriceResult] = useState(null);
@@ -42,18 +44,31 @@ function useBulkTools() {
     setImportResult(null);
 
     try {
+      setImportProgress("");
+
+      const uploaded = await uploadProductImagesService(importImages, (done) =>
+        setImportProgress(
+          `در حال آپلود عکس‌ها: ${done} از ${importImages.length}`,
+        ),
+      );
+
       const response = await importProductsService(
         importFile,
-        importImages,
+        uploaded,
         removeMissing,
+        (stage) => setImportProgress(`در حال ایمپورت: ${stage}...`),
       );
       setImportResult(response.data);
       await reloadProducts();
     } catch (error) {
+      const status = error.response?.status;
+
       setImportError(
-        error.response?.data?.message || "خطا در ایمپورت محصولات",
+        error.response?.data?.message ||
+          `خطا در ایمپورت محصولات (${status ? `کد ${status}` : error.message})`,
       );
     } finally {
+      setImportProgress("");
       setImportLoading(false);
     }
   }
@@ -93,6 +108,7 @@ function useBulkTools() {
     importResult,
     importLoading,
     importError,
+    importProgress,
     submitImport,
 
     priceFile,

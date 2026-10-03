@@ -11,7 +11,9 @@ const {
   deleteAllProducts,
 } = require("../controllers/productController");
 const {
+  uploadProductImages,
   importProducts,
+  getImportStatus,
   bulkUpdatePrices,
 } = require("../controllers/productImportController");
 
@@ -23,7 +25,18 @@ router.post("/", auth, upload.single("image"), createProduct);
 // ویرایش محصول
 router.put("/:id", auth, upload.single("image"), updateProduct);
 
-// ایمپورت گروهی محصولات (اکسل + عکس‌ها)
+// آپلود دسته‌ای عکس محصولات (قبل از ایمپورت)
+router.post(
+  "/images",
+  auth,
+  importUpload.fields([{ name: "images", maxCount: 100 }]),
+  uploadProductImages,
+);
+
+// وضعیت ایمپورت در حال اجرا
+router.get("/import/:jobId", auth, getImportStatus);
+
+// ایمپورت گروهی محصولات (اکسل + عکس‌های آپلودشده)
 router.post(
   "/import",
   auth,
