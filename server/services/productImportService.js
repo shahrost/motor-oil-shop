@@ -6,6 +6,7 @@ const {
   toNumber,
 } = require("../utils/excelReader");
 const brands = require("../data/brands");
+const { persistImages } = require("../utils/cloudStorage");
 
 function normalizeBrand(rawBrand) {
   const value = String(rawBrand || "").trim();
@@ -86,6 +87,22 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
 
     const results = { created: 0, updated: 0, failed: [], removed: [] };
 
+    // عکس‌های مورد نیاز ردیف‌ها یک‌جا (هم‌زمان) به فضای ابری منتقل می‌شن
+    const neededNames = new Set();
+
+    rows.forEach((row) => {
+      if (row.mainImage) neededNames.add(row.mainImage);
+      (row.galleryImages || "")
+        .split(",")
+        .map((n) => n.trim())
+        .filter(Boolean)
+        .forEach((n) => neededNames.add(n));
+    });
+
+    const urlsByFilename = await persistImages(
+      [...neededNames].map((n) => imagesByName.get(n)).filter(Boolean),
+    );
+
     for (const row of rows) {
       try {
         if (!row.sku) throw new Error("کد محصول (sku) خالی است");
@@ -136,13 +153,13 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
               const galleryFile = imagesByName.get(name);
               if (galleryFile) {
                 usedFilenames.add(galleryFile.filename);
-                gallery.push(`/uploads/products/${galleryFile.filename}`);
+                gallery.push(urlsByFilename.get(galleryFile.filename));
               }
             }
           }
 
           doc.image = {
-            main: `/uploads/products/${mainFile.filename}`,
+            main: urlsByFilename.get(mainFile.filename),
             gallery,
           };
         }

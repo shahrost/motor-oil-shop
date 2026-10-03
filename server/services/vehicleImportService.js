@@ -1,6 +1,7 @@
 const Vehicle = require("../models/Vehicle");
 const Product = require("../models/Product");
 const AppError = require("../utils/AppError");
+const { persistImages } = require("../utils/cloudStorage");
 const vehicleBrandsEn = require("../data/vehicleBrandsEn");
 const {
   loadWorkbook,
@@ -148,6 +149,13 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
   const imagesByName = new Map(imageFiles.map((f) => [f.originalname, f]));
   const usedFilenames = new Set();
 
+  log("انتقال عکس‌ها به فضای ابری");
+  const urlsByFilename = await persistImages(
+    [...new Set(entries.map(({ imageName }) => imageName).filter(Boolean))]
+      .map((name) => imagesByName.get(name))
+      .filter(Boolean),
+  );
+
   const results = {
     created: 0,
     updated: 0,
@@ -178,7 +186,7 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
         }
 
         usedFilenames.add(imageFile.filename);
-        doc.image = `/uploads/products/${imageFile.filename}`;
+        doc.image = urlsByFilename.get(imageFile.filename);
       }
 
       (doc.productLinks || []).forEach((link) => linkedSkus.add(link.sku));

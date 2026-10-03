@@ -3,7 +3,8 @@ const Product = require("../models/Product");
 const productRepository =require("../repositories/productRepository");
 const validateProduct = require("../validations/productValidation");
 const AppError = require("../utils/AppError");
-const { removeProductImages } = require("../utils/removeUploadedImage");
+const { removeProductImages, removeUploadedImage } = require("../utils/removeUploadedImage");
+const { persistImage } = require("../utils/cloudStorage");
 
 
 async function getProducts() {
@@ -42,10 +43,14 @@ async function createProduct(data, file) {
 
 
 
+  let uploadedMain = "";
+
   if (file) {
 
+    uploadedMain = await persistImage(file);
+
     data.image = {
-      main: `/uploads/products/${file.filename}`,
+      main: uploadedMain,
       gallery: [],
     };
 
@@ -64,6 +69,8 @@ async function createProduct(data, file) {
   }).select("sku");
 
   if (twin) {
+    removeUploadedImage(uploadedMain);
+
     throw new AppError(
       `این محصول قبلاً ثبت شده است${twin.sku ? ` (کد ${twin.sku})` : ""}`,
       409
@@ -112,7 +119,7 @@ async function updateProduct(id, data, file) {
     previousImages = existing.image;
 
     data.image = {
-      main: `/uploads/products/${file.filename}`,
+      main: await persistImage(file),
       gallery: [],
     };
 
@@ -120,7 +127,7 @@ async function updateProduct(id, data, file) {
 
 
 
-  const product = await productRepository.updateProduct(
+  const product =await productRepository.updateProduct(
     id,
     data
   );

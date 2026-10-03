@@ -1,10 +1,16 @@
 const fs = require("fs");
 const path = require("path");
+const { isCloudUrl, deleteCloudImage } = require("./cloudStorage");
 
 const uploadsDir = path.join(__dirname, "..", "uploads", "products");
 
 function removeUploadedImage(imagePath) {
   if (!imagePath) return;
+
+  if (isCloudUrl(imagePath)) {
+    deleteCloudImage(imagePath);
+    return;
+  }
 
   const filename = path.basename(imagePath);
   const fullPath = path.join(uploadsDir, filename);
