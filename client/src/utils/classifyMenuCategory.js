@@ -65,6 +65,9 @@ export function getMenuCategorySlug(product) {
       if (category === "Additive") return name === "اکتان" ? "octane-booster" : "other";
       return "other";
 
+    case "فیلتر گیربکس ATFO":
+      return "gearbox-filter";
+
     default:
       return "other";
   }

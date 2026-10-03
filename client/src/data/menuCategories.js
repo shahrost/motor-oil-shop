@@ -17,6 +17,7 @@ const menuCategories = [
   { slug: "oil-additive", label: "مکمل روغن", labelEn: "Oil Additive" },
   { slug: "windshield-washer", label: "شیشه‌شویی", labelEn: "Windshield Washer" },
   { slug: "light-machine-oil", label: "روغن ۱۰ قطره", labelEn: "Light Machine Oil" },
+  { slug: "gearbox-filter", label: "فیلتر گیربکس", labelEn: "Transmission Filter" },
   { slug: "other", label: "سایر محصولات", labelEn: "Other Products" },
 ];
 

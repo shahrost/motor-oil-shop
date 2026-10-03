@@ -45,7 +45,7 @@ function ProductInfo({
           {getBrandLabel(product.brand, language)}
         </p>
 
-        <p>
+        <p className="break-words">
           <b className="text-green-700">{t("common.viscosity")}</b> {product.viscosity}
         </p>
 

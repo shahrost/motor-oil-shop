@@ -65,6 +65,24 @@ async function findSameProductWithOtherSku(doc) {
   }).select("sku");
 }
 
+// بعضی فایل‌ها (مثلاً ادینول) توی ستون ویسکوزیته، بعد از گرید لیست بلند
+// تاییدیه‌های خودروسازها رو هم آوردن و کارت محصول به‌هم می‌ریزه. گرید واقعی
+// نگه داشته می‌شه و بقیه به توضیحات منتقل می‌شه.
+const MAX_GRADE_LENGTH = 30;
+const GRADE_PATTERN = /^(ISO\s*VG\s*\d+|(SAE\s*)?\d{1,2}W-?\d{2,3}|SAE\s*\d{2,3})/i;
+
+function splitGrade(rawGrade) {
+  const value = String(rawGrade || "").trim();
+
+  if (value.length <= MAX_GRADE_LENGTH) return { grade: value, approvals: "" };
+
+  const match = value.match(GRADE_PATTERN);
+  const grade = match ? match[0].trim() : "";
+  const approvals = value.slice(grade.length).replace(/^[\s,;:-]+/, "");
+
+  return { grade, approvals };
+}
+
 function toBoolean(value) {
   return ["بله", "yes", "true", "1"].includes(String(value).trim().toLowerCase());
 }
@@ -117,17 +135,21 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
         if (!row.name) throw new Error("نام محصول خالی است");
         if (!row.brand) throw new Error("برند خالی است");
 
+        const { grade, approvals } = splitGrade(row.viscosity);
+
         const doc = {
           sku: row.sku,
           name: row.name,
           brand: normalizeBrand(row.brand),
           category: row.category || "",
           volume: row.volume || "",
-          viscosity: row.viscosity || "",
+          viscosity: grade,
           api: row.api || "",
           acea: row.acea || "",
           oilType: row.oilType || "",
-          description: row.description || "",
+          description: [row.description, approvals && `تاییدیه‌ها: ${approvals}`]
+            .filter(Boolean)
+            .join("\n\n"),
           price: toNumber(row.price) || 0,
           cartonCount: toNumber(row.cartonCount) || 1,
           stock: toNumber(row.stock) || 0,
