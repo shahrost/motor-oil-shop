@@ -5,7 +5,6 @@ import LanguageContext from "../../context/LanguageContext";
 import HomeSearch from "./sections/HomeSearch";
 import QuickFilter from "./sections/QuickFilter";
 import BrandProductRows from "./sections/BrandProductRows";
-import SalesBanner from "./sections/SalesBanner";
 import FloatingActions from "./sections/FloatingActions";
 
 function Home() {
@@ -29,7 +28,6 @@ function Home() {
 
       <BrandProductRows />
 
-      <SalesBanner />
 
       <QuickFilter />
 

@@ -108,11 +108,6 @@ const translations = {
       brandList: {
         title: "برندهای موجود",
       },
-      salesBanner: {
-        title: "همکاری و خرید عمده",
-        text: "برای دریافت قیمت روز، شرایط همکاری و ثبت سفارش عمده با ما در ارتباط باشید.",
-        cta: "درخواست همکاری در واتساپ",
-      },
       featured: {
         viewAll: "مشاهده همه",
       },
@@ -479,11 +474,6 @@ const translations = {
       },
       brandList: {
         title: "Available Brands",
-      },
-      salesBanner: {
-        title: "Partnership & Wholesale Purchase",
-        text: "Contact us for today's price, partnership terms, and wholesale orders.",
-        cta: "Request Partnership on WhatsApp",
       },
       featured: {
         viewAll: "View All",
