@@ -39,10 +39,8 @@ function Products() {
     productTypeOptions,
     priceOptions,
 
-    showTop,
 
     clearFilters,
-    scrollToTop,
   } = useProducts();
 
   return (
@@ -77,7 +75,7 @@ function Products() {
         />
       </div>
 
-      <ScrollTopButton show={showTop} onClick={scrollToTop} />
+      <ScrollTopButton />
     </div>
   );
 }

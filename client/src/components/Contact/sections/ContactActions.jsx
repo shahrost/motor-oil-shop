@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import whatsappLogo from "../../../assets/social/whatsapp.svg";
 import LanguageContext from "../../../context/LanguageContext";
+import { WHATSAPP_URL, PHONE_URL } from "../../../data/contact";
 
 function ContactActions() {
   const { t } = useContext(LanguageContext);
@@ -9,7 +10,7 @@ function ContactActions() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
       <a
-        href="https://wa.me/989198334264"
+        href={WHATSAPP_URL}
         target="_blank"
         rel="noreferrer"
         className="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3 rounded-lg font-bold"
@@ -19,7 +20,7 @@ function ContactActions() {
       </a>
 
       <a
-        href="tel:09198334264"
+        href={PHONE_URL}
         className="inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-bold"
       >
         <span className="text-lg">📞</span>

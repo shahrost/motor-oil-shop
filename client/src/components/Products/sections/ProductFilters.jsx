@@ -1,5 +1,12 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
+import FilterSelect from "../../common/FilterSelect";
+
+const SELECT_CLASS = "border rounded-2xl p-3 bg-white text-black";
+
+// «API» قبل از سطح کیفیت نوشته می‌شه، به‌جز گزینه‌ی «همه» و استانداردهای JASO
+const formatApiLabel = (item) =>
+  item.value === "همه" || item.label.startsWith("JASO") ? item.label : `API ${item.label}`;
 
 function ProductFilters({
   brand,
@@ -41,79 +48,38 @@ function ProductFilters({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <select
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-          className="border rounded-2xl p-3 bg-white text-black"
-        >
-          {brands.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </select>
+        <FilterSelect value={brand} onChange={setBrand} options={brands} className={SELECT_CLASS} />
 
-        <select
+        <FilterSelect
           value={productType}
-          onChange={(e) => setProductType(e.target.value)}
-          className="border rounded-2xl p-3 bg-white text-black"
-        >
-          {productTypeOptions.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </select>
+          onChange={setProductType}
+          options={productTypeOptions}
+          className={SELECT_CLASS}
+        />
 
-        <select
+        <FilterSelect
           value={viscosity}
-          onChange={(e) => setViscosity(e.target.value)}
-          className="border rounded-2xl p-3 bg-white text-black"
-        >
-          {viscosities.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </select>
+          onChange={setViscosity}
+          options={viscosities}
+          className={SELECT_CLASS}
+        />
 
-        <select
-          value={volume}
-          onChange={(e) => setVolume(e.target.value)}
-          className="border rounded-2xl p-3 bg-white text-black"
-        >
-          {volumes.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </select>
+        <FilterSelect value={volume} onChange={setVolume} options={volumes} className={SELECT_CLASS} />
 
-        <select
+        <FilterSelect
           value={api}
-          onChange={(e) => setApi(e.target.value)}
-          className="border rounded-2xl p-3 bg-white text-black"
-        >
-          {apiOptions.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.value === "همه" || item.label.startsWith("JASO")
-                ? item.label
-                : `API ${item.label}`}
-            </option>
-          ))}
-        </select>
+          onChange={setApi}
+          options={apiOptions}
+          formatLabel={formatApiLabel}
+          className={SELECT_CLASS}
+        />
 
-        <select
+        <FilterSelect
           value={priceOption}
-          onChange={(e) => setPriceOption(e.target.value)}
-          className="border rounded-2xl p-3 bg-white text-black"
-        >
-          {priceOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          onChange={setPriceOption}
+          options={priceOptions}
+          className={SELECT_CLASS}
+        />
       </div>
 
       <label className="flex items-center gap-3 mt-5 cursor-pointer">

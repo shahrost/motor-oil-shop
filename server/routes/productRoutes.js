@@ -11,11 +11,13 @@ const {
   deleteAllProducts,
 } = require("../controllers/productController");
 const {
-  uploadProductImages,
   importProducts,
-  getImportStatus,
   bulkUpdatePrices,
 } = require("../controllers/productImportController");
+const {
+  uploadImagesBatch,
+  getImportStatus,
+} = require("../controllers/importController");
 
 // دریافت همه محصولات
 router.get("/", getProducts);
@@ -30,7 +32,7 @@ router.post(
   "/images",
   auth,
   importUpload.fields([{ name: "images", maxCount: 100 }]),
-  uploadProductImages,
+  uploadImagesBatch,
 );
 
 // وضعیت ایمپورت در حال اجرا

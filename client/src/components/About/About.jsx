@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import whatsappLogo from "../../assets/social/whatsapp.svg";
 import LanguageContext from "../../context/LanguageContext";
+import { WHATSAPP_URL } from "../../data/contact";
 
 function About() {
   const { t } = useContext(LanguageContext);
@@ -47,7 +48,7 @@ function About() {
           </Link>
 
           <a
-            href="https://wa.me/989198334264"
+            href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-3 rounded-lg font-bold mr-4"

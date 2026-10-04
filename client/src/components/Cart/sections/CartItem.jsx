@@ -2,11 +2,13 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import getBrandLabel from "../../../utils/brandLabel";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
-import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
-import getProductImageSrc from "../../../utils/productImage";
+import {
+  getProductImageSrc,
+  handleProductImageError,
+} from "../../../utils/productImage";
 
 function CartItem({
   item,
@@ -32,10 +34,7 @@ function CartItem({
         <img
           src={getProductImageSrc(item)}
           alt={name}
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = getBrandLogo(item.brand);
-          }}
+          onError={handleProductImageError(item)}
           className="w-full h-32 object-contain"
         />
       </div>

@@ -8,6 +8,7 @@ import { hasActivePromotion } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
 import PromotionBadge from "../../common/PromotionBadge";
 import DiscountBadge from "../../common/DiscountBadge";
+import SpecLine, { ApiLabel } from "../../common/SpecLine";
 
 function ProductInfo({ product, paymentType }) {
   const { language, t } = useContext(LanguageContext);
@@ -30,42 +31,39 @@ function ProductInfo({ product, paymentType }) {
       </h2>
 
       <div className="mt-4 space-y-3 text-lg font-bold text-gray-800">
-        <p>
-          <span className="text-gray-500">{t("common.brand")}</span>{" "}
-          {getBrandLabel(product.brand, language)}
-        </p>
+        <SpecLine
+          label={t("common.brand")}
+          value={getBrandLabel(product.brand, language)}
+        />
 
-        <p
-          className={`line-clamp-2 break-words ${product.viscosity ? "" : "invisible"}`}
-          aria-hidden={product.viscosity ? undefined : true}
-          title={product.viscosity}
-        >
-          <span className="text-gray-500">{t("common.viscosity")}</span>{" "}
-          {product.viscosity}
-        </p>
-
-        <p
-          className={`line-clamp-1 break-words ${product.api ? "" : "invisible"}`}
-          aria-hidden={product.api ? undefined : true}
-          title={product.api}
-        >
-          <span className="text-gray-500"><bdi>API</bdi>:</span> <bdi>{product.api}</bdi>
-        </p>
-
-        <p
+        <SpecLine
           className="line-clamp-2 break-words"
-          title={formatVolume(product.volume, language)}
-        >
-          <span className="text-gray-500">{t("common.volume")}</span>{" "}
-          {formatVolume(product.volume, language)}
-        </p>
+          label={t("common.viscosity")}
+          value={product.viscosity}
+          title={product.viscosity}
+          reserveSpace
+        />
 
-        <p>
-          <span className="text-gray-500">
-            {t("productCard.cartonCount")}
-          </span>{" "}
-          {product.cartonCount || "-"} {t("common.orderUnit.number")}
-        </p>
+        <SpecLine
+          className="line-clamp-1 break-words"
+          label={<ApiLabel />}
+          value={product.api}
+          title={product.api}
+          reserveSpace
+          isolate
+        />
+
+        <SpecLine
+          className="line-clamp-2 break-words"
+          label={t("common.volume")}
+          value={formatVolume(product.volume, language)}
+          title={formatVolume(product.volume, language)}
+        />
+
+        <SpecLine
+          label={t("productCard.cartonCount")}
+          value={`${product.cartonCount || "-"} ${t("common.orderUnit.number")}`}
+        />
       </div>
 
       <div className="mt-3 text-right">

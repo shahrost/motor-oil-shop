@@ -11,49 +11,34 @@ import {
   removeAllProducts,
 } from "../../../services/productService";
 
+async function fetchSortedProducts() {
+  const response = await fetchProducts();
+
+  return sortProductsDefault(
+    (response.data || []).map((product) => createProduct(product)),
+  );
+}
+
 function useProducts() {
   const [products, setProducts] = useState([]);
 
   // تا اولین پاسخ سرور نرسیده، صفحه‌ها اسکلتون نشون می‌دن نه حالت «خالی»
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function loadProducts() {
-      try {
-        const response = await fetchProducts();
-
-        const productsData = response.data || [];
-
-        const formattedProducts = productsData.map((product) =>
-          createProduct(product),
-        );
-
-        setProducts(sortProductsDefault(formattedProducts));
-      } catch (error) {
-        console.log("خطا در دریافت محصولات", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadProducts();
-  }, []);
-
   async function reloadProducts() {
     try {
-      const response = await fetchProducts();
-
-      const productsData = response.data || [];
-
-      const formattedProducts = productsData.map((product) =>
-        createProduct(product),
-      );
-
-      setProducts(sortProductsDefault(formattedProducts));
+      setProducts(await fetchSortedProducts());
     } catch (error) {
       console.log("خطا در دریافت محصولات", error);
     }
   }
+
+  useEffect(() => {
+    fetchSortedProducts()
+      .then(setProducts)
+      .catch((error) => console.log("خطا در دریافت محصولات", error))
+      .finally(() => setLoading(false));
+  }, []);
 
   async function addProduct(product) {
     try {

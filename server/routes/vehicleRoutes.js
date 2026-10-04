@@ -5,9 +5,11 @@ const {
   getVehicles,
   importVehicles,
   importParsedVehicles,
-  getImportStatus,
-  uploadVehicleImages,
 } = require("../controllers/vehicleController");
+const {
+  uploadImagesBatch,
+  getImportStatus,
+} = require("../controllers/importController");
 
 const router = express.Router();
 
@@ -19,7 +21,7 @@ router.post(
   "/images",
   auth,
   importUpload.fields([{ name: "images", maxCount: 100 }]),
-  uploadVehicleImages,
+  uploadImagesBatch,
 );
 
 // ایمپورت گروهی خودروها (اکسل + عکس‌ها)

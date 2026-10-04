@@ -329,13 +329,8 @@ async function importParsedVehicles(vehicles, imageFiles = [], options = {}) {
   return persistVehicles(entries, [], imageFiles, options, log);
 }
 
-async function getVehicles() {
-  return Vehicle.find().sort({ sku: 1 });
-}
-
 module.exports = {
   COLUMN_MAP: SIMPLE_COLUMN_MAP,
   importVehicles,
   importParsedVehicles,
-  getVehicles,
 };

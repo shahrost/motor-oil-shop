@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
-import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
-import getProductImageSrc from "../../../utils/productImage";
+import {
+  getProductImageSrc,
+  handleProductImageError,
+} from "../../../utils/productImage";
 
 function ProductImage({ product }) {
   const { language } = useContext(LanguageContext);
@@ -10,10 +12,7 @@ function ProductImage({ product }) {
   const src = getProductImageSrc(product);
   const name = getProductNameLabel(product.name, language);
 
-  function handleImageError(e) {
-    e.target.onerror = null;
-    e.target.src = getBrandLogo(product.brand);
-  }
+  const handleImageError = handleProductImageError(product);
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import whatsappLogo from "../../../assets/social/whatsapp.svg";
 import LanguageContext from "../../../context/LanguageContext";
+import { WHATSAPP_URL, PHONE_URL } from "../../../data/contact";
 
 function FloatingActions() {
   const { t } = useContext(LanguageContext);
@@ -9,7 +10,7 @@ function FloatingActions() {
     <>
       {/* دکمه شناور واتساپ */}
       <a
-        href="https://wa.me/989198334264"
+        href={WHATSAPP_URL}
         target="_blank"
         rel="noreferrer"
         className="
@@ -33,7 +34,7 @@ function FloatingActions() {
 
       {/* دکمه تماس */}
       <a
-        href="tel:09198334264"
+        href={PHONE_URL}
         className="
           fixed
           bottom-6

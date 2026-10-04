@@ -1,23 +1,21 @@
 import { useContext } from "react";
-import useProductDetail from "./hooks/useProductDetail";
-import ProductGallery from "./sections/ProductGallery";
-import ProductInfo from "./sections/ProductInfo";
-import ProductPurchase from "./sections/ProductPurchase";
+
 import LanguageContext from "../../context/LanguageContext";
+import formatPrice from "../../utils/formatPrice";
+import { getProductPrice } from "../../utils/productPrice";
+import useProductDetail from "./hooks/useProductDetail";
+import {
+  ProductGallery,
+  ProductSpecs,
+  PurchaseOptions,
+  PromotionInfo,
+  ProductDescription,
+  ProductPurchase,
+} from "./sections";
 
 function ProductDetail() {
-  const { t } = useContext(LanguageContext);
-  const {
-    product,
-    quantity,
-    setQuantity,
-    orderType,
-    setOrderType,
-    paymentType,
-    setPaymentType,
-    handleCart,
-    added,
-  } = useProductDetail();
+  const { language, t } = useContext(LanguageContext);
+  const { product, ...purchase } = useProductDetail();
 
   if (!product) {
     return (
@@ -35,17 +33,33 @@ function ProductDetail() {
         <ProductGallery product={product} />
 
         <div>
-          <ProductInfo
-            product={product}
-            quantity={quantity}
-            setQuantity={setQuantity}
-            orderType={orderType}
-            setOrderType={setOrderType}
-            paymentType={paymentType}
-            setPaymentType={setPaymentType}
+          <ProductSpecs product={product} language={language} t={t} />
+
+          <PurchaseOptions
+            t={t}
+            orderType={purchase.orderType}
+            setOrderType={purchase.setOrderType}
+            quantity={purchase.quantity}
+            setQuantity={purchase.setQuantity}
+            paymentType={purchase.paymentType}
+            setPaymentType={purchase.setPaymentType}
           />
 
-          <ProductPurchase handleCart={handleCart} added={added} />
+          <p className="mt-6 text-4xl font-extrabold text-gray-950">
+            {formatPrice(getProductPrice(product, purchase.paymentType), language)}
+          </p>
+
+          <PromotionInfo
+            product={product}
+            orderType={purchase.orderType}
+            quantity={purchase.quantity}
+            paymentType={purchase.paymentType}
+            t={t}
+          />
+
+          <ProductDescription description={product.description} t={t} />
+
+          <ProductPurchase onAddCart={purchase.handleAddCart} added={purchase.added} />
         </div>
       </div>
     </div>

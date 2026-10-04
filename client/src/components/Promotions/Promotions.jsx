@@ -5,8 +5,10 @@ import { ProductContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
 import { getProductNameLabel } from "../../utils/productNameLabel";
-import getProductImageSrc from "../../utils/productImage";
-import { getBrandLogo } from "../../utils/brandLogo";
+import {
+  getProductImageSrc,
+  handleProductImageError,
+} from "../../utils/productImage";
 import {
   hasActivePromotion,
   getPromotionRuleLines,
@@ -49,10 +51,7 @@ function Promotions() {
                   <img
                     src={getProductImageSrc(product, 160)}
                     alt={name}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = getBrandLogo(product.brand);
-                    }}
+                    onError={handleProductImageError(product)}
                     className="w-20 h-20 object-contain bg-white rounded-xl p-2"
                   />
 

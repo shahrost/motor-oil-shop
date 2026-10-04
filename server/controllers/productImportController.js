@@ -1,30 +1,8 @@
 const productImportService = require("../services/productImportService");
+const priceUpdateService = require("../services/priceUpdateService");
 const apiResponse = require("../utils/apiResponse");
 const AppError = require("../utils/AppError");
-const {
-  startJob,
-  getJob,
-  resolveUploadedImages,
-} = require("../utils/importJobs");
-
-// آپلود دسته‌ای عکس‌ها (قبل از ایمپورت) تا درخواست‌ها حجیم نشن
-async function uploadProductImages(req, res, next) {
-  try {
-    const files = (req.files && req.files.images) || [];
-
-    if (!files.length) {
-      throw new AppError("عکسی ارسال نشده است", 400);
-    }
-
-    return apiResponse.success(
-      res,
-      files.map((f) => ({ name: f.originalname, filename: f.filename })),
-      "عکس‌ها آپلود شد",
-    );
-  } catch (error) {
-    next(error);
-  }
-}
+const { startJob, resolveUploadedImages } = require("../utils/importJobs");
 
 // ایمپورت به‌صورت job پس‌زمینه اجرا می‌شه و فوراً jobId برمی‌گردونه
 async function importProducts(req, res, next) {
@@ -56,21 +34,13 @@ async function importProducts(req, res, next) {
   }
 }
 
-async function getImportStatus(req, res, next) {
-  try {
-    return apiResponse.success(res, getJob(req.params.jobId));
-  } catch (error) {
-    next(error);
-  }
-}
-
 async function bulkUpdatePrices(req, res, next) {
   try {
     if (!req.file) {
       throw new AppError("فایل ارسال نشده است", 400);
     }
 
-    const results = await productImportService.bulkUpdatePrices(req.file);
+    const results = await priceUpdateService.bulkUpdatePrices(req.file);
 
     return apiResponse.success(res, results, "بروزرسانی قیمت‌ها انجام شد");
   } catch (error) {
@@ -78,9 +48,4 @@ async function bulkUpdatePrices(req, res, next) {
   }
 }
 
-module.exports = {
-  uploadProductImages,
-  importProducts,
-  getImportStatus,
-  bulkUpdatePrices,
-};
+module.exports = { importProducts, bulkUpdatePrices };

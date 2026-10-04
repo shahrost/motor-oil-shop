@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 
-function ProductPurchase({ handleCart, added }) {
+function ProductPurchase({ onAddCart, added }) {
   const { t } = useContext(LanguageContext);
 
   return (
     <div className="mt-8">
       <button
         type="button"
-        onClick={handleCart}
+        onClick={onAddCart}
         className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-4 rounded-2xl font-bold text-lg transition"
       >
         🛒 {t("common.addToCart")}

@@ -1,18 +1,17 @@
 import { useContext } from "react";
 import getImageUrl from "../../../utils/getImageUrl";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
-import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
-import getProductImageSrc from "../../../utils/productImage";
+import {
+  getProductImageSrc,
+  handleProductImageError,
+} from "../../../utils/productImage";
 
 function ProductGallery({ product }) {
   const { language } = useContext(LanguageContext);
   const name = getProductNameLabel(product.name, language);
 
-  function handleImageError(e) {
-    e.target.onerror = null;
-    e.target.src = getBrandLogo(product.brand);
-  }
+  const handleImageError = handleProductImageError(product);
 
   return (
     <div>

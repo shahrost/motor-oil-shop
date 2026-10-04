@@ -6,7 +6,7 @@ import {
   CardActions,
 } from "./sections";
 
-import useProductCard from "./hooks/useProductCard";
+import usePurchaseOptions from "../../hooks/usePurchaseOptions";
 import LanguageContext from "../../context/LanguageContext";
 
 function ProductCard({ product }) {
@@ -20,7 +20,7 @@ function ProductCard({ product }) {
     setPaymentType,
     added,
     handleAddCart,
-  } = useProductCard(product);
+  } = usePurchaseOptions(product);
 
   return (
     <div className="border-2 border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition">

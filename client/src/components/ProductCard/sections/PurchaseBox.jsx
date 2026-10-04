@@ -66,16 +66,7 @@ function PurchaseBox({
           type="number"
           min="1"
           value={quantity}
-          onChange={(e) => {
-            const value = e.target.value.replace(/\D/g, "");
-
-            if (value === "") {
-              setQuantity("");
-              return;
-            }
-
-            setQuantity(Math.max(1, Number(value)));
-          }}
+          onChange={(e) => setQuantity(e.target.value)}
           className="
           w-full
           h-11

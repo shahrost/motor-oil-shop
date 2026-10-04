@@ -1,7 +1,64 @@
 # Shahram Roghan Project State
 
 آخرین بروزرسانی:
-Session Update 2026-10-02 (بخش دوم) — بخش خودروها + ایمپورت خودرو ✅
+Session Update 2026-10-04 — سرعت لود، پالت رنگ جدید، اصلاح کارت‌ها، بازسازی ساختار (تک‌مسئولیتی) ✅
+
+---
+
+# Session Update — 2026-10-04
+
+## ۱. سرعت لود اولیه (قبلاً ۱۰ تا ۲۸ ثانیه)
+
+Status: Completed ✅ (دیپلوی شد؛ `/api/products` حالا حدود ۲.۵ ثانیه از سمت کاربر، تقریباً همه‌اش تأخیر شبکه)
+
+✅ سرور: فشرده‌سازی gzip (پکیج `compression`) — JSON محصولات ۴۰۶KB → ۴۹KB
+✅ سرور: کش حافظه‌ای لیست محصولات (`utils/productListCache.js`)؛ با هر نوشتن روی Product فوراً باطل می‌شه (پلاگین `models/plugins/onAnyWrite.js`)، تغییرات خارج از پروسه (اسکریپت‌ها) حداکثر بعد از ۶۰ ثانیه؛ موقع استارت سرور گرم می‌شه (`server.js`)
+✅ سرور: `/uploads` با کش ۳۰ روزه (`immutable`)
+✅ کلاینت: اسکلتون ردیف‌های برند تا رسیدن محصولات (`Home/sections/BrandRowsSkeleton.jsx`) — بخش «فیلتر سریع» دیگه بالا نمی‌پره؛ `loading` به `ProductContext` اضافه شد
+✅ کلاینت: عکس کارت‌ها `loading="lazy"` + نسخه‌ی کوچک Cloudinary (`getThumbUrl` در `utils/getImageUrl.js`)
+✅ کلاینت: خودروها فقط در مسیرهای `/vehicle*` و `/admin` دریافت می‌شن (`VehicleProvider`)
+✅ کلاینت: پنل ادمین lazy-load (chunk جدا)
+✅ لوگوی برندها PNG → WebP کوچک‌شده (۱MB → ۱۷۱KB)
+
+## ۲. اصلاحات ظاهری و کارت‌ها
+
+✅ کارت ادینول (AHF-22-S) با گرید خیلی بلند ۹۸۹px ارتفاع داشت و ردیف آخر رو کش می‌داد: `sm:block` کلاس `line-clamp` رو خنثی می‌کرد → `hidden sm:line-clamp-*`
+✅ فیلتر سریع: همیشه دو ردیف سه‌تایی (گرید، API، لیتراژ / برند، نوع، قیمت)
+✅ پالت جدید «سرمه‌ای + کهربایی» (انتخاب کاربر): در `index.css` خانواده‌های `yellow-*` (کهربایی `#faa61a`)، `gray-*` (خنثی سرد، سرهای تیره سرمه‌ای `#0f1b2d`) و `black` بازتعریف شدن؛ دکمه‌های خرید کهربایی با متن سرمه‌ای، قیمت سرمه‌ای، برچسب‌ها خاکستری، لینک‌ها کهربایی تیره؛ سبز فقط برای موفقیت و واتس‌اپ؛ لوگو (`shahram-monogram-yellow.svg`) کهربایی
+✅ نشان تخفیف ۰٪ مخفی (جاش حفظ می‌شه)؛ حالت شب سرمه‌ای و متن دکمه‌های کهربایی تیره می‌مونه
+✅ خط‌های خالی «گرید / API / ACEA / نوع روغن» نمایش داده نمی‌شن (کارت‌ها خط نامرئی نگه می‌دارن تا هم‌تراز باشن)
+✅ خط «API:» روی کارت‌ها بین گرید و حجم، با چینش درست راست‌به‌چپ (`<bdi>`)
+✅ محصول بدون عکس ← لوگوی برند (`utils/productImage.js`)
+
+⚠️ ۲۱۷ محصول گرید ندارن چون خانه‌ی «ویسکوزیته» در اکسل خالیه (نه باگ ایمپورت). حدود ۱۵۰ تاش ذاتاً گرید ندارن (فیلتر ATFO، ضدیخ، گریس، ...). برای بقیه (روغن ترمز DOT3/DOT4، ATF ها، روغن موتورهای ایدلوب، بهتام BT-PET-001) باید اکسل پر و دوباره ایمپورت بشه
+⚠️ ایمپورت: گرید بیشتر از ۳۰ کاراکتر که با الگوی شناخته‌شده (`5W-30`، `SAE`، `ISO VG`) شروع نشه خالی ذخیره می‌شه — گرید رو کوتاه بنویسید
+⚠️ ایمپورت: تیک «حذف محصولاتی که در اکسل نیستند» همه‌ی محصولات بقیه‌ی برندها رو هم پاک می‌کنه؛ ستون عکس پر بدون آپلود عکس ← ردیف خطا می‌گیره؛ قیمت‌های اکسل جایگزین قیمت فعلی می‌شن
+
+## ۳. بازسازی ساختار (هر فایل یک مسئولیت)
+
+Status: Completed ✅ (lint تمیز، build موفق، تست دستی هدر/فیلتر/صفحه‌ی محصول/سبد و endpointهای سرور)
+
+کلاینت:
+✅ `layout/Header.jsx` (۶۰۴ خط) → `layout/Header/` با `Header.jsx` (فقط ترکیب) + sections: `HeaderBrand`, `DesktopNav`, `HeaderActions`, `LanguageSwitch`, `ThemeToggle`, `MobileMenu`, `OwnerPhotoModal`
+✅ اطلاعات تماس یک‌جا: `data/contact.js` (`WHATSAPP_URL`, `PHONE_URL`) و `data/socialLinks.js` (قبلاً در ۵ فایل تکرار)
+✅ آدرس سرور یک‌جا: `api/config.js` (`API_URL`, `API_ORIGIN`)
+✅ `common/FilterSelect.jsx` مشترک بین فیلتر سریع و فیلترهای صفحه‌ی محصولات؛ منطق فیلتر سریع → `Home/hooks/useQuickFilter.js`
+✅ `common/SpecLine.jsx` (خط «برچسب: مقدار» با حالت مخفی/نامرئی و `ApiLabel`)
+✅ `hooks/usePurchaseOptions.js` (جایگزین `useProductCard` و منطق تکراری `useProductDetail`) — اعتبارسنجی تعداد اینجاست (باگ: خالی‌کردن تعداد، صفر به سبد اضافه می‌کرد)
+✅ `ProductRowCard` → sections `RowCardSpecs`, `RowCardPurchase` (گزینه‌ها از `data/orderUnits` و `data/paymentTypes`)
+✅ صفحه‌ی محصول: `ProductInfo` حذف و به `ProductSpecs`, `PurchaseOptions`, `PromotionInfo`, `ProductDescription` تقسیم شد
+✅ صفحه‌ی محصولات: فیلتر/مرتب‌سازی خالص → `utils/filterProducts.js`؛ دکمه‌ی «برگشت به بالا» خودش اسکرول رو مدیریت می‌کنه
+✅ `CartContext`: تبدیل فرمت قدیمی سبد به `services/cartStorage.js` منتقل شد (+ محافظت در برابر JSON خراب)؛ به‌روزرسانی ردیف‌ها یک تابع
+✅ `BulkTools`: هوک مشترک `useExcelImport` برای ایمپورت محصول و خودرو + `usePriceUpdate`؛ فرم‌ها در sections (`ProductImportForm`, `PriceUpdateForm`, `VehicleImportForm`, `ImportFields`, `SubmitStatus`, `ResultBox`, `ResultList`)
+✅ `services/productImportService.js` (کلاینت) جدا از `productService.js`
+✅ حذف کد مرده (نسخه‌ی کامنت‌شده در `useOrderManager.js` و `vite.config.js`)
+
+سرور:
+✅ `controllers/importController.js`: آپلود دسته‌ای عکس و وضعیت job مشترک (قبلاً در هر دو کنترلر تکرار)
+✅ `vehicleController` از `utils/importJobs.js` استفاده می‌کنه (سیستم job تکراری حذف شد)؛ `getVehicles` → `services/vehicleService.js`
+✅ `productImportService` فقط ایمپورت: تبدیل ردیف → `utils/productRowMapper.js`، ستون‌ها → `utils/productColumns.js`، بروزرسانی قیمت → `services/priceUpdateService.js`
+
+⚠️ ایمپورت کامل محصول/خودرو با فایل واقعی بعد از این بازسازی تست نشده (روی دیتابیس واقعی می‌نویسه) — اولین ایمپورت بعدی رو چک کنید
 
 ---
 

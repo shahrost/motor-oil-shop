@@ -1,5 +1,6 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+
 import { ProductContext } from "../../../context";
 import LanguageContext from "../../../context/LanguageContext";
 import {
@@ -9,220 +10,88 @@ import {
   getApiOptions,
   getPriceOptions,
 } from "../../../utils/productFilters";
-import priceRanges from "../../../data/productOptions/priceRanges";
-import {
-  normalizeViscosity,
-  normalizeVolume,
-  normalizeApi,
-} from "../../../utils/normalizeSpec";
-import {
-  classifyProductType,
-  getProductTypeOptions,
-} from "../../../utils/classifyProductType";
+import { getProductTypeOptions } from "../../../utils/classifyProductType";
+import { filterProducts, ALL } from "../../../utils/filterProducts";
 
+const DEFAULT_FILTERS = {
+  search: "",
+  brand: ALL,
+  viscosity: ALL,
+  volume: ALL,
+  api: ALL,
+  productType: ALL,
+  priceRange: ALL,
+  sort: "default",
+  onlyAvailable: false,
+};
+
+// مقدار اولیه‌ی فیلترها از آدرس (مثلاً وقتی از فیلتر سریع صفحه‌ی اصلی میاد)
+function filtersFromUrl(searchParams) {
+  const filters = { ...DEFAULT_FILTERS };
+
+  ["search", "brand", "viscosity", "volume", "api", "productType", "priceRange", "sort"].forEach(
+    (key) => {
+      const value = searchParams.get(key);
+      if (value) filters[key] = value;
+    },
+  );
+
+  return filters;
+}
+
+// «قیمت» در UI یک لیست است که هم مرتب‌سازی و هم بازه‌ی قیمت رو انتخاب می‌کنه
+function toPriceOption({ sort, priceRange }) {
+  if (sort === "cheap" || sort === "expensive") return `sort:${sort}`;
+  if (priceRange !== ALL) return `range:${priceRange}`;
+  return "";
+}
+
+function fromPriceOption(value) {
+  if (value.startsWith("sort:")) return { sort: value.replace("sort:", ""), priceRange: ALL };
+  if (value.startsWith("range:")) return { sort: "default", priceRange: value.replace("range:", "") };
+  return { sort: "default", priceRange: ALL };
+}
+
+// state فیلترهای صفحه‌ی محصولات + گزینه‌های هر فیلتر + لیست فیلترشده
 function useProducts() {
   const { products } = useContext(ProductContext);
   const { language } = useContext(LanguageContext);
   const [searchParams] = useSearchParams();
 
-  const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [brand, setBrand] = useState(searchParams.get("brand") || "همه");
-  const [viscosity, setViscosity] = useState(
-    searchParams.get("viscosity") || "همه",
-  );
-  const [volume, setVolume] = useState(searchParams.get("volume") || "همه");
-  const [api, setApi] = useState(searchParams.get("api") || "همه");
-  const [productType, setProductType] = useState(
-    searchParams.get("productType") || "همه",
-  );
-  const [priceRange, setPriceRange] = useState(
-    searchParams.get("priceRange") || "همه",
-  );
-  const [sort, setSort] = useState(searchParams.get("sort") || "default");
-  const [onlyAvailable, setOnlyAvailable] = useState(false);
-  const [showTop, setShowTop] = useState(false);
+  const [filters, setFilters] = useState(() => filtersFromUrl(searchParams));
 
-  useEffect(() => {
-    function handleScroll() {
-      setShowTop(window.scrollY > 500);
-    }
+  const setFilter = (key) => (value) => setFilters((prev) => ({ ...prev, [key]: value }));
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const brands = getBrands(language);
-  const viscosities = getViscosities(language);
-  const volumes = getVolumes(language);
-  const apiOptions = getApiOptions(language);
-  const productTypeOptions = getProductTypeOptions(language);
-  const priceOptions = getPriceOptions(language);
-
-  const priceOption =
-    sort === "cheap"
-      ? "sort:cheap"
-      : sort === "expensive"
-        ? "sort:expensive"
-        : priceRange !== "همه"
-          ? `range:${priceRange}`
-          : "";
-
-  function setPriceOption(value) {
-    if (value.startsWith("sort:")) {
-      setSort(value.replace("sort:", ""));
-      setPriceRange("همه");
-    } else if (value.startsWith("range:")) {
-      setPriceRange(value.replace("range:", ""));
-      setSort("default");
-    } else {
-      setSort("default");
-      setPriceRange("همه");
-    }
-  }
-
-  const filteredProducts = useMemo(() => {
-    let result = [...products];
-
-    if (search.trim()) {
-      const words = search.toLowerCase().trim().split(/\s+/);
-
-      result = result.filter((product) => {
-        const haystack = `${product.name} ${product.brand} ${product.sku || ""} ${product.category} ${product.viscosity} ${product.volume} ${product.oilType || ""}`.toLowerCase();
-
-        return words.every((word) => haystack.includes(word));
-      });
-    }
-
-    if (brand !== "همه") {
-      result = result.filter((product) => product.brand === brand);
-    }
-
-    if (viscosity !== "همه") {
-      const target = normalizeViscosity(viscosity);
-
-      result = result.filter(
-        (product) => normalizeViscosity(product.viscosity) === target,
-      );
-    }
-
-    if (volume !== "همه") {
-      const target = normalizeVolume(volume);
-
-      result = result.filter(
-        (product) => normalizeVolume(product.volume) === target,
-      );
-    }
-
-    if (api !== "همه") {
-      const target = normalizeApi(api);
-
-      result = result.filter((product) =>
-        normalizeApi(product.api).includes(target),
-      );
-    }
-
-    if (productType !== "همه") {
-      result = result.filter(
-        (product) => classifyProductType(product.category) === productType,
-      );
-    }
-
-    if (priceRange !== "همه") {
-      const range = priceRanges.find((item) => item.id === priceRange);
-
-      if (range) {
-        result = result.filter(
-          (product) =>
-            Number(product.price) >= range.min &&
-            Number(product.price) <= range.max,
-        );
-      }
-    }
-
-    if (onlyAvailable) {
-      result = result.filter((product) => product.stock !== 0);
-    }
-
-    if (sort === "cheap") {
-      result.sort((a, b) => Number(a.price) - Number(b.price));
-    }
-
-    if (sort === "expensive") {
-      result.sort((a, b) => Number(b.price) - Number(a.price));
-    }
-
-    if (sort === "new") {
-      result.sort((a, b) => Number(b.id) - Number(a.id));
-    }
-
-    if (sort === "best") {
-      result.sort((a, b) => Number(b.isBestSeller) - Number(a.isBestSeller));
-    }
-
-    return result;
-  }, [
-    products,
-    search,
-    brand,
-    viscosity,
-    volume,
-    api,
-    productType,
-    priceRange,
-    sort,
-    onlyAvailable,
-  ]);
-
-  function clearFilters() {
-    setSearch("");
-    setBrand("همه");
-    setViscosity("همه");
-    setVolume("همه");
-    setApi("همه");
-    setProductType("همه");
-    setPriceRange("همه");
-    setSort("default");
-    setOnlyAvailable(false);
-  }
-
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
+  const filteredProducts = useMemo(() => filterProducts(products, filters), [products, filters]);
 
   return {
-    products,
-    search,
-    setSearch,
-    brand,
-    setBrand,
-    viscosity,
-    setViscosity,
-    volume,
-    setVolume,
-    api,
-    setApi,
-    productType,
-    setProductType,
-    priceOption,
-    setPriceOption,
-    onlyAvailable,
-    setOnlyAvailable,
-    showTop,
-    brands,
-    viscosities,
-    volumes,
-    apiOptions,
-    productTypeOptions,
-    priceOptions,
     filteredProducts,
-    clearFilters,
-    scrollToTop,
+
+    search: filters.search,
+    setSearch: setFilter("search"),
+    brand: filters.brand,
+    setBrand: setFilter("brand"),
+    viscosity: filters.viscosity,
+    setViscosity: setFilter("viscosity"),
+    volume: filters.volume,
+    setVolume: setFilter("volume"),
+    api: filters.api,
+    setApi: setFilter("api"),
+    productType: filters.productType,
+    setProductType: setFilter("productType"),
+    priceOption: toPriceOption(filters),
+    setPriceOption: (value) => setFilters((prev) => ({ ...prev, ...fromPriceOption(value) })),
+    onlyAvailable: filters.onlyAvailable,
+    setOnlyAvailable: setFilter("onlyAvailable"),
+
+    brands: getBrands(language),
+    viscosities: getViscosities(language),
+    volumes: getVolumes(language),
+    apiOptions: getApiOptions(language),
+    productTypeOptions: getProductTypeOptions(language),
+    priceOptions: getPriceOptions(language),
+
+    clearFilters: () => setFilters(DEFAULT_FILTERS),
   };
 }
 

@@ -1,50 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import { ProductContext } from "../../../context";
-import CartContext from "../../../context/CartContext";
+import usePurchaseOptions from "../../../hooks/usePurchaseOptions";
 
+// محصول صفحه از روی :id آدرس + انتخاب‌های خرید همون محصول
 function useProductDetail() {
   const { id } = useParams();
-
   const { products } = useContext(ProductContext);
-  const { addToCart } = useContext(CartContext);
 
   const product = products.find((item) => item.id === id);
 
-  const [quantity, setQuantity] = useState(1);
-  const [orderType, setOrderType] = useState("number");
-  const [paymentType, setPaymentType] = useState("cash");
-  const [added, setAdded] = useState(false);
-
-  function handleCart() {
-    if (!product) return;
-
-    addToCart({
-      ...product,
-      quantity: Number(quantity),
-      orderType,
-      paymentType,
-    });
-
-    setAdded(true);
-
-    setTimeout(() => {
-      setAdded(false);
-    }, 2000);
-  }
-
-  return {
-    product,
-    quantity,
-    setQuantity,
-    orderType,
-    setOrderType,
-    paymentType,
-    setPaymentType,
-    handleCart,
-    added,
-  };
+  return { product, ...usePurchaseOptions(product) };
 }
 
 export default useProductDetail;

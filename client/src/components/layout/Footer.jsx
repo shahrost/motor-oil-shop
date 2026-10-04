@@ -1,45 +1,7 @@
 import { useContext } from "react";
 import brandLogo from "../../assets/logo/shahram-monogram-yellow.svg";
-import telegramLogo from "../../assets/social/telegram.svg";
-import whatsappLogo from "../../assets/social/whatsapp.svg";
-import rubikaLogo from "../../assets/social/rubika.png";
-import eitaaLogo from "../../assets/social/eitaa.png";
-import baleLogo from "../../assets/social/bale.png";
 import LanguageContext from "../../context/LanguageContext";
-
-const socialLinks = [
-  {
-    key: "telegram",
-    href: "https://t.me/+Mj8Own1-t2I1NWU0",
-    icon: telegramLogo,
-  },
-  {
-    key: "whatsapp",
-    href: "https://wa.me/989198334264",
-    icon: whatsappLogo,
-  },
-  {
-    key: "rubika",
-    href: "https://rubika.ir/joinc/CACIDHHA0XHNICILSYDUYKWHYGFDXNEG",
-    icon: rubikaLogo,
-  },
-  {
-    key: "eitaa",
-    href: "https://eitaa.com/joinchat/1845625166C85d3057112",
-    icon: eitaaLogo,
-  },
-  {
-    key: "bale",
-    href: "https://ble.ir/join/4WM19sBpmk",
-    icon: baleLogo,
-  },
-  {
-    key: "phone",
-    href: "tel:+989198334264",
-    emoji: "📞",
-    isPhone: true,
-  },
-];
+import socialLinks from "../../data/socialLinks";
 
 function Footer() {
   const { language, t } = useContext(LanguageContext);
