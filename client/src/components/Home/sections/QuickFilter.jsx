@@ -56,42 +56,22 @@ function QuickFilter() {
     <section className="px-5 mt-8">
       <form
         onSubmit={handleSubmit}
-        className="max-w-5xl mx-auto bg-white rounded-3xl shadow p-6"
+        className="max-w-5xl mx-auto bg-white rounded-3xl shadow p-4 sm:p-6"
       >
         <h2 className="text-xl font-extrabold mb-5">
           {t("home.quickFilter.title")}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           <div>
-            <label className="block font-bold text-gray-700 mb-2">
-              {t("common.brandLabel")}
-            </label>
-
-            <select
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              className="w-full border border-gray-300 rounded-2xl p-3 text-black"
-            >
-              <option value="">{t("home.quickFilter.allBrands")}</option>
-
-              {brands.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block font-bold text-gray-700 mb-2">
+            <label className="block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate">
               {t("common.viscosityLabel")}
             </label>
 
             <select
               value={viscosity}
               onChange={(e) => setViscosity(e.target.value)}
-              className="w-full border border-gray-300 rounded-2xl p-3 text-black"
+              className="w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black"
             >
               <option value="">{t("home.quickFilter.allViscosities")}</option>
 
@@ -104,54 +84,14 @@ function QuickFilter() {
           </div>
 
           <div>
-            <label className="block font-bold text-gray-700 mb-2">
-              {t("common.volumeLabel")}
-            </label>
-
-            <select
-              value={volume}
-              onChange={(e) => setVolume(e.target.value)}
-              className="w-full border border-gray-300 rounded-2xl p-3 text-black"
-            >
-              <option value="">{t("home.quickFilter.allVolumes")}</option>
-
-              {volumes.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block font-bold text-gray-700 mb-2">
-              {t("common.productTypeLabel")}
-            </label>
-
-            <select
-              value={productType}
-              onChange={(e) => setProductType(e.target.value)}
-              className="w-full border border-gray-300 rounded-2xl p-3 text-black"
-            >
-              <option value="">{t("home.quickFilter.allTypes")}</option>
-
-              {productTypes.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block font-bold text-gray-700 mb-2">
+            <label className="block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate">
               {t("common.apiLabel")}
             </label>
 
             <select
               value={api}
               onChange={(e) => setApi(e.target.value)}
-              className="w-full border border-gray-300 rounded-2xl p-3 text-black"
+              className="w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black"
             >
               <option value="">{t("home.quickFilter.allApis")}</option>
 
@@ -164,14 +104,74 @@ function QuickFilter() {
           </div>
 
           <div>
-            <label className="block font-bold text-gray-700 mb-2">
+            <label className="block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate">
+              {t("common.volumeLabel")}
+            </label>
+
+            <select
+              value={volume}
+              onChange={(e) => setVolume(e.target.value)}
+              className="w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black"
+            >
+              <option value="">{t("home.quickFilter.allVolumes")}</option>
+
+              {volumes.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate">
+              {t("common.brandLabel")}
+            </label>
+
+            <select
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              className="w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black"
+            >
+              <option value="">{t("home.quickFilter.allBrands")}</option>
+
+              {brands.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate">
+              {t("common.productTypeLabel")}
+            </label>
+
+            <select
+              value={productType}
+              onChange={(e) => setProductType(e.target.value)}
+              className="w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black"
+            >
+              <option value="">{t("home.quickFilter.allTypes")}</option>
+
+              {productTypes.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate">
               {t("common.priceLabel")}
             </label>
 
             <select
               value={priceOption}
               onChange={(e) => setPriceOption(e.target.value)}
-              className="w-full border border-gray-300 rounded-2xl p-3 text-black"
+              className="w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black"
             >
               {priceOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -180,6 +180,7 @@ function QuickFilter() {
               ))}
             </select>
           </div>
+
         </div>
 
         <button
