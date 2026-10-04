@@ -8,9 +8,12 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 const connectDB = require("./config/db");
+const startProcessMonitor = require("./utils/processMonitor");
 const productRepository = require("./repositories/productRepository");
 const routes = require("./routes");
 const errorHandler = require("./middleware/errorHandler");
+
+startProcessMonitor();
 
 connectDB();
 
