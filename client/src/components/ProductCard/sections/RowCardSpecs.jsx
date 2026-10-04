@@ -1,4 +1,3 @@
-import getBrandLabel from "../../../utils/brandLabel";
 import { formatVolume } from "../../../utils/formatVolume";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 
@@ -11,12 +10,6 @@ function RowCardSpecs({ product, name, language, t }) {
       </h3>
 
       <div className="mt-2 text-xs sm:text-sm font-bold text-gray-700 space-y-1">
-        <SpecLine
-          className="line-clamp-1"
-          label={t("common.brand")}
-          value={getBrandLabel(product.brand, language)}
-        />
-
         <SpecLine
           className="hidden sm:line-clamp-1"
           label={t("common.viscosity")}

@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
-import getBrandLabel from "../../../utils/brandLabel";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { formatVolume } from "../../../utils/formatVolume";
 import LanguageContext from "../../../context/LanguageContext";
@@ -31,11 +30,6 @@ function ProductInfo({ product, paymentType }) {
       </h2>
 
       <div className="mt-4 space-y-3 text-lg font-bold text-gray-800">
-        <SpecLine
-          label={t("common.brand")}
-          value={getBrandLabel(product.brand, language)}
-        />
-
         <SpecLine
           className="line-clamp-2 break-words"
           label={t("common.viscosity")}
