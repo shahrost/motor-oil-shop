@@ -35,7 +35,11 @@ function ProductInfo({ product, paymentType }) {
           {getBrandLabel(product.brand, language)}
         </p>
 
-        <p className="line-clamp-2 break-words" title={product.viscosity}>
+        <p
+          className={`line-clamp-2 break-words ${product.viscosity ? "" : "invisible"}`}
+          aria-hidden={product.viscosity ? undefined : true}
+          title={product.viscosity}
+        >
           <span className="text-gray-500">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>

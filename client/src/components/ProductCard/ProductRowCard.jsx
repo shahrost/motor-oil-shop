@@ -71,7 +71,11 @@ function ProductRowCard({ product }) {
           {getBrandLabel(product.brand, language)}
         </p>
 
-        <p className="hidden sm:line-clamp-1">
+        {/* بدون گرید (فیلتر، ضدیخ، گریس و ...) خط نامرئی می‌مونه تا کارت‌ها هم‌تراز باشن */}
+        <p
+          className={`hidden sm:line-clamp-1 ${product.viscosity ? "" : "invisible"}`}
+          aria-hidden={product.viscosity ? undefined : true}
+        >
           <span className="text-gray-500">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>

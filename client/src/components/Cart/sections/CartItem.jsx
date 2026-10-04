@@ -43,18 +43,20 @@ function CartItem({
       <div>
         <h2 className="text-xl font-bold text-black">{name}</h2>
 
-        <p className="mt-2">
+        <p className="mt-2 text-gray-500">
           {t("common.brand")}
-          <b className="text-gray-500">
+          <b className="text-black">
             {" "}
             {getBrandLabel(item.brand, language)}
           </b>
         </p>
 
-        <p>
-          {t("common.viscosity")}
-          <b className="text-gray-500"> {item.viscosity}</b>
-        </p>
+        {item.viscosity && (
+          <p className="text-gray-500">
+            {t("common.viscosity")}
+            <b className="text-black"> {item.viscosity}</b>
+          </p>
+        )}
       </div>
 
       <div className="space-y-4">

@@ -41,10 +41,12 @@ function OrderProductCard({
           <span className="font-bold text-black"> {item.brand}</span>
         </p>
 
-        <p>
-          {t("common.viscosity")}
-          <span className="font-bold text-black"> {item.viscosity}</span>
-        </p>
+        {item.viscosity && (
+          <p>
+            {t("common.viscosity")}
+            <span className="font-bold text-black"> {item.viscosity}</span>
+          </p>
+        )}
 
         <p>
           {t("common.volume")}

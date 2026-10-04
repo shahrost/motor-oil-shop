@@ -45,9 +45,11 @@ function ProductInfo({
           {getBrandLabel(product.brand, language)}
         </p>
 
-        <p className="break-words">
-          <b className="text-gray-500">{t("common.viscosity")}</b> {product.viscosity}
-        </p>
+        {product.viscosity && (
+          <p className="break-words">
+            <b className="text-gray-500">{t("common.viscosity")}</b> {product.viscosity}
+          </p>
+        )}
 
         <p>
           <b className="text-gray-500">{t("common.volume")}</b>{" "}
@@ -92,18 +94,24 @@ function ProductInfo({
           </select>
         </div>
 
-        <p>
-          <b className="text-gray-500">API:</b> {product.api}
-        </p>
+        {product.api && (
+          <p>
+            <b className="text-gray-500">API:</b> {product.api}
+          </p>
+        )}
 
-        <p>
-          <b className="text-gray-500">ACEA:</b> {product.acea}
-        </p>
+        {product.acea && (
+          <p>
+            <b className="text-gray-500">ACEA:</b> {product.acea}
+          </p>
+        )}
 
-        <p>
-          <b className="text-gray-500">{t("productDetail.oilType")}</b>{" "}
-          {product.oilType}
-        </p>
+        {product.oilType && (
+          <p>
+            <b className="text-gray-500">{t("productDetail.oilType")}</b>{" "}
+            {product.oilType}
+          </p>
+        )}
       </div>
 
       <div className="mt-6">
