@@ -3,17 +3,42 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* =========================
-      EYE-COMFORT LIGHT THEME
-      نور شدید سفید خالص رو کم می‌کنه تا در حالت روز
-      برای چشم اذیت‌کننده نباشه؛ روی همه‌ی جاهایی که
-      از bg-white / bg-gray-50 / bg-gray-100 استفاده
-      شده به‌صورت خودکار اعمال می‌شه.
+      PALETTE — سرمه‌ای + کهربایی (سبک فروشگاه‌های حرفه‌ای)
+      به‌جای ویرایش صدها کلاس در کامپوننت‌ها، خانواده‌های
+      رنگ Tailwind همینجا بازتعریف شدن:
+      - yellow-*  → کهربایی/نارنجی برند (دکمه‌ی اصلی، لوگو، لینک‌ها)
+      - gray-*    → خاکستری سرد؛ سرهای تیره (800 تا 950) سرمه‌ای‌ان
+                    (هدر، فوتر، قیمت‌ها و تیترها)
+      - black     → سرمه‌ای خیلی تیره
+      white/50/100 کمی از سفید خالص ملایم‌ترن تا چشم اذیت نشه.
 ========================= */
 
 @theme {
-  --color-white: #f7f6f2;
-  --color-gray-50: #f2f0ea;
-  --color-gray-100: #eae7de;
+  --color-yellow-50: #fff8ec;
+  --color-yellow-100: #ffefd1;
+  --color-yellow-200: #ffdca0;
+  --color-yellow-300: #ffc566;
+  --color-yellow-400: #faa61a;
+  --color-yellow-500: #f09000;
+  --color-yellow-600: #d67a00;
+  --color-yellow-700: #a85f00;
+  --color-yellow-800: #844b06;
+  --color-yellow-900: #6b3d0a;
+
+  --color-white: #fdfdfe;
+  --color-gray-50: #f5f6f8;
+  --color-gray-100: #eceef2;
+  --color-gray-200: #e1e4ea;
+  --color-gray-300: #cbd0d9;
+  --color-gray-400: #98a1b0;
+  --color-gray-500: #697386;
+  --color-gray-600: #4d5769;
+  --color-gray-700: #374154;
+  --color-gray-800: #1f2d44;
+  --color-gray-900: #152238;
+  --color-gray-950: #0f1b2d;
+
+  --color-black: #0b1424;
 }
 
 /* =========================
@@ -54,7 +79,7 @@
 
 /* =========================
       BRAND PALETTE
-      --yellow-brand عمداً با Tailwind yellow-400
+      --yellow-brand عمداً با yellow-400 (کهربایی برند)
       (که مستقیم توی کامپوننت‌ها استفاده می‌شه)
       یکسان نگه داشته شده تا اسکرول‌بار با بقیه‌ی
       سایت هم‌رنگ بمونه. بقیه‌ی رنگ‌های معنایی
@@ -64,8 +89,8 @@
 
 :root {
   /* برند اصلی */
-  --black-brand: #0a0a0a;
-  --yellow-brand: #facc15;
+  --black-brand: #0f1b2d;
+  --yellow-brand: #faa61a;
 
   /* رنگ‌های معنایی */
   --green-brand: #15803d;
@@ -74,25 +99,25 @@
   --whatsapp: #25d366;
 
   /* پس‌زمینه */
-  --bg-main: #f8fafc;
+  --bg-main: #f1f3f6;
   --card-bg: #ffffff;
 
   /* متن */
-  --text-main: #111827;
-  --text-muted: #6b7280;
+  --text-main: #152238;
+  --text-muted: #697386;
 
   /* حاشیه */
-  --border-light: #e5e7eb;
+  --border-light: #e1e4ea;
 }
 
 .dark {
-  --bg-main: #0f1115;
-  --card-bg: #1b1e25;
+  --bg-main: #0b1220;
+  --card-bg: #152238;
 
   --text-main: #f3f4f6;
   --text-muted: #9ca3af;
 
-  --border-light: #2b2f38;
+  --border-light: #24324a;
 }
 
 /* =========================
@@ -108,14 +133,15 @@
 }
 
 .dark .bg-gray-50 {
-  background-color: #15171c;
+  background-color: #101b2e;
 }
 
 .dark .bg-gray-100 {
-  background-color: #20242c;
+  background-color: #1b2a42;
 }
 
-.dark .text-black,
+.dark .text-black:not([class*="bg-yellow"]),
+.dark .text-gray-950:not([class*="bg-yellow"]),
 .dark .text-gray-800,
 .dark .text-gray-900 {
   color: var(--text-main);
@@ -231,7 +257,7 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--bg-main);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -246,7 +272,7 @@ img {
 ========================= */
 
 header .text-yellow-400 {
-  color: #facc15 !important;
+  color: var(--yellow-brand) !important;
 }
 
 header .text-white {
@@ -254,7 +280,7 @@ header .text-white {
 }
 
 header .text-gray-400 {
-  color: #9ca3af !important;
+  color: #98a1b0 !important;
 }
 
 footer .text-white {
@@ -262,15 +288,15 @@ footer .text-white {
 }
 
 footer .text-gray-300 {
-  color: #d1d5db !important;
+  color: #cbd0d9 !important;
 }
 
 footer .text-gray-400 {
-  color: #9ca3af !important;
+  color: #98a1b0 !important;
 }
 
 footer .text-yellow-400 {
-  color: #facc15 !important;
+  color: var(--yellow-brand) !important;
 }
 
 footer .text-green-400 {

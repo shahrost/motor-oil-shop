@@ -45,7 +45,7 @@ function CartItem({
 
         <p className="mt-2">
           {t("common.brand")}
-          <b className="text-green-700">
+          <b className="text-gray-500">
             {" "}
             {getBrandLabel(item.brand, language)}
           </b>
@@ -53,7 +53,7 @@ function CartItem({
 
         <p>
           {t("common.viscosity")}
-          <b className="text-green-700"> {item.viscosity}</b>
+          <b className="text-gray-500"> {item.viscosity}</b>
         </p>
       </div>
 
@@ -100,7 +100,7 @@ function CartItem({
       </div>
 
       <div className="flex flex-col justify-between">
-        <p className="text-green-700 text-2xl font-extrabold">
+        <p className="text-gray-950 text-2xl font-extrabold">
           {formatPrice(getProductPrice(item, item.paymentType), language)}
         </p>
 

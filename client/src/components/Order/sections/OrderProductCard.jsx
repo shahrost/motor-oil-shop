@@ -87,10 +87,10 @@ function OrderProductCard({
         onChange={(type) => changePaymentType(item.id, type, index)}
       />
 
-      <div className="mt-5 bg-green-50 border border-green-200 rounded-2xl p-4">
-        <p className="font-bold text-green-700">{t("order.productCard.price")}</p>
+      <div className="mt-5 bg-yellow-50 border border-yellow-200 rounded-2xl p-4">
+        <p className="font-bold text-gray-600">{t("order.productCard.price")}</p>
 
-        <p className="text-2xl font-extrabold text-green-700 mt-2">
+        <p className="text-2xl font-extrabold text-gray-950 mt-2">
           {formatPrice(itemTotal, language)}
         </p>
       </div>

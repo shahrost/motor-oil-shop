@@ -33,7 +33,7 @@ function VehicleBrand() {
 
   return (
     <section className="px-5 mt-8 max-w-7xl mx-auto">
-      <Link to="/vehicles" className="text-green-700 font-bold text-sm">
+      <Link to="/vehicles" className="text-yellow-700 hover:text-yellow-800 font-bold text-sm">
         ← {t("vehicles.back")}
       </Link>
 

@@ -86,7 +86,7 @@ function Account() {
                 {order.items?.length || 0} {t("account.itemsCount")}
               </p>
 
-              <p className="text-green-700 font-bold">
+              <p className="text-gray-950 font-extrabold">
                 {formatPrice(order.totalPrice, language)}
               </p>
             </div>

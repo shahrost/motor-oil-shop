@@ -41,21 +41,21 @@ function ProductInfo({
 
       <div className="mt-6 space-y-3 text-black">
         <p>
-          <b className="text-green-700">{t("common.brand")}</b>{" "}
+          <b className="text-gray-500">{t("common.brand")}</b>{" "}
           {getBrandLabel(product.brand, language)}
         </p>
 
         <p className="break-words">
-          <b className="text-green-700">{t("common.viscosity")}</b> {product.viscosity}
+          <b className="text-gray-500">{t("common.viscosity")}</b> {product.viscosity}
         </p>
 
         <p>
-          <b className="text-green-700">{t("common.volume")}</b>{" "}
+          <b className="text-gray-500">{t("common.volume")}</b>{" "}
           {formatVolume(product.volume, language)}
         </p>
 
         <div className="flex items-center gap-2">
-          <b className="text-green-700 shrink-0">{t("common.orderUnitLabel")}</b>
+          <b className="text-gray-500 shrink-0">{t("common.orderUnitLabel")}</b>
 
           <select
             value={orderType}
@@ -68,7 +68,7 @@ function ProductInfo({
         </div>
 
         <div className="flex items-center gap-2">
-          <b className="text-green-700 shrink-0">{t("common.quantity")}</b>
+          <b className="text-gray-500 shrink-0">{t("common.quantity")}</b>
 
           <input
             type="number"
@@ -80,7 +80,7 @@ function ProductInfo({
         </div>
 
         <div className="flex items-center gap-2">
-          <b className="text-green-700 shrink-0">{t("common.payment")}</b>
+          <b className="text-gray-500 shrink-0">{t("common.payment")}</b>
 
           <select
             value={paymentType}
@@ -93,21 +93,21 @@ function ProductInfo({
         </div>
 
         <p>
-          <b className="text-green-700">API:</b> {product.api}
+          <b className="text-gray-500">API:</b> {product.api}
         </p>
 
         <p>
-          <b className="text-green-700">ACEA:</b> {product.acea}
+          <b className="text-gray-500">ACEA:</b> {product.acea}
         </p>
 
         <p>
-          <b className="text-green-700">{t("productDetail.oilType")}</b>{" "}
+          <b className="text-gray-500">{t("productDetail.oilType")}</b>{" "}
           {product.oilType}
         </p>
       </div>
 
       <div className="mt-6">
-        <p className="text-4xl font-extrabold text-green-700">
+        <p className="text-4xl font-extrabold text-gray-950">
           {formatPrice(getProductPrice(product, paymentType), language)}
         </p>
       </div>

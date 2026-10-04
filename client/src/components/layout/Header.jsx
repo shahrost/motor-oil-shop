@@ -277,8 +277,10 @@ function Header() {
               sm:flex
               items-center
               justify-center
-              bg-indigo-600
-              hover:bg-indigo-700
+              bg-white/10
+              hover:bg-white/20
+              ring-1
+              ring-white/15
               text-white
               w-11
               h-11
@@ -369,8 +371,10 @@ function Header() {
               md:flex
               items-center
               justify-center
-              bg-blue-600
-              hover:bg-blue-700
+              bg-white/10
+              hover:bg-white/20
+              ring-1
+              ring-white/15
               text-white
               w-11
               h-11
@@ -486,7 +490,7 @@ function Header() {
                   onClick={closeMenu}
                   className="
                   block
-                  bg-indigo-600
+                  bg-gray-800
                   text-white
                   py-3
                   rounded-xl

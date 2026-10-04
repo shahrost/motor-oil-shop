@@ -38,7 +38,7 @@ function FloatingActions() {
           fixed
           bottom-6
           left-6
-          bg-blue-600
+          bg-gray-900
           text-white
           w-14
           h-14

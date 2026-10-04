@@ -50,7 +50,7 @@ function AccountLogin() {
 
       <p className="text-center text-sm mt-5 text-gray-600">
         {t("accountLogin.noAccount")}{" "}
-        <Link to="/register" className="text-green-700 font-bold">
+        <Link to="/register" className="text-yellow-700 hover:text-yellow-800 font-bold">
           {t("header.register")}
         </Link>
       </p>

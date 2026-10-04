@@ -31,12 +31,12 @@ function ProductInfo({ product, paymentType }) {
 
       <div className="mt-4 space-y-3 text-lg font-bold text-gray-800">
         <p>
-          <span className="text-green-700">{t("common.brand")}</span>{" "}
+          <span className="text-gray-500">{t("common.brand")}</span>{" "}
           {getBrandLabel(product.brand, language)}
         </p>
 
         <p className="line-clamp-2 break-words" title={product.viscosity}>
-          <span className="text-green-700">{t("common.viscosity")}</span>{" "}
+          <span className="text-gray-500">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>
 
@@ -44,12 +44,12 @@ function ProductInfo({ product, paymentType }) {
           className="line-clamp-2 break-words"
           title={formatVolume(product.volume, language)}
         >
-          <span className="text-green-700">{t("common.volume")}</span>{" "}
+          <span className="text-gray-500">{t("common.volume")}</span>{" "}
           {formatVolume(product.volume, language)}
         </p>
 
         <p>
-          <span className="text-green-700">
+          <span className="text-gray-500">
             {t("productCard.cartonCount")}
           </span>{" "}
           {product.cartonCount || "-"} {t("common.orderUnit.number")}
@@ -65,7 +65,7 @@ function ProductInfo({ product, paymentType }) {
           className="
           text-2xl
           font-extrabold
-          text-green-700
+          text-gray-950
           "
         >
           {formatPrice(getProductPrice(product, paymentType), language)}

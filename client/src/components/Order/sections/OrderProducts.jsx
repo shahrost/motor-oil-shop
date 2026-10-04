@@ -31,8 +31,8 @@ function OrderProducts({
         ))}
       </div>
 
-      <div className="mt-8 bg-green-100 border border-green-300 rounded-2xl p-5">
-        <p className="text-xl font-extrabold text-green-700">
+      <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-2xl p-5">
+        <p className="text-xl font-extrabold text-gray-950">
           {t("order.products.total")} {formatPrice(cartTotal, language)}
         </p>
       </div>

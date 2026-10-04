@@ -42,7 +42,7 @@ function ProductRowCard({ product }) {
         bg-white
         shadow-sm
         hover:shadow-md
-        hover:border-green-300
+        hover:border-yellow-400
         transition
       "
     >
@@ -67,17 +67,17 @@ function ProductRowCard({ product }) {
 
       <div className="mt-2 text-xs sm:text-sm font-bold text-gray-700 space-y-1">
         <p className="line-clamp-1">
-          <span className="text-green-700">{t("common.brand")}</span>{" "}
+          <span className="text-gray-500">{t("common.brand")}</span>{" "}
           {getBrandLabel(product.brand, language)}
         </p>
 
         <p className="hidden sm:line-clamp-1">
-          <span className="text-green-700">{t("common.viscosity")}</span>{" "}
+          <span className="text-gray-500">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>
 
         <p className="line-clamp-1">
-          <span className="text-green-700">{t("common.volume")}</span>{" "}
+          <span className="text-gray-500">{t("common.volume")}</span>{" "}
           {formatVolume(product.volume, language)}
         </p>
       </div>
@@ -86,7 +86,7 @@ function ProductRowCard({ product }) {
         <DiscountBadge percent={product.discountPercent || 0} />
       </div>
 
-      <p className="mt-1 text-sm sm:text-lg font-extrabold text-green-700">
+      <p className="mt-1 text-sm sm:text-lg font-extrabold text-gray-950">
         {formatPrice(getProductPrice(product, paymentType), language)}
       </p>
 
@@ -120,7 +120,7 @@ function ProductRowCard({ product }) {
         <button
           type="button"
           onClick={handleAddCart}
-          className="w-full mt-1 bg-green-600 hover:bg-green-700 text-white py-1.5 rounded-lg text-xs font-bold transition"
+          className="w-full mt-1 bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-1.5 rounded-lg text-xs font-bold transition"
         >
           🛒 {t("common.addToCart")}
         </button>

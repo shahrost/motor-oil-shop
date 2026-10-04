@@ -36,9 +36,9 @@ function CardActions({ product, handleAddCart }) {
         onClick={handleAddCart}
         className="
         flex-1
-        bg-green-600
-        hover:bg-green-700
-        text-white
+        bg-yellow-400
+        hover:bg-yellow-500
+        text-gray-950
         px-3
         py-2.5
         rounded-lg

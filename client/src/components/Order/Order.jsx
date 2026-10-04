@@ -33,7 +33,7 @@ function Order() {
 
           <Link
             to="/products"
-            className="inline-block mt-6 bg-green-600 text-white px-8 py-3 rounded-xl font-bold"
+            className="inline-block mt-6 bg-yellow-400 text-gray-950 px-8 py-3 rounded-xl font-bold"
           >
             {t("common.viewProducts")}
           </Link>
@@ -68,7 +68,7 @@ function Order() {
 
             <button
               type="submit"
-              className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg transition"
+              className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-4 rounded-xl font-bold text-lg transition"
             >
               {t("order.submit")}
             </button>

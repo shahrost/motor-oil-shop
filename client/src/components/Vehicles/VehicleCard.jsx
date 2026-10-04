@@ -22,7 +22,7 @@ function VehicleCard({ vehicle }) {
         bg-white
         shadow-sm
         hover:shadow-md
-        hover:border-green-300
+        hover:border-yellow-400
         transition
       "
     >
@@ -34,24 +34,24 @@ function VehicleCard({ vehicle }) {
 
       <div className="mt-2 text-sm font-bold text-gray-700 space-y-1">
         <p className="line-clamp-1">
-          <span className="text-green-700">{t("common.brand")}</span>{" "}
+          <span className="text-gray-500">{t("common.brand")}</span>{" "}
           {en ? vehicle.brandEn || vehicle.brand : vehicle.brand}
         </p>
 
         <p className="line-clamp-1">
-          <span className="text-green-700">{t("vehicles.viscosity")}</span>{" "}
+          <span className="text-gray-500">{t("vehicles.viscosity")}</span>{" "}
           {vehicle.viscosities.join(" / ")}
         </p>
 
         {vehicle.oilCapacity && (
           <p className="line-clamp-1">
-            <span className="text-green-700">{t("vehicles.oilCapacity")}</span>{" "}
+            <span className="text-gray-500">{t("vehicles.oilCapacity")}</span>{" "}
             {vehicle.oilCapacity} {t("vehicles.liter")}
           </p>
         )}
       </div>
 
-      <span className="mt-3 block w-full bg-green-600 text-white py-2 rounded-lg text-sm font-bold text-center">
+      <span className="mt-3 block w-full bg-yellow-400 text-gray-950 py-2 rounded-lg text-sm font-bold text-center">
         {t("vehicles.viewSpecs")}
       </span>
     </Link>

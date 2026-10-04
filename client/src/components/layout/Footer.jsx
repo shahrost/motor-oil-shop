@@ -93,7 +93,7 @@ function Footer() {
                   transition
                   group-hover:scale-110
                   group-hover:shadow-lg
-                  ${item.isPhone ? "bg-blue-600 text-2xl" : "bg-white p-2"}
+                  ${item.isPhone ? "bg-yellow-400 text-2xl" : "bg-white p-2"}
                   `}
                 >
                   {item.isPhone ? (

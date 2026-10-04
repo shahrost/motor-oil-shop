@@ -17,7 +17,7 @@ function OrderSuccess() {
 
       <Link
         to="/products"
-        className="inline-block mt-6 bg-green-600 text-white px-8 py-3 rounded-xl font-bold"
+        className="inline-block mt-6 bg-yellow-400 text-gray-950 px-8 py-3 rounded-xl font-bold"
       >
         {t("common.continueShopping")}
       </Link>

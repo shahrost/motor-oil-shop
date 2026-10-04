@@ -13,7 +13,7 @@ function ViscosityProducts() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <Link
         to="/viscosity"
-        className="inline-block mb-6 font-bold text-green-700 hover:text-green-900"
+        className="inline-block mb-6 font-bold text-yellow-700 hover:text-yellow-800"
       >
         ← {t("viscosityProducts.back")}
       </Link>

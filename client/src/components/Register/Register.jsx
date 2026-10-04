@@ -59,7 +59,7 @@ function Register() {
 
       <p className="text-center text-sm mt-5 text-gray-600">
         {t("register.hasAccount")}{" "}
-        <Link to="/account-login" className="text-green-700 font-bold">
+        <Link to="/account-login" className="text-yellow-700 hover:text-yellow-800 font-bold">
           {t("accountLogin.submit")}
         </Link>
       </p>

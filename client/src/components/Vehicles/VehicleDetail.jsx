@@ -59,7 +59,7 @@ function VehicleDetail() {
     <section className="px-5 mt-8 max-w-7xl mx-auto">
       <Link
         to={`/vehicles/${encodeURIComponent(vehicle.brand)}`}
-        className="text-green-700 font-bold text-sm"
+        className="text-yellow-700 hover:text-yellow-800 font-bold text-sm"
       >
         ← {t("vehicles.back")}
       </Link>
@@ -71,14 +71,14 @@ function VehicleDetail() {
           {name}
         </h1>
 
-        <h2 className="mt-4 mb-2 text-sm font-bold text-green-700">
+        <h2 className="mt-4 mb-2 text-sm font-bold text-gray-500">
           {t("vehicles.specs")}
         </h2>
 
         <div className="text-sm font-bold text-gray-700 space-y-1">
           {specs.map(([label, value]) => (
             <p key={label}>
-              <span className="text-green-700">{label}</span> {value}
+              <span className="text-gray-500">{label}</span> {value}
             </p>
           ))}
         </div>

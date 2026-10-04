@@ -9,7 +9,7 @@ function ProductPurchase({ handleCart, added }) {
       <button
         type="button"
         onClick={handleCart}
-        className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-bold text-lg transition"
+        className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-4 rounded-2xl font-bold text-lg transition"
       >
         🛒 {t("common.addToCart")}
       </button>

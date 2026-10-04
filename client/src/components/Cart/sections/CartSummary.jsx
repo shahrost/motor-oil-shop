@@ -8,7 +8,7 @@ function CartSummary({ cartTotal, clearCart }) {
 
   return (
     <div className="bg-white rounded-3xl shadow p-6 mt-8">
-      <h2 className="text-3xl font-extrabold text-green-700">
+      <h2 className="text-3xl font-extrabold text-gray-950">
         {t("cart.summary.total")} {formatPrice(cartTotal, language)}
       </h2>
 
@@ -29,7 +29,7 @@ function CartSummary({ cartTotal, clearCart }) {
 
         <Link
           to="/order"
-          className="bg-green-600 text-white text-center py-4 rounded-xl font-bold"
+          className="bg-yellow-400 text-gray-950 text-center py-4 rounded-xl font-bold"
         >
           {t("cart.summary.checkout")}
         </Link>

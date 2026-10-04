@@ -26,7 +26,7 @@ function Login() {
 
         <button
           type="submit"
-          className="bg-green-600 text-white w-full py-3 rounded-lg"
+          className="bg-yellow-400 text-gray-950 w-full py-3 rounded-lg"
         >
           ورود
         </button>

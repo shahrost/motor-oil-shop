@@ -20,7 +20,7 @@ function ContactActions() {
 
       <a
         href="tel:09198334264"
-        className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-lg font-bold"
+        className="inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-bold"
       >
         <span className="text-lg">📞</span>
         {t("contact.actions.callUs")}

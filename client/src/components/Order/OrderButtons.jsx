@@ -14,7 +14,7 @@ function OrderButtons({ changeAllPaymentType }) {
         <button
           type="button"
           onClick={() => changeAllPaymentType("cash")}
-          className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold transition"
+          className="bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-3 rounded-xl font-bold transition"
         >
           💵 {t("order.buttons.allCash")}
         </button>
@@ -22,7 +22,7 @@ function OrderButtons({ changeAllPaymentType }) {
         <button
           type="button"
           onClick={() => changeAllPaymentType("check")}
-          className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition"
+          className="bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-xl font-bold transition"
         >
           📝 {t("order.buttons.allCheck")}
         </button>

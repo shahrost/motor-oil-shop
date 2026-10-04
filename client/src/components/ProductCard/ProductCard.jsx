@@ -23,7 +23,7 @@ function ProductCard({ product }) {
   } = useProductCard(product);
 
   return (
-    <div className="border-2 border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:border-green-300 transition">
+    <div className="border-2 border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition">
       <ProductImage product={product} />
 
       <ProductInfo product={product} paymentType={paymentType} />
