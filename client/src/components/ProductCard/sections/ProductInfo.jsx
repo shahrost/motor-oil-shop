@@ -49,7 +49,7 @@ function ProductInfo({ product, paymentType }) {
           aria-hidden={product.api ? undefined : true}
           title={product.api}
         >
-          <span className="text-gray-500">API:</span> {product.api}
+          <span className="text-gray-500"><bdi>API</bdi>:</span> <bdi>{product.api}</bdi>
         </p>
 
         <p

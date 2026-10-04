@@ -96,13 +96,13 @@ function ProductInfo({
 
         {product.api && (
           <p>
-            <b className="text-gray-500">API:</b> {product.api}
+            <b className="text-gray-500"><bdi>API</bdi>:</b> <bdi>{product.api}</bdi>
           </p>
         )}
 
         {product.acea && (
           <p>
-            <b className="text-gray-500">ACEA:</b> {product.acea}
+            <b className="text-gray-500"><bdi>ACEA</bdi>:</b> <bdi>{product.acea}</bdi>
           </p>
         )}
 

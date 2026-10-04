@@ -84,7 +84,7 @@ function ProductRowCard({ product }) {
           className={`hidden sm:line-clamp-1 ${product.api ? "" : "invisible"}`}
           aria-hidden={product.api ? undefined : true}
         >
-          <span className="text-gray-500">API:</span> {product.api}
+          <span className="text-gray-500"><bdi>API</bdi>:</span> <bdi>{product.api}</bdi>
         </p>
 
         <p className="line-clamp-1">
