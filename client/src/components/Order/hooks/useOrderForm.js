@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import OrderContext from "../../../context/OrderContext";
 import CartContext from "../../../context/CartContext";
 import CustomerAuthContext from "../../../context/CustomerAuthContext";
@@ -29,6 +28,8 @@ function useOrderForm() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   function handleChange(e) {
     setCustomer({
@@ -37,21 +38,31 @@ function useOrderForm() {
     });
   }
 
-  function submitOrder(e) {
+  // سبد فقط بعد از ثبت موفق سفارش روی سرور خالی می‌شه
+  async function submitOrder(e) {
     e.preventDefault();
+
+    if (submitting) return;
 
     if (customer.phone.length !== 11 || !customer.phone.startsWith("09")) {
       alert(t("order.invalidPhone"));
       return;
     }
 
-    const order = buildOrderData(cart, customer, cartTotal, account?.id);
+    setSubmitting(true);
+    setSubmitError("");
 
-    addOrder(order);
+    try {
+      await addOrder(buildOrderData(cart, customer, cartTotal, account?.id));
 
-    clearCart();
-
-    setSubmitted(true);
+      clearCart();
+      setSubmitted(true);
+    } catch (error) {
+      console.log("خطا در ثبت سفارش", error);
+      setSubmitError(t("order.submitError"));
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return {
@@ -59,6 +70,8 @@ function useOrderForm() {
     customer,
     setCustomer,
     submitted,
+    submitting,
+    submitError,
 
     handleChange,
     submitOrder,

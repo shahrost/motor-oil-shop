@@ -173,6 +173,8 @@ const translations = {
     order: {
       title: "ثبت نهایی سفارش",
       submit: "ثبت سفارش نهایی",
+      submitting: "در حال ثبت سفارش...",
+      submitError: "ثبت سفارش ناموفق بود؛ سبد خرید شما حفظ شده است. لطفاً دوباره تلاش کنید.",
       products: {
         title: "محصولات سفارش",
         total: "مبلغ کل سفارش:",
@@ -541,6 +543,8 @@ const translations = {
     order: {
       title: "Finalize Order",
       submit: "Submit Final Order",
+      submitting: "Submitting order...",
+      submitError: "Your order could not be submitted; your cart is kept. Please try again.",
       products: {
         title: "Order Products",
         total: "Order Total:",

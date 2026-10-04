@@ -9,54 +9,51 @@ import {
 
 const OrderContext = createContext();
 
+// دریافت و نگهداری سفارش‌ها (پنل ادمین) و ثبت سفارش مشتری
 export function OrderProvider({ children }) {
   const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [loadError, setLoadError] = useState("");
 
-  // دریافت سفارش‌ها
-  // مسئول دریافت و نگهداری سفارش‌ها در Context است.
   const loadOrders = useCallback(async () => {
+    setLoadingOrders(true);
+    setLoadError("");
+
     try {
       const response = await fetchOrders();
 
       setOrders(response || []);
     } catch (error) {
       console.log("خطا در دریافت سفارش‌ها", error);
+      setLoadError(error.response?.data?.message || "دریافت سفارش‌ها از سرور ناموفق بود");
+    } finally {
+      setLoadingOrders(false);
     }
   }, []);
 
-  // ثبت سفارش جدید
+  // ثبت سفارش جدید؛ در صورت خطا throw می‌کنه تا فرم سفارش سبد رو پاک نکنه
   async function addOrder(order) {
-    const newOrder = {
+    const savedOrder = await createOrder({
       ...order,
-
       status: "جدید",
-
       date: new Date().toLocaleDateString("fa-IR"),
-    };
+    });
 
-    try {
-      const savedOrder = await createOrder(newOrder);
+    setOrders((prev) => [...prev, savedOrder]);
 
-      setOrders((prev) => [...prev, savedOrder]);
-    } catch (error) {
-      console.log("خطا در ثبت سفارش", error);
-    }
+    return savedOrder;
   }
 
-  // تغییر وضعیت سفارش
   async function updateOrderStatus(id, status) {
     try {
       const updated = await updateOrderStatusService(id, status);
 
-      setOrders((prev) =>
-        prev.map((order) => (order.id === id ? updated : order)),
-      );
+      setOrders((prev) => prev.map((order) => (order.id === id ? updated : order)));
     } catch (error) {
       console.log("خطا در تغییر وضعیت", error);
     }
   }
 
-  // حذف سفارش
   async function deleteOrder(id) {
     try {
       await deleteOrderService(id);
@@ -71,13 +68,11 @@ export function OrderProvider({ children }) {
     <OrderContext.Provider
       value={{
         orders,
-
+        loadingOrders,
+        loadError,
         loadOrders,
-
         addOrder,
-
         updateOrderStatus,
-
         deleteOrder,
       }}
     >

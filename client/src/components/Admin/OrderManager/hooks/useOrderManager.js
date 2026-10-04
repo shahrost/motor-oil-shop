@@ -4,8 +4,14 @@ import orderStats from "../helpers/orderStats";
 import OrderContext from "../../../../context/OrderContext";
 
 function useOrderManager() {
-  const { orders, loadOrders, updateOrderStatus, deleteOrder } =
-    useContext(OrderContext);
+  const {
+    orders,
+    loadingOrders,
+    loadError,
+    loadOrders,
+    updateOrderStatus,
+    deleteOrder,
+  } = useContext(OrderContext);
 
   const [search, setSearch] = useState("");
 
@@ -51,6 +57,12 @@ function useOrderManager() {
 
   return {
     orders,
+
+    loadingOrders,
+
+    loadError,
+
+    loadOrders,
 
     updateOrderStatus,
 

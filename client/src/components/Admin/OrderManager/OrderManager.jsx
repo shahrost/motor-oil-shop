@@ -3,10 +3,14 @@ import useOrderManager from "./hooks/useOrderManager";
 import OrderDashboard from "./sections/OrderDashboard";
 import OrderFilters from "./sections/OrderFilters";
 import OrderCard from "./sections/OrderCard";
+import OrderListStatus from "./sections/OrderListStatus";
 
 function OrderManager() {
   const {
     orders,
+    loadingOrders,
+    loadError,
+    loadOrders,
     filteredOrders,
     dashboard,
 
@@ -35,26 +39,12 @@ function OrderManager() {
       />
 
       <div className="space-y-5">
-        {filteredOrders.length === 0 ? (
-          <div
-            className="
-          bg-white
-          rounded-xl
-          shadow
-          p-8
-          text-center
-          "
-          >
-            <p
-              className="
-            text-xl
-            font-bold
-            text-gray-600
-            "
-            >
-              سفارشی پیدا نشد
-            </p>
-          </div>
+        {loadingOrders || loadError || filteredOrders.length === 0 ? (
+          <OrderListStatus
+            loading={loadingOrders}
+            error={loadError}
+            onRetry={loadOrders}
+          />
         ) : (
           filteredOrders.map((order) => (
             <OrderCard

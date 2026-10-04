@@ -11,9 +11,17 @@ function ProtectedRoute({ children }) {
 
     verifyToken()
       .then(() => setStatus("authorized"))
-      .catch(() => {
-        localStorage.removeItem("token");
-        setStatus("unauthorized");
+      .catch((error) => {
+        const status = error.response?.status;
+
+        // فقط توکن نامعتبر/منقضی باعث خروج می‌شه؛ قطعی موقت سرور ادمین رو بیرون نمی‌اندازه
+        if (status === 401 || status === 403) {
+          localStorage.removeItem("token");
+          setStatus("unauthorized");
+          return;
+        }
+
+        setStatus("authorized");
       });
   }, [hasToken]);
 

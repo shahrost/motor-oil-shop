@@ -14,6 +14,8 @@ function Order() {
     cart,
     customer,
     submitted,
+    submitting,
+    submitError,
     handleChange,
     submitOrder,
     updateQuantity,
@@ -22,6 +24,17 @@ function Order() {
     changeAllPaymentType,
     cartTotal,
   } = useOrderForm();
+
+  // بعد از ثبت موفق سبد خالی می‌شه؛ پیام موفقیت باید قبل از حالت «سبد خالی» بررسی بشه
+  if (submitted) {
+    return (
+      <div className="px-5 py-8">
+        <div className="max-w-5xl mx-auto">
+          <OrderSuccess />
+        </div>
+      </div>
+    );
+  }
 
   if (cart.length === 0) {
     return (
@@ -59,23 +72,26 @@ function Order() {
           changePaymentType={changePaymentType}
         />
 
-        {!submitted ? (
-          <form
-            onSubmit={submitOrder}
-            className="bg-white rounded-3xl shadow-md border p-6 mt-6"
-          >
-            <CustomerInfo customer={customer} handleChange={handleChange} />
+        <form
+          onSubmit={submitOrder}
+          className="bg-white rounded-3xl shadow-md border p-6 mt-6"
+        >
+          <CustomerInfo customer={customer} handleChange={handleChange} />
 
-            <button
-              type="submit"
-              className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-4 rounded-xl font-bold text-lg transition"
-            >
-              {t("order.submit")}
-            </button>
-          </form>
-        ) : (
-          <OrderSuccess />
-        )}
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-4 rounded-xl font-bold text-lg transition disabled:opacity-60"
+          >
+            {submitting ? t("order.submitting") : t("order.submit")}
+          </button>
+
+          {submitError && (
+            <p className="mt-4 bg-red-100 text-red-700 rounded-xl p-3 text-center font-bold">
+              {submitError}
+            </p>
+          )}
+        </form>
       </div>
     </div>
   );

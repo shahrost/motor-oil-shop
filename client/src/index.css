@@ -204,31 +204,54 @@ body {
       TEXT
 ========================= */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Vazirmatn", sans-serif;
-  font-weight: 800;
-  color: var(--text-main);
+/* رنگ متن از body ارث می‌رسه؛ هیچ قانون رنگی روی تگ‌ها (p, span, h1, ...) نیست،
+   چون قانون‌های بیرون از layer کلاس‌های رنگ Tailwind رو خنثی می‌کردن
+   (مثلاً متن سفید روی دکمه یا متن تیره روی کادر روشن در حالت شب). */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Vazirmatn", sans-serif;
+    font-weight: 800;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-family: "Vazirmatn", sans-serif;
+  }
 }
 
-p,
-span,
-label,
-small,
-strong,
-b {
-  color: var(--text-main);
+/* کادرهای رنگی روشن (قیمت سفارش، طرح فروش، کارت‌های داشبورد) در حالت شب
+   ته‌رنگ تیره می‌گیرن تا متن روشن حالت شب روشون خوانا بمونه */
+.dark .bg-yellow-50,
+.dark .bg-yellow-100,
+.dark .bg-amber-50,
+.dark .bg-amber-100 {
+  background-color: rgb(250 166 26 / 0.12);
 }
 
-input,
-textarea,
-select,
-button {
-  font-family: "Vazirmatn", sans-serif;
+.dark .bg-green-50,
+.dark .bg-green-100 {
+  background-color: rgb(34 197 94 / 0.12);
+}
+
+.dark .bg-blue-50,
+.dark .bg-blue-100 {
+  background-color: rgb(59 130 246 / 0.12);
+}
+
+.dark .bg-red-100 {
+  background-color: rgb(239 68 68 / 0.15);
+}
+
+.dark .text-amber-700,
+.dark .text-amber-800 {
+  color: #fcd38d;
 }
 
 /* =========================
@@ -263,44 +286,6 @@ img {
 ::-webkit-scrollbar-thumb {
   background: var(--yellow-brand);
   border-radius: 20px;
-}
-
-/* =========================
-      HEADER & FOOTER TEXT FIX
-      جلوگیری از خراب شدن رنگ‌های Tailwind
-      در هدر/فوتر تیره
-========================= */
-
-header .text-yellow-400 {
-  color: var(--yellow-brand) !important;
-}
-
-header .text-white {
-  color: #ffffff !important;
-}
-
-header .text-gray-400 {
-  color: #98a1b0 !important;
-}
-
-footer .text-white {
-  color: #ffffff !important;
-}
-
-footer .text-gray-300 {
-  color: #cbd0d9 !important;
-}
-
-footer .text-gray-400 {
-  color: #98a1b0 !important;
-}
-
-footer .text-yellow-400 {
-  color: var(--yellow-brand) !important;
-}
-
-footer .text-green-400 {
-  color: #4ade80 !important;
 }
 
 /* =========================
