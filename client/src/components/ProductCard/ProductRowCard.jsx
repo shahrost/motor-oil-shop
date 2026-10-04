@@ -80,6 +80,13 @@ function ProductRowCard({ product }) {
           {product.viscosity}
         </p>
 
+        <p
+          className={`hidden sm:line-clamp-1 ${product.api ? "" : "invisible"}`}
+          aria-hidden={product.api ? undefined : true}
+        >
+          <span className="text-gray-500">API:</span> {product.api}
+        </p>
+
         <p className="line-clamp-1">
           <span className="text-gray-500">{t("common.volume")}</span>{" "}
           {formatVolume(product.volume, language)}

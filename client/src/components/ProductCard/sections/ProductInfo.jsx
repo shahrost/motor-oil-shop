@@ -45,6 +45,14 @@ function ProductInfo({ product, paymentType }) {
         </p>
 
         <p
+          className={`line-clamp-1 break-words ${product.api ? "" : "invisible"}`}
+          aria-hidden={product.api ? undefined : true}
+          title={product.api}
+        >
+          <span className="text-gray-500">API:</span> {product.api}
+        </p>
+
+        <p
           className="line-clamp-2 break-words"
           title={formatVolume(product.volume, language)}
         >
