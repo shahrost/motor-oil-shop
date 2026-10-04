@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
-import getImageUrl from "../../../utils/getImageUrl";
 import getBrandLabel from "../../../utils/brandLabel";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
+import getProductImageSrc from "../../../utils/productImage";
 
 function CartItem({
   item,
@@ -30,7 +30,7 @@ function CartItem({
     <div className="bg-white rounded-3xl shadow p-5 grid md:grid-cols-4 gap-5">
       <div className="bg-gray-50 rounded-2xl p-3">
         <img
-          src={getImageUrl(item.image?.main)}
+          src={getProductImageSrc(item)}
           alt={name}
           onError={(e) => {
             e.target.onerror = null;

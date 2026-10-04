@@ -3,6 +3,7 @@ import getImageUrl from "../../../utils/getImageUrl";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
+import getProductImageSrc from "../../../utils/productImage";
 
 function ProductGallery({ product }) {
   const { language } = useContext(LanguageContext);
@@ -17,7 +18,7 @@ function ProductGallery({ product }) {
     <div>
       <div className="bg-gray-50 rounded-3xl p-5 flex items-center justify-center">
         <img
-          src={getImageUrl(product.image?.main)}
+          src={getProductImageSrc(product)}
           alt={name}
           onError={handleImageError}
           className="w-full h-80 object-contain hover:scale-105 transition"

@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
-import getImageUrl, { getThumbUrl } from "../../../utils/getImageUrl";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
+import getProductImageSrc from "../../../utils/productImage";
 
 function ProductImage({ product }) {
   const { language } = useContext(LanguageContext);
   const [zoomed, setZoomed] = useState(false);
-  const src = getImageUrl(product.image?.main);
+  const src = getProductImageSrc(product);
   const name = getProductNameLabel(product.name, language);
 
   function handleImageError(e) {
@@ -18,7 +18,7 @@ function ProductImage({ product }) {
   return (
     <>
       <img
-        src={getThumbUrl(product.image?.main, 480)}
+        src={getProductImageSrc(product, 480)}
         alt={name}
         loading="lazy"
         decoding="async"
