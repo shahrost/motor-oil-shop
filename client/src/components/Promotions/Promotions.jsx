@@ -5,7 +5,7 @@ import { ProductContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
 import { getProductNameLabel } from "../../utils/productNameLabel";
-import getImageUrl from "../../utils/getImageUrl";
+import { getThumbUrl } from "../../utils/getImageUrl";
 import { getBrandLogo } from "../../utils/brandLogo";
 import {
   hasActivePromotion,
@@ -47,7 +47,7 @@ function Promotions() {
               >
                 <div className="flex items-center gap-4">
                   <img
-                    src={getImageUrl(product.image?.main)}
+                    src={getThumbUrl(product.image?.main, 160)}
                     alt={name}
                     onError={(e) => {
                       e.target.onerror = null;

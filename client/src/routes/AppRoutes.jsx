@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Home from "../pages/Home";
@@ -21,11 +22,12 @@ import Register from "../pages/Register";
 import AccountLogin from "../pages/AccountLogin";
 import Account from "../pages/Account";
 
-import Admin from "../pages/Admin";
-import AdminOrders from "../pages/AdminOrders";
-
 import ProtectedRoute from "../components/ProtectedRoute";
 import CustomerProtectedRoute from "../components/CustomerProtectedRoute";
+
+// پنل ادمین حجیمه و مشتری‌ها لازمش ندارن؛ جدا لود می‌شه تا صفحه‌ی اصلی سبک‌تر باشه
+const Admin = lazy(() => import("../pages/Admin"));
+const AdminOrders = lazy(() => import("../pages/AdminOrders"));
 
 function AppRoutes() {
   return (
@@ -85,7 +87,9 @@ function AppRoutes() {
         path="/admin"
         element={
           <ProtectedRoute>
-            <Admin />
+            <Suspense fallback={null}>
+              <Admin />
+            </Suspense>
           </ProtectedRoute>
         }
       />
@@ -94,7 +98,9 @@ function AppRoutes() {
         path="/admin/orders"
         element={
           <ProtectedRoute>
-            <AdminOrders />
+            <Suspense fallback={null}>
+              <AdminOrders />
+            </Suspense>
           </ProtectedRoute>
         }
       />

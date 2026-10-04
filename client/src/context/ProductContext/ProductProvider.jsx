@@ -4,6 +4,7 @@ import useProducts from "./hooks/useProducts";
 function ProductProvider({ children }) {
   const {
     products,
+    loading,
     addProduct,
     deleteProduct,
     updateProduct,
@@ -15,6 +16,7 @@ function ProductProvider({ children }) {
     <ProductContext.Provider
       value={{
         products,
+        loading,
         addProduct,
         deleteProduct,
         updateProduct,

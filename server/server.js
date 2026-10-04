@@ -1,14 +1,25 @@
 const express = require("express");
 const cors = require("cors");
+const compression = require("compression");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
+const mongoose = require("mongoose");
+
 const connectDB = require("./config/db");
+const productRepository = require("./repositories/productRepository");
 const routes = require("./routes");
 const errorHandler = require("./middleware/errorHandler");
 
 connectDB();
+
+// لیست محصولات از همان ابتدا در کش آماده می‌شود تا اولین بازدیدکننده منتظر دیتابیس نماند
+mongoose.connection.once("open", () => {
+  productRepository
+    .getAllProducts()
+    .catch((error) => console.error("Product cache warm-up failed:", error.message));
+});
 
 const app = express();
 
@@ -22,6 +33,9 @@ app.use(
     crossOriginResourcePolicy: { policy: "cross-origin" },
   }),
 );
+
+// پاسخ‌های JSON (لیست محصولات/خودروها) چند صد کیلوبایتن؛ gzip حجمشون رو حدود ۱۰ برابر کم می‌کنه
+app.use(compression());
 
 app.use(
   cors({
@@ -38,7 +52,11 @@ app.use((req, res, next) => {
   return jsonParser(req, res, next);
 });
 
-app.use("/uploads", express.static("uploads"));
+// اسم فایل‌های آپلودی یکتاست و عوض نمی‌شن، پس مرورگر می‌تونه طولانی کش کنه
+app.use(
+  "/uploads",
+  express.static("uploads", { maxAge: "30d", immutable: true }),
+);
 app.use("/templates", express.static("templates"));
 
 const loginLimiter = rateLimit({

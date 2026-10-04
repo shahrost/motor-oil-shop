@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import getImageUrl from "../../../utils/getImageUrl";
+import getImageUrl, { getThumbUrl } from "../../../utils/getImageUrl";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { getBrandLogo } from "../../../utils/brandLogo";
 import LanguageContext from "../../../context/LanguageContext";
@@ -18,8 +18,10 @@ function ProductImage({ product }) {
   return (
     <>
       <img
-        src={src}
+        src={getThumbUrl(product.image?.main, 480)}
         alt={name}
+        loading="lazy"
+        decoding="async"
         onError={handleImageError}
         onClick={() => setZoomed(true)}
         className="

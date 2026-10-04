@@ -1,7 +1,11 @@
 const Product = require("../models/Product");
+const productListCache = require("../utils/productListCache");
 
+// خروجی آبجکت ساده (toJSON) است تا کش‌شدنی باشد
 async function getAllProducts() {
-  return await Product.find();
+  return productListCache.get(async () =>
+    (await Product.find()).map((product) => product.toJSON()),
+  );
 }
 
 async function createProduct(data) {

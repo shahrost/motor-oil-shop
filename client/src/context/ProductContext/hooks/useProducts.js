@@ -14,6 +14,9 @@ import {
 function useProducts() {
   const [products, setProducts] = useState([]);
 
+  // تا اولین پاسخ سرور نرسیده، صفحه‌ها اسکلتون نشون می‌دن نه حالت «خالی»
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function loadProducts() {
       try {
@@ -28,6 +31,8 @@ function useProducts() {
         setProducts(sortProductsDefault(formattedProducts));
       } catch (error) {
         console.log("خطا در دریافت محصولات", error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -100,6 +105,7 @@ function useProducts() {
 
   return {
     products,
+    loading,
     addProduct,
     deleteProduct,
     updateProduct,

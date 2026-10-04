@@ -6,7 +6,7 @@ import getBrandLabel from "../../utils/brandLabel";
 import { getProductNameLabel } from "../../utils/productNameLabel";
 import { formatVolume } from "../../utils/formatVolume";
 import formatPrice from "../../utils/formatPrice";
-import getImageUrl from "../../utils/getImageUrl";
+import { getThumbUrl } from "../../utils/getImageUrl";
 import { getBrandLogo } from "../../utils/brandLogo";
 import { getProductPrice } from "../../utils/productPrice";
 import DiscountBadge from "../common/DiscountBadge";
@@ -47,8 +47,12 @@ function ProductRowCard({ product }) {
       "
     >
       <img
-        src={getImageUrl(product.image?.main)}
+        src={getThumbUrl(product.image?.main)}
         alt={name}
+        loading="lazy"
+        decoding="async"
+        width="320"
+        height="128"
         draggable={false}
         onError={(e) => {
           e.target.onerror = null;

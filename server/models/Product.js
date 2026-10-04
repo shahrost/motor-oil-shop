@@ -170,4 +170,28 @@ const ProductSchema = new mongoose.Schema(
   },
 );
 
+// هر تغییری روی محصولات (ادمین، ایمپورت اکسل، سفارش و ...) کش لیست محصولات رو باطل می‌کنه
+const productListCache = require("../utils/productListCache");
+
+const invalidate = () => productListCache.invalidate();
+
+ProductSchema.post("save", invalidate);
+ProductSchema.post("insertMany", invalidate);
+ProductSchema.post("bulkWrite", invalidate);
+ProductSchema.post(
+  [
+    "updateOne",
+    "updateMany",
+    "findOneAndUpdate",
+    "replaceOne",
+    "deleteOne",
+    "deleteMany",
+    "findOneAndDelete",
+    "findOneAndReplace",
+  ],
+  { document: false, query: true },
+  invalidate,
+);
+ProductSchema.post("deleteOne", { document: true, query: false }, invalidate);
+
 module.exports = mongoose.model("Product", ProductSchema);
