@@ -61,7 +61,7 @@ function ProductRowCard({ product }) {
         className="w-full h-24 sm:h-32 object-contain"
       />
 
-      <h3 className="hidden sm:block mt-2 text-sm font-bold text-gray-900 line-clamp-2">
+      <h3 className="hidden sm:line-clamp-2 mt-2 text-sm font-bold text-gray-900">
         {name}
       </h3>
 
@@ -71,7 +71,7 @@ function ProductRowCard({ product }) {
           {getBrandLabel(product.brand, language)}
         </p>
 
-        <p className="hidden sm:block line-clamp-1">
+        <p className="hidden sm:line-clamp-1">
           <span className="text-green-700">{t("common.viscosity")}</span>{" "}
           {product.viscosity}
         </p>
