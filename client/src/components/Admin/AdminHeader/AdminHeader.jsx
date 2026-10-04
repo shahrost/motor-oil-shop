@@ -29,7 +29,7 @@ function AdminHeader() {
           <img
             src={brandLogo}
             alt=""
-            className="h-7 w-auto select-none"
+            className="h-7 w-auto select-none dark:invert"
             draggable="false"
           />
 

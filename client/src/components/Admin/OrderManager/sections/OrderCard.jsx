@@ -1,31 +1,21 @@
 import OrderProducts from "./OrderProducts";
+import orderStatusStyle from "../helpers/orderStatusStyle";
 
 function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
-  function statusColor(status) {
-    if (status === "جدید") return "bg-yellow-200";
-
-    if (status === "تماس گرفته شد") return "bg-blue-200";
-
-    if (status === "آماده ارسال") return "bg-orange-200";
-
-    if (status === "ارسال شد") return "bg-green-200";
-
-    if (status === "تحویل شد") return "bg-gray-300";
-
-    return "bg-white";
-  }
+  const style = orderStatusStyle(order.status);
 
   return (
     <article
-      className={`
-      rounded-xl
-      shadow
-      p-6
-      ${statusColor(order.status)}
-      `}
+      className={`bg-white rounded-xl shadow p-6 border-r-8 ${style.stripe}`}
     >
       <div className="flex justify-between items-center mb-5">
-        <h2 className="text-xl font-bold">سفارش #{order.id}</h2>
+        <div className="flex items-center gap-3 flex-wrap">
+          <h2 className="text-xl font-bold">سفارش #{order.id}</h2>
+
+          <span className={`px-3 py-1 rounded-full text-sm font-bold ${style.badge}`}>
+            {order.status}
+          </span>
+        </div>
 
         <button
           onClick={() => deleteOrder(order.id)}
@@ -52,6 +42,8 @@ function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
           p-2
           rounded-lg
           border
+          bg-white
+          text-black
           "
         >
           {statuses.map((status) => (
@@ -101,7 +93,7 @@ function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
 
           <div
             className="
-          bg-green-100
+          bg-gray-100
           rounded-xl
           p-4
           mt-5
@@ -111,7 +103,6 @@ function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
               className="
             text-xl
             font-bold
-            text-green-700
             "
             >
               مبلغ کل سفارش: {Number(order.totalPrice || 0).toLocaleString()}
