@@ -4,28 +4,10 @@ const Product = require("../models/Product");
 
 // طرح‌های فروش ثابت — شهریور ۱۴۰۵
 const PROMOTIONS = {
-  // ضد یخ سوپر سمن شیمی: هر ۲۰ کارتن — نقدی ۵ کارتن هدیه، چکی/اعتباری ۴ کارتن هدیه
-  "SC-AF-001": {
-    isActive: true,
-    buyQty: 20,
-    giftQtyCash: 5,
-    giftQtyCheck: 4,
-    note: "چک مدت‌دار نیز مشمول همین طرح است (هر ۲۰ کارتن ۴ عدد هدیه).",
-  },
-  "SC-AF-001-2KG": {
-    isActive: true,
-    buyQty: 20,
-    giftQtyCash: 5,
-    giftQtyCheck: 4,
-    note: "چک مدت‌دار نیز مشمول همین طرح است (هر ۲۰ کارتن ۴ عدد هدیه).",
-  },
-  "SC-AF-001-4KG": {
-    isActive: true,
-    buyQty: 20,
-    giftQtyCash: 5,
-    giftQtyCheck: 4,
-    note: "چک مدت‌دار نیز مشمول همین طرح است (هر ۲۰ کارتن ۴ عدد هدیه).",
-  },
+  // ضد یخ سمن شیمی (کارتنی: ۱، ۲ و ۴ کیلویی): هر ۴ کارتن ۱ کارتن هدیه (نقدی و چکی یکسان)
+  "SC-AF-001": { isActive: true, buyQty: 4, giftQtyCash: 1, giftQtyCheck: 1 },
+  "SC-AF-001-2KG": { isActive: true, buyQty: 4, giftQtyCash: 1, giftQtyCheck: 1 },
+  "SC-AF-001-4KG": { isActive: true, buyQty: 4, giftQtyCash: 1, giftQtyCheck: 1 },
 
   // روغن ترمز سمن شیمی (DOT3 و DOT4): هر ۱ کارتن — نقدی ۱۰ عدد هدیه، چکی/اعتباری ۸ عدد هدیه
   "SC-BRK-001": { isActive: true, buyQty: 1, giftQtyCash: 10, giftQtyCheck: 8 },
@@ -52,6 +34,8 @@ const PROMOTIONS = {
 };
 
 const APPLY = process.argv.includes("--apply");
+// --only=SC-AF  → فقط SKUهایی که با این پیشوند شروع می‌شوند
+const ONLY = (process.argv.find((a) => a.startsWith("--only=")) || "").slice(7);
 
 (async () => {
   await mongoose.connect(process.env.MONGO_URI);
@@ -59,6 +43,8 @@ const APPLY = process.argv.includes("--apply");
   const rows = [];
 
   for (const [sku, promotion] of Object.entries(PROMOTIONS)) {
+    if (ONLY && !sku.startsWith(ONLY)) continue;
+
     const p = await Product.findOne({ sku }).lean();
 
     if (!p) {
