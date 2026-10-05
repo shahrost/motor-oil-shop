@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import orderUnits from "../../../data/orderUnits";
-import paymentTypes from "../../../data/paymentTypes";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
+import GiftBadge from "../../common/GiftBadge";
+import { OrderUnitOptions, PaymentTypeOptions } from "../../common/OrderOptions";
 
 function PurchaseBox({
   product,
@@ -49,11 +49,7 @@ function PurchaseBox({
           bg-white
           "
         >
-          {orderUnits.map((item) => (
-            <option key={item.value} value={item.value}>
-              {t(`common.orderUnit.${item.value}`)}
-            </option>
-          ))}
+          <OrderUnitOptions />
         </select>
       </div>
 
@@ -95,34 +91,14 @@ function PurchaseBox({
           text-base
           "
         >
-          {paymentTypes.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.icon} {t(`common.paymentType.${item.value}`)}
-            </option>
-          ))}
+          <PaymentTypeOptions />
         </select>
       </div>
 
-      {giftQty > 0 && (
-        <div
-          className="
-          col-span-3
-          mt-1
-          bg-amber-50
-          border
-          border-amber-300
-          rounded-lg
-          p-2
-          text-amber-800
-          text-sm
-          font-bold
-          text-center
-          "
-        >
-          🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
-          {t("common.orderUnit.carton")}
-        </div>
-      )}
+      <GiftBadge
+        giftQty={giftQty}
+        className="col-span-3 mt-1 rounded-lg p-2 text-sm"
+      />
     </div>
   );
 }

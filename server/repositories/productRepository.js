@@ -32,8 +32,53 @@ async function deleteAllProducts() {
   return await Product.deleteMany({});
 }
 
+// محصولی با همین مشخصات (برای جلوگیری از ثبت تکراری)؛ excludeSku یعنی با کد دیگری
+async function findDuplicate(fields, { excludeSku } = {}) {
+  const filter = excludeSku ? { ...fields, sku: { $ne: excludeSku } } : fields;
+
+  return Product.findOne(filter).select("sku");
+}
+
+async function findBySku(sku) {
+  return Product.findOne({ sku });
+}
+
+async function setFieldsById(id, fields) {
+  return Product.updateOne({ _id: id }, { $set: fields });
+}
+
+async function bulkWrite(ops) {
+  return Product.bulkWrite(ops);
+}
+
+// از بین کدهای داده‌شده، آن‌هایی که در دیتابیس محصول دارند
+async function findExistingSkus(skus) {
+  const found = await Product.find({ sku: { $in: skus } }).select("sku");
+
+  return found.map((p) => p.sku);
+}
+
+// حذف محصولاتی که کدشان در لیست نیست؛ خروجی: محصولات حذف‌شده { sku, name }
+async function deleteWhereSkuNotIn(skus) {
+  const stale = await Product.find({
+    sku: { $exists: true, $nin: ["", ...skus] },
+  }).select("sku name");
+
+  if (stale.length) {
+    await Product.deleteMany({ _id: { $in: stale.map((p) => p._id) } });
+  }
+
+  return stale.map((p) => ({ sku: p.sku, name: p.name }));
+}
+
 module.exports = {
   getAllProducts,
+  findDuplicate,
+  findBySku,
+  setFieldsById,
+  bulkWrite,
+  findExistingSkus,
+  deleteWhereSkuNotIn,
   createProduct,
   getProductById,
   updateProduct,

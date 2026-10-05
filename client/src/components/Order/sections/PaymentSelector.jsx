@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
+import { PaymentTypeOptions } from "../../common/OrderOptions";
 
 function PaymentSelector({ paymentType, onChange }) {
   const { t } = useContext(LanguageContext);
@@ -15,8 +16,7 @@ function PaymentSelector({ paymentType, onChange }) {
         onChange={(e) => onChange(e.target.value)}
         className="w-full border rounded-xl p-3"
       >
-        <option value="cash">💵 {t("common.paymentType.cash")}</option>
-        <option value="check">📝 {t("common.paymentType.check")}</option>
+        <PaymentTypeOptions />
       </select>
     </div>
   );

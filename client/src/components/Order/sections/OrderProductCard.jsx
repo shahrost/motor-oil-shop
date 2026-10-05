@@ -5,7 +5,9 @@ import { formatVolume } from "../../../utils/formatVolume";
 import PaymentSelector from "./PaymentSelector";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
-import { getProductPrice } from "../../../utils/productPrice";
+import { getItemTotal } from "../../../utils/cartItemCalc";
+import GiftBadge from "../../common/GiftBadge";
+import { OrderUnitOptions } from "../../common/OrderOptions";
 
 function OrderProductCard({
   item,
@@ -16,11 +18,7 @@ function OrderProductCard({
 }) {
   const { language, t } = useContext(LanguageContext);
 
-  const itemTotal =
-    getProductPrice(item, item.paymentType) *
-    (item.orderType === "carton"
-      ? Number(item.quantity) * Number(item.cartonCount || 1)
-      : Number(item.quantity));
+  const itemTotal = getItemTotal(item);
 
   const giftQty = calcPromotionGift(
     item.promotion,
@@ -67,8 +65,7 @@ function OrderProductCard({
           onChange={(e) => changeOrderType(item.id, e.target.value, index)}
           className="w-full border rounded-xl p-3"
         >
-          <option value="number">{t("common.orderUnit.number")}</option>
-          <option value="carton">{t("common.orderUnit.carton")}</option>
+          <OrderUnitOptions />
         </select>
       </div>
 
@@ -97,14 +94,7 @@ function OrderProductCard({
         </p>
       </div>
 
-      {giftQty > 0 && (
-        <div className="mt-3 bg-amber-50 border border-amber-300 rounded-2xl p-3 text-center">
-          <p className="font-bold text-amber-800">
-            🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
-            {t("common.orderUnit.carton")}
-          </p>
-        </div>
-      )}
+      <GiftBadge giftQty={giftQty} className="mt-3 rounded-2xl p-3" />
     </div>
   );
 }

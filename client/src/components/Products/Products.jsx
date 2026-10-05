@@ -7,39 +7,12 @@ import ScrollTopButton from "./sections/ScrollTopButton";
 function Products() {
   const {
     filteredProducts,
-
     search,
     setSearch,
-
-    brand,
-    setBrand,
-
-    viscosity,
-    setViscosity,
-
-    volume,
-    setVolume,
-
-    api,
-    setApi,
-
-    productType,
-    setProductType,
-
-    priceOption,
-    setPriceOption,
-
+    values,
+    setValue,
     onlyAvailable,
     setOnlyAvailable,
-
-    brands,
-    viscosities,
-    volumes,
-    apiOptions,
-    productTypeOptions,
-    priceOptions,
-
-
     clearFilters,
   } = useProducts();
 
@@ -51,26 +24,10 @@ function Products() {
         <ProductRows products={filteredProducts} />
 
         <ProductFilters
-          brand={brand}
-          setBrand={setBrand}
-          viscosity={viscosity}
-          setViscosity={setViscosity}
-          volume={volume}
-          setVolume={setVolume}
-          api={api}
-          setApi={setApi}
-          productType={productType}
-          setProductType={setProductType}
-          priceOption={priceOption}
-          setPriceOption={setPriceOption}
+          values={values}
+          setValue={setValue}
           onlyAvailable={onlyAvailable}
           setOnlyAvailable={setOnlyAvailable}
-          brands={brands}
-          viscosities={viscosities}
-          volumes={volumes}
-          apiOptions={apiOptions}
-          productTypeOptions={productTypeOptions}
-          priceOptions={priceOptions}
           clearFilters={clearFilters}
         />
       </div>

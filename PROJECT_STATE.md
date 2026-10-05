@@ -1,7 +1,7 @@
 # Shahram Roghan Project State
 
 آخرین بروزرسانی:
-Session Update 2026-10-06 — طرح فروش نقدی/اعتباری جدا، جشنواره ضدیخ لوکینی، فیلتر صفحه‌ی محصولات، فوتر چت خصوصی ✅
+Session Update 2026-10-06 — طرح فروش نقدی/اعتباری جدا، جشنواره ضدیخ لوکینی، فیلتر صفحه‌ی محصولات، فوتر چت خصوصی، تقسیم وظایف کامپوننت‌ها/سرویس‌ها طبق معماری ✅
 
 ---
 
@@ -37,6 +37,27 @@ Status: Completed ✅ (دیپلوی شد)
 
 ✅ `data/socialLinks.js`: تلگرام `t.me/shr546`، روبیکا `rubika.ir/SHAHROST1`، ایتا `eitaa.com/shahrost`، بله `ble.ir/shahrost`؛ واتس‌اپ از قبل چت خصوصی بود. هیچ لینک کانالی در پروژه باقی نمونده (به درخواست کاربر)
 ⚠️ لینک روبیکا از روی وب قابل تأیید نبود (صفحه اسم حساب رو نشون نمی‌ده) — باید با گوشی تست بشه
+
+## ۵. تقسیم وظایف طبق معماری (فایل‌هایی که دو کار می‌کردن)
+
+Status: Completed ✅ (lint و build کلاینت تمیز؛ سرور لوکال اجرا و endpointهای محصولات/خودروها/سفارش تست شد؛ تست بصری در مرورگر انجام نشد)
+
+کلاینت:
+✅ محاسبه‌ی مبلغ/تعداد ردیف سبد (۳ نسخه‌ی تکراری در `CartContext`، `buildOrderData`، `OrderProductCard`) → `utils/cartItemCalc.js` (`getItemUnitCount`, `getItemTotal`)
+✅ برچسب «🎁 هدیه این خرید» (۴ نسخه) → `common/GiftBadge.jsx`
+✅ گزینه‌های هاردکد واحد خرید/نوع پرداخت در `CartItem`، `OrderProductCard`، `PaymentSelector` → `common/OrderOptions.jsx` (از `data/orderUnits` و `data/paymentTypes`)
+✅ `Account`: رنگ/برچسب وضعیت → `Account/helpers/orderStatus.js`؛ ظاهر → `sections/ProfileCard`, `OrderHistory`, `OrderHistoryItem`
+✅ `VehicleDetail`: ساخت ردیف‌های مشخصات → `Vehicles/helpers/vehicleSpecs.js`؛ `sections/VehicleSpecsCard`, `OilGrid` (شبکه‌ی تکراری)
+✅ `ProtectedRoute`: بررسی توکن ادمین → `hooks/useAdminAuthCheck.js`
+✅ `ProductImage`: مودال بزرگ‌نمایی → `ProductCard/sections/ImageZoomModal.jsx`
+✅ `Promotions`: کارت → `Promotions/sections/PromotionCard.jsx`
+✅ تعریف فیلدهای فیلتر (تکراری بین فیلتر سریع و صفحه‌ی محصولات) → `utils/filterFields.js`؛ `useProducts` به‌جای ۶ مقدار + ۶ setter + ۶ لیست گزینه، `values` و `setValue(key, value)` برمی‌گردونه
+
+سرور:
+✅ هیچ سرویسی دیگه مستقیم مدل Mongoose رو صدا نمی‌زنه: توابع جدید `productRepository` (`findDuplicate`, `findBySku`, `setFieldsById`, `bulkWrite`, `findExistingSkus`, `deleteWhereSkuNotIn`) و `repositories/vehicleRepository.js` جدید
+✅ `vehicleImportService` (۳۳۶ → ۲۰۸ خط): ستون‌ها → `utils/vehicleColumns.js`، تبدیل ردیف → `utils/vehicleRowMapper.js` (مثل ایمپورت محصول)
+
+⚠️ ایمپورت اکسل محصول/خودرو و بروزرسانی گروهی قیمت بعد از این تغییر با فایل واقعی تست نشده (توابع خواندنی روی دیتابیس واقعی تست شدن) — اولین ایمپورت بعدی رو چک کنید
 
 ---
 

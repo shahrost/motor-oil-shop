@@ -1,5 +1,6 @@
 import { calcPromotionGift } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
+import { getItemUnitCount } from "../../../utils/cartItemCalc";
 
 function buildOrderData(cart, customer, cartTotal, customerId) {
   return {
@@ -24,10 +25,7 @@ function buildOrderData(cart, customer, cartTotal, customerId) {
 
       quantity: item.quantity,
 
-      totalCount:
-        item.orderType === "carton"
-          ? Number(item.quantity) * Number(item.cartonCount || 1)
-          : Number(item.quantity),
+      totalCount: getItemUnitCount(item),
 
       price: getProductPrice(item, item.paymentType || "cash"),
 

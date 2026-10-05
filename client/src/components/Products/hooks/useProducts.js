@@ -2,15 +2,6 @@ import { useContext, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { ProductContext } from "../../../context";
-import LanguageContext from "../../../context/LanguageContext";
-import {
-  getBrands,
-  getViscosities,
-  getVolumes,
-  getApiOptions,
-  getPriceOptions,
-} from "../../../utils/productFilters";
-import { getProductTypeOptions } from "../../../utils/classifyProductType";
 import { filterProducts, ALL } from "../../../utils/filterProducts";
 
 const DEFAULT_FILTERS = {
@@ -55,7 +46,6 @@ function fromPriceOption(value) {
 // state فیلترهای صفحه‌ی محصولات + گزینه‌های هر فیلتر + لیست فیلترشده
 function useProducts() {
   const { products } = useContext(ProductContext);
-  const { language } = useContext(LanguageContext);
   const [searchParams] = useSearchParams();
 
   const [filters, setFilters] = useState(() => filtersFromUrl(searchParams));
@@ -69,27 +59,24 @@ function useProducts() {
 
     search: filters.search,
     setSearch: setFilter("search"),
-    brand: filters.brand,
-    setBrand: setFilter("brand"),
-    viscosity: filters.viscosity,
-    setViscosity: setFilter("viscosity"),
-    volume: filters.volume,
-    setVolume: setFilter("volume"),
-    api: filters.api,
-    setApi: setFilter("api"),
-    productType: filters.productType,
-    setProductType: setFilter("productType"),
-    priceOption: toPriceOption(filters),
-    setPriceOption: (value) => setFilters((prev) => ({ ...prev, ...fromPriceOption(value) })),
+
+    // مقادیر فیلدهای فیلتر (کلیدها مثل utils/filterFields)
+    values: {
+      viscosity: filters.viscosity,
+      api: filters.api,
+      volume: filters.volume,
+      brand: filters.brand,
+      productType: filters.productType,
+      priceOption: toPriceOption(filters),
+    },
+    setValue: (key, value) =>
+      setFilters((prev) => ({
+        ...prev,
+        ...(key === "priceOption" ? fromPriceOption(value) : { [key]: value }),
+      })),
+
     onlyAvailable: filters.onlyAvailable,
     setOnlyAvailable: setFilter("onlyAvailable"),
-
-    brands: getBrands(language),
-    viscosities: getViscosities(language),
-    volumes: getVolumes(language),
-    apiOptions: getApiOptions(language),
-    productTypeOptions: getProductTypeOptions(language),
-    priceOptions: getPriceOptions(language),
 
     clearFilters: () => setFilters(DEFAULT_FILTERS),
   };

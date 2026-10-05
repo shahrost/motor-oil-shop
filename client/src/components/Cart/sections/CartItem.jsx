@@ -5,6 +5,8 @@ import { getProductNameLabel } from "../../../utils/productNameLabel";
 import LanguageContext from "../../../context/LanguageContext";
 import { calcPromotionGift } from "../../../utils/promotionCalc";
 import { getProductPrice } from "../../../utils/productPrice";
+import GiftBadge from "../../common/GiftBadge";
+import { OrderUnitOptions, PaymentTypeOptions } from "../../common/OrderOptions";
 import {
   getProductImageSrc,
   handleProductImageError,
@@ -81,8 +83,7 @@ function CartItem({
             onChange={(e) => changeOrderType(item.id, e.target.value, index)}
             className="w-full border rounded-xl p-3"
           >
-            <option value="number">{t("common.orderUnit.number")}</option>
-            <option value="carton">{t("common.orderUnit.carton")}</option>
+            <OrderUnitOptions />
           </select>
         </div>
 
@@ -94,8 +95,7 @@ function CartItem({
             onChange={(e) => changePaymentType(item.id, e.target.value, index)}
             className="w-full border rounded-xl p-3"
           >
-            <option value="cash">💵 {t("common.paymentType.cash")}</option>
-            <option value="check">📝 {t("common.paymentType.check")}</option>
+            <PaymentTypeOptions />
           </select>
         </div>
       </div>
@@ -105,12 +105,7 @@ function CartItem({
           {formatPrice(getProductPrice(item, item.paymentType), language)}
         </p>
 
-        {giftQty > 0 && (
-          <p className="bg-amber-50 border border-amber-300 text-amber-800 rounded-lg p-2 text-sm font-bold text-center">
-            🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
-            {t("common.orderUnit.carton")}
-          </p>
-        )}
+        <GiftBadge giftQty={giftQty} className="rounded-lg p-2 text-sm" />
 
         <button
           onClick={() => removeFromCart(item.id, index)}

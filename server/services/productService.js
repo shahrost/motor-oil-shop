@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Product = require("../models/Product");
 const productRepository =require("../repositories/productRepository");
 const validateProduct = require("../validations/productValidation");
 const AppError = require("../utils/AppError");
@@ -58,7 +57,7 @@ async function createProduct(data, file) {
 
 
 
-  const twin = await Product.findOne({
+  const twin = await productRepository.findDuplicate({
     brand: data.brand,
     name: data.name,
     category: data.category || "",
@@ -66,7 +65,7 @@ async function createProduct(data, file) {
     viscosity: data.viscosity || "",
     api: data.api || "",
     description: data.description || "",
-  }).select("sku");
+  });
 
   if (twin) {
     removeUploadedImage(uploadedMain);

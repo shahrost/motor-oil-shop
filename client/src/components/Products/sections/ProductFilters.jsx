@@ -1,85 +1,30 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import FilterSelect from "../../common/FilterSelect";
+import getFilterFields from "../../../utils/filterFields";
 import { ALL } from "../../../utils/filterProducts";
-
-// گزینه‌ی «همه» با placeholder هر فیلد نمایش داده می‌شه (مثل فیلتر سریع صفحه‌ی اصلی)
-const withoutAll = (options) => options.filter((item) => item.value !== ALL);
-const toSelectValue = (value) => (value === ALL ? "" : value);
 
 // «API» قبل از سطح کیفیت نوشته می‌شه، به‌جز استانداردهای JASO
 const formatApiLabel = (item) =>
   item.label.startsWith("JASO") ? item.label : `API ${item.label}`;
 
+// فیلدهای «همه» در state صفحه با ALL نگه داشته می‌شن و در select با ""
+const toSelectValue = (value) => (value === ALL ? "" : value);
+
+const LABEL_CLASS =
+  "block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate";
+const SELECT_CLASS =
+  "w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black";
+
+// همان ظاهر فیلتر سریع صفحه‌ی اصلی + پاک کردن فیلترها و «فقط موجودها»
 function ProductFilters({
-  brand,
-  setBrand,
-  viscosity,
-  setViscosity,
-  volume,
-  setVolume,
-  api,
-  setApi,
-  productType,
-  setProductType,
-  priceOption,
-  setPriceOption,
+  values,
+  setValue,
   onlyAvailable,
   setOnlyAvailable,
-  brands,
-  viscosities,
-  volumes,
-  apiOptions,
-  productTypeOptions,
-  priceOptions,
   clearFilters,
 }) {
-  const { t } = useContext(LanguageContext);
-
-  // همان ترتیب فیلتر سریع صفحه‌ی اصلی: گرید/API/لیتراژ، برند/نوع/قیمت
-  const fields = [
-    {
-      key: "viscosity",
-      label: t("common.viscosityLabel"),
-      placeholder: t("home.quickFilter.allViscosities"),
-      options: viscosities,
-      value: viscosity,
-      onChange: setViscosity,
-    },
-    {
-      key: "api",
-      label: t("common.apiLabel"),
-      placeholder: t("home.quickFilter.allApis"),
-      options: apiOptions,
-      value: api,
-      onChange: setApi,
-      formatLabel: formatApiLabel,
-    },
-    {
-      key: "volume",
-      label: t("common.volumeLabel"),
-      placeholder: t("home.quickFilter.allVolumes"),
-      options: volumes,
-      value: volume,
-      onChange: setVolume,
-    },
-    {
-      key: "brand",
-      label: t("common.brandLabel"),
-      placeholder: t("home.quickFilter.allBrands"),
-      options: brands,
-      value: brand,
-      onChange: setBrand,
-    },
-    {
-      key: "productType",
-      label: t("common.productTypeLabel"),
-      placeholder: t("home.quickFilter.allTypes"),
-      options: productTypeOptions,
-      value: productType,
-      onChange: setProductType,
-    },
-  ];
+  const { language, t } = useContext(LanguageContext);
 
   return (
     <section className="max-w-5xl mx-auto bg-white rounded-3xl shadow p-4 sm:p-6">
@@ -97,28 +42,19 @@ function ProductFilters({
 
       {/* همیشه دو ردیف سه‌تایی؛ روی موبایل فونت و فاصله‌ها کوچک‌تر */}
       <div className="grid grid-cols-3 gap-2 sm:gap-4">
-        {fields.map((field) => (
+        {getFilterFields(language, t).map((field) => (
           <FilterSelect
             key={field.key}
             label={field.label}
             placeholder={field.placeholder}
-            options={withoutAll(field.options)}
-            value={toSelectValue(field.value)}
-            onChange={(value) => field.onChange(value || ALL)}
-            formatLabel={field.formatLabel}
+            options={field.options}
+            value={toSelectValue(values[field.key])}
+            onChange={(value) => setValue(field.key, value || ALL)}
+            formatLabel={field.key === "api" ? formatApiLabel : undefined}
             labelClassName={LABEL_CLASS}
             className={SELECT_CLASS}
           />
         ))}
-
-        <FilterSelect
-          label={t("common.priceLabel")}
-          options={priceOptions}
-          value={priceOption}
-          onChange={setPriceOption}
-          labelClassName={LABEL_CLASS}
-          className={SELECT_CLASS}
-        />
       </div>
 
       <label className="flex items-center gap-3 mt-5 cursor-pointer">
@@ -134,10 +70,5 @@ function ProductFilters({
     </section>
   );
 }
-
-const LABEL_CLASS =
-  "block font-bold text-gray-700 mb-2 text-xs sm:text-base truncate";
-const SELECT_CLASS =
-  "w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black";
 
 export default ProductFilters;

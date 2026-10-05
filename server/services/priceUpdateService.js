@@ -1,4 +1,4 @@
-const Product = require("../models/Product");
+const productRepository = require("../repositories/productRepository");
 const AppError = require("../utils/AppError");
 const { readWorkbookFile, removeFileQuietly, toNumber } = require("../utils/excelReader");
 const PRODUCT_COLUMN_MAP = require("../utils/productColumns");
@@ -43,11 +43,10 @@ async function bulkUpdatePrices(excelFile) {
     }
 
     if (bulkOps.length) {
-      const bulkResult = await Product.bulkWrite(bulkOps);
+      const bulkResult = await productRepository.bulkWrite(bulkOps);
 
       const skus = bulkOps.map((op) => op.updateOne.filter.sku);
-      const found = await Product.find({ sku: { $in: skus } }).select("sku");
-      const foundSet = new Set(found.map((p) => p.sku));
+      const foundSet = new Set(await productRepository.findExistingSkus(skus));
 
       results.updated = bulkResult.matchedCount;
       results.notFound = skus.filter((s) => !foundSet.has(s));

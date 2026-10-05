@@ -1,18 +1,12 @@
 import { createContext, useState, useEffect } from "react";
 import { getCart, saveCart, clearCartStorage } from "../services/cartStorage";
-import { getProductPrice } from "../utils/productPrice";
+import { getItemTotal } from "../utils/cartItemCalc";
 
 const CartContext = createContext();
 
 // یک محصول با واحد و نوع پرداخت متفاوت، ردیف جداگانه‌ی سبد حساب می‌شه
 const isSameLine = (a, b) =>
   a.id === b.id && a.orderType === b.orderType && a.paymentType === b.paymentType;
-
-function itemCount(item) {
-  const quantity = Number(item.quantity);
-
-  return item.orderType === "carton" ? quantity * Number(item.cartonCount || 1) : quantity;
-}
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(getCart);
@@ -68,10 +62,7 @@ export function CartProvider({ children }) {
 
   const cartCount = cart.reduce((total, item) => total + Number(item.quantity || 0), 0);
 
-  const cartTotal = cart.reduce(
-    (total, item) => total + getProductPrice(item, item.paymentType) * itemCount(item),
-    0,
-  );
+  const cartTotal = cart.reduce((total, item) => total + getItemTotal(item), 0);
 
   return (
     <CartContext.Provider

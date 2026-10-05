@@ -1,4 +1,4 @@
-const Product = require("../models/Product");
+const productRepository = require("../repositories/productRepository");
 const AppError = require("../utils/AppError");
 const { readWorkbookFile, removeFileQuietly } = require("../utils/excelReader");
 const { persistImages } = require("../utils/cloudStorage");
@@ -7,16 +7,18 @@ const { rowToProductDoc, splitList } = require("../utils/productRowMapper");
 
 // همان محصول با کد (sku) دیگر — دلیل اصلی تکراری‌شدن محصولات هنگام ایمپورت
 async function findSameProductWithOtherSku(doc) {
-  return Product.findOne({
-    sku: { $ne: doc.sku },
-    brand: doc.brand,
-    name: doc.name,
-    category: doc.category,
-    volume: doc.volume,
-    viscosity: doc.viscosity,
-    api: doc.api,
-    description: doc.description,
-  }).select("sku");
+  return productRepository.findDuplicate(
+    {
+      brand: doc.brand,
+      name: doc.name,
+      category: doc.category,
+      volume: doc.volume,
+      viscosity: doc.viscosity,
+      api: doc.api,
+      description: doc.description,
+    },
+    { excludeSku: doc.sku },
+  );
 }
 
 // اسم همه‌ی عکس‌هایی که ردیف‌های اکسل بهشون اشاره کردن (اصلی + گالری)
@@ -54,10 +56,10 @@ function resolveRowImage(row, imagesByName, urlsByFilename, usedFilenames) {
 
 // ساخت یا بروزرسانی محصول بر اساس sku؛ خروجی: "created" | "updated"
 async function upsertProduct(doc) {
-  const existing = await Product.findOne({ sku: doc.sku });
+  const existing = await productRepository.findBySku(doc.sku);
 
   if (existing) {
-    await Product.updateOne({ _id: existing._id }, { $set: doc });
+    await productRepository.setFieldsById(existing._id, doc);
     return "updated";
   }
 
@@ -69,7 +71,7 @@ async function upsertProduct(doc) {
     );
   }
 
-  await Product.create(doc);
+  await productRepository.createProduct(doc);
   return "created";
 }
 
@@ -79,15 +81,7 @@ async function removeProductsNotIn(rows) {
     .map((row) => String(row.sku || "").trim().toUpperCase())
     .filter(Boolean);
 
-  const stale = await Product.find({
-    sku: { $exists: true, $nin: ["", ...skusInFile] },
-  }).select("sku name");
-
-  if (stale.length) {
-    await Product.deleteMany({ _id: { $in: stale.map((p) => p._id) } });
-  }
-
-  return stale.map((p) => ({ sku: p.sku, name: p.name }));
+  return productRepository.deleteWhereSkuNotIn(skusInFile);
 }
 
 async function importProducts(excelFile, imageFiles = [], options = {}) {

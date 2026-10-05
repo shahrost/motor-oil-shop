@@ -1,7 +1,7 @@
-const Vehicle = require("../models/Vehicle");
+const vehicleRepository = require("../repositories/vehicleRepository");
 
 async function getVehicles() {
-  return Vehicle.find().sort({ sku: 1 });
+  return vehicleRepository.getAllVehicles();
 }
 
 module.exports = { getVehicles };

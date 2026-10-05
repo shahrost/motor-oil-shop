@@ -3,6 +3,7 @@ import {
   getPromotionRuleLines,
   calcPromotionGift,
 } from "../../../utils/promotionCalc";
+import GiftBadge from "../../common/GiftBadge";
 
 // شرایط طرح فروش محصول و هدیه‌ای که با انتخاب فعلی خریدار تعلق می‌گیره
 function PromotionInfo({ product, orderType, quantity, paymentType, t }) {
@@ -30,13 +31,7 @@ function PromotionInfo({ product, orderType, quantity, paymentType, t }) {
         </div>
       )}
 
-      {giftQty > 0 && (
-        <div className="mt-5 bg-amber-50 border border-amber-300 rounded-2xl p-5 text-center">
-          <p className="font-bold text-amber-800">
-            🎁 {t("common.promotion.giftEarned")} {giftQty} {t("common.orderUnit.carton")}
-          </p>
-        </div>
-      )}
+      <GiftBadge giftQty={giftQty} className="mt-5 rounded-2xl p-5" />
     </>
   );
 }
