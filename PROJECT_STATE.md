@@ -57,6 +57,8 @@ Status: Completed ✅ (lint و build کلاینت تمیز؛ سرور لوکال
 ✅ هیچ سرویسی دیگه مستقیم مدل Mongoose رو صدا نمی‌زنه: توابع جدید `productRepository` (`findDuplicate`, `findBySku`, `setFieldsById`, `bulkWrite`, `findExistingSkus`, `deleteWhereSkuNotIn`) و `repositories/vehicleRepository.js` جدید
 ✅ `vehicleImportService` (۳۳۶ → ۲۰۸ خط): ستون‌ها → `utils/vehicleColumns.js`، تبدیل ردیف → `utils/vehicleRowMapper.js` (مثل ایمپورت محصول)
 
+⚠️ `/api/vehicles` روی سرور اصلی حدود ۲۰ تا ۳۰ ثانیه طول می‌کشه (۴۳۴KB، بدون کش؛ همون کوئری قبلی، لوکال سریع). احتمالاً از قبل همین‌طور بوده — پیشنهاد: کش حافظه‌ای مثل `productListCache`
+⚠️ اولین دیپلوی سرور در Runflare خطای «Error while deploying new version» داد و دومی موفق شد؛ تا چند دقیقه بعد از دیپلوی API گاهی 502/503 می‌ده
 ⚠️ ایمپورت اکسل محصول/خودرو و بروزرسانی گروهی قیمت بعد از این تغییر با فایل واقعی تست نشده (توابع خواندنی روی دیتابیس واقعی تست شدن) — اولین ایمپورت بعدی رو چک کنید
 
 ---
