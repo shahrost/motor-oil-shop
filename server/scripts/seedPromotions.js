@@ -55,7 +55,10 @@ const ONLY = (process.argv.find((a) => a.startsWith("--only=")) || "").slice(7);
     rows.push({
       sku,
       name: p.name,
-      rule: `هر ${promotion.buyQty} کارتن — نقدی ${promotion.giftQtyCash} / چکی ${promotion.giftQtyCheck}`,
+      rule:
+        `نقدی: هر ${promotion.buyQtyCash || promotion.buyQty} کارتن ${promotion.giftQtyCash} هدیه — ` +
+        `چکی: هر ${promotion.buyQtyCheck || promotion.buyQty} کارتن ${promotion.giftQtyCheck} هدیه` +
+        (promotion.minQty ? ` — حداقل ${promotion.minQty}` : ""),
     });
 
     if (APPLY) {

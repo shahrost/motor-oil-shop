@@ -1,3 +1,5 @@
+import buildPromotionData from "../../../utils/buildPromotionData";
+
 function buildProductData(product) {
   return {
     name: `${product.brand || ""} ${product.viscosity || ""} ${product.volume || ""}`.trim(),
@@ -22,13 +24,7 @@ function buildProductData(product) {
     isBestSeller: Boolean(product.isBestSeller),
     isActive: Boolean(product.isActive),
 
-    promotion: {
-      isActive: Boolean(product.promotion?.isActive),
-      buyQty: Number(product.promotion?.buyQty || 0),
-      giftQtyCash: Number(product.promotion?.giftQtyCash || 0),
-      giftQtyCheck: Number(product.promotion?.giftQtyCheck || 0),
-      note: product.promotion?.note || "",
-    },
+    promotion: buildPromotionData(product.promotion),
 
     image: product.image || null,
   };

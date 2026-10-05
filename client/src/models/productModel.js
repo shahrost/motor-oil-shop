@@ -40,6 +40,9 @@ const productModel = {
   promotion: {
     isActive: false,
     buyQty: 0,
+    buyQtyCash: 0,
+    buyQtyCheck: 0,
+    minQty: 0,
     giftQtyCash: 0,
     giftQtyCheck: 0,
     note: "",

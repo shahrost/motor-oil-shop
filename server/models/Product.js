@@ -135,7 +135,25 @@ const ProductSchema = new mongoose.Schema(
         default: false,
       },
 
+      // buyQty: پله‌ی مشترک (طرح‌های قدیمی). اگر buyQtyCash/buyQtyCheck
+      // مقدار داشته باشند، برای همان نوع پرداخت جایگزین buyQty می‌شوند.
       buyQty: {
+        type: Number,
+        default: 0,
+      },
+
+      buyQtyCash: {
+        type: Number,
+        default: 0,
+      },
+
+      buyQtyCheck: {
+        type: Number,
+        default: 0,
+      },
+
+      // حداقل تعداد کارتن سفارش برای تعلق هدیه (۰ یعنی بدون حداقل)
+      minQty: {
         type: Number,
         default: 0,
       },

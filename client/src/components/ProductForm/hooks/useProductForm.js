@@ -23,6 +23,9 @@ const initialState = {
   promotion: {
     isActive: false,
     buyQty: "",
+    buyQtyCash: "",
+    buyQtyCheck: "",
+    minQty: "",
     giftQtyCash: "",
     giftQtyCheck: "",
     note: "",
@@ -46,7 +49,8 @@ function useProductForm(addProduct) {
   }
 
   function updatePromotionField(field, value) {
-    const isNumericField = field === "buyQty" || field.startsWith("giftQty");
+    const isNumericField =
+      field.startsWith("buyQty") || field.startsWith("giftQty") || field === "minQty";
 
     const newValue = isNumericField
       ? String(value).replace(/\D/g, "")
