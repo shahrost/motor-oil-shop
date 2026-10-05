@@ -5,11 +5,11 @@ import eitaaLogo from "../assets/social/eitaa.png";
 import baleLogo from "../assets/social/bale.png";
 import { WHATSAPP_URL, PHONE_URL } from "./contact";
 
-// شبکه‌های اجتماعی و راه‌های ارتباطی فوتر
+// راه‌های ارتباطی فوتر — همه مستقیم به چت خصوصی فروشگاه می‌روند (نه کانال)
 const socialLinks = [
   {
     key: "telegram",
-    href: "https://t.me/+Mj8Own1-t2I1NWU0",
+    href: "https://t.me/shr546",
     icon: telegramLogo,
   },
   {
@@ -19,17 +19,17 @@ const socialLinks = [
   },
   {
     key: "rubika",
-    href: "https://rubika.ir/joinc/CACIDHHA0XHNICILSYDUYKWHYGFDXNEG",
+    href: "https://rubika.ir/SHAHROST1",
     icon: rubikaLogo,
   },
   {
     key: "eitaa",
-    href: "https://eitaa.com/joinchat/1845625166C85d3057112",
+    href: "https://eitaa.com/shahrost",
     icon: eitaaLogo,
   },
   {
     key: "bale",
-    href: "https://ble.ir/join/4WM19sBpmk",
+    href: "https://ble.ir/shahrost",
     icon: baleLogo,
   },
   {
