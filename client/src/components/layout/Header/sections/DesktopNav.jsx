@@ -2,49 +2,26 @@ import { Link } from "react-router-dom";
 
 import menu from "../../../../data/menu";
 import menuCategories from "../../../../data/menuCategories";
+import useVehicleMenuGroups from "../../../../hooks/useVehicleMenuGroups";
+import NavDropdown from "./NavDropdown";
+import VehicleMenuPanel from "./VehicleMenuPanel";
 
-// منوی دسکتاپ؛ «محصولات» با هاور زیرمنوی دسته‌بندی‌ها رو باز می‌کنه
+// منوی دسکتاپ؛ «محصولات» و «خودروها» با هاور زیرمنو باز می‌کنن
 function DesktopNav({ t, language }) {
+  const { domestic, foreign, requestVehicles } = useVehicleMenuGroups();
+
   return (
     <nav className="hidden lg:flex items-center gap-6">
-      {menu.map((item) =>
-        item.key === "products" ? (
-          <div key={item.path} className="relative group py-2">
-            <Link
-              to={item.path}
-              className="
-              flex
-              items-center
-              gap-1
-              font-bold
-              text-gray-200
-              hover:text-yellow-400
-              transition
-              "
-            >
-              {t(`nav.${item.key}`)}
-              <span className="text-xs">▾</span>
-            </Link>
+      {menu.map((item) => {
+        const label = t(`nav.${item.key}`);
 
-            <div
-              className="
-              absolute
-              top-full
-              right-0
-              hidden
-              group-hover:grid
-              grid-cols-2
-              gap-x-4
-              gap-y-1
-              bg-gray-900
-              border
-              border-gray-800
-              rounded-xl
-              shadow-xl
-              p-4
-              w-104
-              z-50
-              "
+        if (item.key === "products") {
+          return (
+            <NavDropdown
+              key={item.path}
+              to={item.path}
+              label={label}
+              panelClassName="right-0 group-hover:grid grid-cols-2 gap-x-4 gap-y-1 p-4 w-104"
             >
               {menuCategories.map((category) => (
                 <Link
@@ -61,9 +38,30 @@ function DesktopNav({ t, language }) {
                   {language === "en" ? category.labelEn : category.label}
                 </Link>
               ))}
-            </div>
-          </div>
-        ) : (
+            </NavDropdown>
+          );
+        }
+
+        if (item.key === "vehicles") {
+          return (
+            <NavDropdown
+              key={item.path}
+              to={item.path}
+              label={label}
+              onOpen={requestVehicles}
+              panelClassName="start-0 group-hover:block p-5 w-160 max-h-[75vh] overflow-y-auto"
+            >
+              <VehicleMenuPanel
+                t={t}
+                language={language}
+                domestic={domestic}
+                foreign={foreign}
+              />
+            </NavDropdown>
+          );
+        }
+
+        return (
           <Link
             key={item.path}
             to={item.path}
@@ -74,10 +72,10 @@ function DesktopNav({ t, language }) {
             transition
             "
           >
-            {t(`nav.${item.key}`)}
+            {label}
           </Link>
-        ),
-      )}
+        );
+      })}
     </nav>
   );
 }

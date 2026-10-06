@@ -1,15 +1,15 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 
-import { VehicleContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
-import getVehicleBrands from "../../utils/vehicleBrands";
+import useVehicleMenuGroups from "../../hooks/useVehicleMenuGroups";
+import VehicleBrandCard from "./sections/VehicleBrandCard";
 
+const GRID_CLASS = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-4";
+
+// صفحه‌ی خودروها: خودروسازان داخلی ← برندها، و برندهای خارجی
 function Vehicles() {
   const { language, t } = useContext(LanguageContext);
-  const { vehicles } = useContext(VehicleContext);
-
-  const vehicleBrands = getVehicleBrands(vehicles);
+  const { domestic, foreign } = useVehicleMenuGroups();
 
   return (
     <section className="px-5 mt-8">
@@ -19,39 +19,46 @@ function Vehicles() {
 
       <p className="text-center mt-3 text-gray-600">{t("vehicles.subtitle")}</p>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {vehicleBrands.map((brand) => {
-          const label = language === "en" ? brand.nameEn : brand.name;
+      <div className="max-w-7xl mx-auto">
+        {domestic.length > 0 && (
+          <>
+            <h2 className="text-2xl font-extrabold mt-10">
+              {t("vehicles.domesticMakers")}
+            </h2>
 
-          return (
-            <Link
-              key={brand.name}
-              to={`/vehicles/${encodeURIComponent(brand.name)}`}
-              className="
-                bg-white
-                rounded-3xl
-                shadow-md
-                p-6
-                text-center
-                hover:shadow-xl
-                hover:-translate-y-1
-                transition
-              "
-            >
-              <div className="h-24 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center font-extrabold text-gray-500 text-xl">
-                  {label.slice(0, 1)}
+            {domestic.map((maker) => (
+              <div key={maker.slug} className="mt-6">
+                <h3 className="text-lg font-bold text-yellow-700">
+                  {language === "en" ? maker.labelEn : maker.label}
+                </h3>
+
+                <div className={GRID_CLASS}>
+                  {maker.brands.map((brand) => (
+                    <VehicleBrandCard
+                      key={brand.name}
+                      brand={brand}
+                      makerSlug={maker.slug}
+                    />
+                  ))}
                 </div>
               </div>
+            ))}
+          </>
+        )}
 
-              <h3 className="font-bold mt-4">{label}</h3>
+        {foreign.length > 0 && (
+          <>
+            <h2 className="text-2xl font-extrabold mt-12">
+              {t("vehicles.foreignBrands")}
+            </h2>
 
-              <p className="text-sm text-gray-500 mt-1">
-                {brand.count} {t("vehicles.modelsCount")}
-              </p>
-            </Link>
-          );
-        })}
+            <div className={GRID_CLASS}>
+              {foreign.map((brand) => (
+                <VehicleBrandCard key={brand.name} brand={brand} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

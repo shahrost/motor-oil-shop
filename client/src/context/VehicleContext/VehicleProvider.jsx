@@ -28,6 +28,9 @@ function VehicleProvider({ children }) {
 
   if (needsVehicles && !requested) setRequested(true);
 
+  // برای منوی «خودروها» توی هدر: با باز شدن منو دریافت لیست شروع می‌شه
+  const requestVehicles = useCallback(() => setRequested(true), []);
+
   useEffect(() => {
     if (!requested) return;
 
@@ -48,8 +51,9 @@ function VehicleProvider({ children }) {
     () => ({
       vehicles: dbVehicles.length > 0 ? dbVehicles : defaultVehicles,
       reloadVehicles,
+      requestVehicles,
     }),
-    [dbVehicles, reloadVehicles],
+    [dbVehicles, reloadVehicles, requestVehicles],
   );
 
   return (
