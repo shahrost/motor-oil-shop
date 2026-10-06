@@ -49,6 +49,9 @@ async function uploadLocalFile(filePath, { keepLocal = false } = {}) {
 async function persistImage(file) {
   if (!file) return "";
 
+  // قبلاً موقع آپلود دسته‌ای منتقل شده
+  if (file.url) return file.url;
+
   if (!isEnabled()) return `/uploads/products/${file.filename}`;
 
   return uploadLocalFile(file.path);

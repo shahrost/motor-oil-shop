@@ -12,7 +12,8 @@ export async function fetchVehicles() {
 // آپلود عکس‌ها به‌صورت دسته‌ای (هر بار چند فایل) تا درخواست حجیم نشه و قطع نشه.
 // خروجی: { "نام فایل اصلی": "نام فایل روی سرور" }
 
-const IMAGE_BATCH_SIZE = 20;
+// هر دسته روی سرور به فضای ابری هم منتقل می‌شه، پس دسته‌ها کوچیک‌ن تا درخواست طول نکشه
+const IMAGE_BATCH_SIZE = 8;
 
 export async function uploadVehicleImagesService(imageFiles, onProgress) {
   const uploaded = {};
@@ -31,7 +32,7 @@ export async function uploadVehicleImagesService(imageFiles, onProgress) {
     });
 
     (response.data.data || []).forEach((item) => {
-      uploaded[item.name] = item.filename;
+      uploaded[item.name] = item.url || item.filename;
     });
 
     if (onProgress) {

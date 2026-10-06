@@ -63,7 +63,10 @@ function getJob(jobId) {
   };
 }
 
-// عکس‌هایی که قبلاً با آپلود دسته‌ای ذخیره شدن: { "C10001.webp": "<filename>" }
+// عکس‌هایی که قبلاً با آپلود دسته‌ای ذخیره شدن: { "C10001.webp": "<url یا filename>" }
+// مقدار آدرس (ابری یا /uploads/...) یعنی عکس قبلاً منتقل شده و فقط همون آدرس استفاده می‌شه.
+const isStoredUrl = (value) => /^(https?:\/\/|\/uploads\/)/.test(value);
+
 function resolveUploadedImages(rawMap) {
   if (!rawMap) return [];
 
@@ -77,12 +80,16 @@ function resolveUploadedImages(rawMap) {
 
   return Object.entries(map)
     .map(([originalname, filename]) => {
+      if (isStoredUrl(String(filename))) {
+        return { originalname, filename, url: filename };
+      }
+
       const safeName = path.basename(String(filename));
       const fullPath = path.join("uploads", "products", safeName);
 
       return { originalname, filename: safeName, path: fullPath };
     })
-    .filter((f) => fs.existsSync(f.path));
+    .filter((f) => f.url || fs.existsSync(f.path));
 }
 
 module.exports = { startJob, getJob, resolveUploadedImages };
