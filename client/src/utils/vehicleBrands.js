@@ -25,4 +25,17 @@ export function vehicleBrandPath(brand) {
   return `/vehicles/${encodeURIComponent(brand)}`;
 }
 
+// مدل‌های یک برند که نام فارسی یا انگلیسی‌شون شامل عبارت جستجو باشه
+export function searchVehicles(vehicles, search) {
+  const query = search.trim().toLowerCase();
+
+  if (!query) return vehicles;
+
+  return vehicles.filter(
+    (vehicle) =>
+      vehicle.name.toLowerCase().includes(query) ||
+      (vehicle.nameEn || "").toLowerCase().includes(query),
+  );
+}
+
 export default getVehicleBrands;

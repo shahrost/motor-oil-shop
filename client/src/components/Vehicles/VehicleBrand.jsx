@@ -1,18 +1,14 @@
-import { useContext, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
-import { VehicleContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
+import useVehicleBrandModels from "./hooks/useVehicleBrandModels";
 import VehicleCard from "./VehicleCard";
 
+// مدل‌های یک برند خودرو (با جستجو)؛ هر مدل به صفحه‌ی روانکار و فیلترش می‌ره
 function VehicleBrand() {
-  const { brand: brandName } = useParams();
   const { language, t } = useContext(LanguageContext);
-  const { vehicles } = useContext(VehicleContext);
-  const [search, setSearch] = useState("");
-
-  const brandVehicles = vehicles.filter((vehicle) => vehicle.brand === brandName);
-  const first = brandVehicles[0];
+  const { first, search, setSearch, filtered } = useVehicleBrandModels();
 
   if (!first) {
     return (
@@ -21,15 +17,6 @@ function VehicleBrand() {
       </p>
     );
   }
-
-  const query = search.trim().toLowerCase();
-
-  const filtered = brandVehicles.filter(
-    (vehicle) =>
-      !query ||
-      vehicle.name.toLowerCase().includes(query) ||
-      (vehicle.nameEn || "").toLowerCase().includes(query),
-  );
 
   return (
     <section className="px-5 mt-8 max-w-7xl mx-auto">

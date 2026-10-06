@@ -2,9 +2,7 @@ import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
 
-import EntryCard from "./sections/EntryCard";
-import OilDropArt from "./sections/OilDropArt";
-import CarArt from "./sections/CarArt";
+import { EntryCard, OilDropArt, CarArt } from "./sections";
 
 // صفحه‌ی اصلی: فقط دو کارت ورودی «روانکار» و «خودروهای من»
 function Home() {
