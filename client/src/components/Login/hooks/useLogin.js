@@ -13,7 +13,7 @@ function useLogin() {
 
     try {
       const response = await apiClient.post("/auth/login", {
-        username,
+        username: username.trim(),
         password,
       });
 
@@ -22,9 +22,12 @@ function useLogin() {
       localStorage.setItem("token", token);
 
       navigate("/admin");
-      // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      alert("نام کاربری یا رمز اشتباه است");
+      // پیام خود سرور (مثلاً رمز اشتباه)؛ اگه سرور جواب نداد، خطای ارتباط
+      alert(
+        error.response?.data?.message ||
+          "ارتباط با سرور برقرار نشد؛ چند لحظه بعد دوباره امتحان کنید",
+      );
     }
   }
 
