@@ -15,19 +15,26 @@ export function OrderProvider({ children }) {
   const [loadingOrders, setLoadingOrders] = useState(false);
   const [loadError, setLoadError] = useState("");
 
-  const loadOrders = useCallback(async () => {
-    setLoadingOrders(true);
-    setLoadError("");
+  // silent: بروزرسانی خودکار پس‌زمینه؛ پیام «در حال دریافت» نشون نمی‌ده و خطای موقتش لیست فعلی رو پاک نمی‌کنه
+  const loadOrders = useCallback(async ({ silent = false } = {}) => {
+    if (!silent) {
+      setLoadingOrders(true);
+      setLoadError("");
+    }
 
     try {
       const response = await fetchOrders();
 
       setOrders(response || []);
+      setLoadError("");
     } catch (error) {
       console.log("خطا در دریافت سفارش‌ها", error);
-      setLoadError(error.response?.data?.message || "دریافت سفارش‌ها از سرور ناموفق بود");
+
+      if (!silent) {
+        setLoadError(error.response?.data?.message || "دریافت سفارش‌ها از سرور ناموفق بود");
+      }
     } finally {
-      setLoadingOrders(false);
+      if (!silent) setLoadingOrders(false);
     }
   }, []);
 

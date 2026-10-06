@@ -1,7 +1,8 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 
 import orderStats from "../helpers/orderStats";
 import OrderContext from "../../../../context/OrderContext";
+import useOrdersAutoRefresh from "../../../../hooks/useOrdersAutoRefresh";
 
 function useOrderManager() {
   const {
@@ -25,9 +26,7 @@ function useOrderManager() {
     "تحویل شد",
   ];
 
-  useEffect(() => {
-    loadOrders();
-  }, [loadOrders]);
+  useOrdersAutoRefresh(loadOrders);
 
   const filteredOrders = useMemo(() => {
     return orders
