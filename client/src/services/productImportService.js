@@ -49,12 +49,15 @@ export async function importProductsService(
   uploadedImages = {},
   removeMissing = false,
   onStage,
+  { onlyNew = false } = {},
 ) {
   const formData = new FormData();
 
   formData.append("file", excelFile);
 
   formData.append("removeMissing", String(removeMissing));
+
+  formData.append("onlyNew", String(onlyNew));
 
   formData.append("uploadedImages", JSON.stringify(uploadedImages));
 

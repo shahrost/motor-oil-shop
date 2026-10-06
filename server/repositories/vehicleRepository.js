@@ -4,6 +4,13 @@ async function getAllVehicles() {
   return Vehicle.find().sort({ sku: 1 });
 }
 
+// فیلدهای لازم برای تطبیق نام خودرو و افزودن لینک محصول
+async function getVehiclesForLinking() {
+  return Vehicle.find()
+    .select("sku name nameEn brand brandEn productLinks")
+    .lean();
+}
+
 async function bulkWrite(ops) {
   return Vehicle.bulkWrite(ops, { ordered: false });
 }
@@ -19,4 +26,9 @@ async function deleteWhereSkuNotIn(skus) {
   return stale.map((v) => ({ sku: v.sku, name: v.name }));
 }
 
-module.exports = { getAllVehicles, bulkWrite, deleteWhereSkuNotIn };
+module.exports = {
+  getAllVehicles,
+  getVehiclesForLinking,
+  bulkWrite,
+  deleteWhereSkuNotIn,
+};

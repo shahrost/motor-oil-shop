@@ -127,7 +127,15 @@ function readSheetRows(workbook, columnMap, requiredKeys = [], sheetName) {
       record[key] = cellValueToString(cell.value);
     });
 
-    if (Object.keys(record).length > 1) rows.push(record);
+    if (Object.keys(record).length === 1) return;
+
+    // ستون‌های موجود در سرستون که خانه‌شون در این ردیف خالیه (مثلاً آخر ردیف)
+    // مقدار "" می‌گیرن؛ undefined یعنی ستون اصلاً توی فایل نیست.
+    foundKeys.forEach((key) => {
+      if (record[key] === undefined) record[key] = "";
+    });
+
+    rows.push(record);
   });
 
   return rows;

@@ -4,6 +4,7 @@ const { readWorkbookFile, removeFileQuietly } = require("../utils/excelReader");
 const { persistImages } = require("../utils/cloudStorage");
 const PRODUCT_COLUMN_MAP = require("../utils/productColumns");
 const { rowToProductDoc, splitList } = require("../utils/productRowMapper");
+const { linkProductsToVehicles } = require("./vehicleLinkService");
 
 // همان محصول با کد (sku) دیگر — دلیل اصلی تکراری‌شدن محصولات هنگام ایمپورت
 async function findSameProductWithOtherSku(doc) {
@@ -54,9 +55,12 @@ function resolveRowImage(row, imagesByName, urlsByFilename, usedFilenames) {
   return { main: urlsByFilename.get(mainFile.filename), gallery };
 }
 
-// ساخت یا بروزرسانی محصول بر اساس sku؛ خروجی: "created" | "updated"
-async function upsertProduct(doc) {
+// ساخت یا بروزرسانی محصول بر اساس sku؛ خروجی: "created" | "updated" | "skipped"
+// با onlyNew محصول موجود دست نمی‌خوره (skipped).
+async function upsertProduct(doc, onlyNew) {
   const existing = await productRepository.findBySku(doc.sku);
+
+  if (existing && onlyNew) return "skipped";
 
   if (existing) {
     await productRepository.setFieldsById(existing._id, doc);
@@ -90,11 +94,11 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
   try {
     onStage("خواندن فایل اکسل");
 
+    // قیمت الزامی نیست (مثلاً لیست فیلترها)؛ ستون غایب قیمت فعلی رو تغییر نمی‌ده
     const rows = await readWorkbookFile(excelFile, PRODUCT_COLUMN_MAP, [
       "sku",
       "name",
       "brand",
-      "price",
     ]);
 
     if (!rows.length) {
@@ -103,7 +107,19 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
 
     const imagesByName = new Map(imageFiles.map((f) => [f.originalname, f]));
     const usedFilenames = new Set();
-    const results = { created: 0, updated: 0, failed: [], removed: [] };
+    const results = {
+      created: 0,
+      updated: 0,
+      failed: [],
+      removed: [],
+      skipped: [],
+      duplicates: [],
+      vehicleLinks: [],
+      unmatchedVehicles: [],
+      noVehicles: [],
+    };
+    const seenSkus = new Set();
+    const linkEntries = [];
 
     // عکس‌های مورد نیاز ردیف‌ها یک‌جا (هم‌زمان) به فضای ابری منتقل می‌شن
     onStage("انتقال عکس‌ها به فضای ابری");
@@ -117,15 +133,47 @@ async function importProducts(excelFile, imageFiles = [], options = {}) {
     for (const row of rows) {
       try {
         const doc = rowToProductDoc(row);
+        const skuKey = String(doc.sku).toUpperCase();
+
+        if (seenSkus.has(skuKey)) {
+          results.duplicates.push({ row: row.__row, sku: doc.sku, name: doc.name });
+          continue;
+        }
+
+        seenSkus.add(skuKey);
 
         if (row.mainImage) {
           doc.image = resolveRowImage(row, imagesByName, urlsByFilename, usedFilenames);
         }
 
-        results[await upsertProduct(doc)] += 1;
+        const outcome = await upsertProduct(doc, options.onlyNew);
+
+        if (outcome === "skipped") {
+          results.skipped.push({ row: row.__row, sku: doc.sku, name: doc.name });
+        } else {
+          results[outcome] += 1;
+        }
+
+        // ستون «خودروهای سازگار» فقط وقتی توی فایل باشه بررسی می‌شه
+        if (row.compatibleVehicles === undefined) continue;
+
+        if (row.compatibleVehicles) {
+          linkEntries.push({ row: row.__row, sku: doc.sku, vehicles: row.compatibleVehicles });
+        } else {
+          results.noVehicles.push({ row: row.__row, sku: doc.sku, name: doc.name });
+        }
       } catch (err) {
         results.failed.push({ row: row.__row, sku: row.sku || "-", error: err.message });
       }
+    }
+
+    if (linkEntries.length) {
+      onStage("اتصال به خودروهای سازگار");
+
+      const links = await linkProductsToVehicles(linkEntries);
+
+      results.vehicleLinks = links.linked;
+      results.unmatchedVehicles = links.unmatched;
     }
 
     if (options.removeMissing) {

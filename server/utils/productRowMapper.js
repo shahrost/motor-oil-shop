@@ -71,14 +71,17 @@ function rowToProductDoc(row) {
     description: [row.description, approvals && `تاییدیه‌ها: ${approvals}`]
       .filter(Boolean)
       .join("\n\n"),
-    price: toNumber(row.price) || 0,
-    cartonCount: toNumber(row.cartonCount) || 1,
-    stock: toNumber(row.stock) || 0,
     supplier: row.supplier || "",
     warranty: row.warranty || "",
     tags: splitList(row.tags),
     isBestSeller: toBoolean(row.isBestSeller),
   };
+
+  // ستونی که در فایل نیست (مثلاً لیست فیلترهای بدون قیمت) مقدار فعلی/پیش‌فرض
+  // محصول رو تغییر نمی‌ده؛ ستون موجود با خانه‌ی خالی همون رفتار قبلی رو داره.
+  if (row.price !== undefined) doc.price = toNumber(row.price) || 0;
+  if (row.cartonCount !== undefined) doc.cartonCount = toNumber(row.cartonCount) || 1;
+  if (row.stock !== undefined) doc.stock = toNumber(row.stock) || 0;
 
   const priceCheck = toNumber(row.priceCheck);
 

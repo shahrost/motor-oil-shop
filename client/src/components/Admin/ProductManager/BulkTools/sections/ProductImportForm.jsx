@@ -8,8 +8,7 @@ import {
 import useExcelImport from "../hooks/useExcelImport";
 import ImportFields from "./ImportFields";
 import SubmitStatus from "./SubmitStatus";
-import ResultBox from "./ResultBox";
-import ResultList from "./ResultList";
+import ProductImportResult from "./ProductImportResult";
 
 function ProductImportForm() {
   const { reloadProducts } = useContext(ProductContext);
@@ -30,7 +29,9 @@ function ProductImportForm() {
       <h2 className="text-xl font-bold mb-2">ایمپورت گروهی محصولات</h2>
       <p className="text-sm text-gray-500 mb-4">
         یک فایل اکسل (طبق فرمت الگو) و پوشه عکس‌های محصولات را انتخاب کنید.
-        محصولات بر اساس «کد محصول» ساخته یا بروزرسانی می‌شوند.
+        محصولات بر اساس «کد محصول» ساخته یا بروزرسانی می‌شوند. عکس اختیاری است؛
+        محصول بدون عکس لوگوی برندش را نشان می‌دهد. ستون «خودروهای سازگار» (نام
+        خودروها با کاما جدا) محصول را به تب فیلتر همان خودروها اضافه می‌کند.
       </p>
 
       <ImportFields
@@ -41,6 +42,15 @@ function ProductImportForm() {
         importer={importer}
       />
 
+      <label className="flex items-center gap-2 text-sm mb-4">
+        <input
+          type="checkbox"
+          checked={importer.onlyNew}
+          onChange={(e) => importer.setOnlyNew(e.target.checked)}
+        />
+        فقط محصولات جدید اضافه شوند (محصولات موجود ویرایش نشوند)
+      </label>
+
       <SubmitStatus
         loading={importer.loading}
         label="اجرای ایمپورت"
@@ -49,25 +59,7 @@ function ProductImportForm() {
         error={importer.error}
       />
 
-      {result && (
-        <ResultBox title="نتیجه ایمپورت">
-          <p>محصول جدید ایجاد شد: {result.created}</p>
-          <p>محصول موجود بروزرسانی شد: {result.updated}</p>
-
-          <ResultList
-            title={`محصولات حذف‌شده (در اکسل نبودند): ${result.removed?.length}`}
-            tone="text-amber-600"
-            items={result.removed}
-            renderItem={(r) => `${r.sku}: ${r.name}`}
-          />
-
-          <ResultList
-            title="ردیف‌های ناموفق:"
-            items={result.failed}
-            renderItem={(f) => `ردیف ${f.row} (${f.sku}): ${f.error}`}
-          />
-        </ResultBox>
-      )}
+      {result && <ProductImportResult result={result} />}
     </form>
   );
 }

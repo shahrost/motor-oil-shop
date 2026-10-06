@@ -6,6 +6,8 @@ function useExcelImport({ uploadImages, runImport, reload, confirmRemoveMessage,
   const [file, setFile] = useState(null);
   const [images, setImages] = useState([]);
   const [removeMissing, setRemoveMissing] = useState(false);
+  // فقط موارد جدید ساخته بشن و محصولات موجود دست نخورن (فقط ایمپورت محصولات)
+  const [onlyNew, setOnlyNew] = useState(false);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -31,8 +33,12 @@ function useExcelImport({ uploadImages, runImport, reload, confirmRemoveMessage,
         setProgress(`در حال آپلود عکس‌ها: ${done} از ${images.length}`),
       );
 
-      const response = await runImport(file, uploaded, removeMissing, (stage) =>
-        setProgress(`در حال ایمپورت: ${stage}...`),
+      const response = await runImport(
+        file,
+        uploaded,
+        removeMissing,
+        (stage) => setProgress(`در حال ایمپورت: ${stage}...`),
+        { onlyNew },
       );
 
       setResult(response.data);
@@ -55,6 +61,8 @@ function useExcelImport({ uploadImages, runImport, reload, confirmRemoveMessage,
     setImages,
     removeMissing,
     setRemoveMissing,
+    onlyNew,
+    setOnlyNew,
     result,
     loading,
     error,

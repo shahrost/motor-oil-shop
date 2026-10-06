@@ -23,6 +23,7 @@ async function importProducts(req, res, next) {
       (onStage) =>
         productImportService.importProducts(excelFile, imageFiles, {
           removeMissing: req.body?.removeMissing === "true",
+          onlyNew: req.body?.onlyNew === "true",
           onStage,
         }),
       imageFiles.length,
