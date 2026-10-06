@@ -16,13 +16,14 @@ const LABEL_CLASS =
 const SELECT_CLASS =
   "w-full border border-gray-300 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-xs sm:text-base text-black";
 
-// همان ظاهر فیلتر سریع صفحه‌ی اصلی + پاک کردن فیلترها و «فقط موجودها»
+// همان ظاهر فیلتر سریع صفحه‌ی اصلی + پاک کردن فیلترها، «فقط موجودها» و دکمه‌ی نمایش محصولات
 function ProductFilters({
   values,
   setValue,
   onlyAvailable,
   setOnlyAvailable,
   clearFilters,
+  onSubmit,
 }) {
   const { language, t } = useContext(LanguageContext);
 
@@ -67,6 +68,14 @@ function ProductFilters({
 
         <span className="font-bold">{t("products.filters.onlyAvailable")}</span>
       </label>
+
+      <button
+        type="button"
+        onClick={onSubmit}
+        className="w-full sm:w-auto mt-5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-3 rounded-2xl"
+      >
+        {t("products.filters.submit")}
+      </button>
     </section>
   );
 }
