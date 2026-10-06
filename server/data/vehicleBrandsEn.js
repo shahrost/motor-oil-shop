@@ -43,6 +43,21 @@ const vehicleBrandsEn = {
   مینی: "MINI",
   ولوو: "Volvo",
   لندرور: "Land Rover",
+  چری: "Chery",
+  کایی: "Kaiyi",
+  دوو: "Daewoo",
+  ایسوزو: "Isuzu",
+  کاپرا: "Capra",
+  لندمارک: "Landmark (Landwind)",
+  هونگچی: "Hongqi",
+  "بی‌وای‌دی": "BYD",
+  بایک: "BAIC",
+  اکستریم: "Exeed",
+  لوکانو: "Lucano",
+  "اف‌ام‌سی": "FMC",
+  فردا: "Farda",
+  الماری: "Lamari",
+  زوتی: "Zotye",
 };
 
 module.exports = vehicleBrandsEn;

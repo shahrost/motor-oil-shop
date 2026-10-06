@@ -2,14 +2,16 @@ import { normalizeViscosity } from "./normalizeSpec";
 import getMenuCategorySlug from "./classifyMenuCategory";
 
 const ALT_KIND = "جایگزین";
+const FILTER_KIND = "فیلتر";
 
-// روغن‌های مناسب یک خودرو: { main, alt }
+// روغن‌ها و فیلترهای مناسب یک خودرو: { main, alt, filters }
 // - اگه خودرو از ایمپورت اکسل لیست محصولات مشخص (productLinks) داشته باشه، همون
 //   محصولات به ترتیب اولویت نشون داده می‌شن (محصولاتی که توی سایت نیستن رد می‌شن).
+//   نوع توصیه: «اصلی» ← main، «جایگزین» ← alt، «فیلتر» ← filters.
 // - وگرنه روغن موتورهای بنزینیِ فعال که ویسکوزیته‌شون جزو ویسکوزیته‌های پیشنهادی
 //   خودرو باشه.
 export function getRecommendedOils(vehicle, products) {
-  if (!vehicle) return { main: [], alt: [] };
+  if (!vehicle) return { main: [], alt: [], filters: [] };
 
   const active = products.filter((product) => product.isActive !== false);
 
@@ -20,6 +22,7 @@ export function getRecommendedOils(vehicle, products) {
 
     const main = [];
     const alt = [];
+    const filters = [];
 
     [...vehicle.productLinks]
       .sort((a, b) => a.priority - b.priority)
@@ -28,10 +31,11 @@ export function getRecommendedOils(vehicle, products) {
 
         if (!product) return;
 
-        (link.kind === ALT_KIND ? alt : main).push(product);
+        if (link.kind === FILTER_KIND) filters.push(product);
+        else (link.kind === ALT_KIND ? alt : main).push(product);
       });
 
-    return { main, alt };
+    return { main, alt, filters };
   }
 
   const wanted = vehicle.viscosities.map(normalizeViscosity);
@@ -43,6 +47,7 @@ export function getRecommendedOils(vehicle, products) {
         wanted.includes(normalizeViscosity(product.viscosity)),
     ),
     alt: [],
+    filters: [],
   };
 }
 

@@ -25,7 +25,12 @@ function VehicleDetail() {
   }
 
   const name = language === "en" ? vehicle.nameEn || vehicle.name : vehicle.name;
-  const { main: oils, alt: altOils } = getRecommendedOils(vehicle, products);
+  const {
+    main: oils,
+    alt: altOils,
+    filters,
+  } = getRecommendedOils(vehicle, products);
+  const isElectric = (vehicle.fuel || "").trim() === "برقی";
 
   return (
     <section className="px-5 mt-8 max-w-7xl mx-auto">
@@ -50,8 +55,12 @@ function VehicleDetail() {
       {oils.length > 0 ? (
         <OilGrid products={oils} />
       ) : (
-        <p className="text-center text-red-500 mt-6 font-bold">
-          {t("vehicles.noOils")}
+        <p
+          className={`text-center mt-6 font-bold ${
+            isElectric ? "text-gray-500" : "text-red-500"
+          }`}
+        >
+          {isElectric ? t("vehicles.electricNoOil") : t("vehicles.noOils")}
         </p>
       )}
 
@@ -62,6 +71,16 @@ function VehicleDetail() {
           </h2>
 
           <OilGrid products={altOils} />
+        </>
+      )}
+
+      {filters.length > 0 && (
+        <>
+          <h2 className="text-2xl font-extrabold text-center mt-10">
+            {t("vehicles.recommendedFilters")}
+          </h2>
+
+          <OilGrid products={filters} />
         </>
       )}
     </section>

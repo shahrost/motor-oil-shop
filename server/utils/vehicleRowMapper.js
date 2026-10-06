@@ -48,10 +48,12 @@ function listRowToDoc(row) {
   return {
     sku: row.sku,
     name,
-    nameEn: name,
+    nameEn: cleanDash(row.nameEn) || name,
     brand: row.brand,
     brandEn: vehicleBrandsEn[row.brand] || row.brand,
     country: row.country || "",
+    years: cleanDash(row.years),
+    yearsEn: cleanDash(row.yearsEn) || cleanDash(row.years),
     engine: cleanDash(row.engine),
     engineEn: cleanDash(row.engine),
     engineSize: cleanDash(row.engineSize),
@@ -60,6 +62,9 @@ function listRowToDoc(row) {
     body: cleanDash(row.body),
     maker: cleanDash(row.maker),
     status: cleanDash(row.status),
+    oilCapacity: cleanDash(row.oilCapacity),
+    api: cleanDash(row.api),
+    interval: cleanDash(row.interval),
     viscosities: parseViscosities(row.viscosity),
     altViscosities: parseViscosities(row.viscosityAlt),
   };
