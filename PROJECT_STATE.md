@@ -1,7 +1,20 @@
 # Shahram Roghan Project State
 
 آخرین بروزرسانی:
-Session Update 2026-10-06 — طرح فروش نقدی/اعتباری جدا، جشنواره ضدیخ لوکینی، فیلتر صفحه‌ی محصولات، فوتر چت خصوصی، تقسیم وظایف کامپوننت‌ها/سرویس‌ها طبق معماری، دکمه‌های دسته در صفحه‌ی خودرو، دکمه‌ی «نمایش محصولات» در فیلتر صفحه‌ی محصولات ✅
+Session Update 2026-10-06 — طرح فروش نقدی/اعتباری جدا، جشنواره ضدیخ لوکینی، فیلتر صفحه‌ی محصولات، فوتر چت خصوصی، تقسیم وظایف کامپوننت‌ها/سرویس‌ها طبق معماری، دکمه‌های دسته در صفحه‌ی خودرو، دکمه‌ی «نمایش محصولات» در فیلتر صفحه‌ی محصولات، صفحه‌ی اصلی دو کارتی و «خودروهای من» ✅
+
+## ۸. ناوبری جدید: صفحه‌ی اصلی دو کارتی + «خودروهای من»
+
+Status: Completed ✅ (lint و build تمیز؛ تست بصری در مرورگر با دیتای پیش‌فرض خودروها — API اصلی به localhost جواب نداد)
+
+✅ صفحه‌ی اصلی (`Home/Home.jsx`) فقط دو کارت ورودی: «روانکار» ← `/products` (بدون تغییر) و «خودروهای من» ← `/vehicles`. کارت: `Home/sections/EntryCard.jsx`؛ تصاویر SVG داخلی: `sections/OilDropArt.jsx` (قطره‌ی روغن) و `sections/CarArt.jsx` (خودروی بی‌برند)
+✅ حذف شد: جستجو، فیلتر سریع، ردیف محصولات برندها، اسکلتون و دکمه‌های شناور واتس‌اپ/تماس صفحه‌ی اصلی (`Home/sections/*` قدیمی و `useQuickFilter`). کلیدهای ترجمه‌ی `home.quickFilter.*` و `home.featured.viewAll` چون در `filterFields` و `BrandRow` استفاده می‌شن ماندن
+✅ هدر: آیتم «خودروها» با زیرمنوی خودروسازان → «خودروهای من» (`nav.myVehicles`، بدون زیرمنو) کنار «محصولات»، به همون `/vehicles`. `VehicleMenuPanel`، `hooks/useVehicleMenuGroups`، `onOpen` در `NavDropdown` و `requestVehicles` در `VehicleProvider` حذف شدن. لینک‌های منوی دسکتاپ `whitespace-nowrap`
+✅ صفحه‌ی برندها (`/vehicles`، یک پیاده‌سازی برای هر دو ورودی): فقط برندها، بدون سطح خودروساز. هر برند یک بار (برندی که زیر چند خودروساز/واردکننده بود یکی شد)، به ترتیب تعداد مدل. `utils/vehicleBrands.js` (`getVehicleBrands`, `vehicleBrandPath`) ← `Vehicles/hooks/useVehicleBrands.js` ← `sections/VehicleBrandCard` + `sections/VehicleBrandLogo`
+✅ `data/vehicleMakers.js` و `utils/vehicleMenuGroups.js` (گروه‌بندی خودروساز) حذف شدن؛ `/vehicles/:brand` دیگه `?maker=`/`?group=` نداره و همه‌ی مدل‌های برند رو نشون می‌ده. صفحه‌ی `/vehicle/:id` دست نخورد
+✅ لوگوها: `client/src/assets/vehicleBrands/*.webp` (۴۵ فایل از `D:/OIL/CLAUDE-PIC/cars/logos`، منبع و لایسنس در `logo-credits.csv`). `utils/vehicleBrandLogo.js` با `import.meta.glob` فایل رو از روی نام انگلیسی برند پیدا می‌کنه (حروف کوچک، خط تیره؛ نام‌های متفاوت در `ALIASES`: ikco, mercedes, besturn, greatwall). برای افزودن لوگو کافیه فایل با همین نام در پوشه گذاشته بشه
+⚠️ ۱۶ برند هنوز لوگو ندارن و حرف اول نامشون نمایش داده می‌شه: Chery, Fownix, BYD, BAIC, Capra, Exeed, Hongqi, Isuzu, Kaiyi, Landmark (landmark-landwind), Lucano, FMC, Farda, Lamari, Daewoo, Zotye
+⚠️ لوگوهای کلمه‌ای (هیوندای، پژو، تویوتا) روی کارت کوچک دیده می‌شن
 
 ## ۷. دکمه‌ی «نمایش محصولات» در فیلتر صفحه‌ی محصولات
 

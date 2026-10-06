@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
 // آیتم منوی دسکتاپ با زیرمنوی هاوری؛ panelClassName چیدمان پنل رو تعیین می‌کنه
-function NavDropdown({ to, label, panelClassName, onOpen, children }) {
+function NavDropdown({ to, label, panelClassName, children }) {
   return (
-    <div className="relative group py-2" onMouseEnter={onOpen} onFocus={onOpen}>
+    <div className="relative group py-2">
       <Link
         to={to}
         className="
@@ -11,6 +11,7 @@ function NavDropdown({ to, label, panelClassName, onOpen, children }) {
         items-center
         gap-1
         font-bold
+        whitespace-nowrap
         text-gray-200
         hover:text-yellow-400
         transition

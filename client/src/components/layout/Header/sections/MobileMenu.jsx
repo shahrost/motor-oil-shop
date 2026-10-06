@@ -6,23 +6,18 @@ import CustomerAuthContext from "../../../../context/CustomerAuthContext";
 import ThemeContext from "../../../../context/ThemeContext";
 import menu from "../../../../data/menu";
 import menuCategories from "../../../../data/menuCategories";
-import useVehicleMenuGroups from "../../../../hooks/useVehicleMenuGroups";
 import LanguageSwitch from "./LanguageSwitch";
-import VehicleMenuPanel from "./VehicleMenuPanel";
 
 const LINK_CLASS = "text-gray-200 hover:text-yellow-400";
 
 // آیتم‌هایی که زیرمنوی بازشونده دارن
-const SUBMENU_KEYS = ["products", "vehicles"];
+const SUBMENU_KEYS = ["products"];
 
 // منوی کشویی موبایل/تبلت؛ با انتخاب هر لینک بسته می‌شه
 function MobileMenu({ t, language, onClose }) {
   const [openKey, setOpenKey] = useState(null);
-  const { domestic, foreign, requestVehicles } = useVehicleMenuGroups();
 
   function toggleSubmenu(key) {
-    if (key === "vehicles") requestVehicles();
-
     setOpenKey((current) => (current === key ? null : key));
   }
 
@@ -65,18 +60,6 @@ function MobileMenu({ t, language, onClose }) {
                     </li>
                   ))}
                 </ul>
-              )}
-
-              {openKey === "vehicles" && item.key === "vehicles" && (
-                <div className="mt-3 bg-gray-800 rounded-lg p-4 font-normal">
-                  <VehicleMenuPanel
-                    t={t}
-                    language={language}
-                    domestic={domestic}
-                    foreign={foreign}
-                    onNavigate={onClose}
-                  />
-                </div>
               )}
             </li>
           ) : (

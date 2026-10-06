@@ -4,7 +4,7 @@ const translations = {
       home: "خانه",
       products: "محصولات",
       brands: "برندها",
-      vehicles: "خودروها",
+      myVehicles: "خودروهای من",
       promotions: "طرح‌های فروش",
       cart: "سبد خرید",
       contact: "تماس با ما",
@@ -95,6 +95,16 @@ const translations = {
     },
 
     home: {
+      entries: {
+        lubricants: {
+          title: "روانکار",
+          description: "روغن موتور، فیلتر و سایر روانکارها",
+        },
+        myVehicles: {
+          title: "خودروهای من",
+          description: "برند و مدل خودروتون رو انتخاب کنید و روانکار و فیلتر مناسبش رو ببینید",
+        },
+      },
       productsTitle: "محصولات روغن موتور و فیلتر",
       productsSubtitle: "محصولات فروشگاه شهرام روغن",
       quickFilter: {
@@ -295,16 +305,14 @@ const translations = {
     },
 
     vehicles: {
-      title: "خودروها",
+      title: "خودروهای من",
       subtitle: "برند و مدل خودروی خودتون رو انتخاب کنید تا روغن‌های مناسبش رو ببینید",
       modelsCount: "مدل",
-      domesticMakers: "خودروسازان داخلی",
-      foreignBrands: "برندهای خارجی",
       searchPlaceholder: "جستجوی مدل خودرو...",
       notFoundBrand: "برند خودرو پیدا نشد",
       notFoundModels: "خودرویی پیدا نشد",
       notFoundVehicle: "خودرو پیدا نشد",
-      back: "بازگشت به خودروها",
+      back: "بازگشت به برندهای خودرو",
       specs: "مشخصات خودرو",
       years: "سال ساخت",
       engine: "موتور",
@@ -389,7 +397,7 @@ const translations = {
       home: "Home",
       products: "Products",
       brands: "Brands",
-      vehicles: "Vehicles",
+      myVehicles: "My Vehicles",
       promotions: "Sales Promotions",
       cart: "Cart",
       contact: "Contact Us",
@@ -480,6 +488,16 @@ const translations = {
     },
 
     home: {
+      entries: {
+        lubricants: {
+          title: "Lubricants",
+          description: "Engine oils, filters and other lubricants",
+        },
+        myVehicles: {
+          title: "My Vehicles",
+          description: "Pick your car brand and model to see its matching lubricants and filters",
+        },
+      },
       productsTitle: "Engine Oil & Filter Products",
       productsSubtitle: "Products from Shahram Oil Shop",
       quickFilter: {
@@ -681,16 +699,14 @@ const translations = {
     },
 
     vehicles: {
-      title: "Vehicles",
+      title: "My Vehicles",
       subtitle: "Choose your car brand and model to see the suitable oils",
       modelsCount: "models",
-      domesticMakers: "Domestic Manufacturers",
-      foreignBrands: "Foreign Brands",
       searchPlaceholder: "Search car model...",
       notFoundBrand: "Car brand not found",
       notFoundModels: "No vehicles found",
       notFoundVehicle: "Vehicle not found",
-      back: "Back to vehicles",
+      back: "Back to car brands",
       specs: "Vehicle specifications",
       years: "Production years",
       engine: "Engine",

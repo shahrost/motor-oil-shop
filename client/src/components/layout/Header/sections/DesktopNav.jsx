@@ -2,14 +2,10 @@ import { Link } from "react-router-dom";
 
 import menu from "../../../../data/menu";
 import menuCategories from "../../../../data/menuCategories";
-import useVehicleMenuGroups from "../../../../hooks/useVehicleMenuGroups";
 import NavDropdown from "./NavDropdown";
-import VehicleMenuPanel from "./VehicleMenuPanel";
 
-// منوی دسکتاپ؛ «محصولات» و «خودروها» با هاور زیرمنو باز می‌کنن
+// منوی دسکتاپ؛ «محصولات» با هاور زیرمنوی دسته‌ها رو باز می‌کنه
 function DesktopNav({ t, language }) {
-  const { domestic, foreign, requestVehicles } = useVehicleMenuGroups();
-
   return (
     <nav className="hidden lg:flex items-center gap-6">
       {menu.map((item) => {
@@ -42,31 +38,13 @@ function DesktopNav({ t, language }) {
           );
         }
 
-        if (item.key === "vehicles") {
-          return (
-            <NavDropdown
-              key={item.path}
-              to={item.path}
-              label={label}
-              onOpen={requestVehicles}
-              panelClassName="start-0 group-hover:block p-5 w-160 max-h-[75vh] overflow-y-auto"
-            >
-              <VehicleMenuPanel
-                t={t}
-                language={language}
-                domestic={domestic}
-                foreign={foreign}
-              />
-            </NavDropdown>
-          );
-        }
-
         return (
           <Link
             key={item.path}
             to={item.path}
             className="
             font-bold
+            whitespace-nowrap
             text-gray-200
             hover:text-yellow-400
             transition

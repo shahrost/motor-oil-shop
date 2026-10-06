@@ -1,10 +1,8 @@
 import { useContext, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { VehicleContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
-import vehicleMakers from "../../data/vehicleMakers";
-import { filterBrandVehicles } from "../../utils/vehicleMenuGroups";
 import VehicleCard from "./VehicleCard";
 
 function VehicleBrand() {
@@ -13,15 +11,7 @@ function VehicleBrand() {
   const { vehicles } = useContext(VehicleContext);
   const [search, setSearch] = useState("");
 
-  // ?maker=<slug> فقط خودروهای همون خودروساز داخلی، ?group=foreign فقط غیرداخلی‌ها
-  const [searchParams] = useSearchParams();
-  const makerSlug = searchParams.get("maker");
-  const maker = vehicleMakers.find((m) => m.slug === makerSlug);
-
-  const brandVehicles = filterBrandVehicles(vehicles, brandName, {
-    makerSlug: maker?.slug,
-    foreignOnly: searchParams.get("group") === "foreign",
-  });
+  const brandVehicles = vehicles.filter((vehicle) => vehicle.brand === brandName);
   const first = brandVehicles[0];
 
   if (!first) {
@@ -50,12 +40,6 @@ function VehicleBrand() {
       <h1 className="text-3xl font-extrabold text-center mt-4">
         {language === "en" ? first.brandEn || first.brand : first.brand}
       </h1>
-
-      {maker && (
-        <p className="text-center text-gray-500 mt-2 font-bold">
-          {language === "en" ? maker.labelEn : maker.label}
-        </p>
-      )}
 
       <input
         type="text"

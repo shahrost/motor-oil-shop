@@ -2,17 +2,18 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import LanguageContext from "../../../context/LanguageContext";
-import { vehicleBrandPath } from "../../../utils/vehicleMenuGroups";
+import { vehicleBrandPath } from "../../../utils/vehicleBrands";
+import VehicleBrandLogo from "./VehicleBrandLogo";
 
-// کارت یک برند خودرو توی صفحه‌ی «خودروها»
-function VehicleBrandCard({ brand, makerSlug }) {
+// کارت یک برند خودرو توی صفحه‌ی «خودروهای من»
+function VehicleBrandCard({ brand }) {
   const { language, t } = useContext(LanguageContext);
 
   const label = language === "en" ? brand.nameEn : brand.name;
 
   return (
     <Link
-      to={vehicleBrandPath(brand.name, makerSlug)}
+      to={vehicleBrandPath(brand.name)}
       className="
         bg-white
         rounded-3xl
@@ -25,9 +26,7 @@ function VehicleBrandCard({ brand, makerSlug }) {
       "
     >
       <div className="h-24 flex items-center justify-center">
-        <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center font-extrabold text-gray-500 text-xl">
-          {label.slice(0, 1)}
-        </div>
+        <VehicleBrandLogo nameEn={brand.nameEn} label={label} />
       </div>
 
       <h3 className="font-bold mt-4">{label}</h3>
