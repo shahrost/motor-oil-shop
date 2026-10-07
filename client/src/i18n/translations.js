@@ -158,6 +158,11 @@ const translations = {
       scrollTop: "بازگشت به بالای صفحه",
     },
 
+    compatibleVehicles: {
+      more: "خودرو دیگر",
+      less: "کمتر",
+    },
+
     productCard: {
       cartonCount: "تعداد در کارتن:",
       pricePerUnit: "قیمت هر عدد",
@@ -550,6 +555,11 @@ const translations = {
       },
       notFound: "No products found",
       scrollTop: "Back to top",
+    },
+
+    compatibleVehicles: {
+      more: "more vehicles",
+      less: "Show less",
     },
 
     productCard: {

@@ -3,6 +3,7 @@ import { useContext } from "react";
 import LanguageContext from "../../context/LanguageContext";
 import formatPrice from "../../utils/formatPrice";
 import { getProductPrice } from "../../utils/productPrice";
+import CompatibleVehicles from "../common/CompatibleVehicles";
 import useProductDetail from "./hooks/useProductDetail";
 import {
   ProductGallery,
@@ -34,6 +35,12 @@ function ProductDetail() {
 
         <div>
           <ProductSpecs product={product} language={language} t={t} />
+
+          <CompatibleVehicles
+            product={product}
+            defaultOpen
+            className="mt-4"
+          />
 
           <PurchaseOptions
             t={t}

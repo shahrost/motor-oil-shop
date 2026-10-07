@@ -14,6 +14,19 @@ async function getVehicles(req, res, next) {
   }
 }
 
+// خودروهای سازگار هر فیلتر (برای نمایش روی کارت محصول)
+async function getFilterCompatibility(req, res, next) {
+  try {
+    const compatibility = await vehicleService.getFilterCompatibility();
+
+    res.set("Cache-Control", "public, max-age=300");
+
+    return apiResponse.success(res, compatibility);
+  } catch (error) {
+    next(error);
+  }
+}
+
 // ایمپورت از فایل اکسل (job پس‌زمینه؛ فوراً jobId برمی‌گردونه)
 async function importVehicles(req, res, next) {
   try {
@@ -67,4 +80,9 @@ async function importParsedVehicles(req, res, next) {
   }
 }
 
-module.exports = { getVehicles, importVehicles, importParsedVehicles };
+module.exports = {
+  getVehicles,
+  getFilterCompatibility,
+  importVehicles,
+  importParsedVehicles,
+};

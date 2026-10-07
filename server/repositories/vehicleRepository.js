@@ -11,6 +11,14 @@ async function getVehiclesForLinking() {
     .lean();
 }
 
+// خودروهایی که حداقل یک لینک «فیلتر» دارند (فقط فیلدهای لازم برای نمایش)
+async function getVehiclesWithFilterLinks(filterKind) {
+  return Vehicle.find({ "productLinks.kind": filterKind })
+    .sort({ sku: 1 })
+    .select("name nameEn productLinks")
+    .lean();
+}
+
 async function bulkWrite(ops) {
   return Vehicle.bulkWrite(ops, { ordered: false });
 }
@@ -29,6 +37,7 @@ async function deleteWhereSkuNotIn(skus) {
 module.exports = {
   getAllVehicles,
   getVehiclesForLinking,
+  getVehiclesWithFilterLinks,
   bulkWrite,
   deleteWhereSkuNotIn,
 };

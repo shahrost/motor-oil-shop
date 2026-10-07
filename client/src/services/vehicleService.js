@@ -10,6 +10,14 @@ export async function fetchVehicles() {
   return response.data;
 }
 
+// خودروهای سازگار هر فیلتر: { "<کد محصول>": [{ name, nameEn }] }
+
+export async function fetchFilterCompatibility() {
+  const response = await apiClient.get("/vehicles/filter-compatibility");
+
+  return response.data.data || {};
+}
+
 // آپلود عکس‌ها به‌صورت دسته‌ای (هر بار چند فایل) تا درخواست حجیم نشه و قطع نشه.
 // خروجی: { "نام فایل اصلی": "نام فایل روی سرور" }
 

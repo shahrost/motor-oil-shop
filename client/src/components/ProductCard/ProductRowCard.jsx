@@ -10,6 +10,7 @@ import {
 } from "../../utils/productImage";
 import { getProductPrice } from "../../utils/productPrice";
 import DiscountBadge from "../common/DiscountBadge";
+import CompatibleVehicles from "../common/CompatibleVehicles";
 import { RowCardSpecs, RowCardPurchase } from "./sections";
 import usePurchaseOptions from "../../hooks/usePurchaseOptions";
 
@@ -39,6 +40,13 @@ function ProductRowCard({ product }) {
       />
 
       <RowCardSpecs product={product} name={name} language={language} t={t} />
+
+      <CompatibleVehicles
+        product={product}
+        limit={3}
+        compact
+        className="mt-2"
+      />
 
       <div className="mt-2 text-right">
         <DiscountBadge percent={product.discountPercent || 0} />

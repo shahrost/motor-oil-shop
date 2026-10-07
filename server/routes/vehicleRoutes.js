@@ -3,6 +3,7 @@ const importUpload = require("../middleware/importUpload");
 const { auth } = require("../middleware/auth");
 const {
   getVehicles,
+  getFilterCompatibility,
   importVehicles,
   importParsedVehicles,
 } = require("../controllers/vehicleController");
@@ -15,6 +16,9 @@ const router = express.Router();
 
 // دریافت همه خودروها
 router.get("/", getVehicles);
+
+// خودروهای سازگار هر فیلتر (فقط نام‌ها؛ سبک‌تر از لیست کامل خودروها)
+router.get("/filter-compatibility", getFilterCompatibility);
 
 // آپلود دسته‌ای عکس خودروها (قبل از ایمپورت)
 router.post(

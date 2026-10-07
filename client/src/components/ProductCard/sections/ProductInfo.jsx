@@ -8,6 +8,7 @@ import { getProductPrice } from "../../../utils/productPrice";
 import PromotionBadge from "../../common/PromotionBadge";
 import DiscountBadge from "../../common/DiscountBadge";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
+import CompatibleVehicles from "../../common/CompatibleVehicles";
 
 function ProductInfo({ product, paymentType }) {
   const { language, t } = useContext(LanguageContext);
@@ -59,6 +60,8 @@ function ProductInfo({ product, paymentType }) {
           value={`${product.cartonCount || "-"} ${t("common.orderUnit.number")}`}
         />
       </div>
+
+      <CompatibleVehicles product={product} className="mt-3" />
 
       <div className="mt-3 text-right">
         <DiscountBadge percent={product.discountPercent || 0} />
