@@ -1,4 +1,5 @@
 import apiClient from "../api/apiClient";
+import { withRetry, runImportJob } from "./importJobClient";
 
 // ابزارهای گروهی پنل ادمین: آپلود عکس‌ها، ایمپورت اکسل محصولات و بروزرسانی گروهی قیمت
 
@@ -18,11 +19,15 @@ export async function uploadProductImagesService(imageFiles, onProgress) {
       .slice(i, i + IMAGE_BATCH_SIZE)
       .forEach((file) => formData.append("images", file));
 
-    const response = await apiClient.post("/products/images", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await withRetry(
+      () =>
+        apiClient.post("/products/images", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }),
+      "آپلود عکس‌ها",
+    );
 
     (response.data.data || []).forEach((item) => {
       uploaded[item.name] = item.url || item.filename;
@@ -39,10 +44,6 @@ export async function uploadProductImagesService(imageFiles, onProgress) {
 // ایمپورت گروهی محصولات (فایل اکسل + عکس‌های آپلودشده)
 // سرور ایمپورت رو پس‌زمینه اجرا می‌کنه و فوراً jobId برمی‌گردونه؛ بعدش وضعیت
 // هر چند ثانیه چک می‌شه تا درخواست طولانی توسط پروکسی قطع نشه.
-
-const POLL_INTERVAL_MS = 2000;
-const POLL_MAX_MS = 15 * 60 * 1000;
-const POLL_MAX_FAILURES = 5;
 
 export async function importProductsService(
   excelFile,
@@ -63,49 +64,25 @@ export async function importProductsService(
 
   if (onStage) onStage("ارسال فایل اکسل به سرور");
 
-  const start = await apiClient.post("/products/import", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
+  const results = await runImportJob({
+    start: async () => {
+      const response = await withRetry(
+        () =>
+          apiClient.post("/products/import", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }),
+        "شروع ایمپورت",
+      );
+
+      return response.data.data;
     },
+    statusPath: (jobId) => `/products/import/${jobId}`,
+    onStage,
   });
 
-  const { jobId } = start.data.data;
-
-  const startedAt = Date.now();
-  let failures = 0;
-
-  while (Date.now() - startedAt < POLL_MAX_MS) {
-    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-
-    let job;
-
-    try {
-      const response = await apiClient.get(`/products/import/${jobId}`);
-
-      job = response.data.data;
-      failures = 0;
-    } catch (error) {
-      if (error.response?.status === 404) throw error;
-
-      failures += 1;
-
-      if (failures >= POLL_MAX_FAILURES) throw error;
-
-      continue;
-    }
-
-    if (onStage) onStage(job.stage);
-
-    if (job.status === "done") return { data: job.results };
-
-    if (job.status === "error") {
-      const error = new Error(job.error);
-      error.response = { data: { message: job.error } };
-      throw error;
-    }
-  }
-
-  throw new Error("ایمپورت بیش از حد طول کشید");
+  return { data: results };
 }
 
 // بروزرسانی گروهی قیمت‌ها (فایل اکسل با ستون کد محصول و قیمت)
