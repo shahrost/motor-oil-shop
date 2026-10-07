@@ -25,7 +25,7 @@ function ProductRowCard({ product }) {
       to={`/product/${product.id}`}
       draggable={false}
       onDragStart={(e) => e.preventDefault()}
-      className="h-full block border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition"
+      className="h-full flex flex-col border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition"
     >
       <img
         src={getProductImageSrc(product, 320)}
@@ -48,28 +48,31 @@ function ProductRowCard({ product }) {
         className="mt-2"
       />
 
-      {/* قیمت و نشان تخفیف تو یک ردیف؛ بدون تخفیف نشان رندر نمی‌شه تا ردیف اضافه جا نگیره */}
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-1">
-        <p className="text-sm sm:text-lg font-extrabold text-gray-950">
-          {formatPrice(getProductPrice(product, card.paymentType), language)}
-        </p>
+      {/* mt-auto: قیمت و کنترل‌های خرید همیشه ته کارت‌اند تا کارت‌های هم‌ردیف هم‌قد و هم‌تراز بمونن */}
+      <div className="mt-auto">
+        {/* قیمت و نشان تخفیف تو یک ردیف؛ بدون تخفیف نشان رندر نمی‌شه تا ردیف اضافه جا نگیره */}
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-1">
+          <p className="text-sm sm:text-lg font-extrabold text-gray-950">
+            {formatPrice(getProductPrice(product, card.paymentType), language)}
+          </p>
 
-        {product.discountPercent > 0 && (
-          <DiscountBadge percent={product.discountPercent} />
-        )}
+          {product.discountPercent > 0 && (
+            <DiscountBadge percent={product.discountPercent} />
+          )}
+        </div>
+
+        <RowCardPurchase
+          t={t}
+          orderType={card.orderType}
+          setOrderType={card.setOrderType}
+          quantity={card.quantity}
+          setQuantity={card.setQuantity}
+          paymentType={card.paymentType}
+          setPaymentType={card.setPaymentType}
+          added={card.added}
+          onAddCart={card.handleAddCart}
+        />
       </div>
-
-      <RowCardPurchase
-        t={t}
-        orderType={card.orderType}
-        setOrderType={card.setOrderType}
-        quantity={card.quantity}
-        setQuantity={card.setQuantity}
-        paymentType={card.paymentType}
-        setPaymentType={card.setPaymentType}
-        added={card.added}
-        onAddCart={card.handleAddCart}
-      />
     </Link>
   );
 }

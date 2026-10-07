@@ -28,7 +28,7 @@ function BrandRow({ brand, items, t }) {
         {...dragHandlers}
         className="
           flex
-          items-start
+          items-stretch
           gap-3
           overflow-x-auto
           pb-2
