@@ -23,7 +23,8 @@ function ProductCard({ product }) {
   } = usePurchaseOptions(product);
 
   return (
-    <div className="border-2 border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition">
+    // flex-col: lets the actions block be pushed to the bottom (grid stretch already equalizes card height)
+    <div className="flex flex-col border-2 border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition">
       <ProductImage product={product} />
 
       <ProductInfo product={product} paymentType={paymentType} />
@@ -38,24 +39,27 @@ function ProductCard({ product }) {
         setPaymentType={setPaymentType}
       />
 
-      <CardActions product={product} handleAddCart={handleAddCart} />
+      {/* mt-auto: actions always sit at the card bottom, aligned across the row */}
+      <div className="mt-auto">
+        <CardActions product={product} handleAddCart={handleAddCart} />
 
-      {added && (
-        <div
-          className="
-          mt-4
-          bg-green-600
-          text-white
-          rounded-lg
-          p-2
-          text-center
-          text-sm
-          font-bold
-          "
-        >
-          ✅ {t("common.addedToCart")}
-        </div>
-      )}
+        {added && (
+          <div
+            className="
+            mt-4
+            bg-green-600
+            text-white
+            rounded-lg
+            p-2
+            text-center
+            text-sm
+            font-bold
+            "
+          >
+            ✅ {t("common.addedToCart")}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
