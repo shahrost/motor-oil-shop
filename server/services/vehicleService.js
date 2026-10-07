@@ -1,6 +1,6 @@
 const vehicleRepository = require("../repositories/vehicleRepository");
 
-const FILTER_KIND = "فیلتر";
+const { FILTER_KIND } = require("../data/vehicleLinkKinds");
 
 async function getVehicles() {
   return vehicleRepository.getAllVehicles();

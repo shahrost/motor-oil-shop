@@ -1,7 +1,7 @@
 const vehicleRepository = require("../repositories/vehicleRepository");
 const { splitVehicleNames, buildVehicleNameIndex } = require("../utils/vehicleNameIndex");
 
-const FILTER_KIND = "فیلتر";
+const { FILTER_KIND } = require("../data/vehicleLinkKinds");
 
 // اتصال محصولات (فیلترها) به خودروهای سازگار از ستون «خودروهای سازگار» اکسل.
 // فقط لینک «فیلتر» به productLinks خودرو اضافه می‌شه؛ لینک‌های فعلی و بقیه‌ی
