@@ -13,6 +13,22 @@ function useExcelImport({ uploadImages, runImport, reload, confirmRemoveMessage,
   const [error, setError] = useState("");
   const [progress, setProgress] = useState("");
 
+  function describeError(err) {
+    const status = err.response?.status;
+
+    return (
+      err.response?.data?.message ||
+      `${errorLabel} (${status ? `کد ${status}` : err.message})`
+    );
+  }
+
+  function startRun() {
+    setLoading(true);
+    setError("");
+    setResult(null);
+    setProgress("");
+  }
+
   async function submit(e) {
     e.preventDefault();
 
@@ -23,10 +39,7 @@ function useExcelImport({ uploadImages, runImport, reload, confirmRemoveMessage,
 
     if (removeMissing && !window.confirm(confirmRemoveMessage)) return;
 
-    setLoading(true);
-    setError("");
-    setResult(null);
-    setProgress("");
+    startRun();
 
     try {
       const uploaded = await uploadImages(images, (done) =>
@@ -44,12 +57,34 @@ function useExcelImport({ uploadImages, runImport, reload, confirmRemoveMessage,
       setResult(response.data);
       await reload();
     } catch (err) {
-      const status = err.response?.status;
+      setError(describeError(err));
+    } finally {
+      setProgress("");
+      setLoading(false);
+    }
+  }
 
-      setError(
-        err.response?.data?.message ||
-          `${errorLabel} (${status ? `کد ${status}` : err.message})`,
+  // پیش‌نمایش بدون ثبت: چند محصول ساخته/بروزرسانی/حذف می‌شه و کدوم ردیف‌ها خطا دارن
+  async function preview() {
+    if (!file) {
+      setError("فایل اکسل را انتخاب کنید");
+      return;
+    }
+
+    startRun();
+
+    try {
+      const response = await runImport(
+        file,
+        {},
+        removeMissing,
+        (stage) => setProgress(`پیش‌نمایش: ${stage}...`),
+        { onlyNew, dryRun: true, imageNames: images.map((image) => image.name) },
       );
+
+      setResult(response.data);
+    } catch (err) {
+      setError(describeError(err));
     } finally {
       setProgress("");
       setLoading(false);
@@ -68,6 +103,7 @@ function useExcelImport({ uploadImages, runImport, reload, confirmRemoveMessage,
     error,
     progress,
     submit,
+    preview,
   };
 }
 

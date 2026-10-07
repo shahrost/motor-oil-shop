@@ -1,3 +1,4 @@
+// aliases: نام‌های جایگزین برند (فقط برای تطبیق ایمپورت اکسل؛ نام ثبت‌شده همان name است)
 const brands = [
   { name: "سمن شیمی", nameEn: "Seman Chimie" },
   { name: "پترولکس", nameEn: "Petrolex" },
@@ -7,9 +8,9 @@ const brands = [
   { name: "ایدلوب", nameEn: "Aidlube" },
   { name: "لوکینی", nameEn: "Lookini" },
   { name: "ووفر", nameEn: "Woofer" },
-  { name: "فیلتر لوکومبیل", nameEn: "Locomobil" },
-  { name: "فیلتر میهن", nameEn: "Mihan" },
-  { name: "فیلتر گیربکس ATFO", nameEn: "ATFO" },
+  { name: "فیلتر لوکومبیل", nameEn: "Locomobil", aliases: ["لوکومبیل", "Locomobile"] },
+  { name: "فیلتر میهن", nameEn: "Mihan", aliases: ["میهن", "میهن فیلتر", "Mihan Filter"] },
+  { name: "فیلتر گیربکس ATFO", nameEn: "ATFO", aliases: ["اتفو", "فیلتر ATFO"] },
   { name: "بهران", nameEn: "Behran" },
   { name: "ایرانول", nameEn: "Iranol" },
   { name: "پارس", nameEn: "Pars" },

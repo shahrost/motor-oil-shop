@@ -58,11 +58,16 @@ async function findExistingSkus(skus) {
   return found.map((p) => p.sku);
 }
 
-// حذف محصولاتی که کدشان در لیست نیست؛ خروجی: محصولات حذف‌شده { sku, name }
-async function deleteWhereSkuNotIn(skus) {
-  const stale = await Product.find({
+// محصولاتی که کدشان در لیست نیست (بدون حذف)؛ خروجی: [{ _id, sku, name }]
+async function findWhereSkuNotIn(skus) {
+  return Product.find({
     sku: { $exists: true, $nin: ["", ...skus] },
   }).select("sku name");
+}
+
+// حذف محصولاتی که کدشان در لیست نیست؛ خروجی: محصولات حذف‌شده { sku, name }
+async function deleteWhereSkuNotIn(skus) {
+  const stale = await findWhereSkuNotIn(skus);
 
   if (stale.length) {
     await Product.deleteMany({ _id: { $in: stale.map((p) => p._id) } });
@@ -78,6 +83,7 @@ module.exports = {
   setFieldsById,
   bulkWrite,
   findExistingSkus,
+  findWhereSkuNotIn,
   deleteWhereSkuNotIn,
   createProduct,
   getProductById,

@@ -10,9 +10,9 @@ function SubmitStatus({ loading, label, loadingLabel, progress, error }) {
         {loading ? loadingLabel : label}
       </button>
 
-      {loading && progress && <p className="text-gray-600 text-sm mt-3">{progress}</p>}
+      {loading && progress && <p className="text-gray-600 text-sm mt-3 w-full">{progress}</p>}
 
-      {error && <p className="text-red-600 text-sm mt-3">{error}</p>}
+      {error && <p className="text-red-600 text-sm mt-3 w-full">{error}</p>}
     </>
   );
 }

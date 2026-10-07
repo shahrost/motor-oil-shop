@@ -50,7 +50,7 @@ export async function importProductsService(
   uploadedImages = {},
   removeMissing = false,
   onStage,
-  { onlyNew = false } = {},
+  { onlyNew = false, dryRun = false, imageNames = [] } = {},
 ) {
   const formData = new FormData();
 
@@ -61,6 +61,11 @@ export async function importProductsService(
   formData.append("onlyNew", String(onlyNew));
 
   formData.append("uploadedImages", JSON.stringify(uploadedImages));
+
+  // پیش‌نمایش (بدون ثبت): عکسی آپلود نمی‌شه، فقط اسم فایل‌ها برای بررسی ردیف‌ها می‌ره
+  formData.append("dryRun", String(dryRun));
+
+  formData.append("imageNames", JSON.stringify(imageNames));
 
   if (onStage) onStage("ارسال فایل اکسل به سرور");
 
@@ -73,7 +78,7 @@ export async function importProductsService(
               "Content-Type": "multipart/form-data",
             },
           }),
-        "شروع ایمپورت",
+        dryRun ? "پیش‌نمایش ایمپورت" : "شروع ایمپورت",
       );
 
       return response.data.data;

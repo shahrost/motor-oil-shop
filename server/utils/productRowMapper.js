@@ -1,24 +1,27 @@
-const brands = require("../data/brands");
 const { toNumber } = require("./excelReader");
+const { matchBrand } = require("./brandMatcher");
+const RowError = require("./RowError");
 
-// برند اکسل (فارسی یا انگلیسی) ← نام فارسی ثبت‌شده‌ی برند؛ برند ناشناخته خطا می‌ده
-function normalizeBrand(rawBrand) {
-  const value = String(rawBrand || "").trim();
+// برند اکسل (فارسی/انگلیسی/نام مستعار، با هر ترتیب کلمات) ← نام فارسی ثبت‌شده‌ی برند
+const normalizeBrand = (rawBrand) => matchBrand(rawBrand).name;
 
-  const match = brands.find(
-    (b) =>
-      b.name === value || b.nameEn.toLowerCase() === value.toLowerCase(),
-  );
+// ستون موجودی: عدد، یا متن «موجود» (تعداد نامشخص ← ۱) و «ناموجود» (۰)
+function parseStock(rawStock) {
+  const text = String(rawStock || "").trim();
 
-  if (!match) {
-    throw new Error(
-      `برند «${value}» شناخته‌شده نیست. یکی از برندهای موجود را وارد کنید: ${brands
-        .map((b) => b.name)
-        .join("، ")}`,
+  if (/^(ناموجود|نا\s*موجود)$/.test(text)) return 0;
+  if (/^(موجود|دارد|بله)$/.test(text)) return 1;
+
+  const number = toNumber(text);
+
+  if (text && isNaN(number)) {
+    throw new RowError(
+      `مقدار ستون «موجودی» («${text}») عدد یا «موجود/ناموجود» نیست`,
+      "مقدار ستون «موجودی» عدد یا «موجود/ناموجود» نیست",
     );
   }
 
-  return match.name;
+  return number || 0;
 }
 
 // بعضی فایل‌ها (مثلاً ادینول) توی ستون ویسکوزیته، بعد از گرید لیست بلند
@@ -81,7 +84,7 @@ function rowToProductDoc(row) {
   // محصول رو تغییر نمی‌ده؛ ستون موجود با خانه‌ی خالی همون رفتار قبلی رو داره.
   if (row.price !== undefined) doc.price = toNumber(row.price) || 0;
   if (row.cartonCount !== undefined) doc.cartonCount = toNumber(row.cartonCount) || 1;
-  if (row.stock !== undefined) doc.stock = toNumber(row.stock) || 0;
+  if (row.stock !== undefined) doc.stock = parseStock(row.stock);
 
   const priceCheck = toNumber(row.priceCheck);
 
@@ -92,4 +95,4 @@ function rowToProductDoc(row) {
   return doc;
 }
 
-module.exports = { rowToProductDoc, splitList, splitGrade, normalizeBrand };
+module.exports = { rowToProductDoc, splitList, splitGrade, normalizeBrand, parseStock };

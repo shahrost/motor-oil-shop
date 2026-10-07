@@ -4,6 +4,16 @@ const apiResponse = require("../utils/apiResponse");
 const AppError = require("../utils/AppError");
 const { startJob, resolveUploadedImages } = require("../utils/importJobs");
 
+function parseImageNames(rawNames) {
+  try {
+    const names = JSON.parse(rawNames || "[]");
+
+    return Array.isArray(names) ? names.map((name) => ({ originalname: String(name) })) : [];
+  } catch {
+    throw new AppError("لیست نام عکس‌ها نامعتبر است", 400);
+  }
+}
+
 // ایمپورت به‌صورت job پس‌زمینه اجرا می‌شه و فوراً jobId برمی‌گردونه
 async function importProducts(req, res, next) {
   try {
@@ -13,10 +23,15 @@ async function importProducts(req, res, next) {
       throw new AppError("فایل اکسل ارسال نشده است", 400);
     }
 
-    const imageFiles = [
-      ...((req.files && req.files.images) || []),
-      ...resolveUploadedImages(req.body?.uploadedImages),
-    ];
+    const dryRun = req.body?.dryRun === "true";
+
+    // پیش‌نمایش عکسی آپلود نمی‌کنه؛ فقط اسم فایل‌ها برای بررسی وجود عکس هر ردیف می‌آد
+    const imageFiles = dryRun
+      ? parseImageNames(req.body?.imageNames)
+      : [
+          ...((req.files && req.files.images) || []),
+          ...resolveUploadedImages(req.body?.uploadedImages),
+        ];
 
     const jobId = startJob(
       "product-import",
@@ -24,12 +39,17 @@ async function importProducts(req, res, next) {
         productImportService.importProducts(excelFile, imageFiles, {
           removeMissing: req.body?.removeMissing === "true",
           onlyNew: req.body?.onlyNew === "true",
+          dryRun,
           onStage,
         }),
       imageFiles.length,
     );
 
-    return apiResponse.success(res, { jobId }, "ایمپورت شروع شد");
+    return apiResponse.success(
+      res,
+      { jobId },
+      dryRun ? "پیش‌نمایش ایمپورت شروع شد" : "ایمپورت شروع شد",
+    );
   } catch (error) {
     next(error);
   }

@@ -51,13 +51,24 @@ function ProductImportForm() {
         فقط محصولات جدید اضافه شوند (محصولات موجود ویرایش نشوند)
       </label>
 
-      <SubmitStatus
-        loading={importer.loading}
-        label="اجرای ایمپورت"
-        loadingLabel="در حال ایمپورت..."
-        progress={importer.progress}
-        error={importer.error}
-      />
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          onClick={importer.preview}
+          disabled={importer.loading}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg disabled:opacity-50"
+        >
+          پیش‌نمایش (بدون ثبت)
+        </button>
+
+        <SubmitStatus
+          loading={importer.loading}
+          label="اجرای ایمپورت"
+          loadingLabel="در حال ایمپورت..."
+          progress={importer.progress}
+          error={importer.error}
+        />
+      </div>
 
       {result && <ProductImportResult result={result} />}
     </form>
