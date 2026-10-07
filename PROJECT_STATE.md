@@ -12,6 +12,7 @@ Status: Completed ✅ (build تمیز؛ دیپلوی کلاینت)
 ✅ `ProductCard.jsx`: ریشه `flex flex-col`؛ `CardActions` + پیام «اضافه شد» داخل wrapper با `mt-auto` (همیشه ته کارت). ارتفاع ثابت استفاده نشد
 ✅ `ProductInfo.jsx`: `space-y-3`→`space-y-1.5`، margin عنوان/خودروهای سازگار کمتر، `DiscountBadge` از ردیف جدا به کنار قیمت رفت (`flex justify-between`؛ بدون تخفیف همچنان نامرئی ولی جا را نگه می‌دارد تا هم‌ترازی حفظ شود)
 ✅ `PurchaseBox` (`mt-5`→`mt-3`)، `CardActions` (`mt-4`→`mt-3`)، `ProductImage` (`h-56`→`h-48`)
+✅ فشرده‌سازی دوم: عکس `h-48`→`h-40`، padding کارت `p-4`→`p-3`، ارتفاع select/input `h-11`→`h-10`، مشخصات `text-lg`→`text-base` با `space-y-1`، قیمت `text-2xl`→`text-xl`، دکمه‌ها `py-2.5`→`py-2`
 ✅ بدون تغییر در گرید صفحات (`ViscosityProductsList` و `BrandProducts`) و ریسپانسیو
 ⚠️ کارت‌های دیگر (`VehicleCard`, `PromotionCard`, `EntryCard`, `ProductRowCard`) دست نخوردند
 

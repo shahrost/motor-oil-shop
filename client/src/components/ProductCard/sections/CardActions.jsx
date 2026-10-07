@@ -22,7 +22,7 @@ function CardActions({ product, handleAddCart }) {
         hover:bg-gray-800
         text-white
         px-3
-        py-2.5
+        py-2
         rounded-lg
         text-sm
         font-bold
@@ -40,7 +40,7 @@ function CardActions({ product, handleAddCart }) {
         hover:bg-yellow-500
         text-gray-950
         px-3
-        py-2.5
+        py-2
         rounded-lg
         text-sm
         font-bold

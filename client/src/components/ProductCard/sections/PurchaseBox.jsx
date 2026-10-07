@@ -41,7 +41,7 @@ function PurchaseBox({
           onChange={(e) => setOrderType(e.target.value)}
           className="
           w-full
-          h-11
+          h-10
           border
           rounded-lg
           px-2
@@ -65,7 +65,7 @@ function PurchaseBox({
           onChange={(e) => setQuantity(e.target.value)}
           className="
           w-full
-          h-11
+          h-10
           border
           rounded-lg
           px-2
@@ -84,7 +84,7 @@ function PurchaseBox({
           onChange={(e) => setPaymentType(e.target.value)}
           className="
           w-full
-          h-11
+          h-10
           border
           rounded-lg
           px-2

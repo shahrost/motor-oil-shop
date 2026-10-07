@@ -30,7 +30,7 @@ function ProductInfo({ product, paymentType }) {
         {getProductNameLabel(product.name, language)}
       </h2>
 
-      <div className="mt-2 space-y-1.5 text-lg font-bold text-gray-800">
+      <div className="mt-2 space-y-1 text-base font-bold text-gray-800">
         <SpecLine
           className="line-clamp-2 break-words"
           label={t("common.viscosity")}
@@ -68,7 +68,7 @@ function ProductInfo({ product, paymentType }) {
         <div>
           <p
             className="
-            text-2xl
+            text-xl
             font-extrabold
             text-gray-950
             "

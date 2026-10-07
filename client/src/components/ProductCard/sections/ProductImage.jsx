@@ -25,7 +25,7 @@ function ProductImage({ product }) {
         onClick={() => setZoomed(true)}
         className="
         w-full
-        h-48
+        h-40
         object-contain
         hover:scale-105
         transition

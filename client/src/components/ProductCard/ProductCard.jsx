@@ -24,7 +24,7 @@ function ProductCard({ product }) {
 
   return (
     // flex-col: lets the actions block be pushed to the bottom (grid stretch already equalizes card height)
-    <div className="flex flex-col border-2 border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition">
+    <div className="flex flex-col border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition">
       <ProductImage product={product} />
 
       <ProductInfo product={product} paymentType={paymentType} />
