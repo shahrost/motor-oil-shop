@@ -20,10 +20,11 @@ function VehicleProvider({ children }) {
     }
   }, []);
 
-  // لیست خودروها حجیمه و فقط صفحه‌های خودرو و پنل ادمین لازمش دارن؛
+  // لیست خودروها حجیمه و فقط صفحه‌های مدل/جزئیات خودرو و پنل ادمین لازمش دارن؛
   // پس فقط وقتی کاربر اولین بار به اون صفحه‌ها رفت دریافت می‌شه تا لود صفحه‌ی اصلی کند نشه.
+  // صفحه‌ی برندها (/vehicles) برندها رو جدا و سبک از سرور می‌گیره.
   const { pathname } = useLocation();
-  const needsVehicles = /^\/(vehicle|admin)/.test(pathname);
+  const needsVehicles = /^\/(vehicles\/|vehicle\/|admin)/.test(pathname);
   const [requested, setRequested] = useState(false);
 
   if (needsVehicles && !requested) setRequested(true);

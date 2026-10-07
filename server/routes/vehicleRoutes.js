@@ -3,6 +3,7 @@ const importUpload = require("../middleware/importUpload");
 const { auth } = require("../middleware/auth");
 const {
   getVehicles,
+  getVehicleBrands,
   getFilterCompatibility,
   importVehicles,
   importParsedVehicles,
@@ -16,6 +17,9 @@ const router = express.Router();
 
 // دریافت همه خودروها
 router.get("/", getVehicles);
+
+// برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»؛ سبک‌تر از لیست کامل)
+router.get("/brands", getVehicleBrands);
 
 // خودروهای سازگار هر فیلتر (فقط نام‌ها؛ سبک‌تر از لیست کامل خودروها)
 router.get("/filter-compatibility", getFilterCompatibility);

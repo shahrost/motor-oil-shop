@@ -10,6 +10,14 @@ export async function fetchVehicles() {
   return response.data;
 }
 
+// برندهای خودرو با تعداد مدل‌ها: [{ name, nameEn, count }] (خیلی سبک‌تر از لیست کامل)
+
+export async function fetchVehicleBrands() {
+  const response = await apiClient.get("/vehicles/brands");
+
+  return response.data.data || [];
+}
+
 // خودروهای سازگار هر فیلتر: { "<کد محصول>": [{ name, nameEn }] }
 
 export async function fetchFilterCompatibility() {

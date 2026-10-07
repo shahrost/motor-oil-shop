@@ -11,7 +11,7 @@ const menu = [
   },
   {
     key: "myVehicles",
-    titleFa: "خودروهای من",
+    titleFa: "خودروها",
     path: "/vehicles",
   },
   {

@@ -4,6 +4,26 @@ async function getAllVehicles() {
   return Vehicle.find().sort({ sku: 1 });
 }
 
+// برندها با تعداد مدل‌ها (بدون خواندن همه‌ی خودروها): [{ name, nameEn, count }]
+async function getBrandSummaries() {
+  const rows = await Vehicle.aggregate([
+    {
+      $group: {
+        _id: "$brand",
+        nameEn: { $max: "$brandEn" },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { count: -1, _id: 1 } },
+  ]);
+
+  return rows.map((row) => ({
+    name: row._id,
+    nameEn: row.nameEn || row._id,
+    count: row.count,
+  }));
+}
+
 // فیلدهای لازم برای تطبیق نام خودرو و افزودن لینک محصول
 async function getVehiclesForLinking() {
   return Vehicle.find()
@@ -36,6 +56,7 @@ async function deleteWhereSkuNotIn(skus) {
 
 module.exports = {
   getAllVehicles,
+  getBrandSummaries,
   getVehiclesForLinking,
   getVehiclesWithFilterLinks,
   bulkWrite,

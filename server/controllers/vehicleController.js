@@ -14,6 +14,19 @@ async function getVehicles(req, res, next) {
   }
 }
 
+// برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»)
+async function getVehicleBrands(req, res, next) {
+  try {
+    const brands = await vehicleService.getVehicleBrands();
+
+    res.set("Cache-Control", "public, max-age=300");
+
+    return apiResponse.success(res, brands);
+  } catch (error) {
+    next(error);
+  }
+}
+
 // خودروهای سازگار هر فیلتر (برای نمایش روی کارت محصول)
 async function getFilterCompatibility(req, res, next) {
   try {
@@ -82,6 +95,7 @@ async function importParsedVehicles(req, res, next) {
 
 module.exports = {
   getVehicles,
+  getVehicleBrands,
   getFilterCompatibility,
   importVehicles,
   importParsedVehicles,

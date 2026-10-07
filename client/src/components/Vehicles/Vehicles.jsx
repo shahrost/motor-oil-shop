@@ -17,11 +17,15 @@ function Vehicles() {
 
       <p className="text-center mt-3 text-gray-600">{t("vehicles.subtitle")}</p>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {brands.map((brand) => (
-          <VehicleBrandCard key={brand.name} brand={brand} />
-        ))}
-      </div>
+      {brands === null ? (
+        <p className="text-center text-gray-500 mt-10">{t("vehicles.loading")}</p>
+      ) : (
+        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+          {brands.map((brand) => (
+            <VehicleBrandCard key={brand.name} brand={brand} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

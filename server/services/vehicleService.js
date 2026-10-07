@@ -6,6 +6,11 @@ async function getVehicles() {
   return vehicleRepository.getAllVehicles();
 }
 
+// برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»؛ خیلی سبک‌تر از لیست کامل)
+async function getVehicleBrands() {
+  return vehicleRepository.getBrandSummaries();
+}
+
 // خودروهای سازگار هر فیلتر، از همان لینک‌های فیلتر خودروها (بدون داده‌ی جدید):
 // { "<کد محصول>": [{ name, nameEn }] } — هر خودرو برای هر محصول یک بار
 async function getFilterCompatibility() {
@@ -29,4 +34,4 @@ async function getFilterCompatibility() {
   return bySku;
 }
 
-module.exports = { getVehicles, getFilterCompatibility };
+module.exports = { getVehicles, getVehicleBrands, getFilterCompatibility };
