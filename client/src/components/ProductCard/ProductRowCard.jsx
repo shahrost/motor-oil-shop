@@ -48,13 +48,16 @@ function ProductRowCard({ product }) {
         className="mt-2"
       />
 
-      <div className="mt-2 text-right">
-        <DiscountBadge percent={product.discountPercent || 0} />
-      </div>
+      {/* قیمت و نشان تخفیف تو یک ردیف؛ بدون تخفیف نشان رندر نمی‌شه تا ردیف اضافه جا نگیره */}
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-1">
+        <p className="text-sm sm:text-lg font-extrabold text-gray-950">
+          {formatPrice(getProductPrice(product, card.paymentType), language)}
+        </p>
 
-      <p className="mt-1 text-sm sm:text-lg font-extrabold text-gray-950">
-        {formatPrice(getProductPrice(product, card.paymentType), language)}
-      </p>
+        {product.discountPercent > 0 && (
+          <DiscountBadge percent={product.discountPercent} />
+        )}
+      </div>
 
       <RowCardPurchase
         t={t}

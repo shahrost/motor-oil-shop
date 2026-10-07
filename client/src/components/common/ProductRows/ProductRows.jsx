@@ -23,7 +23,8 @@ function ProductRows({ products, notFoundKey = "products.notFound" }) {
   }
 
   return (
-    <div className="space-y-10">
+    // pb-2 داخل BrandRow جای سایه‌ی کارت‌هاست؛ با space-y-2 فاصله‌ی کل ردیف‌ها ۱۶px می‌شه
+    <div className="space-y-2">
       {rows.map(({ brand, items }) => (
         <BrandRow key={brand.name} brand={brand} items={items} t={t} />
       ))}
