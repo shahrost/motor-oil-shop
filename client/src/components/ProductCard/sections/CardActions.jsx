@@ -10,7 +10,7 @@ function CardActions({ product, handleAddCart }) {
       className="
       flex
       gap-2
-      mt-4
+      mt-3
       "
     >
       <Link

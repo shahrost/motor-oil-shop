@@ -25,7 +25,7 @@ function PurchaseBox({
   return (
     <div
       className="
-      mt-5
+      mt-3
       grid
       grid-cols-3
       gap-2

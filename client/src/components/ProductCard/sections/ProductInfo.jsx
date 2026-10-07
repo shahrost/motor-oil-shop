@@ -23,14 +23,14 @@ function ProductInfo({ product, paymentType }) {
         className="
         text-xl
         font-extrabold
-        mt-4
+        mt-2
         text-gray-900
         "
       >
         {getProductNameLabel(product.name, language)}
       </h2>
 
-      <div className="mt-4 space-y-3 text-lg font-bold text-gray-800">
+      <div className="mt-2 space-y-1.5 text-lg font-bold text-gray-800">
         <SpecLine
           className="line-clamp-2 break-words"
           label={t("common.viscosity")}
@@ -61,24 +61,27 @@ function ProductInfo({ product, paymentType }) {
         />
       </div>
 
-      <CompatibleVehicles product={product} className="mt-3" />
+      <CompatibleVehicles product={product} className="mt-2" />
 
-      <div className="mt-3 text-right">
+      {/* قیمت و نشان تخفیف تو یک ردیف تا کارت یک ردیف کوتاه‌تر بشه */}
+      <div className="mt-2 flex items-start justify-between gap-2">
+        <div>
+          <p
+            className="
+            text-2xl
+            font-extrabold
+            text-gray-950
+            "
+          >
+            {formatPrice(getProductPrice(product, paymentType), language)}
+          </p>
+
+          <p className="text-sm text-gray-500">
+            {t("productCard.pricePerUnit")}
+          </p>
+        </div>
+
         <DiscountBadge percent={product.discountPercent || 0} />
-      </div>
-
-      <div className="mt-2">
-        <p
-          className="
-          text-2xl
-          font-extrabold
-          text-gray-950
-          "
-        >
-          {formatPrice(getProductPrice(product, paymentType), language)}
-        </p>
-
-        <p className="text-sm text-gray-500">{t("productCard.pricePerUnit")}</p>
       </div>
     </>
   );
