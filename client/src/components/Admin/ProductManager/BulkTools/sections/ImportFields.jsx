@@ -14,7 +14,7 @@ function ImportFields({ templateFile, templateLabel, imagesLabel, removeLabel, i
         {templateLabel}
       </a>
 
-      <label className="block text-sm font-medium mb-1">فایل اکسل</label>
+      <label className="block text-sm font-bold mb-1">فایل اکسل</label>
       <input
         type="file"
         accept=".xlsx,.xls,.csv"
@@ -22,7 +22,7 @@ function ImportFields({ templateFile, templateLabel, imagesLabel, removeLabel, i
         className={FILE_INPUT_CLASS}
       />
 
-      <label className="block text-sm font-medium mb-1">{imagesLabel}</label>
+      <label className="block text-sm font-bold mb-1">{imagesLabel}</label>
       <input
         type="file"
         accept="image/*"

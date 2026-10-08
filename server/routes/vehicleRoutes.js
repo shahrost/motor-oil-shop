@@ -3,6 +3,8 @@ const importUpload = require("../middleware/importUpload");
 const { auth } = require("../middleware/auth");
 const {
   getVehicles,
+  getBrandVehicles,
+  getVehicleById,
   getVehicleBrands,
   getFilterCompatibility,
   importVehicles,
@@ -20,6 +22,10 @@ router.get("/", getVehicles);
 
 // برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»؛ سبک‌تر از لیست کامل)
 router.get("/brands", getVehicleBrands);
+
+// مدل‌های یک برند و یک خودرو (برای صفحه‌های مدل و جزئیات؛ سبک‌تر از لیست کامل)
+router.get("/brand/:brand", getBrandVehicles);
+router.get("/item/:id", getVehicleById);
 
 // خودروهای سازگار هر فیلتر (فقط نام‌ها؛ سبک‌تر از لیست کامل خودروها)
 router.get("/filter-compatibility", getFilterCompatibility);

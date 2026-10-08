@@ -23,7 +23,7 @@ function PriceUpdateForm() {
         دانلود فایل نمونه بروزرسانی قیمت
       </a>
 
-      <label className="block text-sm font-medium mb-1">فایل قیمت‌ها</label>
+      <label className="block text-sm font-bold mb-1">فایل قیمت‌ها</label>
       <input
         type="file"
         accept=".xlsx,.xls,.csv"

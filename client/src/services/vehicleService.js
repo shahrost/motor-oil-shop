@@ -10,6 +10,32 @@ export async function fetchVehicles() {
   return response.data;
 }
 
+// مدل‌های یک برند (سبک‌تر از لیست کامل)
+
+export async function fetchBrandVehicles(brand) {
+  const response = await apiClient.get(
+    `/vehicles/brand/${encodeURIComponent(brand)}`,
+  );
+
+  return response.data.data || [];
+}
+
+// یک خودرو با شناسه؛ نبود (404) ← null
+
+export async function fetchVehicleById(id) {
+  try {
+    const response = await apiClient.get(
+      `/vehicles/item/${encodeURIComponent(id)}`,
+    );
+
+    return response.data.data || null;
+  } catch (error) {
+    if (error.response?.status === 404) return null;
+
+    throw error;
+  }
+}
+
 // برندهای خودرو با تعداد مدل‌ها: [{ name, nameEn, count }] (خیلی سبک‌تر از لیست کامل)
 
 export async function fetchVehicleBrands() {

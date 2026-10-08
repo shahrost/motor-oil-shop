@@ -14,6 +14,30 @@ async function getVehicles(req, res, next) {
   }
 }
 
+// مدل‌های یک برند (سبک‌تر از لیست کامل)
+async function getBrandVehicles(req, res, next) {
+  try {
+    const vehicles = await vehicleService.getBrandVehicles(req.params.brand);
+
+    return apiResponse.success(res, vehicles);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// یک خودرو با شناسه
+async function getVehicleById(req, res, next) {
+  try {
+    const vehicle = await vehicleService.getVehicleById(req.params.id);
+
+    if (!vehicle) throw new AppError("خودرو پیدا نشد", 404);
+
+    return apiResponse.success(res, vehicle);
+  } catch (error) {
+    next(error);
+  }
+}
+
 // برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»)
 async function getVehicleBrands(req, res, next) {
   try {
@@ -95,6 +119,8 @@ async function importParsedVehicles(req, res, next) {
 
 module.exports = {
   getVehicles,
+  getBrandVehicles,
+  getVehicleById,
   getVehicleBrands,
   getFilterCompatibility,
   importVehicles,

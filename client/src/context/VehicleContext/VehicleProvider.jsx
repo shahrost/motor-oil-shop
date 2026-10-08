@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-
-import { useLocation } from "react-router-dom";
+import { useCallback, useMemo, useState } from "react";
 
 import VehicleContext from "./VehicleContext";
 import defaultVehicles from "../../data/vehicles";
 import { fetchVehicles } from "../../services/vehicleService";
 
 // تا وقتی خودرویی از ایمپورت ادمین توی دیتابیس نباشه، دیتای پیش‌فرض نشون داده می‌شه.
+// لیست کامل خودروها حجیمه و خودکار گرفته نمی‌شه: صفحه‌های مشتری داده‌ی سبک خودشون رو
+// می‌گیرن (برندها، مدل‌های یک برند، یک خودرو — Vehicles/hooks)؛ فقط بعد از ایمپورت
+// ادمین (reloadVehicles) لیست کامل دریافت می‌شه.
 function VehicleProvider({ children }) {
   const [dbVehicles, setDbVehicles] = useState([]);
 
@@ -19,31 +20,6 @@ function VehicleProvider({ children }) {
       console.log("خطا در دریافت خودروها", error);
     }
   }, []);
-
-  // لیست خودروها حجیمه و فقط صفحه‌های مدل/جزئیات خودرو و پنل ادمین لازمش دارن؛
-  // پس فقط وقتی کاربر اولین بار به اون صفحه‌ها رفت دریافت می‌شه تا لود صفحه‌ی اصلی کند نشه.
-  // صفحه‌ی برندها (/vehicles) برندها رو جدا و سبک از سرور می‌گیره.
-  const { pathname } = useLocation();
-  const needsVehicles = /^\/(vehicles\/|vehicle\/|admin)/.test(pathname);
-  const [requested, setRequested] = useState(false);
-
-  if (needsVehicles && !requested) setRequested(true);
-
-  useEffect(() => {
-    if (!requested) return;
-
-    async function loadVehicles() {
-      try {
-        const response = await fetchVehicles();
-
-        setDbVehicles(response.data || []);
-      } catch (error) {
-        console.log("خطا در دریافت خودروها", error);
-      }
-    }
-
-    loadVehicles();
-  }, [requested]);
 
   const value = useMemo(
     () => ({

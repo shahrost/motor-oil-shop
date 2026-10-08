@@ -8,7 +8,11 @@ import VehicleCard from "./VehicleCard";
 // مدل‌های یک برند خودرو (با جستجو)؛ هر مدل به صفحه‌ی روانکار و فیلترش می‌ره
 function VehicleBrand() {
   const { language, t } = useContext(LanguageContext);
-  const { first, search, setSearch, filtered } = useVehicleBrandModels();
+  const { loading, first, search, setSearch, filtered } = useVehicleBrandModels();
+
+  if (loading) {
+    return <p className="text-center text-gray-500 mt-10">{t("vehicles.loading")}</p>;
+  }
 
   if (!first) {
     return (

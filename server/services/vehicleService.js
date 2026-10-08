@@ -6,6 +6,20 @@ async function getVehicles() {
   return vehicleRepository.getAllVehicles();
 }
 
+// مدل‌های یک برند (برای صفحه‌ی /vehicles/:brand)؛ از کش لیست کامل، بدون کوئری جدید
+async function getBrandVehicles(brand) {
+  const vehicles = await vehicleRepository.getAllVehicles();
+
+  return vehicles.filter((vehicle) => vehicle.brand === brand);
+}
+
+// یک خودرو با شناسه (برای صفحه‌ی /vehicle/:id)؛ نبود ← null
+async function getVehicleById(id) {
+  const vehicles = await vehicleRepository.getAllVehicles();
+
+  return vehicles.find((vehicle) => vehicle.id === id) || null;
+}
+
 // برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»؛ خیلی سبک‌تر از لیست کامل)
 async function getVehicleBrands() {
   return vehicleRepository.getBrandSummaries();
@@ -34,4 +48,10 @@ async function getFilterCompatibility() {
   return bySku;
 }
 
-module.exports = { getVehicles, getVehicleBrands, getFilterCompatibility };
+module.exports = {
+  getVehicles,
+  getBrandVehicles,
+  getVehicleById,
+  getVehicleBrands,
+  getFilterCompatibility,
+};

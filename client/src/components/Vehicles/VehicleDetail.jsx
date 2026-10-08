@@ -10,7 +10,11 @@ import PartProducts from "./sections/PartProducts";
 
 function VehicleDetail() {
   const { language, t } = useContext(LanguageContext);
-  const { vehicle, parts, selected, selectPart } = useVehicleDetail();
+  const { loading, vehicle, parts, selected, selectPart } = useVehicleDetail();
+
+  if (loading) {
+    return <p className="text-center text-gray-500 mt-10">{t("vehicles.loading")}</p>;
+  }
 
   if (!vehicle) {
     return (
