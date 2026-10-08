@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 import Header from "./Header";
@@ -12,7 +13,10 @@ function MainLayout() {
       <Header />
 
       <main>
-        <Outlet />
+        {/* صفحه‌ها جدا لود می‌شن؛ تا رسیدنشون جای خالی نگه داشته می‌شه تا فوتر بالا نپره */}
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <Outlet />
+        </Suspense>
       </main>
 
       <Footer />

@@ -2,30 +2,34 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Home from "../pages/Home";
-import Login from "../pages/Login";
 import Products from "../pages/Products";
-import ProductDetail from "../pages/ProductDetail";
-import Cart from "../pages/Cart";
-import Order from "../pages/Order";
-import Viscosity from "../pages/Viscosity";
-import ViscosityProducts from "../pages/ViscosityProducts";
-import Brands from "../pages/Brands";
-import BrandProducts from "../pages/BrandProducts";
-import CategoryProducts from "../pages/CategoryProducts";
-import Vehicles from "../pages/Vehicles";
-import VehicleBrand from "../pages/VehicleBrand";
-import VehicleDetail from "../pages/VehicleDetail";
-import Promotions from "../pages/Promotions";
-import Contact from "../pages/Contact";
-import About from "../pages/About";
-import Register from "../pages/Register";
-import AccountLogin from "../pages/AccountLogin";
-import Account from "../pages/Account";
 
 import ProtectedRoute from "../components/ProtectedRoute";
 import CustomerProtectedRoute from "../components/CustomerProtectedRoute";
 
-// پنل ادمین حجیمه و مشتری‌ها لازمش ندارن؛ جدا لود می‌شه تا صفحه‌ی اصلی سبک‌تر باشه
+// فقط صفحه‌ی اصلی و محصولات (پربازدیدترین ورودی‌ها) همراه بسته‌ی اول می‌آن؛
+// بقیه‌ی صفحه‌ها اولین باری که باز می‌شن جدا لود می‌شن تا لود اول سبک‌تر باشه.
+// Suspense صفحه‌های مشتری در MainLayout است.
+const Login = lazy(() => import("../pages/Login"));
+const ProductDetail = lazy(() => import("../pages/ProductDetail"));
+const Cart = lazy(() => import("../pages/Cart"));
+const Order = lazy(() => import("../pages/Order"));
+const Viscosity = lazy(() => import("../pages/Viscosity"));
+const ViscosityProducts = lazy(() => import("../pages/ViscosityProducts"));
+const Brands = lazy(() => import("../pages/Brands"));
+const BrandProducts = lazy(() => import("../pages/BrandProducts"));
+const CategoryProducts = lazy(() => import("../pages/CategoryProducts"));
+const Vehicles = lazy(() => import("../pages/Vehicles"));
+const VehicleBrand = lazy(() => import("../pages/VehicleBrand"));
+const VehicleDetail = lazy(() => import("../pages/VehicleDetail"));
+const Promotions = lazy(() => import("../pages/Promotions"));
+const Contact = lazy(() => import("../pages/Contact"));
+const About = lazy(() => import("../pages/About"));
+const Register = lazy(() => import("../pages/Register"));
+const AccountLogin = lazy(() => import("../pages/AccountLogin"));
+const Account = lazy(() => import("../pages/Account"));
+
+// پنل ادمین حجیمه و مشتری‌ها لازمش ندارن
 const Admin = lazy(() => import("../pages/Admin"));
 const AdminOrders = lazy(() => import("../pages/AdminOrders"));
 

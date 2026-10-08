@@ -1,7 +1,11 @@
 const Vehicle = require("../models/Vehicle");
+const vehicleListCache = require("../utils/vehicleListCache");
 
+// خروجی آبجکت ساده (toJSON) است تا کش‌شدنی باشد
 async function getAllVehicles() {
-  return Vehicle.find().sort({ sku: 1 });
+  return vehicleListCache.get(async () =>
+    (await Vehicle.find().sort({ sku: 1 })).map((vehicle) => vehicle.toJSON()),
+  );
 }
 
 // برندها با تعداد مدل‌ها (بدون خواندن همه‌ی خودروها): [{ name, nameEn, count }]

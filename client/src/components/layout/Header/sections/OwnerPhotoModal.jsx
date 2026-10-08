@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import ownerPhoto from "../../../../assets/logo/shahram-logo.png";
+import ownerPhoto from "../../../../assets/logo/shahram-logo.webp";
 
 // نمایش بزرگ عکس شهرام؛ با کلیک بیرون عکس یا کلید Escape بسته می‌شه
 function OwnerPhotoModal({ t, onClose }) {

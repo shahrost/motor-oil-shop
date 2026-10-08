@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import ownerPhoto from "../../../../assets/logo/shahram-logo.png";
+import ownerPhoto from "../../../../assets/logo/shahram-avatar.webp";
 import brandLogo from "../../../../assets/logo/shahram-monogram-yellow.svg";
 
 function HeaderBrand({ t, onPhotoClick }) {
