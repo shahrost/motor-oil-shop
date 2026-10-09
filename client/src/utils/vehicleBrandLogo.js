@@ -11,6 +11,8 @@ const ALIASES = {
   "mercedes-benz": "mercedes",
   bestune: "besturn",
   "great-wall": "greatwall",
+  "landmark-landwind": "landwind",
+  fmc: "farda",
 };
 
 export function vehicleBrandSlug(nameEn) {
