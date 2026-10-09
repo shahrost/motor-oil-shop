@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
 
-import { EntryCard, OilDropArt, CarArt } from "./sections";
+import { EntryCard, LubricantCard, CarArt } from "./sections";
 
 // صفحه‌ی اصلی: فقط دو کارت ورودی «روانکار» و «خودروهای من»
 function Home() {
@@ -11,11 +11,10 @@ function Home() {
   return (
     <section className="px-5 mt-12 mb-16">
       <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <EntryCard
+        <LubricantCard
           to="/products"
           title={t("home.entries.lubricants.title")}
           description={t("home.entries.lubricants.description")}
-          art={<OilDropArt />}
         />
 
         <EntryCard

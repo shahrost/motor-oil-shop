@@ -302,3 +302,132 @@ img {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* =========================
+      HOME — انیمیشن کارت «روانکار»
+      گالن روغن روی چرخ‌دنده می‌ریزه و متن‌ها طلایی می‌شن
+      (منطق در components/Home/hooks/useOilPour.js)
+========================= */
+
+/* قطره‌ی بزرگ تا وقتی از بالای کارت نیفتاده دیده نمی‌شه */
+.oil-big-drop {
+  opacity: 0;
+  transform-origin: 50% 100%;
+}
+
+/* صفحه‌ی وسط چرخ‌دنده و زنجیر */
+.oil-plate {
+  fill: #f5f6f8;
+  stroke: #cbd0d9;
+}
+
+.dark .oil-plate {
+  fill: #101b2e;
+  stroke: #24324a;
+}
+
+.oil-text-title {
+  --oil-base: var(--text-main);
+}
+
+.oil-text-desc {
+  --oil-base: var(--text-muted);
+}
+
+@property --oil-r {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+/* روغن از نقطه‌ی برخورد روی متن پخش می‌شه و رنگش رو طلایی می‌کنه */
+.oil-soaked {
+  background-image: radial-gradient(
+    circle at var(--oil-x, 50%) 0,
+    #ffc566 0%,
+    #faa61a calc(var(--oil-r) * 0.4),
+    #d67a00 calc(var(--oil-r) * 0.8),
+    #a85f00 calc(var(--oil-r) - 2%),
+    var(--oil-base) var(--oil-r)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  animation: oil-soak 1.6s cubic-bezier(0.25, 0.7, 0.3, 1) forwards;
+}
+
+@keyframes oil-soak {
+  from {
+    --oil-r: 0%;
+  }
+  to {
+    --oil-r: 170%;
+  }
+}
+
+.oil-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.oil-stream {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.oil-stream path {
+  fill: none;
+  stroke: url(#oilStreamFill);
+  stroke-width: 7;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+.oil-jug {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  filter: drop-shadow(0 8px 10px rgb(11 20 36 / 0.3));
+  font-family: "Vazirmatn", sans-serif;
+}
+
+.oil-bead,
+.oil-drip,
+.oil-puddle {
+  position: absolute;
+}
+
+.oil-bead {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe2a0 0 20%, #faa61a 55%, #b86e00 100%);
+}
+
+.oil-drip {
+  width: 10px;
+  height: 13px;
+  border-radius: 50% 50% 50% 50% / 38% 38% 62% 62%;
+  background: radial-gradient(circle at 35% 30%, #ffe2a0 0 18%, #faa61a 45%, #b86e00 100%);
+}
+
+.oil-puddle {
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgb(255 197 102 / 0.9) 0,
+    rgb(250 166 26 / 0.65) 40%,
+    rgb(214 122 0 / 0) 72%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oil-soaked {
+    animation-duration: 1ms;
+  }
+}
