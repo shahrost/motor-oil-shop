@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { clearAdminToken } from "../../../../services/adminTokenStorage";
 
 function useAdminHeader() {
   const navigate = useNavigate();
 
   function logout() {
-    localStorage.removeItem("token");
+    clearAdminToken();
     navigate("/login");
   }
 

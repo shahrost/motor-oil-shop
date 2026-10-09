@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/apiClient";
+import { saveAdminToken } from "../../../services/adminTokenStorage";
 
 function useLogin() {
   const [username, setUsername] = useState("");
@@ -19,7 +20,7 @@ function useLogin() {
 
       const token = response.data.data.token;
 
-      localStorage.setItem("token", token);
+      saveAdminToken(token);
 
       navigate("/admin");
     } catch (error) {

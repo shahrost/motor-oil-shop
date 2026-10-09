@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
 import useAdminHeader from "./hooks/useAdminHeader";
-import menu from "../../../data/menu";
-import brandLogo from "../../../assets/logo/shahram-monogram-black.svg";
+import { AdminBrand, AdminActions, AdminNav } from "./sections";
 
 function AdminHeader() {
   const { logout } = useAdminHeader();
@@ -25,85 +23,12 @@ function AdminHeader() {
         gap-3
         "
       >
-        <div className="flex items-center gap-3">
-          <img
-            src={brandLogo}
-            alt=""
-            className="h-7 w-auto select-none dark:invert"
-            draggable="false"
-          />
+        <AdminBrand />
 
-          <h1
-            className="
-            text-2xl
-            font-bold
-            "
-          >
-            پنل مدیریت محصولات
-          </h1>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Link
-            to="/admin/orders"
-            className="
-            bg-yellow-400
-            text-black
-            px-5
-            py-2
-            rounded-lg
-            font-bold
-            hover:bg-yellow-500
-            "
-          >
-            سفارشات
-          </Link>
-
-          <button
-            onClick={logout}
-            className="
-            bg-red-600
-            text-white
-            px-5
-            py-2
-            rounded-lg
-            hover:bg-red-700
-            "
-          >
-            خروج از پنل
-          </button>
-        </div>
+        <AdminActions onLogout={logout} />
       </div>
 
-      <nav
-        className="
-        flex
-        flex-wrap
-        gap-3
-        mt-4
-        pt-4
-        border-t
-        "
-      >
-        {menu.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className="
-            bg-gray-100
-            hover:bg-yellow-400
-            text-gray-800
-            font-bold
-            px-4
-            py-2
-            rounded-lg
-            transition
-            "
-          >
-            {item.titleFa}
-          </Link>
-        ))}
-      </nav>
+      <AdminNav />
     </header>
   );
 }

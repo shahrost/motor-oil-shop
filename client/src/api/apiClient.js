@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { API_URL } from "./config";
+import { getAdminToken } from "../services/adminTokenStorage";
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -13,7 +14,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     if (!config.headers.Authorization) {
-      const token = localStorage.getItem("token");
+      const token = getAdminToken();
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;

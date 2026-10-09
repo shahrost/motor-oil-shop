@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { verifyToken } from "../services/authService";
+import { getAdminToken, clearAdminToken } from "../services/adminTokenStorage";
 
 // وضعیت ورود ادمین: "checking" | "authorized" | "unauthorized"
 function useAdminAuthCheck() {
-  const hasToken = Boolean(localStorage.getItem("token"));
+  const hasToken = Boolean(getAdminToken());
   const [status, setStatus] = useState(hasToken ? "checking" : "unauthorized");
 
   useEffect(() => {
@@ -16,7 +17,7 @@ function useAdminAuthCheck() {
 
         // فقط توکن نامعتبر/منقضی باعث خروج می‌شه؛ قطعی موقت سرور ادمین رو بیرون نمی‌اندازه
         if (code === 401 || code === 403) {
-          localStorage.removeItem("token");
+          clearAdminToken();
           setStatus("unauthorized");
           return;
         }
