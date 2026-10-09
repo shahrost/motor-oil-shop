@@ -34,7 +34,7 @@ server/   Express + Mongoose
 - کارت محصول: فشرده (عکس `h-40`، فاصله‌های کم، نشان تخفیف کنار قیمت) و دکمه‌های «مشاهده / افزودن به سبد» همیشه پایین کارت و هم‌تراز در هر ردیف گرید (`flex flex-col` + `mt-auto`، بدون ارتفاع ثابت).
 - صفحه‌ی محصولات: فیلتر زنده + دکمه‌ی «نمایش محصولات» که به لیست اسکرول می‌کنه.
 - حساب کاربری مشتری (ثبت‌نام/ورود جدا از ادمین).
-- هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه.
+- هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه. Cart، common و Home هم طبق معماری بازبینی شدن (منطق ردیف سبد در `useCartItem`، `PromotionFields` پوشه‌ای با hook، ابزار مشترک انیمیشن `Home/helpers/animate.js`).
 - ۳۵۷ محصول در دیتابیس (2026-10-06)، همگی به یکی از ۱۷ برند تعریف‌شده در `client/src/data/brands.js` متصل‌اند.
 
 ## هاست و دیپلوی

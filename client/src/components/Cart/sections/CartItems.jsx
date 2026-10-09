@@ -1,24 +1,10 @@
 import CartItem from "./CartItem";
 
-function CartItems({
-  cart,
-  removeFromCart,
-  updateQuantity,
-  changeOrderType,
-  changePaymentType,
-}) {
+function CartItems({ cart }) {
   return (
     <div className="space-y-5">
       {cart.map((item, index) => (
-        <CartItem
-          key={`${item.id}-${index}`}
-          item={item}
-          index={index}
-          removeFromCart={removeFromCart}
-          updateQuantity={updateQuantity}
-          changeOrderType={changeOrderType}
-          changePaymentType={changePaymentType}
-        />
+        <CartItem key={`${item.id}-${index}`} item={item} index={index} />
       ))}
     </div>
   );

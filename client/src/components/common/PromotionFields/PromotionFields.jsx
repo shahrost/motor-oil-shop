@@ -1,39 +1,12 @@
 // فیلدهای طرح فروش — مشترک بین فرم افزودن و ویرایش محصول
-const NUMERIC_FIELDS = [
-  "buyQtyCash",
-  "giftQtyCash",
-  "buyQtyCheck",
-  "giftQtyCheck",
-  "minQty",
-];
-
-function NumberInput({ label, value, onChange }) {
-  return (
-    <div>
-      <label className="block text-sm mb-1">{label}</label>
-
-      <input
-        type="text"
-        inputMode="numeric"
-        value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full border rounded-lg p-2"
-      />
-    </div>
-  );
-}
+import usePromotionFields from "./hooks/usePromotionFields";
+import { NumberInput } from "./sections";
 
 function PromotionFields({ promotion = {}, onChange }) {
-  function update(field, value) {
-    onChange(
-      field,
-      NUMERIC_FIELDS.includes(field) ? String(value).replace(/\D/g, "") : value,
-    );
-  }
-
-  // طرح‌های قدیمی فقط buyQty مشترک دارند
-  const buyQtyCash = promotion.buyQtyCash || promotion.buyQty;
-  const buyQtyCheck = promotion.buyQtyCheck || promotion.buyQty;
+  const { update, buyQtyCash, buyQtyCheck } = usePromotionFields(
+    promotion,
+    onChange,
+  );
 
   return (
     <section className="mb-6">

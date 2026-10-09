@@ -1,15 +1,7 @@
 // ابزارهای انیمیشن روغن کارت «روانکار»: ساخت قطره و پاشش، پخش رنگ روی متن،
 // و هندسه‌ی گالن. همه‌ی المان‌های موقت داخل لایه‌ی انیمیشن کارت ساخته می‌شن.
 
-export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export async function play(el, keyframes, options) {
-  try {
-    await el.animate(keyframes, { fill: "forwards", ...options }).finished;
-  } catch {
-    // انیمیشن با unmount یا اجرای دوباره لغو شد
-  }
-}
+import { play } from "./animate";
 
 function spawn(layer, className, styles) {
   const el = document.createElement("div");

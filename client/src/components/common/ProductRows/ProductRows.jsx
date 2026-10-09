@@ -1,18 +1,12 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../../context/LanguageContext";
-import brandsData from "../../../data/brands";
 import BrandRow from "../BrandRow";
+import useBrandRows from "./hooks/useBrandRows";
 
 function ProductRows({ products, notFoundKey = "products.notFound" }) {
   const { t } = useContext(LanguageContext);
-
-  const rows = brandsData
-    .map((brand) => ({
-      brand,
-      items: products.filter((product) => product.brand === brand.name),
-    }))
-    .filter((row) => row.items.length > 0);
+  const rows = useBrandRows(products);
 
   if (rows.length === 0) {
     return (
@@ -26,7 +20,7 @@ function ProductRows({ products, notFoundKey = "products.notFound" }) {
     // pb-2 داخل BrandRow جای سایه‌ی کارت‌هاست؛ با space-y-2 فاصله‌ی کل ردیف‌ها ۱۶px می‌شه
     <div className="space-y-2">
       {rows.map(({ brand, items }) => (
-        <BrandRow key={brand.name} brand={brand} items={items} t={t} />
+        <BrandRow key={brand.name} brand={brand} items={items} />
       ))}
     </div>
   );

@@ -1,34 +1,25 @@
 import { useContext } from "react";
-import formatPrice from "../../../utils/formatPrice";
-import getBrandLabel from "../../../utils/brandLabel";
-import { getProductNameLabel } from "../../../utils/productNameLabel";
 import LanguageContext from "../../../context/LanguageContext";
-import { calcPromotionGift } from "../../../utils/promotionCalc";
-import { getProductPrice } from "../../../utils/productPrice";
 import GiftBadge from "../../common/GiftBadge";
-import { OrderUnitOptions, PaymentTypeOptions } from "../../common/OrderOptions";
+import CartItemOptions from "./CartItemOptions";
+import useCartItem from "../hooks/useCartItem";
 import {
   getProductImageSrc,
   handleProductImageError,
 } from "../../../utils/productImage";
 
-function CartItem({
-  item,
-  index,
-  removeFromCart,
-  updateQuantity,
-  changeOrderType,
-  changePaymentType,
-}) {
-  const { language, t } = useContext(LanguageContext);
-  const name = getProductNameLabel(item.name, language);
-
-  const giftQty = calcPromotionGift(
-    item.promotion,
-    item.orderType,
-    item.quantity,
-    item.paymentType,
-  );
+function CartItem({ item, index }) {
+  const { t } = useContext(LanguageContext);
+  const {
+    name,
+    brandLabel,
+    priceLabel,
+    giftQty,
+    setQuantity,
+    setOrderType,
+    setPaymentType,
+    remove,
+  } = useCartItem(item, index);
 
   return (
     <div className="bg-white rounded-3xl shadow p-5 grid md:grid-cols-4 gap-5">
@@ -46,10 +37,7 @@ function CartItem({
 
         <p className="mt-2 text-gray-500">
           {t("common.brand")}
-          <b className="text-black">
-            {" "}
-            {getBrandLabel(item.brand, language)}
-          </b>
+          <b className="text-black"> {brandLabel}</b>
         </p>
 
         {item.viscosity && (
@@ -60,55 +48,20 @@ function CartItem({
         )}
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <label className="font-bold block mb-2">{t("common.quantity")}</label>
-
-          <input
-            type="number"
-            min="1"
-            value={item.quantity}
-            onChange={(e) => updateQuantity(item.id, e.target.value, index)}
-            className="w-full border rounded-xl p-3"
-          />
-        </div>
-
-        <div>
-          <label className="font-bold block mb-2">
-            {t("common.orderUnitLabel")}
-          </label>
-
-          <select
-            value={item.orderType}
-            onChange={(e) => changeOrderType(item.id, e.target.value, index)}
-            className="w-full border rounded-xl p-3"
-          >
-            <OrderUnitOptions />
-          </select>
-        </div>
-
-        <div>
-          <label className="font-bold block mb-2">{t("common.payment")}</label>
-
-          <select
-            value={item.paymentType}
-            onChange={(e) => changePaymentType(item.id, e.target.value, index)}
-            className="w-full border rounded-xl p-3"
-          >
-            <PaymentTypeOptions />
-          </select>
-        </div>
-      </div>
+      <CartItemOptions
+        item={item}
+        onQuantityChange={setQuantity}
+        onOrderTypeChange={setOrderType}
+        onPaymentTypeChange={setPaymentType}
+      />
 
       <div className="flex flex-col justify-between">
-        <p className="text-gray-950 text-2xl font-extrabold">
-          {formatPrice(getProductPrice(item, item.paymentType), language)}
-        </p>
+        <p className="text-gray-950 text-2xl font-extrabold">{priceLabel}</p>
 
         <GiftBadge giftQty={giftQty} className="rounded-lg p-2 text-sm" />
 
         <button
-          onClick={() => removeFromCart(item.id, index)}
+          onClick={remove}
           className="bg-red-600 text-white rounded-xl py-3 font-bold"
         >
           {t("cart.removeItem")}

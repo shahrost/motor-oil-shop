@@ -13,8 +13,8 @@ function CompatibleVehicles({
   compact = false,
   className = "",
 }) {
-  const { language, t } = useContext(LanguageContext);
-  const { names, visible, hiddenCount, collapsible, open, toggle } =
+  const { t } = useContext(LanguageContext);
+  const { names, text, hiddenCount, collapsible, open, toggle } =
     useCompatibleVehicles(product, { limit, defaultOpen });
 
   if (!names.length) return null;
@@ -30,7 +30,7 @@ function CompatibleVehicles({
     <div
       className={`${compact ? "text-xs" : "text-sm"} font-bold text-gray-700 ${className}`}
     >
-      <p className="leading-6 break-words">{visible.join(language === "en" ? ", " : "، ")}</p>
+      <p className="leading-6 break-words">{text}</p>
 
       {collapsible && (
         <button

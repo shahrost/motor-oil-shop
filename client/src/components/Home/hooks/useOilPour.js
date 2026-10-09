@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 
 import createGearDrive from "../helpers/gearDrive";
+import { wait, play, prefersReducedMotion, onceVisible } from "../helpers/animate";
 import {
-  wait,
-  play,
   splashBeads,
   splashPuddle,
   fallingDrip,
@@ -56,7 +55,7 @@ function useOilPour() {
     let cancelled = false;
     const alive = () => !cancelled;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = prefersReducedMotion();
 
     const showFinalState = () => {
       el.drop.style.opacity = "1";
@@ -168,16 +167,11 @@ function useOilPour() {
       return () => drive.stop();
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      observer.disconnect();
-      run();
-    }, { threshold: 0.5 });
-    observer.observe(el.card);
+    const stopWatching = onceVisible(el.card, run);
 
     return () => {
       cancelled = true;
-      observer.disconnect();
+      stopWatching();
       drive.stop();
       [el.drop, el.jug, el.stream].forEach((node) => node.getAnimations().forEach((a) => a.cancel()));
       el.layer.querySelectorAll(".oil-bead, .oil-puddle, .oil-drip").forEach((node) => node.remove());

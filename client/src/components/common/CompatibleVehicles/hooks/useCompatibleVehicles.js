@@ -1,34 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 
 import LanguageContext from "../../../../context/LanguageContext";
-import { fetchFilterCompatibility } from "../../../../services/vehicleService";
+import {
+  getCachedCompatibility,
+  loadCompatibility,
+} from "../../../../services/filterCompatibilityCache";
 import {
   showsCompatibleVehicles,
   getCompatibleVehicleNames,
 } from "../../../../utils/compatibleVehicles";
-
-// یک درخواست برای همه‌ی کارت‌ها؛ فقط وقتی اولین کارتِ فیلتر نمایش داده بشه
-// می‌ره و در صورت خطا دفعه‌ی بعد دوباره تلاش می‌شه
-let cached = null;
-let pending = null;
-
-function loadCompatibility() {
-  if (cached) return Promise.resolve(cached);
-
-  if (!pending) {
-    pending = fetchFilterCompatibility()
-      .then((data) => {
-        cached = data;
-
-        return data;
-      })
-      .finally(() => {
-        pending = null;
-      });
-  }
-
-  return pending;
-}
 
 // نام خودروهای سازگار یک فیلتر + وضعیت جمع/باز بودن لیست.
 // برای محصولات غیرفیلتر هیچ درخواستی نمی‌ره و لیست خالیه.
@@ -37,7 +17,7 @@ function useCompatibleVehicles(product, { limit, defaultOpen = false }) {
   const enabled = showsCompatibleVehicles(product);
   const sku = enabled ? String(product.sku).toUpperCase() : "";
 
-  const [data, setData] = useState(cached);
+  const [data, setData] = useState(getCachedCompatibility);
   const [open, setOpen] = useState(defaultOpen);
 
   useEffect(() => {
@@ -60,7 +40,7 @@ function useCompatibleVehicles(product, { limit, defaultOpen = false }) {
 
   return {
     names,
-    visible,
+    text: visible.join(language === "en" ? ", " : "، "),
     hiddenCount: names.length - visible.length,
     collapsible,
     open,

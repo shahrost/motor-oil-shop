@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+
+import LanguageContext from "../../../context/LanguageContext";
 
 import ProductRowCard from "../../ProductCard/ProductRowCard";
 import useDragScroll from "./hooks/useDragScroll";
+import { SwipeHint } from "./sections";
 
-function BrandRow({ brand, items, t }) {
+function BrandRow({ brand, items }) {
+  const { t } = useContext(LanguageContext);
   const { rowRef, dragHandlers } = useDragScroll();
 
   return (
@@ -51,31 +56,7 @@ function BrandRow({ brand, items, t }) {
           >
             <ProductRowCard product={product} />
 
-            {index === 2 && items.length > 3 && (
-              <span
-                className="
-                  sm:hidden
-                  pointer-events-none
-                  absolute
-                  top-10
-                  -left-3
-                  z-10
-                  flex
-                  items-center
-                  justify-center
-                  w-7
-                  h-7
-                  rounded-full
-                  bg-black/60
-                  text-white
-                  text-sm
-                  shadow-lg
-                  animate-pulse
-                "
-              >
-                ‹
-              </span>
-            )}
+            {index === 2 && items.length > 3 && <SwipeHint />}
           </div>
         ))}
       </div>

@@ -9,11 +9,10 @@ import {
   flightKeyframes,
   makeChip,
 } from "../helpers/logoOrbit";
+import { wait, prefersReducedMotion, onceVisible } from "../helpers/animate";
 
 const MAX_SPEED = 0.00035; // رادیان بر میلی‌ثانیه
 const ACCEL = 0.0000004;
-
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // کارت «خودروهای من»: لوگوی برندها از لبه‌های صفحه پرواز می‌کنن داخل کارت
 // و دور ماشین روی بیضی سه‌بعدی می‌چرخن. ref رو به باکس تصویر (دور ماشین) بدید.
@@ -104,16 +103,11 @@ function useLogoOrbit() {
       layoutAll();
     };
 
-    let observer = null;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let stopWatching = null;
+    if (prefersReducedMotion()) {
       showFinalState();
     } else {
-      observer = new IntersectionObserver(([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        run();
-      }, { threshold: 0.5 });
-      observer.observe(art);
+      stopWatching = onceVisible(art, run);
     }
 
     // اندازه‌ی کارت عوض شد ← لوگوها روی بیضی جدید
@@ -122,7 +116,7 @@ function useLogoOrbit() {
 
     return () => {
       cancelled = true;
-      observer?.disconnect();
+      stopWatching?.();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
       flight.querySelectorAll(".logo-chip").forEach((chip) => chip.getAnimations().forEach((an) => an.cancel()));
