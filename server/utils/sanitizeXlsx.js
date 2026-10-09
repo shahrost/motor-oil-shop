@@ -1,5 +1,3 @@
-const JSZip = require("jszip");
-
 const COMMENT_FILE_PATTERNS = [
   /^xl\/comments\d*\.xml$/,
   /^xl\/threadedComments\/threadedComment\d*\.xml$/,
@@ -18,6 +16,9 @@ const COMMENT_REL_TYPE_RE = /(comments|vmlDrawing|threadedComment|person)/i;
 // parts entirely before handing the buffer to ExcelJS.
 // https://github.com/exceljs/exceljs/issues/2797
 async function sanitizeXlsx(buffer) {
+  // فقط موقع ایمپورت لازمه؛ موقع شروع سرور لود نمی‌شه
+  const JSZip = require("jszip");
+
   let zip;
 
   try {

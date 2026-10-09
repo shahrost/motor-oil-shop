@@ -2,6 +2,7 @@
 // برای پیدا کردن علت ری‌استارت‌های پشت‌سرهم سرور روی هاست (کمبود حافظه یا health check).
 // چون لاگ Runflare بعد از ری‌استارت پاک می‌شه، آخرین وضعیت هر نسخه در دیتابیس هم ذخیره
 // می‌شه و نسخه‌ی بعدی موقع شروع، سرنوشت نسخه‌ی قبلی رو لاگ می‌کنه.
+const os = require("os");
 const mongoose = require("mongoose");
 const processHeartbeatRepository = require("../repositories/processHeartbeatRepository");
 
@@ -25,7 +26,13 @@ function saveHeartbeat(note) {
   if (mongoose.connection.readyState !== 1) return Promise.resolve();
 
   const { rss, heapUsed } = process.memoryUsage();
-  const fields = { startedAt, lastSeenAt: new Date(), rssMb: mb(rss), heapMb: mb(heapUsed) };
+  const fields = {
+    startedAt,
+    lastSeenAt: new Date(),
+    rssMb: mb(rss),
+    heapMb: mb(heapUsed),
+    host: os.hostname(),
+  };
 
   if (note) fields.note = note;
 
@@ -49,7 +56,7 @@ async function logPreviousInstance() {
     const gapSec = Math.round((startedAt - lastSeen) / 1000);
 
     console.log(
-      `[process] previous instance started ${new Date(previous.startedAt).toISOString()}, last seen ${lastSeen.toISOString()} (${gapSec}s before this start) rss=${previous.rssMb}MB heap=${previous.heapMb}MB note="${previous.note}"`,
+      `[process] previous instance started ${new Date(previous.startedAt).toISOString()}, last seen ${lastSeen.toISOString()} (${gapSec}s before this start) rss=${previous.rssMb}MB heap=${previous.heapMb}MB note="${previous.note}" host=${previous.host || "?"}`,
     );
   } catch (error) {
     console.error("[process] previous instance lookup failed:", error.message);
@@ -57,7 +64,7 @@ async function logPreviousInstance() {
 }
 
 function startProcessMonitor() {
-  logMemory("start");
+  logMemory(`start node=${process.version} flags=${process.execArgv.join(" ") || "-"}`);
 
   setInterval(() => logMemory("memory"), INTERVAL_MS).unref();
 

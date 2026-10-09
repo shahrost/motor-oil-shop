@@ -18,13 +18,14 @@ startProcessMonitor();
 
 connectDB();
 
-// لیست محصولات و خودروها از همان ابتدا در کش آماده می‌شوند تا اولین بازدیدکننده منتظر دیتابیس نماند
-mongoose.connection.once("open", () => {
-  productRepository
+// لیست محصولات و خودروها از همان ابتدا در کش آماده می‌شوند تا اولین بازدیدکننده منتظر دیتابیس نماند.
+// پشت سر هم (نه هم‌زمان) تا اوج حافظه‌ی شروع از سقف هاست بالا نرود
+mongoose.connection.once("open", async () => {
+  await productRepository
     .getAllProducts()
     .catch((error) => console.error("Product cache warm-up failed:", error.message));
 
-  vehicleRepository
+  await vehicleRepository
     .getAllVehicles()
     .catch((error) => console.error("Vehicle cache warm-up failed:", error.message));
 });

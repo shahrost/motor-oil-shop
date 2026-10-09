@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { v2: cloudinary } = require("cloudinary");
 
 const FOLDER = "motor-oil-shop/products";
 const CONCURRENCY = 6;
@@ -12,13 +11,18 @@ function isEnabled() {
   );
 }
 
-function configure() {
+// SDK فقط موقع آپلود/حذف عکس لازمه؛ اولین بار همون موقع لود می‌شه نه موقع شروع سرور
+function getCloudinary() {
+  const { v2: cloudinary } = require("cloudinary");
+
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true,
   });
+
+  return cloudinary;
 }
 
 function isCloudUrl(value) {
@@ -32,7 +36,7 @@ function removeLocalQuietly(filePath) {
 // فایل لوکال را در Cloudinary آپلود می‌کند و آدرس https دائمی برمی‌گرداند.
 // بعد از آپلود موفق، فایل موقت لوکال پاک می‌شود.
 async function uploadLocalFile(filePath, { keepLocal = false } = {}) {
-  configure();
+  const cloudinary = getCloudinary();
 
   const result = await cloudinary.uploader.upload(filePath, {
     folder: FOLDER,
@@ -88,7 +92,7 @@ async function deleteCloudImage(url) {
 
   if (!publicId || !isEnabled()) return;
 
-  configure();
+  const cloudinary = getCloudinary();
 
   try {
     await cloudinary.uploader.destroy(publicId);

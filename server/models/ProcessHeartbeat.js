@@ -17,6 +17,9 @@ const ProcessHeartbeatSchema = new mongoose.Schema(
     // آخرین رویداد مهم (مثلاً سیگنال توقف یا خطای مهارنشده)
     note: { type: String, default: "" },
 
+    // نام ماشین/کانتینر؛ اجرای محلی روی همین دیتابیس رو از نسخه‌های هاست جدا می‌کنه
+    host: { type: String, default: "" },
+
     // بعد از ۷ روز خودکار پاک می‌شه
     createdAt: { type: Date, default: Date.now, expires: 7 * 24 * 60 * 60 },
   },

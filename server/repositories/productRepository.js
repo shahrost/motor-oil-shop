@@ -1,10 +1,12 @@
 const Product = require("../models/Product");
 const productListCache = require("../utils/productListCache");
+const leanToJSON = require("../utils/leanToJSON");
 
-// خروجی آبجکت ساده (toJSON) است تا کش‌شدنی باشد
+// خروجی آبجکت ساده (هم‌شکل toJSON) است تا کش‌شدنی باشد؛ lean تا موقع پر شدن کش
+// هزار سند کامل Mongoose هم‌زمان در حافظه نباشد
 async function getAllProducts() {
   return productListCache.get(async () =>
-    (await Product.find()).map((product) => product.toJSON()),
+    (await Product.find().lean()).map((product) => leanToJSON(Product, product)),
   );
 }
 

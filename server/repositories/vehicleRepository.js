@@ -1,10 +1,14 @@
 const Vehicle = require("../models/Vehicle");
 const vehicleListCache = require("../utils/vehicleListCache");
+const leanToJSON = require("../utils/leanToJSON");
 
-// خروجی آبجکت ساده (toJSON) است تا کش‌شدنی باشد
+// خروجی آبجکت ساده (هم‌شکل toJSON) است تا کش‌شدنی باشد؛ lean تا موقع پر شدن کش
+// همه‌ی خودروها به‌صورت سند کامل Mongoose هم‌زمان در حافظه نباشند
 async function getAllVehicles() {
   return vehicleListCache.get(async () =>
-    (await Vehicle.find().sort({ sku: 1 })).map((vehicle) => vehicle.toJSON()),
+    (await Vehicle.find().sort({ sku: 1 }).lean()).map((vehicle) =>
+      leanToJSON(Vehicle, vehicle),
+    ),
   );
 }
 

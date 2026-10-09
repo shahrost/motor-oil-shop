@@ -1,5 +1,4 @@
 const fs = require("fs/promises");
-const ExcelJS = require("exceljs");
 const AppError = require("./AppError");
 const sanitizeXlsx = require("./sanitizeXlsx");
 
@@ -52,6 +51,9 @@ function normalizeHeader(str) {
 }
 
 async function loadWorkbook(excelFile) {
+  // exceljs سنگینه (~۱۱MB حافظه) و فقط موقع ایمپورت لازمه؛ همون موقع لود می‌شه نه موقع شروع سرور
+  const ExcelJS = require("exceljs");
+
   const buffer = await fs.readFile(excelFile.path);
   const cleanBuffer = await sanitizeXlsx(buffer);
 
