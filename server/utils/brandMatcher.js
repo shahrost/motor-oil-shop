@@ -72,16 +72,24 @@ function findClosestBrand(raw) {
   return ranked[0] && ranked[0].score >= SUGGEST_THRESHOLD ? ranked[0].brand : null;
 }
 
+// قالب «نام فارسی (نام انگلیسی)» مثل «لوکومبیل (LocoMobil)»: هر بخش جدا تطبیق داده می‌شه
+function partsOf(value) {
+  const match = value.match(/^(.+?)\s*\((.+)\)\s*$/);
+
+  return match ? [value, match[1], match[2]] : [value];
+}
+
 // برند اکسل ← برند ثبت‌شده. سطح‌های تطبیق: مساوی بعد از نرمال‌سازی، سپس مساوی بدون توجه
 // به ترتیب کلمات. اگه چند برند هم‌زمان جور شدن حدس نمی‌زنیم و خطای واضح می‌دیم.
 function matchBrand(rawBrand) {
   const value = String(rawBrand || "").trim();
-  const exactKey = normalizeText(value);
-  const looseKey = orderFreeKey(value);
+  const parts = partsOf(value);
+  const exactKeys = parts.map(normalizeText);
+  const looseKeys = parts.map(orderFreeKey);
 
   const levels = [
-    (name) => normalizeText(name) === exactKey,
-    (name) => orderFreeKey(name) === looseKey,
+    (name) => exactKeys.includes(normalizeText(name)),
+    (name) => looseKeys.includes(orderFreeKey(name)),
   ];
 
   for (const isSame of levels) {

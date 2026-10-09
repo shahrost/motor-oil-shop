@@ -39,8 +39,14 @@ async function findDuplicate(fields, { excludeSku } = {}) {
   return Product.findOne(filter).select("sku");
 }
 
-async function findBySku(sku) {
-  return Product.findOne({ sku });
+// محصولات با این کدها (برای ایمپورت گروهی، یک کوئری به‌جای یک کوئری برای هر ردیف)
+async function findBySkus(skus) {
+  return Product.find({ sku: { $in: skus } }).select("sku").lean();
+}
+
+// محصولات این برندها با فیلدهای داده‌شده (برای تشخیص محصول تکراری با کد دیگر در ایمپورت)
+async function findByBrands(brands, fields) {
+  return Product.find({ brand: { $in: brands } }).select(["sku", ...fields]).lean();
 }
 
 async function setFieldsById(id, fields) {
@@ -79,7 +85,8 @@ async function deleteWhereSkuNotIn(skus) {
 module.exports = {
   getAllProducts,
   findDuplicate,
-  findBySku,
+  findBySkus,
+  findByBrands,
   setFieldsById,
   bulkWrite,
   findExistingSkus,

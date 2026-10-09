@@ -33,7 +33,7 @@ async function importProducts(req, res, next) {
           ...resolveUploadedImages(req.body?.uploadedImages),
         ];
 
-    const jobId = startJob(
+    const jobId = await startJob(
       "product-import",
       (onStage) =>
         productImportService.importProducts(excelFile, imageFiles, {

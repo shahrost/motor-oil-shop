@@ -1,57 +1,66 @@
 const path = require("path");
 const fs = require("fs");
 const AppError = require("./AppError");
+const importJobRepository = require("../repositories/importJobRepository");
 
 // ایمپورت ممکنه از زمان مجاز پروکسی بیشتر طول بکشه، پس به‌صورت job پس‌زمینه
 // اجرا می‌شه: درخواست فوراً jobId برمی‌گردونه و کلاینت وضعیت رو پیگیری می‌کنه.
-const jobs = new Map();
+// وضعیت job در دیتابیس است تا هر نسخه‌ی سرور بتونه جواب پیگیری رو بده.
+const HEARTBEAT_MS = 10 * 1000;
+const HEARTBEAT_STALE_MS = 60 * 1000;
 
-function pruneJobs() {
-  const limit = Date.now() - 60 * 60 * 1000;
-
-  jobs.forEach((job, id) => {
-    if (job.startedAt < limit) jobs.delete(id);
-  });
-}
-
-function startJob(label, runner, imageCount) {
-  pruneJobs();
-
+async function startJob(label, runner, imageCount) {
   const jobId = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-  const job = {
-    status: "running",
-    stage: "شروع",
-    startedAt: Date.now(),
-    results: null,
-    error: "",
-  };
+  const startedAt = Date.now();
 
-  jobs.set(jobId, job);
+  await importJobRepository.createJob(jobId, label);
 
   console.log(`[${label} ${jobId}] started (${imageCount} images)`);
 
+  // نوشتن‌ها پشت‌سرهم تا وضعیت نهایی با یک «مرحله»ی دیرتر رسیده بازنویسی نشه
+  let writes = Promise.resolve();
+
+  const save = (fields) => {
+    writes = writes
+      .then(() => importJobRepository.updateJob(jobId, fields))
+      .catch((error) => console.error(`[${label} ${jobId}] status save failed:`, error.message));
+
+    return writes;
+  };
+
+  const heartbeat = setInterval(() => save({ heartbeatAt: new Date() }), HEARTBEAT_MS);
+
   runner((stage) => {
-    job.stage = stage;
-    console.log(`[${label} ${jobId}] ${stage} (+${Date.now() - job.startedAt}ms)`);
+    save({ stage, heartbeatAt: new Date() });
+    console.log(`[${label} ${jobId}] ${stage} (+${Date.now() - startedAt}ms)`);
   })
     .then((results) => {
-      job.status = "done";
-      job.results = results;
-      console.log(`[${label} ${jobId}] done in ${Date.now() - job.startedAt}ms`);
+      console.log(`[${label} ${jobId}] done in ${Date.now() - startedAt}ms`);
+
+      return save({ status: "done", results });
     })
     .catch((error) => {
-      job.status = "error";
-      job.error = error.message || "خطا در ایمپورت";
-      console.log(`[${label} ${jobId}] ERROR: ${job.error}`);
-    });
+      const message = error.message || "خطا در ایمپورت";
+
+      console.log(`[${label} ${jobId}] ERROR: ${message}`);
+
+      return save({ status: "error", error: message });
+    })
+    .finally(() => clearInterval(heartbeat));
 
   return jobId;
 }
 
-function getJob(jobId) {
-  const job = jobs.get(jobId);
+async function getJob(jobId) {
+  const job = await importJobRepository.findJob(jobId);
 
-  if (!job) {
+  // job در حال اجرایی که مدتی خبری ازش نیست یعنی سرورِ اجراکننده ری‌استارت شده
+  const lost =
+    job &&
+    job.status === "running" &&
+    Date.now() - new Date(job.heartbeatAt).getTime() > HEARTBEAT_STALE_MS;
+
+  if (!job || lost) {
     throw new AppError("ایمپورت پیدا نشد (ممکنه سرور ریستارت شده باشه)", 404);
   }
 

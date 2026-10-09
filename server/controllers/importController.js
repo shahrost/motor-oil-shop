@@ -35,7 +35,7 @@ async function uploadImagesBatch(req, res, next) {
 // وضعیت job ایمپورتی که پس‌زمینه در حال اجراست
 async function getImportStatus(req, res, next) {
   try {
-    return apiResponse.success(res, getJob(req.params.jobId));
+    return apiResponse.success(res, await getJob(req.params.jobId));
   } catch (error) {
     next(error);
   }

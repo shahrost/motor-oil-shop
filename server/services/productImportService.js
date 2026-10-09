@@ -8,20 +8,39 @@ const PRODUCT_COLUMN_MAP = require("../utils/productColumns");
 const { rowToProductDoc, splitList } = require("../utils/productRowMapper");
 const { linkProductsToVehicles } = require("./vehicleLinkService");
 
-// همان محصول با کد (sku) دیگر — دلیل اصلی تکراری‌شدن محصولات هنگام ایمپورت
-async function findSameProductWithOtherSku(doc) {
-  return productRepository.findDuplicate(
-    {
-      brand: doc.brand,
-      name: doc.name,
-      category: doc.category,
-      volume: doc.volume,
-      viscosity: doc.viscosity,
-      api: doc.api,
-      description: doc.description,
-    },
-    { excludeSku: doc.sku },
-  );
+// فیلدهایی که یکسان بودنشان یعنی «همان محصول» (مثل بررسی تکراری در productService)
+const TWIN_FIELDS = ["brand", "name", "category", "volume", "viscosity", "api", "description"];
+
+// ایمپورت صدها ردیف دارد و دیتابیس خارج از سرور است (هر کوئری تا ~۱ ثانیه)؛ پس به‌جای
+// دو کوئری برای هر ردیف، محصولات موجود یک‌جا خوانده و مقایسه‌ها در حافظه انجام می‌شود.
+const skuKeyOf = (sku) => String(sku || "").trim().toUpperCase();
+
+const twinKeyOf = (product) =>
+  JSON.stringify(TWIN_FIELDS.map((field) => String(product[field] ?? "").trim()));
+
+async function loadExistingProducts(docs) {
+  const [bySku, sameBrand] = await Promise.all([
+    productRepository.findBySkus(docs.map((doc) => skuKeyOf(doc.sku))),
+    productRepository.findByBrands([...new Set(docs.map((doc) => doc.brand))], TWIN_FIELDS),
+  ]);
+
+  const twinsByKey = new Map();
+
+  sameBrand.forEach((product) => {
+    const key = twinKeyOf(product);
+
+    if (!twinsByKey.has(key)) twinsByKey.set(key, []);
+    twinsByKey.get(key).push(product);
+  });
+
+  return {
+    bySku: new Map(bySku.map((product) => [skuKeyOf(product.sku), product])),
+    // همان محصول با کد (sku) دیگر — دلیل اصلی تکراری‌شدن محصولات هنگام ایمپورت
+    findTwin: (doc) =>
+      (twinsByKey.get(twinKeyOf(doc)) || []).find(
+        (product) => skuKeyOf(product.sku) !== skuKeyOf(doc.sku),
+      ),
+  };
 }
 
 // عکس‌های ردیف. عکس اختیاری است: فایل پیدانشده (اصلی یا گالری) ردیف را رد نمی‌کند، فقط
@@ -50,14 +69,14 @@ function resolveRowImages(row, imageIndex, onMissing) {
 
 // وضعیت ردیف نسبت به دیتابیس: "created" | "updated" | "skipped".
 // با onlyNew محصول موجود دست نمی‌خورد (skipped). محصول تکراری با کد دیگر خطا می‌دهد.
-async function decideAction(doc, onlyNew) {
-  const existing = await productRepository.findBySku(doc.sku);
+function decideAction(doc, onlyNew, existingProducts) {
+  const existing = existingProducts.bySku.get(skuKeyOf(doc.sku));
 
   if (existing && onlyNew) return { outcome: "skipped" };
 
   if (existing) return { outcome: "updated", existingId: existing._id };
 
-  const twin = await findSameProductWithOtherSku(doc);
+  const twin = existingProducts.findTwin(doc);
 
   if (twin) {
     throw new RowError(
@@ -119,31 +138,43 @@ function summaryOf(entry) {
 async function planRows(rows, imageIndex, options) {
   const plan = { entries: [], failed: [], duplicates: [], missingImages: [] };
   const seenSkus = new Set();
+  const mapped = [];
 
-  for (const row of rows) {
+  rows.forEach((row) => {
     try {
       const doc = rowToProductDoc(row);
-      const skuKey = String(doc.sku).toUpperCase();
+      const skuKey = skuKeyOf(doc.sku);
 
       if (seenSkus.has(skuKey)) {
         plan.duplicates.push({ row: row.__row, sku: doc.sku, name: doc.name });
-        continue;
+        return;
       }
 
       seenSkus.add(skuKey);
+      mapped.push({ row, doc });
+    } catch (err) {
+      plan.failed.push(failureOf(row, err));
+    }
+  });
 
+  if (!mapped.length) return plan;
+
+  const existingProducts = await loadExistingProducts(mapped.map((m) => m.doc));
+
+  mapped.forEach(({ row, doc }) => {
+    try {
       const images = row.mainImage
         ? resolveRowImages(row, imageIndex, (fileName) =>
             plan.missingImages.push({ row: row.__row, sku: doc.sku, name: fileName }),
           )
         : null;
-      const action = await decideAction(doc, options.onlyNew);
+      const action = decideAction(doc, options.onlyNew, existingProducts);
 
       plan.entries.push({ row, doc, images, ...action });
     } catch (err) {
       plan.failed.push(failureOf(row, err));
     }
-  }
+  });
 
   return plan;
 }
@@ -164,6 +195,8 @@ async function previewRemoval(rows) {
   return stale.map((p) => ({ sku: p.sku, name: p.name }));
 }
 
+const WRITE_CONCURRENCY = 8;
+
 // نوشتن ردیف‌های معتبر؛ فقط ردیف‌هایی که نوشته می‌شن عکسشون به فضای ابری منتقل می‌شه
 async function applyPlan(plan, results, imageFiles, onStage) {
   const writable = plan.entries.filter((e) => e.outcome !== "skipped");
@@ -181,23 +214,34 @@ async function applyPlan(plan, results, imageFiles, onStage) {
 
   const urlsByFilename = await persistImages([...imageFilesNeeded.values()]);
 
-  onStage("ثبت محصولات در دیتابیس");
+  onStage(`ثبت ${writable.length} محصول در دیتابیس`);
 
-  for (const entry of writable) {
-    try {
-      if (entry.images && entry.images.main) {
-        entry.doc.image = {
-          main: urlsByFilename.get(entry.images.main.filename),
-          gallery: entry.images.gallery.map((f) => urlsByFilename.get(f.filename)),
-        };
+  // نوشتن‌ها چندتا هم‌زمان (هر کدام یک رفت‌وبرگشت به دیتابیس بیرونی است)
+  let next = 0;
+
+  const worker = async () => {
+    while (next < writable.length) {
+      const entry = writable[next];
+
+      next += 1;
+
+      try {
+        if (entry.images && entry.images.main) {
+          entry.doc.image = {
+            main: urlsByFilename.get(entry.images.main.filename),
+            gallery: entry.images.gallery.map((f) => urlsByFilename.get(f.filename)),
+          };
+        }
+
+        await writeProduct(entry);
+        results[entry.outcome] += 1;
+      } catch (err) {
+        results.failed.push(failureOf(entry.row, err));
       }
-
-      await writeProduct(entry);
-      results[entry.outcome] += 1;
-    } catch (err) {
-      results.failed.push(failureOf(entry.row, err));
     }
-  }
+  };
+
+  await Promise.all(Array.from({ length: WRITE_CONCURRENCY }, worker));
 
   const failedRows = new Set(results.failed.map((f) => f.row));
   const linkEntries = [];

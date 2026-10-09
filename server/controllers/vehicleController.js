@@ -78,7 +78,7 @@ async function importVehicles(req, res, next) {
       ...resolveUploadedImages(req.body?.uploadedImages),
     ];
 
-    const jobId = startJob(
+    const jobId = await startJob(
       "vehicle-import",
       (onStage) =>
         vehicleImportService.importVehicles(excelFile, imageFiles, {
@@ -101,7 +101,7 @@ async function importParsedVehicles(req, res, next) {
       JSON.stringify(req.body?.uploadedImages || {}),
     );
 
-    const jobId = startJob(
+    const jobId = await startJob(
       "vehicle-import",
       (onStage) =>
         vehicleImportService.importParsedVehicles(req.body?.vehicles, imageFiles, {
