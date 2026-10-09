@@ -1,19 +1,6 @@
-// توضیح کارت «روانکار» داخل زنجیر تانک (چون متنش طولانیه) با دو چرخ سر و ته
-function TrackWheel({ cx }) {
-  return (
-    <g data-oil="wheel">
-      <circle cx={cx} cy="32" r="15" fill="#374154" />
-      <circle cx={cx} cy="32" r="11" fill="#697386" />
-      <path
-        d={`M${cx} 21V43M${cx - 11} 32H${cx + 11}M${cx - 8} 24l16 16M${cx + 8} 24 ${cx - 8} 40`}
-        stroke="#374154"
-        strokeWidth="2.4"
-      />
-      <circle cx={cx} cy="32" r="4" fill="#faa61a" />
-    </g>
-  );
-}
+import TrackWheel from "./TrackWheel";
 
+// توضیح کارت «روانکار» داخل زنجیر تانک (چون متنش طولانیه) با دو چرخ سر و ته
 function TrackDescription({ description }) {
   return (
     <div data-oil="track" className="relative w-[340px] max-w-full -mt-1.5">

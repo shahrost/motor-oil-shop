@@ -21,6 +21,7 @@ common:
 Home:
 ✅ ساختار درست بود (Home فقط ترکیب، منطق در hooks، محاسبات در helpers)؛ تکرارها ← `helpers/animate.js`: `wait` (در `oilFx` و `useLogoOrbit` دو بار تعریف شده بود)، `play`، `prefersReducedMotion`، `onceVisible` (الگوی IntersectionObserver هر دو hook)
 ✅ `useOilPour.js` (۱۹۵ ← ۵۳ خط) فقط چرخه‌ی عمر (دیده‌شدن، لغو، پاک‌سازی)؛ سناریو ← `helpers/oilPourScenario.js` (`collectOilParts`, `runOilPour` با مراحل جدا `dropFall`/`jugIn`/`pour`/`dripOnTrack`/`streamEnd`/`jugOut`, `showOilFinalState`, `resetOilPour`). تست با Chrome headless (reduced-motion خاموش): انیمیشن کامل اجرا شد، حالت نهایی درست، ۱۴ لوگوی مدار، بدون خطای کنسول، بعد از خروج از صفحه لایه‌ای جا نموند
+✅ `useLogoOrbit.js` (۱۳۱ ← ۳۶ خط) هم به همین الگو: سناریو ← `helpers/logoOrbitScenario.js` (`createLogoOrbit(art, brands)` ← `run`, `showFinalState`, `layout`, `destroy`)؛ `TrackWheel` از داخل `TrackDescription.jsx` ← `sections/TrackWheel.jsx`. تست headless: پرواز ۱۰ لوگو ← ۱۴ لوگو روی مدار، بدون خطا
 
 ## ۲۳. بررسی معماری `AdminHeader` (پنل ادمین)
 
