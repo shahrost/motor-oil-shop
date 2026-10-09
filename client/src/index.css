@@ -431,3 +431,46 @@ img {
     animation-duration: 1ms;
   }
 }
+
+/* =========================
+      HOME — کارت «خودروهای من»
+      لوگوی برندها از لبه‌های صفحه پرواز می‌کنن و دور ماشین می‌چرخن
+      (منطق در components/Home/hooks/useLogoOrbit.js)
+      .logo-orbit عمداً z-index نداره تا لوگوهای جلو (z-3) روی ماشین (z-2)
+      و لوگوهای پشت (z-1) زیرش بیفتن
+========================= */
+
+.logo-orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.logo-flight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+}
+
+.logo-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 10px rgb(11 20 36 / 0.18), 0 0 0 1px rgb(11 20 36 / 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.logo-chip img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}

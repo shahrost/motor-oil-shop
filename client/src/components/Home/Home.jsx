@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
 
-import { EntryCard, LubricantCard, CarArt } from "./sections";
+import { LubricantCard, VehiclesCard } from "./sections";
 
 // صفحه‌ی اصلی: فقط دو کارت ورودی «روانکار» و «خودروهای من»
 function Home() {
@@ -17,11 +17,10 @@ function Home() {
           description={t("home.entries.lubricants.description")}
         />
 
-        <EntryCard
+        <VehiclesCard
           to="/vehicles"
           title={t("home.entries.myVehicles.title")}
           description={t("home.entries.myVehicles.description")}
-          art={<CarArt />}
         />
       </div>
     </section>
