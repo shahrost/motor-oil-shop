@@ -42,6 +42,21 @@ function splitGrade(rawGrade) {
   return { grade, approvals };
 }
 
+// اگه ستون ویسکوزیته خالی بود، گرید از نام/برچسب‌ها/توضیحات پیدا می‌شه
+// (مثلاً «AIDLUBE MASTER SELECT 5W-40 SN» یا «QUANTIC PLUS SN OW20») تا
+// ایمپورت دوباره‌ی فایل گرید محصول رو پاک نکنه. «OW» (حرف O) همون 0W است.
+const TEXT_GRADE_PATTERN = /(?:^|[^\dA-Z])([0O]|\d{1,2})W\s*-?\s*(\d{2,3})(?![\d])/i;
+
+function gradeFromText(...texts) {
+  for (const text of texts) {
+    const match = String(text || "").match(TEXT_GRADE_PATTERN);
+
+    if (match) return `${match[1].replace(/o/i, "0")}W-${match[2]}`;
+  }
+
+  return "";
+}
+
 function toBoolean(value) {
   return ["بله", "yes", "true", "1"].includes(String(value).trim().toLowerCase());
 }
@@ -67,7 +82,7 @@ function rowToProductDoc(row) {
     brand: normalizeBrand(row.brand),
     category: row.category || "",
     volume: row.volume || "",
-    viscosity: grade,
+    viscosity: grade || gradeFromText(row.name, row.tags, row.description),
     api: row.api || "",
     acea: row.acea || "",
     oilType: row.oilType || "",
@@ -95,4 +110,4 @@ function rowToProductDoc(row) {
   return doc;
 }
 
-module.exports = { rowToProductDoc, splitList, splitGrade, normalizeBrand, parseStock };
+module.exports = { rowToProductDoc, splitList, splitGrade, gradeFromText, normalizeBrand, parseStock };
