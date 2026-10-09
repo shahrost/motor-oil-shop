@@ -3,13 +3,7 @@ import formatPrice from "../../../utils/formatPrice";
 import OrderProductCard from "./OrderProductCard";
 import LanguageContext from "../../../context/LanguageContext";
 
-function OrderProducts({
-  cart,
-  cartTotal,
-  updateQuantity,
-  changeOrderType,
-  changePaymentType,
-}) {
+function OrderProducts({ cart, cartTotal }) {
   const { language, t } = useContext(LanguageContext);
 
   return (
@@ -24,9 +18,6 @@ function OrderProducts({
             key={`${item.id}-${index}`}
             item={item}
             index={index}
-            updateQuantity={updateQuantity}
-            changeOrderType={changeOrderType}
-            changePaymentType={changePaymentType}
           />
         ))}
       </div>

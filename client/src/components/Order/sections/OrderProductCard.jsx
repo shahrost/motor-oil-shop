@@ -1,42 +1,31 @@
 import { useContext } from "react";
-import formatPrice from "../../../utils/formatPrice";
-import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { formatVolume } from "../../../utils/formatVolume";
 import PaymentSelector from "./PaymentSelector";
 import LanguageContext from "../../../context/LanguageContext";
-import { calcPromotionGift } from "../../../utils/promotionCalc";
-import { getItemTotal } from "../../../utils/cartItemCalc";
+import useCartItem from "../../../hooks/useCartItem";
 import GiftBadge from "../../common/GiftBadge";
 import { OrderUnitOptions } from "../../common/OrderOptions";
 
-function OrderProductCard({
-  item,
-  index,
-  updateQuantity,
-  changeOrderType,
-  changePaymentType,
-}) {
+function OrderProductCard({ item, index }) {
   const { language, t } = useContext(LanguageContext);
-
-  const itemTotal = getItemTotal(item);
-
-  const giftQty = calcPromotionGift(
-    item.promotion,
-    item.orderType,
-    item.quantity,
-    item.paymentType,
-  );
+  const {
+    name,
+    brandLabel,
+    totalLabel,
+    giftQty,
+    setQuantity,
+    setOrderType,
+    setPaymentType,
+  } = useCartItem(item, index);
 
   return (
     <div className="border border-gray-200 rounded-2xl p-5 bg-gray-50">
-      <h3 className="text-xl font-extrabold text-black">
-        {getProductNameLabel(item.name, language)}
-      </h3>
+      <h3 className="text-xl font-extrabold text-black">{name}</h3>
 
       <div className="mt-3 space-y-2 text-gray-700">
         <p>
           {t("common.brand")}
-          <span className="font-bold text-black"> {item.brand}</span>
+          <span className="font-bold text-black"> {brandLabel}</span>
         </p>
 
         {item.viscosity && (
@@ -62,7 +51,7 @@ function OrderProductCard({
 
         <select
           value={item.orderType || "number"}
-          onChange={(e) => changeOrderType(item.id, e.target.value, index)}
+          onChange={(e) => setOrderType(e.target.value)}
           className="w-full border rounded-xl p-3"
         >
           <OrderUnitOptions />
@@ -76,22 +65,17 @@ function OrderProductCard({
           type="number"
           min="1"
           value={item.quantity}
-          onChange={(e) => updateQuantity(item.id, e.target.value, index)}
+          onChange={(e) => setQuantity(e.target.value)}
           className="w-full border rounded-xl p-3"
         />
       </div>
 
-      <PaymentSelector
-        paymentType={item.paymentType}
-        onChange={(type) => changePaymentType(item.id, type, index)}
-      />
+      <PaymentSelector paymentType={item.paymentType} onChange={setPaymentType} />
 
       <div className="mt-5 bg-yellow-50 border border-yellow-200 rounded-2xl p-4">
         <p className="font-bold text-gray-600">{t("order.productCard.price")}</p>
 
-        <p className="text-2xl font-extrabold text-gray-950 mt-2">
-          {formatPrice(itemTotal, language)}
-        </p>
+        <p className="text-2xl font-extrabold text-gray-950 mt-2">{totalLabel}</p>
       </div>
 
       <GiftBadge giftQty={giftQty} className="mt-3 rounded-2xl p-3" />

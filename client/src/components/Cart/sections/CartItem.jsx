@@ -2,7 +2,7 @@ import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import GiftBadge from "../../common/GiftBadge";
 import CartItemOptions from "./CartItemOptions";
-import useCartItem from "../hooks/useCartItem";
+import useCartItem from "../../../hooks/useCartItem";
 import {
   getProductImageSrc,
   handleProductImageError,

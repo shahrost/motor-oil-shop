@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { CartEmpty, CartItems, CartSummary } from "./sections";
+import { CartItems, CartSummary } from "./sections";
+import EmptyCart from "../common/EmptyCart";
 import useCartPage from "./hooks/useCartPage";
 import LanguageContext from "../../context/LanguageContext";
 
@@ -8,7 +9,7 @@ function Cart() {
   const { cart, clearCart, cartTotal } = useCartPage();
 
   if (cart.length === 0) {
-    return <CartEmpty />;
+    return <EmptyCart />;
   }
 
   return (

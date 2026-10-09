@@ -5,16 +5,11 @@ import CustomerAuthContext from "../../../context/CustomerAuthContext";
 import LanguageContext from "../../../context/LanguageContext";
 import buildOrderData from "../helpers/buildOrderData";
 
+const PHONE_LENGTH = 11;
+
 function useOrderForm() {
-  const {
-    cart,
-    clearCart,
-    changeAllPaymentType,
-    changeOrderType,
-    changePaymentType,
-    updateQuantity,
-    cartTotal,
-  } = useContext(CartContext);
+  const { cart, clearCart, changeAllPaymentType, cartTotal } =
+    useContext(CartContext);
 
   const { addOrder } = useContext(OrderContext);
   const { customer: account } = useContext(CustomerAuthContext);
@@ -38,13 +33,22 @@ function useOrderForm() {
     });
   }
 
+  // موبایل فقط رقم و حداکثر ۱۱ رقم
+  function changePhone(value) {
+    const digits = value.replace(/\D/g, "");
+
+    if (digits.length <= PHONE_LENGTH) {
+      setCustomer({ ...customer, phone: digits });
+    }
+  }
+
   // سبد فقط بعد از ثبت موفق سفارش روی سرور خالی می‌شه
   async function submitOrder(e) {
     e.preventDefault();
 
     if (submitting) return;
 
-    if (customer.phone.length !== 11 || !customer.phone.startsWith("09")) {
+    if (customer.phone.length !== PHONE_LENGTH || !customer.phone.startsWith("09")) {
       alert(t("order.invalidPhone"));
       return;
     }
@@ -67,21 +71,16 @@ function useOrderForm() {
 
   return {
     cart,
+    cartTotal,
     customer,
-    setCustomer,
     submitted,
     submitting,
     submitError,
 
     handleChange,
+    changePhone,
     submitOrder,
-
-    updateQuantity,
-    changeOrderType,
-    changePaymentType,
     changeAllPaymentType,
-
-    cartTotal,
   };
 }
 

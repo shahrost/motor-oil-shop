@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import LanguageContext from "../../context/LanguageContext";
+import LanguageContext from "../../../context/LanguageContext";
 
 function OrderButtons({ changeAllPaymentType }) {
   const { t } = useContext(LanguageContext);

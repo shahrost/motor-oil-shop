@@ -1,13 +1,15 @@
 import { useContext } from "react";
-import CartContext from "../../../context/CartContext";
-import LanguageContext from "../../../context/LanguageContext";
-import formatPrice from "../../../utils/formatPrice";
-import getBrandLabel from "../../../utils/brandLabel";
-import { getProductNameLabel } from "../../../utils/productNameLabel";
-import { calcPromotionGift } from "../../../utils/promotionCalc";
-import { getProductPrice } from "../../../utils/productPrice";
+import CartContext from "../context/CartContext";
+import LanguageContext from "../context/LanguageContext";
+import formatPrice from "../utils/formatPrice";
+import getBrandLabel from "../utils/brandLabel";
+import { getProductNameLabel } from "../utils/productNameLabel";
+import { calcPromotionGift } from "../utils/promotionCalc";
+import { getProductPrice } from "../utils/productPrice";
+import { getItemTotal } from "../utils/cartItemCalc";
 
-// داده‌ی نمایشی و تغییرات یک ردیف سبد (ردیف با index شناخته می‌شه)
+// داده‌ی نمایشی و تغییرات یک ردیف سبد (ردیف با index شناخته می‌شه)؛
+// مشترک بین صفحه‌ی سبد خرید و صفحه‌ی ثبت سفارش
 function useCartItem(item, index) {
   const { removeFromCart, updateQuantity, changeOrderType, changePaymentType } =
     useContext(CartContext);
@@ -17,6 +19,7 @@ function useCartItem(item, index) {
     name: getProductNameLabel(item.name, language),
     brandLabel: getBrandLabel(item.brand, language),
     priceLabel: formatPrice(getProductPrice(item, item.paymentType), language),
+    totalLabel: formatPrice(getItemTotal(item), language),
     giftQty: calcPromotionGift(
       item.promotion,
       item.orderType,
