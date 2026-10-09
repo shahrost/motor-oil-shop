@@ -20,7 +20,7 @@ common:
 
 Home:
 ✅ ساختار درست بود (Home فقط ترکیب، منطق در hooks، محاسبات در helpers)؛ تکرارها ← `helpers/animate.js`: `wait` (در `oilFx` و `useLogoOrbit` دو بار تعریف شده بود)، `play`، `prefersReducedMotion`، `onceVisible` (الگوی IntersectionObserver هر دو hook)
-⚠️ `useOilPour.js` (~۱۸۰ خط) هنوز کل سناریوی ۵ مرحله‌ای رو داره؛ جدا کردن مراحل بدون تست بصری انیمیشن انجام نشد
+✅ `useOilPour.js` (۱۹۵ ← ۵۳ خط) فقط چرخه‌ی عمر (دیده‌شدن، لغو، پاک‌سازی)؛ سناریو ← `helpers/oilPourScenario.js` (`collectOilParts`, `runOilPour` با مراحل جدا `dropFall`/`jugIn`/`pour`/`dripOnTrack`/`streamEnd`/`jugOut`, `showOilFinalState`, `resetOilPour`). تست با Chrome headless (reduced-motion خاموش): انیمیشن کامل اجرا شد، حالت نهایی درست، ۱۴ لوگوی مدار، بدون خطای کنسول، بعد از خروج از صفحه لایه‌ای جا نموند
 
 ## ۲۳. بررسی معماری `AdminHeader` (پنل ادمین)
 
@@ -31,7 +31,8 @@ Status: Completed ✅ (lint و build کلاینت تمیز؛ رفتار تغیی
 2. کلید توکن ادمین (`"token"`) در ۴ فایل مستقیم با `localStorage` خونده/نوشته/پاک می‌شد (`useAdminHeader`، `useLogin`، `useAdminAuthCheck`، `apiClient`).
 ✅ `Admin/AdminHeader/sections/`: `AdminBrand`, `AdminActions` (`onLogout`), `AdminNav` + `index.js`؛ `AdminHeader.jsx` فقط ترکیب
 ✅ `services/adminTokenStorage.js` (`getAdminToken`, `saveAdminToken`, `clearAdminToken`) مثل `cartStorage.js`؛ هر ۴ فایل از این سرویس استفاده می‌کنن
-⚠️ عنوان «پنل مدیریت محصولات» در صفحه‌ی `/admin/orders` هم نشون داده می‌شه؛ هدر ادمین `bg-white` ثابت و بدون حالت شبه (تغییر داده نشد)
+✅ عنوان هدر بر اساس مسیر (`useAdminHeader`: `/admin/orders` ← «مدیریت سفارشات»، بقیه «پنل مدیریت محصولات»)؛ `AdminBrand` عنوان رو prop می‌گیره
+✅ حالت شب هدر ادمین از قوانین سراسری `index.css` (`.dark .bg-white` و…) میاد؛ فقط hover کهربایی منو متن روشن داشت ← `hover:text-gray-950`
 
 ## ۲۲. ایمپورت لوکومبیل با خطای «ایمپورت روی سرور از بین رفت»
 

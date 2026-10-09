@@ -2,7 +2,7 @@ import useAdminHeader from "./hooks/useAdminHeader";
 import { AdminBrand, AdminActions, AdminNav } from "./sections";
 
 function AdminHeader() {
-  const { logout } = useAdminHeader();
+  const { title, logout } = useAdminHeader();
 
   return (
     <header
@@ -23,7 +23,7 @@ function AdminHeader() {
         gap-3
         "
       >
-        <AdminBrand />
+        <AdminBrand title={title} />
 
         <AdminActions onLogout={logout} />
       </div>

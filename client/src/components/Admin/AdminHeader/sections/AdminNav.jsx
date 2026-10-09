@@ -21,6 +21,7 @@ function AdminNav() {
           bg-gray-100
           hover:bg-yellow-400
           text-gray-800
+          hover:text-gray-950
           font-bold
           px-4
           py-2

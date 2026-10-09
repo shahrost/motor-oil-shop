@@ -1,6 +1,6 @@
 import brandLogo from "../../../../assets/logo/shahram-monogram-black.svg";
 
-function AdminBrand() {
+function AdminBrand({ title }) {
   return (
     <div className="flex items-center gap-3">
       <img
@@ -16,7 +16,7 @@ function AdminBrand() {
         font-bold
         "
       >
-        پنل مدیریت محصولات
+        {title}
       </h1>
     </div>
   );
