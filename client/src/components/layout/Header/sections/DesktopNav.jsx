@@ -1,11 +1,17 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+
+import LanguageContext from "../../../../context/LanguageContext";
 
 import menu from "../../../../data/menu";
 import menuCategories from "../../../../data/menuCategories";
+import localizedLabel from "../../../../utils/localizedLabel";
 import NavDropdown from "./NavDropdown";
 
 // منوی دسکتاپ؛ «محصولات» با هاور زیرمنوی دسته‌ها رو باز می‌کنه
-function DesktopNav({ t, language }) {
+function DesktopNav() {
+  const { language, t } = useContext(LanguageContext);
+
   return (
     <nav className="hidden lg:flex items-center gap-6">
       {menu.map((item) => {
@@ -31,7 +37,7 @@ function DesktopNav({ t, language }) {
                   transition
                   "
                 >
-                  {language === "en" ? category.labelEn : category.label}
+                  {localizedLabel(category, language)}
                 </Link>
               ))}
             </NavDropdown>

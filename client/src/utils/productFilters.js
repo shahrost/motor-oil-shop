@@ -4,6 +4,7 @@ import volumes from "../data/productOptions/volumes";
 import priceRanges from "../data/productOptions/priceRanges";
 import api from "../data/productOptions/api";
 import translations from "../i18n/translations";
+import localizedLabel from "./localizedLabel";
 
 export function getBrands(language = "fa") {
   return [
@@ -60,7 +61,7 @@ export function getPriceOptions(language = "fa") {
     },
     ...priceRanges.map((range) => ({
       value: `range:${range.id}`,
-      label: language === "en" ? range.labelEn : range.label,
+      label: localizedLabel(range, language),
     })),
   ];
 }

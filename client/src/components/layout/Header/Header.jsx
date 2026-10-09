@@ -1,6 +1,4 @@
-import { useCallback, useContext, useState } from "react";
-
-import LanguageContext from "../../../context/LanguageContext";
+import useHeader from "./hooks/useHeader";
 import {
   HeaderBrand,
   DesktopNav,
@@ -10,33 +8,24 @@ import {
 } from "./sections";
 
 function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [photoOpen, setPhotoOpen] = useState(false);
-
-  const { language, t } = useContext(LanguageContext);
-
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
-  const closePhoto = useCallback(() => setPhotoOpen(false), []);
+  const { menuOpen, toggleMenu, closeMenu, photoOpen, openPhoto, closePhoto } =
+    useHeader();
 
   return (
     <header className="bg-gray-950 sticky top-0 z-50 shadow-lg border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="h-20 flex items-center justify-between">
-          <HeaderBrand t={t} onPhotoClick={() => setPhotoOpen(true)} />
+          <HeaderBrand onPhotoClick={openPhoto} />
 
-          <DesktopNav t={t} language={language} />
+          <DesktopNav />
 
-          <HeaderActions
-            t={t}
-            menuOpen={menuOpen}
-            onToggleMenu={() => setMenuOpen((open) => !open)}
-          />
+          <HeaderActions menuOpen={menuOpen} onToggleMenu={toggleMenu} />
         </div>
 
-        {menuOpen && <MobileMenu t={t} language={language} onClose={closeMenu} />}
+        {menuOpen && <MobileMenu onClose={closeMenu} />}
       </div>
 
-      {photoOpen && <OwnerPhotoModal t={t} onClose={closePhoto} />}
+      {photoOpen && <OwnerPhotoModal onClose={closePhoto} />}
     </header>
   );
 }

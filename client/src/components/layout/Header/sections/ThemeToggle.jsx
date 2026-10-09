@@ -1,9 +1,11 @@
 import { useContext } from "react";
 
 import ThemeContext from "../../../../context/ThemeContext";
+import LanguageContext from "../../../../context/LanguageContext";
 
 // دکمه‌ی آیکونی تغییر حالت روز/شب با انیمیشن چرخش ماه و خورشید
-function ThemeToggle({ t }) {
+function ThemeToggle() {
+  const { t } = useContext(LanguageContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const isDark = theme === "dark";
 

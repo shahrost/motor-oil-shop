@@ -1,4 +1,5 @@
 import productTypes from "../data/productOptions/productTypes";
+import localizedLabel from "./localizedLabel";
 
 const OTHER_TYPE = { id: "other", label: "سایر", labelEn: "Other" };
 
@@ -17,11 +18,11 @@ export function getProductTypeOptions(language = "fa") {
     { value: "همه", label: language === "en" ? "All" : "همه" },
     ...productTypes.map((type) => ({
       value: type.id,
-      label: language === "en" ? type.labelEn : type.label,
+      label: localizedLabel(type, language),
     })),
     {
       value: OTHER_TYPE.id,
-      label: language === "en" ? OTHER_TYPE.labelEn : OTHER_TYPE.label,
+      label: localizedLabel(OTHER_TYPE, language),
     },
   ];
 }

@@ -1,18 +1,15 @@
-import { useEffect } from "react";
+import { useContext } from "react";
+
+import LanguageContext from "../../../../context/LanguageContext";
 
 import ownerPhoto from "../../../../assets/logo/shahram-logo.webp";
+import useEscapeKey from "../hooks/useEscapeKey";
 
 // نمایش بزرگ عکس شهرام؛ با کلیک بیرون عکس یا کلید Escape بسته می‌شه
-function OwnerPhotoModal({ t, onClose }) {
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.key === "Escape") onClose();
-    }
+function OwnerPhotoModal({ onClose }) {
+  const { t } = useContext(LanguageContext);
 
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  useEscapeKey(onClose);
 
   return (
     <div

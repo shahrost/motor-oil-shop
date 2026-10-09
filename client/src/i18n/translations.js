@@ -10,6 +10,10 @@ const translations = {
       contact: "تماس با ما",
     },
 
+    site: {
+      name: "شهرام روغن",
+    },
+
     header: {
       register: "ثبت‌نام",
       showPhoto: "نمایش بزرگ عکس",
@@ -407,6 +411,10 @@ const translations = {
       promotions: "Sales Promotions",
       cart: "Cart",
       contact: "Contact Us",
+    },
+
+    site: {
+      name: "Shahram Roghan",
     },
 
     header: {

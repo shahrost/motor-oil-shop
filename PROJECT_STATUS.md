@@ -1,6 +1,6 @@
 # وضعیت پروژه — شهرام روغن
 
-آخرین بروزرسانی: 2026-10-09
+آخرین بروزرسانی: 2026-10-10
 
 ## معرفی
 
@@ -34,7 +34,7 @@ server/   Express + Mongoose
 - کارت محصول: فشرده (عکس `h-40`، فاصله‌های کم، نشان تخفیف کنار قیمت) و دکمه‌های «مشاهده / افزودن به سبد» همیشه پایین کارت و هم‌تراز در هر ردیف گرید (`flex flex-col` + `mt-auto`، بدون ارتفاع ثابت).
 - صفحه‌ی محصولات: فیلتر زنده + دکمه‌ی «نمایش محصولات» که به لیست اسکرول می‌کنه.
 - حساب کاربری مشتری (ثبت‌نام/ورود جدا از ادمین).
-- هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه. Cart، common و Home هم طبق معماری بازبینی شدن (منطق ردیف سبد در `useCartItem`، `PromotionFields` پوشه‌ای با hook، ابزار مشترک انیمیشن `Home/helpers/animate.js`).
+- هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه. Cart، common و Home هم طبق معماری بازبینی شدن (منطق ردیف سبد در `useCartItem`، `PromotionFields` پوشه‌ای با hook، ابزار مشترک انیمیشن `Home/helpers/animate.js`). layout هم بازبینی شد: state هدر در `useHeader`/`useMobileMenu`، فوتر پوشه‌ای با sections، نام فروشگاه با کلید ترجمه‌ی `site.name` (هدر در EN «Shahram Roghan»).
 - ۳۵۷ محصول در دیتابیس (2026-10-06)، همگی به یکی از ۱۷ برند تعریف‌شده در `client/src/data/brands.js` متصل‌اند.
 
 ## هاست و دیپلوی
