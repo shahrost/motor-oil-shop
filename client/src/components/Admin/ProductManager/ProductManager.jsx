@@ -1,7 +1,7 @@
 import ProductForm from "../../ProductForm";
 import ProductEditForm from "../../ProductEditForm";
 import ProductList from "../ProductList";
-import BulkTools from "./BulkTools/BulkTools";
+import BulkTools from "./BulkTools";
 
 import useProductManager from "./hooks/useProductManager";
 

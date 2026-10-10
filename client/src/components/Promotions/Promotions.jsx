@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ProductContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
 import { hasActivePromotion } from "../../utils/promotionCalc";
-import PromotionCard from "./sections/PromotionCard";
+import { PromotionCard } from "./sections";
 
 function Promotions() {
   const { products } = useContext(ProductContext);

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LanguageContext from "../../../context/LanguageContext";
 
-import ProductRowCard from "../../ProductCard/ProductRowCard";
+import { ProductRowCard } from "../../ProductCard";
 import useDragScroll from "./hooks/useDragScroll";
 import { SwipeHint } from "./sections";
 

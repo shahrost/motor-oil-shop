@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import useAccount from "./hooks/useAccount";
 import LanguageContext from "../../context/LanguageContext";
-import ProfileCard from "./sections/ProfileCard";
-import OrderHistory from "./sections/OrderHistory";
+import { ProfileCard, OrderHistory } from "./sections";
 
 function Account() {
   const { language, t } = useContext(LanguageContext);

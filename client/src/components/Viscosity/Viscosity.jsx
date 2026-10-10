@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import useViscosity from "./hooks/useViscosity";
-import ViscosityList from "./sections/ViscosityList";
+import { ViscosityList } from "./sections";
 import LanguageContext from "../../context/LanguageContext";
 
 function Viscosity() {

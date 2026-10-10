@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 import LanguageContext from "../../context/LanguageContext";
 import useVehicleDetail from "./hooks/useVehicleDetail";
 import buildVehicleSpecs from "./helpers/vehicleSpecs";
-import VehicleSpecsCard from "./sections/VehicleSpecsCard";
-import PartButtons from "./sections/PartButtons";
-import PartProducts from "./sections/PartProducts";
+import { VehicleSpecsCard, PartButtons, PartProducts } from "./sections";
 
 function VehicleDetail() {
   const { language, t } = useContext(LanguageContext);

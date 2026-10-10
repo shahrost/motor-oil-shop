@@ -1,4 +1,4 @@
-import ProductRowCard from "../../ProductCard/ProductRowCard";
+import { ProductRowCard } from "../../ProductCard";
 
 // شبکه‌ی کارت‌های فشرده‌ی محصولات پیشنهادی خودرو
 function OilGrid({ products }) {

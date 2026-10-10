@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
 import useVehicleBrands from "./hooks/useVehicleBrands";
-import VehicleBrandCard from "./sections/VehicleBrandCard";
+import { VehicleBrandCard } from "./sections";
 
 // صفحه‌ی «خودروهای من» (مقصد مشترک کارت صفحه‌ی اصلی و منوی هدر): فقط برندها
 function Vehicles() {

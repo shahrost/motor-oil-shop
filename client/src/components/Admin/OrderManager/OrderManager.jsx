@@ -1,9 +1,6 @@
 import useOrderManager from "./hooks/useOrderManager";
 
-import OrderDashboard from "./sections/OrderDashboard";
-import OrderFilters from "./sections/OrderFilters";
-import OrderCard from "./sections/OrderCard";
-import OrderListStatus from "./sections/OrderListStatus";
+import { OrderDashboard, OrderFilters, OrderCard, OrderListStatus } from "./sections";
 
 function OrderManager() {
   const {

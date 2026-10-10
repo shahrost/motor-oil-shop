@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import useViscosityProducts from "./hooks/useViscosityProducts";
-import ViscosityProductsList from "./sections/ViscosityProductsList";
+import { ViscosityProductsList } from "./sections";
 import LanguageContext from "../../context/LanguageContext";
 
 function ViscosityProducts() {

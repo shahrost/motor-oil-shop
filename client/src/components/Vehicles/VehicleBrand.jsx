@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LanguageContext from "../../context/LanguageContext";
 import useVehicleBrandModels from "./hooks/useVehicleBrandModels";
-import VehicleCard from "./sections/VehicleCard";
+import { VehicleCard } from "./sections";
 
 // مدل‌های یک برند خودرو (با جستجو)؛ هر مدل به صفحه‌ی روانکار و فیلترش می‌ره
 function VehicleBrand() {

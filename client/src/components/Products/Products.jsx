@@ -1,10 +1,8 @@
 import { useRef } from "react";
 
 import useProductsPage from "./hooks/useProductsPage";
-import ProductSearch from "./sections/ProductSearch";
+import { ProductSearch, ProductFilters, ScrollTopButton } from "./sections";
 import ProductRows from "../common/ProductRows";
-import ProductFilters from "./sections/ProductFilters";
-import ScrollTopButton from "./sections/ScrollTopButton";
 
 function Products() {
   const {

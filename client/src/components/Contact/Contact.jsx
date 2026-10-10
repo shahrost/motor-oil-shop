@@ -1,6 +1,5 @@
 import { useContext } from "react";
-import ContactInfo from "./sections/ContactInfo";
-import ContactActions from "./sections/ContactActions";
+import { ContactInfo, ContactActions } from "./sections";
 import LanguageContext from "../../context/LanguageContext";
 
 function Contact() {
