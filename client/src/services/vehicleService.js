@@ -1,5 +1,5 @@
 import apiClient from "../api/apiClient";
-import parseVehicleExcel from "../utils/parseVehicleExcel";
+import parseVehicleExcel from "../utils/vehicleExcel";
 import { withRetry, runImportJob } from "./importJobClient";
 
 // دریافت همه خودروها
