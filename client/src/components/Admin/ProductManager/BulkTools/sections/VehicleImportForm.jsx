@@ -4,7 +4,7 @@ import { VehicleContext } from "../../../../../context";
 import {
   importVehiclesService,
   uploadVehicleImagesService,
-} from "../../../../../services/vehicleService";
+} from "../../../../../services/vehicleImportService";
 import useExcelImport from "../hooks/useExcelImport";
 import ImportFields from "./ImportFields";
 import SubmitStatus from "./SubmitStatus";
