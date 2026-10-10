@@ -202,7 +202,6 @@ async function importParsedVehicles(vehicles, imageFiles = [], options = {}) {
 }
 
 module.exports = {
-  COLUMN_MAP: SIMPLE_COLUMN_MAP,
   importVehicles,
   importParsedVehicles,
 };

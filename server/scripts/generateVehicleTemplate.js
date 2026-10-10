@@ -3,7 +3,7 @@
 const path = require("path");
 const { pathToFileURL } = require("url");
 const ExcelJS = require("exceljs");
-const { COLUMN_MAP } = require("../services/vehicleImportService");
+const { SIMPLE_COLUMN_MAP: COLUMN_MAP } = require("../utils/vehicleColumns");
 
 async function main() {
   const { vehicles } = await import(
