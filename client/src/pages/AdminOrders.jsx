@@ -1,14 +1,7 @@
-import AdminHeader from "../components/Admin/AdminHeader";
-import OrderManager from "../components/Admin/OrderManager";
+import AdminOrdersPanel from "../components/Admin/AdminOrdersPanel";
 
 function AdminOrders() {
-  return (
-    <main>
-      <AdminHeader />
-
-      <OrderManager />
-    </main>
-  );
+  return <AdminOrdersPanel />;
 }
 
 export default AdminOrders;
