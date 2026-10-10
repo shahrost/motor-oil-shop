@@ -1,6 +1,6 @@
 # وضعیت پروژه — شهرام روغن
 
-آخرین بروزرسانی: 2026-10-10
+آخرین بروزرسانی: 2026-10-11
 
 ## معرفی
 
@@ -9,18 +9,35 @@
 ## ساختار کلی
 
 ```
-client/   React + Vite (Tailwind v4)
-  src/components/   کامپوننت‌های صفحه‌محور (هرکدام index.js + sections/hooks داخلی)
-  src/pages/        صفحات نازک که فقط کامپوننت مربوطه را رندر می‌کنند (مسیریابی از اینجا)
-  src/context/       Cart, Order, Product, CustomerAuth, Theme, Language
-  src/services/      لایه‌ی axios برای صدا زدن API
-  src/data/          داده‌های ثابت (برندها، دسته‌بندی‌ها، منو، ترجمه‌ها)
+client/   React + Vite (Tailwind v4) — جدا دیپلوی می‌شه
+  src/routes/        AppRoutes.jsx (مسیرها + lazy load صفحه‌ها)
+  src/pages/         فقط Route Wrapper: یک کامپوننت رو رندر می‌کنن، بدون منطق
+  src/components/    هر بخش: Feature.jsx (فقط ترکیب) + index.js + sections/ (UI، با index.js)
+                     + hooks/ (منطق) + helpers/ (پردازش)
+    common/          کامپوننت‌های مشترک (BrandRow، ProductRows، OrderOptions، …)
+    layout/          Header/، Footer/، MainLayout
+    Admin/           AdminPanel، AdminOrdersPanel، AdminHeader/، Dashboard/، ProductManager/،
+                     ProductList/، OrderManager/، helpers/ (مشترک بخش‌های ادمین)
+  src/context/       Cart, Order, Product, Vehicle, CustomerAuth, Theme, Language
+  src/hooks/         hookهای مشترک چند بخش (useCartItem، usePurchaseOptions، …)
+  src/services/      صدا زدن API (axios) + ذخیره‌سازی مرورگر و کش
+                     (cartStorage، adminTokenStorage، customerTokenStorage، filterCompatibilityCache)
+  src/api/           کلاینت axios و آدرس سرور
+  src/utils/         پردازش مشترک (vehicleExcel/ = خواندن اکسل خودرو در مرورگر)
+  src/data/          داده‌های ثابت (برندها، دسته‌بندی‌ها، منو، مناطق، …)
+  src/i18n/          ترجمه‌ها (fa / en)
+  src/assets/        لوگو، عکس برندها، فونت
 
-server/   Express + Mongoose
-  controllers/ routes/ services/ repositories/ models/ middleware/ validations/
+server/   Express + Mongoose — جدا دیپلوی می‌شه
+  routes/ → controllers/ (فقط request/response) → services/ (منطق؛ شامل importJobService)
+          → repositories/ (دیتابیس) → models/ (schema)
+  middleware/ validations/ config/ data/ (برندها و …) utils/ (ابزار: کش، اکسل، فضای ابری، …)
+  scripts/            اسکریپت‌های دستی (با node اجرا می‌شن؛ جزو سرور نیستن)
   uploads/products/   عکس‌های آپلودی محصولات (gitignore شده)
-  templates/          فایل‌های نمونه‌ی اکسل برای ایمپورت/بروزرسانی گروهی
+  templates/          فایل‌های نمونه‌ی اکسل برای ایمپورت/بروزرسانی گروهی (سرو استاتیک)
 ```
+
+ریشه‌ی ریپو فقط مستندات و `.gitignore` دارد (نه `package.json` و نه `node_modules`).
 
 ## وضعیت فعلی
 
@@ -36,12 +53,21 @@ server/   Express + Mongoose
 - حساب کاربری مشتری (ثبت‌نام/ورود جدا از ادمین).
 - سرور زیر سقف حافظه‌ی Runflare (~۱۱۵–۱۲۰MB) کار می‌کنه: کش لیست‌ها با `lean`، کتابخانه‌های ایمپورت/آپلود فقط موقع نیاز، `node --max-semi-space-size=2`؛ rss عادی ~۸۶–۹۵MB. قطعی ۲۰۲۶-۱۰-۱۰ (حدود نیم ساعت) از همین بود (بخش ۲۷ PROJECT_STATE، نکته‌ی ۴ DEPLOYMENT.md).
 - هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه. Cart، common و Home هم طبق معماری بازبینی شدن (منطق ردیف سبد در `useCartItem`، `PromotionFields` پوشه‌ای با hook، ابزار مشترک انیمیشن `Home/helpers/animate.js`). layout هم بازبینی شد: state هدر در `useHeader`/`useMobileMenu`، فوتر پوشه‌ای با sections، نام فروشگاه با کلید ترجمه‌ی `site.name` (هدر در EN «Shahram Roghan»). Order هم بازبینی شد (فرم در `OrderForm`، hook مشترک ردیف سبد `hooks/useCartItem.js`، سبد خالی مشترک `common/EmptyCart`، مناطق در `data/orderAreas.js`).
+- ساختار پروژه طبق قوانین معماری مرتب شد (2026-10-11): هر فایل یک مسئولیت، `sections/index.js` در همه‌ی بخش‌ها، pageها فقط wrapper، ذخیره‌سازی مرورگر فقط از services.
 - ۳۵۷ محصول در دیتابیس (2026-10-06)، همگی به یکی از ۱۷ برند تعریف‌شده در `client/src/data/brands.js` متصل‌اند.
 
 ## هاست و دیپلوی
 
 - هاست: Runflare (سرور، کلاینت و دیتابیس). Liara و همه‌ی فایل‌هاش از پروژه حذف شدن.
 - دیپلوی دستی با `runflare deploy` از داخل `client/` یا `server/`؛ جزئیات و شناسه‌ها تو [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## کارهای انجام‌شده در سشن 2026-10-11
+
+- **مرتب‌سازی ساختار** (branch `refactor/structure-cleanup`، جزئیات: بخش ۲۸ PROJECT_STATE): فایل‌های بی‌جا به لایه‌ی درست رفتن (`models/` کلاینت ← `ProductContext/helpers`، کارت/عکس خودرو ← `Vehicles/sections`، `orderStats` ← `Admin/helpers`، `importJobs` سرور ← `services/importJobService`)؛ پردازش اکسل خودرو در کلاینت به `utils/vehicleExcel/` تقسیم شد؛ ایمپورت خودرو از `vehicleService` جدا شد (`vehicleImportService`)؛ توکن مشتری فقط از `customerTokenStorage`؛ صفحه‌ی سفارش‌های ادمین فقط wrapper (`AdminOrdersPanel`)؛ همه‌ی `sections/` حالا `index.js` دارن؛ hook صفحه‌ی محصولات `useProductsPage` شد.
+- **حذف:** `node_modules/` اضافه‌ی ریشه (۲۴۶ فایل در git)، `uploads/` خالی ریشه، `client/README.md`، `server/config.zip` (پشتیبان قدیمی با `.env`).
+- **سبک‌تر:** لود اول صفحه‌ی اصلی ۱۵۷.۴KB ← ۱۵۱.۰KB (gzip) و ۱۵ ← ۹ فایل، چون کد خواندن اکسل خودرو دیگه همراه بسته‌ی اول نیست.
+
+**کارهای باز:** تأیید محل دیتابیس (مستندات «Atlas» و «Runflare» هر دو دارن؛ `MONGO_URI` محلی روی Atlas است و heartbeat سرور production هم در همون دیتابیس دیده شد).
 
 ## کارهای انجام‌شده در سشن 2026-10-08
 

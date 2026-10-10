@@ -1,7 +1,45 @@
 # Shahram Roghan Project State
 
 آخرین بروزرسانی:
-Session Update 2026-10-10 — رفع قطعی سرور (چرخه‌ی کرش به‌خاطر سقف حافظه‌ی Runflare): کش lean، لود دیرهنگام کتابخانه‌های سنگین، semi-space کوچک ✅؛ Session Update 2026-10-10 — بررسی معماری Order: sections/index، فرم جدا، hook مشترک ردیف سبد، سبد خالی مشترک، مناطق در data ✅؛ Session Update 2026-10-10 — بررسی معماری layout (Header/Footer): state و منطق به hooks، Footer پوشه‌ای، نام فروشگاه ترجمه‌پذیر ✅؛ Session Update 2026-10-09 — بررسی معماری AdminHeader، Cart، common و Home: انتقال منطق به hook/service، index برای sections، حذف تکرارها ✅؛ Session Update 2026-10-09 — ایمپورت لوکومبیل: برند «فارسی (English)» شناخته می‌شه، ایمپورت ۳۵۰ برابر سریع‌تر، وضعیت job در دیتابیس ✅؛ Session Update 2026-10-09 — گرید روغن موتورهای ایدلوب/بهتام در سایت و اکسل + خواندن گرید از نام/برچسب در ایمپورت ✅؛ Session Update 2026-10-09 — لوگوهای برند خودرو کامل شد (۱۳ برند جدید + نشان به‌جای نوشته برای پژو، مرسدس و…) ✅؛ Session Update 2026-10-09 — کارت «خودروهای من»: لوگوی برندها دور ماشین می‌چرخن ✅؛ Session Update 2026-10-09 — انیمیشن کارت «روانکار»: گالن روغن، چرخ‌دنده و زنجیر تانک ✅؛ Session Update 2026-10-08 — سبک‌سازی ۲: صفحه‌های خودرو فقط داده‌ی خودشون رو می‌گیرن، حذف فونت‌ها و عکس‌های بلااستفاده ✅؛ Session Update 2026-10-08 — سبک‌سازی سایت: لود جدای صفحه‌ها، کش لیست خودروها، فونت swap، عکس هدر WebP ✅؛ Session Update 2026-10-08 — کارت‌های ردیفی (میهن/ATFO) هم‌قد و هم‌تراز ✅؛ Session Update 2026-10-08 — کارت ردیفی صفحه‌ی محصولات: فاصله‌ی حجم تا قیمت و فاصله‌ی ردیف‌ها کم شد ✅؛ Session Update 2026-10-08 — کارت محصول: دکمه‌ها همیشه پایین کارت و هم‌تراز، کارت کوتاه‌تر و فشرده‌تر ✅؛ Session Update 2026-10-07 — خودروهای سازگار روی کارت فیلترها ✅؛ Session Update 2026-10-07 — ایمپورت محصولات: تطبیق هوشمند برند/عکس، پیش‌نمایش، حذف ایمن ✅؛ Session Update 2026-10-07 — ایمپورت گروهی با تحمل ری‌استارت سرور ✅؛ Session Update 2026-10-06 — طرح فروش نقدی/اعتباری جدا، جشنواره ضدیخ لوکینی، فیلتر صفحه‌ی محصولات، فوتر چت خصوصی، تقسیم وظایف کامپوننت‌ها/سرویس‌ها طبق معماری، دکمه‌های دسته در صفحه‌ی خودرو، دکمه‌ی «نمایش محصولات» در فیلتر صفحه‌ی محصولات، صفحه‌ی اصلی دو کارتی و «خودروهای من»، ایمپورت فیلترها بدون عکس + اتصال به خودرو ✅
+Session Update 2026-10-11 — مرتب‌سازی ساختار پروژه: جابه‌جایی فایل‌های بی‌جا، تقسیم فایل‌های چندمسئولیتی، index برای sections، حذف node_modules و فایل‌های بلااستفاده‌ی ریشه ✅؛ Session Update 2026-10-10 — رفع قطعی سرور (چرخه‌ی کرش به‌خاطر سقف حافظه‌ی Runflare): کش lean، لود دیرهنگام کتابخانه‌های سنگین، semi-space کوچک ✅؛ Session Update 2026-10-10 — بررسی معماری Order: sections/index، فرم جدا، hook مشترک ردیف سبد، سبد خالی مشترک، مناطق در data ✅؛ Session Update 2026-10-10 — بررسی معماری layout (Header/Footer): state و منطق به hooks، Footer پوشه‌ای، نام فروشگاه ترجمه‌پذیر ✅؛ Session Update 2026-10-09 — بررسی معماری AdminHeader، Cart، common و Home: انتقال منطق به hook/service، index برای sections، حذف تکرارها ✅؛ Session Update 2026-10-09 — ایمپورت لوکومبیل: برند «فارسی (English)» شناخته می‌شه، ایمپورت ۳۵۰ برابر سریع‌تر، وضعیت job در دیتابیس ✅؛ Session Update 2026-10-09 — گرید روغن موتورهای ایدلوب/بهتام در سایت و اکسل + خواندن گرید از نام/برچسب در ایمپورت ✅؛ Session Update 2026-10-09 — لوگوهای برند خودرو کامل شد (۱۳ برند جدید + نشان به‌جای نوشته برای پژو، مرسدس و…) ✅؛ Session Update 2026-10-09 — کارت «خودروهای من»: لوگوی برندها دور ماشین می‌چرخن ✅؛ Session Update 2026-10-09 — انیمیشن کارت «روانکار»: گالن روغن، چرخ‌دنده و زنجیر تانک ✅؛ Session Update 2026-10-08 — سبک‌سازی ۲: صفحه‌های خودرو فقط داده‌ی خودشون رو می‌گیرن، حذف فونت‌ها و عکس‌های بلااستفاده ✅؛ Session Update 2026-10-08 — سبک‌سازی سایت: لود جدای صفحه‌ها، کش لیست خودروها، فونت swap، عکس هدر WebP ✅؛ Session Update 2026-10-08 — کارت‌های ردیفی (میهن/ATFO) هم‌قد و هم‌تراز ✅؛ Session Update 2026-10-08 — کارت ردیفی صفحه‌ی محصولات: فاصله‌ی حجم تا قیمت و فاصله‌ی ردیف‌ها کم شد ✅؛ Session Update 2026-10-08 — کارت محصول: دکمه‌ها همیشه پایین کارت و هم‌تراز، کارت کوتاه‌تر و فشرده‌تر ✅؛ Session Update 2026-10-07 — خودروهای سازگار روی کارت فیلترها ✅؛ Session Update 2026-10-07 — ایمپورت محصولات: تطبیق هوشمند برند/عکس، پیش‌نمایش، حذف ایمن ✅؛ Session Update 2026-10-07 — ایمپورت گروهی با تحمل ری‌استارت سرور ✅؛ Session Update 2026-10-06 — طرح فروش نقدی/اعتباری جدا، جشنواره ضدیخ لوکینی، فیلتر صفحه‌ی محصولات، فوتر چت خصوصی، تقسیم وظایف کامپوننت‌ها/سرویس‌ها طبق معماری، دکمه‌های دسته در صفحه‌ی خودرو، دکمه‌ی «نمایش محصولات» در فیلتر صفحه‌ی محصولات، صفحه‌ی اصلی دو کارتی و «خودروهای من»، ایمپورت فیلترها بدون عکس + اتصال به خودرو ✅
+
+## ۲۸. مرتب‌سازی ساختار پروژه (branch `refactor/structure-cleanup`)
+
+Status: Completed ✅ (lint و build کلاینت تمیز؛ هر ۶۸ ماژول سرور بدون خطا لود می‌شن؛ تست Chrome headless با سرور محلی: خانه، محصولات، برندهای خودرو ← مدل‌ها ← جزئیات خودرو (+ تب فیلتر)، تماس، طرح‌ها، ویسکوزیته و محصولاتش، برندها، حساب (بدون توکن و با توکن خراب)، پنل ادمین و سفارش‌ها — بدون خطای کنسول. پروژه تست خودکار نداره)
+
+ساختار فعلی کامل در `PROJECT_STATUS.md` («ساختار کلی») است؛ درخت‌های قدیمی پایین همین فایل (Home/Cart/Order Refactor، Backend Current Structure) تاریخچه‌اند.
+
+جابه‌جایی (`git mv`، تاریخچه حفظ شد):
+✅ `client/src/models/createProduct.js`، `productModel.js` ← `context/ProductContext/helpers/` (فقط `ProductContext/hooks/useProducts` استفاده‌شون می‌کنه؛ پوشه‌ی `models` در ساختار کلاینت نبود)
+✅ `Vehicles/VehicleCard.jsx`، `Vehicles/VehicleImage.jsx` ← `Vehicles/sections/`
+✅ `Admin/OrderManager/helpers/orderStats.js` ← `Admin/helpers/orderStats.js` (مشترک `Dashboard` و `OrderManager`؛ قبلاً Dashboard مستقیم از داخل OrderManager import می‌کرد)
+✅ سرور: `utils/importJobs.js` ← `services/importJobService.js` (چرخه‌ی job + repository = منطق service)
+
+نام‌گذاری:
+✅ `Products/hooks/useProducts.js` ← `useProductsPage.js` (هم‌نام hook `ProductContext/hooks/useProducts` بود؛ مثل `useCartPage`)
+✅ `ProductForm/sections/ImageSection/index.jsx` (خود کامپوننت در index) ← `ImageSection.jsx` + `index.js`
+
+index:
+✅ `sections/index.js` برای Account، Admin/OrderManager، Contact، Products، Promotions، Vehicles، Viscosity، ViscosityProducts؛ والدها از `./sections` import می‌کنن
+✅ `BulkTools/index.js`؛ `ProductCard/index.js` ← `ProductRowCard` هم (BrandRow، OilGrid)
+✅ `Contact/index.js` و `Products/index.js` فقط کامپوننت رو export می‌کنن (hook/sectionهای داخلی و حتی `common/ProductRows` re-export شده بودن و هیچ‌جا import نمی‌شدن)
+
+تقسیم:
+✅ `utils/parseVehicleExcel.js` (۲۲۷ خط) ← `utils/vehicleExcel/`: `vehicleColumns.js`، `excelReader.js`، `vehicleRowMapper.js`، `parseVehicleExcel.js`، `index.js` (هم‌شکل `server/utils`). خروجی با نسخه‌ی قبل مقایسه شد: `cars_database.xlsx` (۳۰۶ ردیف، ۲۹۳ با لینک محصول) و `vehicle-import-template.xlsx` (۲۲ ردیف) یکسان
+✅ `services/vehicleService.js` (خواندن خودروها + ایمپورت) ← ایمپورت (آپلود عکس + پردازش اکسل + job) در `services/vehicleImportService.js`، مثل `productService`/`productImportService`
+✅ `services/customerTokenStorage.js` (`get/save/clearCustomerToken`): کلید `customerToken` در ۷ جای `CustomerAuthContext` و `customerAuthService` مستقیم با localStorage کار می‌شد (مثل `adminTokenStorage` بخش ۲۳)
+✅ `pages/AdminOrders.jsx` خودش AdminHeader + OrderManager رو ترکیب می‌کرد ← `components/Admin/AdminOrdersPanel.jsx` (مثل `AdminPanel`)؛ page فقط wrapper. با مسیر فایل import می‌شه نه از `Admin/index.js`، چون re-export از index هر دو صفحه‌ی ادمین رو در یک chunk ۵۵KB ادغام می‌کرد
+✅ سرور: `scripts/generateVehicleTemplate.js` ستون‌ها رو مستقیم از `utils/vehicleColumns` می‌خونه؛ `vehicleImportService` دیگه `COLUMN_MAP` رو (فقط برای این اسکریپت) export نمی‌کنه
+
+حذف:
+✅ `node_modules/` ریشه (۲۴۶ فایل در git: `xlsx@0.18.5` و وابستگی‌ها، کامیت `4077f66`) — ریشه `package.json` نداره و هیچ‌جا `xlsx`/`cfb`/`codepage` require نمی‌شه
+✅ `uploads/` ریشه (دو پوشه‌ی خالی؛ ساخته‌ی `importUpload.js` وقتی سرور از ریشه اجرا شده)، `client/README.md` (متن قالب Vite + کامنت trigger دوره‌ی Liara)، `server/config.zip` (پشتیبان قدیمی سرور با `.env`؛ با تأیید کاربر)
+
+اندازه‌ی لود اول صفحه‌ی اصلی: ۱۵ فایل / ۱۵۷.۴KB gzip ← ۹ فایل / ۱۵۱.۰KB. کد پردازش اکسل خودرو قبلاً از طریق `VehicleProvider` ← `vehicleService` همراه بسته‌ی اول می‌اومد؛ حالا فقط در chunk ادمین (۳۳ ← ۴۱KB)
+
+⚠️ دست نخورده (نامطمئن): `client/.runflare-trigger`، اسکریپت‌های دستی `server/scripts`، endpoint `POST /api/vehicles/import` (کلاینت فقط `/import-parsed` رو صدا می‌زنه)، `deleteAllOrders` در `orderService` کلاینت (هیچ‌جا صدا زده نمی‌شه)، `client/install.bat` (DEPLOYMENT بهش ارجاع داده)، worktreeهای `.claude/worktrees`
+⚠️ مسیرهای `uploads/...` در `middleware/upload.js`، `importUpload.js` و `importJobService` نسبی و وابسته به cwd هستن؛ اجرای سرور از ریشه‌ی ریپو پوشه‌ی `uploads/` اضافه می‌سازه (سرور رو از داخل `server/` اجرا کنید)
+⚠️ دیتابیس: PROJECT_STATUS «MongoDB (Atlas)» و DEPLOYMENT «Runflare» می‌گن؛ کاربر گفت Runflare، ولی `MONGO_URI` محلی روی `mongodb.net` (Atlas) است و heartbeat نسخه‌ی production (`host=backend-rad-deploy-…`) در همین دیتابیس دیده شد ← هنوز تأیید نشده، مستندات دیتابیس عوض نشد
 
 ## ۲۷. قطعی سرور: چرخه‌ی کرش به‌خاطر سقف حافظه‌ی Runflare
 
@@ -852,6 +890,11 @@ Status: Completed ✅ (lint و build تمیز؛ کلاینت دیپلوی شد؛
 - Refactor بدون تغییر رفتار اصلی
 - Pageها فقط Route Wrapper هستند
 - منطق Admin داخل Components و Hooks قرار می‌گیرد
+- (2026-10-11) هر پوشه‌ی `sections/` یک `index.js` داره و والد از `./sections` import می‌کنه؛ `index.js` هر کامپوننت فقط چیزی رو export می‌کنه که بیرون استفاده می‌شه
+- (2026-10-11) ترکیب چند کامپوننت جاش `components/` است، نه `pages/`
+- (2026-10-11) `services/` کلاینت = صدا زدن API + ذخیره‌سازی مرورگر و کش (`cartStorage`، `adminTokenStorage`، `customerTokenStorage`، `filterCompatibilityCache`)؛ کلید localStorage فقط در یک فایل
+- (2026-10-11) نام hookها یکتا؛ hook وضعیت یک صفحه `use<Page>Page` (مثل `useCartPage`، `useProductsPage`)
+- (2026-10-11) پردازش مخصوص یک بخش در `helpers/` همون بخش؛ مشترک بین چند بخش در `utils/` یا `helpers/` والد مشترک (مثل `Admin/helpers`)
 
 ---
 
@@ -1040,7 +1083,7 @@ Current Flow:
 
 App.jsx
 ↓
-router/AppRoutes.jsx
+routes/AppRoutes.jsx
 ↓
 Pages
 ↓
