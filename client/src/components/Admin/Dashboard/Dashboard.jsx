@@ -2,7 +2,7 @@ import { useContext, useMemo } from "react";
 import DashboardCard from "./DashboardCard";
 import OrderContext from "../../../context/OrderContext";
 import useOrdersAutoRefresh from "../../../hooks/useOrdersAutoRefresh";
-import orderStats from "../OrderManager/helpers/orderStats";
+import orderStats from "../helpers/orderStats";
 
 function Dashboard() {
   const { orders, loadOrders } = useContext(OrderContext);

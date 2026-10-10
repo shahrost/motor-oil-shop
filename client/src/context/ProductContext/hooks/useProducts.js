@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import createProduct from "../../../models/createProduct";
+import createProduct from "../helpers/createProduct";
 import { sortProductsDefault } from "../../../utils/sortProducts";
 
 import {

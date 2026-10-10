@@ -1,6 +1,6 @@
 const apiResponse = require("../utils/apiResponse");
 const AppError = require("../utils/AppError");
-const { getJob } = require("../utils/importJobs");
+const { getJob } = require("../services/importJobService");
 const { persistImages } = require("../utils/cloudStorage");
 
 // هندلرهای مشترک ایمپورت گروهی (محصولات و خودروها)

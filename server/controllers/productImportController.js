@@ -2,7 +2,7 @@ const productImportService = require("../services/productImportService");
 const priceUpdateService = require("../services/priceUpdateService");
 const apiResponse = require("../utils/apiResponse");
 const AppError = require("../utils/AppError");
-const { startJob, resolveUploadedImages } = require("../utils/importJobs");
+const { startJob, resolveUploadedImages } = require("../services/importJobService");
 
 function parseImageNames(rawNames) {
   try {

@@ -2,7 +2,7 @@ const vehicleService = require("../services/vehicleService");
 const vehicleImportService = require("../services/vehicleImportService");
 const apiResponse = require("../utils/apiResponse");
 const AppError = require("../utils/AppError");
-const { startJob, resolveUploadedImages } = require("../utils/importJobs");
+const { startJob, resolveUploadedImages } = require("../services/importJobService");
 
 async function getVehicles(req, res, next) {
   try {

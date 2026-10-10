@@ -1,4 +1,4 @@
-import VehicleImage from "../VehicleImage";
+import VehicleImage from "./VehicleImage";
 
 // کارت عکس، نام و مشخصات خودرو
 function VehicleSpecsCard({ vehicle, name, specs, t }) {

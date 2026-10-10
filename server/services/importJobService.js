@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const AppError = require("./AppError");
+const AppError = require("../utils/AppError");
 const importJobRepository = require("../repositories/importJobRepository");
 
 // ایمپورت ممکنه از زمان مجاز پروکسی بیشتر طول بکشه، پس به‌صورت job پس‌زمینه

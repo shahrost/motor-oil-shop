@@ -1,4 +1,4 @@
-import getImageUrl from "../../utils/getImageUrl";
+import getImageUrl from "../../../utils/getImageUrl";
 
 function VehicleImage({ vehicle, name, className = "" }) {
   if (vehicle.image) {

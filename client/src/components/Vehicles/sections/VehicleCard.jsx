@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import LanguageContext from "../../context/LanguageContext";
+import LanguageContext from "../../../context/LanguageContext";
 import VehicleImage from "./VehicleImage";
 
 function VehicleCard({ vehicle }) {

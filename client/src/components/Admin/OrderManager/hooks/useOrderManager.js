@@ -1,6 +1,6 @@
 import { useContext, useMemo, useState } from "react";
 
-import orderStats from "../helpers/orderStats";
+import orderStats from "../../helpers/orderStats";
 import OrderContext from "../../../../context/OrderContext";
 import useOrdersAutoRefresh from "../../../../hooks/useOrdersAutoRefresh";
 
