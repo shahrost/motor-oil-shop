@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import useProducts from "./hooks/useProducts";
+import useProductsPage from "./hooks/useProductsPage";
 import ProductSearch from "./sections/ProductSearch";
 import ProductRows from "../common/ProductRows";
 import ProductFilters from "./sections/ProductFilters";
@@ -16,7 +16,7 @@ function Products() {
     onlyAvailable,
     setOnlyAvailable,
     clearFilters,
-  } = useProducts();
+  } = useProductsPage();
 
   // فیلترها زنده اعمال می‌شن؛ دکمه‌ی «نمایش محصولات» کاربر رو به لیست می‌بره
   const listRef = useRef(null);

@@ -44,7 +44,7 @@ function fromPriceOption(value) {
 }
 
 // state فیلترهای صفحه‌ی محصولات + گزینه‌های هر فیلتر + لیست فیلترشده
-function useProducts() {
+function useProductsPage() {
   const { products } = useContext(ProductContext);
   const [searchParams] = useSearchParams();
 
@@ -82,4 +82,4 @@ function useProducts() {
   };
 }
 
-export default useProducts;
+export default useProductsPage;
