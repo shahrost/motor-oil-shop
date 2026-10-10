@@ -4,11 +4,16 @@ import {
   loginCustomer,
   fetchCustomerProfile,
 } from "../services/customerAuthService";
+import {
+  getCustomerToken,
+  saveCustomerToken,
+  clearCustomerToken,
+} from "../services/customerTokenStorage";
 
 const CustomerAuthContext = createContext();
 
 export function CustomerAuthProvider({ children }) {
-  const hasToken = Boolean(localStorage.getItem("customerToken"));
+  const hasToken = Boolean(getCustomerToken());
 
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(hasToken);
@@ -19,7 +24,7 @@ export function CustomerAuthProvider({ children }) {
     fetchCustomerProfile()
       .then((data) => setCustomer(data))
       .catch(() => {
-        localStorage.removeItem("customerToken");
+        clearCustomerToken();
       })
       .finally(() => setLoading(false));
   }, [hasToken]);
@@ -27,19 +32,19 @@ export function CustomerAuthProvider({ children }) {
   async function register(data) {
     const result = await registerCustomer(data);
 
-    localStorage.setItem("customerToken", result.token);
+    saveCustomerToken(result.token);
     setCustomer(result.customer);
   }
 
   async function login(data) {
     const result = await loginCustomer(data);
 
-    localStorage.setItem("customerToken", result.token);
+    saveCustomerToken(result.token);
     setCustomer(result.customer);
   }
 
   function logout() {
-    localStorage.removeItem("customerToken");
+    clearCustomerToken();
     setCustomer(null);
   }
 

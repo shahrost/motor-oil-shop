@@ -1,4 +1,5 @@
 import apiClient from "../api/apiClient";
+import { getCustomerToken } from "./customerTokenStorage";
 
 export async function registerCustomer(data) {
   const response = await apiClient.post("/customers/register", data);
@@ -13,7 +14,7 @@ export async function loginCustomer(data) {
 }
 
 export async function fetchCustomerProfile() {
-  const token = localStorage.getItem("customerToken");
+  const token = getCustomerToken();
 
   const response = await apiClient.get("/customers/me", {
     headers: {
@@ -25,7 +26,7 @@ export async function fetchCustomerProfile() {
 }
 
 export async function fetchMyOrders() {
-  const token = localStorage.getItem("customerToken");
+  const token = getCustomerToken();
 
   const response = await apiClient.get("/customers/me/orders", {
     headers: {
