@@ -11,7 +11,7 @@ import {
 import { getProductPrice } from "../../utils/productPrice";
 import DiscountBadge from "../common/DiscountBadge";
 import CompatibleVehicles from "../common/CompatibleVehicles";
-import { RowCardSpecs, RowCardPurchase } from "./sections";
+import { ProductBrandBadge, RowCardSpecs, RowCardPurchase } from "./sections";
 import usePurchaseOptions from "../../hooks/usePurchaseOptions";
 
 // کارت فشرده‌ی محصول برای ردیف‌های افقی (صفحه‌ی اصلی)
@@ -25,8 +25,10 @@ function ProductRowCard({ product }) {
       to={`/product/${product.id}`}
       draggable={false}
       onDragStart={(e) => e.preventDefault()}
-      className="h-full flex flex-col border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition"
+      className="relative h-full flex flex-col border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition"
     >
+      <ProductBrandBadge product={product} />
+
       <img
         src={getProductImageSrc(product, 320)}
         alt={name}

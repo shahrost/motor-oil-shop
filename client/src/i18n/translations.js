@@ -42,6 +42,7 @@ const translations = {
 
     common: {
       brand: "برند:",
+      brandLogo: "لوگوی {brand}",
       viscosity: "گرید:",
       volume: "حجم:",
       quantity: "تعداد",
@@ -445,6 +446,7 @@ const translations = {
 
     common: {
       brand: "Brand:",
+      brandLogo: "{brand} logo",
       viscosity: "Grade:",
       volume: "Volume:",
       quantity: "Quantity",

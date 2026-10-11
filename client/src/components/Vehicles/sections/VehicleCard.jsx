@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import LanguageContext from "../../../context/LanguageContext";
+import { getVehicleBrandLogo } from "../../../utils/vehicleBrandLogo";
+import BrandBadge from "../../common/BrandBadge";
 import VehicleImage from "./VehicleImage";
 
 function VehicleCard({ vehicle }) {
@@ -9,11 +11,13 @@ function VehicleCard({ vehicle }) {
   const en = language === "en";
 
   const name = en ? vehicle.nameEn || vehicle.name : vehicle.name;
+  const brand = en ? vehicle.brandEn || vehicle.brand : vehicle.brand;
 
   return (
     <Link
       to={`/vehicle/${vehicle.id}`}
       className="
+        relative
         block
         border-2
         border-gray-200
@@ -26,6 +30,12 @@ function VehicleCard({ vehicle }) {
         transition
       "
     >
+      <BrandBadge
+        src={getVehicleBrandLogo(vehicle.brandEn)}
+        name={brand}
+        variant="vehicle"
+      />
+
       <VehicleImage vehicle={vehicle} name={name} className="w-full h-32" />
 
       <h3 className="mt-3 text-sm font-bold text-gray-900 line-clamp-2">
@@ -35,7 +45,7 @@ function VehicleCard({ vehicle }) {
       <div className="mt-2 text-sm font-bold text-gray-700 space-y-1">
         <p className="line-clamp-1">
           <span className="text-gray-500">{t("common.brand")}</span>{" "}
-          {en ? vehicle.brandEn || vehicle.brand : vehicle.brand}
+          {brand}
         </p>
 
         <p className="line-clamp-1">

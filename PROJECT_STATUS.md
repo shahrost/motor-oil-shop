@@ -53,6 +53,7 @@ server/   Express + Mongoose — جدا دیپلوی می‌شه
 - حساب کاربری مشتری (ثبت‌نام/ورود جدا از ادمین).
 - سرور زیر سقف حافظه‌ی Runflare (~۱۱۵–۱۲۰MB) کار می‌کنه: کش لیست‌ها با `lean`، کتابخانه‌های ایمپورت/آپلود فقط موقع نیاز، `node --max-semi-space-size=2`؛ rss عادی ~۸۶–۹۵MB. قطعی ۲۰۲۶-۱۰-۱۰ (حدود نیم ساعت) از همین بود (بخش ۲۷ PROJECT_STATE، نکته‌ی ۴ DEPLOYMENT.md).
 - هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه. Cart، common و Home هم طبق معماری بازبینی شدن (منطق ردیف سبد در `useCartItem`، `PromotionFields` پوشه‌ای با hook، ابزار مشترک انیمیشن `Home/helpers/animate.js`). layout هم بازبینی شد: state هدر در `useHeader`/`useMobileMenu`، فوتر پوشه‌ای با sections، نام فروشگاه با کلید ترجمه‌ی `site.name` (هدر در EN «Shahram Roghan»). Order هم بازبینی شد (فرم در `OrderForm`، hook مشترک ردیف سبد `hooks/useCartItem.js`، سبد خالی مشترک `common/EmptyCart`، مناطق در `data/orderAreas.js`).
+- کارت‌های خودرو و روغن گوشه‌ی بالا-چپ نشان لوگوی برند دارن (`components/common/BrandBadge`؛ خودرو ۲۸/۴۰px، روغن ۲۰/۲۴px؛ بی‌لوگو ← حرف اول برند؛ محصول بی‌عکس نشان نمی‌گیره چون عکسش خود لوگوست).
 - ساختار پروژه طبق قوانین معماری مرتب شد (2026-10-11): هر فایل یک مسئولیت، `sections/index.js` در همه‌ی بخش‌ها، pageها فقط wrapper، ذخیره‌سازی مرورگر فقط از services.
 - ۳۵۷ محصول در دیتابیس (2026-10-06)، همگی به یکی از ۱۷ برند تعریف‌شده در `client/src/data/brands.js` متصل‌اند.
 
@@ -64,10 +65,11 @@ server/   Express + Mongoose — جدا دیپلوی می‌شه
 ## کارهای انجام‌شده در سشن 2026-10-11
 
 - **مرتب‌سازی ساختار** (branch `refactor/structure-cleanup`، جزئیات: بخش ۲۸ PROJECT_STATE): فایل‌های بی‌جا به لایه‌ی درست رفتن (`models/` کلاینت ← `ProductContext/helpers`، کارت/عکس خودرو ← `Vehicles/sections`، `orderStats` ← `Admin/helpers`، `importJobs` سرور ← `services/importJobService`)؛ پردازش اکسل خودرو در کلاینت به `utils/vehicleExcel/` تقسیم شد؛ ایمپورت خودرو از `vehicleService` جدا شد (`vehicleImportService`)؛ توکن مشتری فقط از `customerTokenStorage`؛ صفحه‌ی سفارش‌های ادمین فقط wrapper (`AdminOrdersPanel`)؛ همه‌ی `sections/` حالا `index.js` دارن؛ hook صفحه‌ی محصولات `useProductsPage` شد.
+- **نشان لوگوی برند** (بخش ۲۹ PROJECT_STATE): کامپوننت مشترک `common/BrandBadge` روی `VehicleCard`، `ProductCard` و `ProductRowCard` از همون نگاشت‌های موجود لوگو (`utils/vehicleBrandLogo`، `data/brands.js`)؛ حاشیه‌ی خالی ۱۷ لوگوی خودرو بریده شد تا کوچیک هم خوانا باشن؛ دکمه‌ی «برگشت به بالا» `z-40` گرفت.
 - **حذف:** `node_modules/` اضافه‌ی ریشه (۲۴۶ فایل در git)، `uploads/` خالی ریشه، `client/README.md`، `server/config.zip` (پشتیبان قدیمی با `.env`).
 - **سبک‌تر:** لود اول صفحه‌ی اصلی ۱۵۷.۴KB ← ۱۵۱.۰KB (gzip) و ۱۵ ← ۹ فایل، چون کد خواندن اکسل خودرو دیگه همراه بسته‌ی اول نیست.
 
-**کارهای باز:** تأیید محل دیتابیس (مستندات «Atlas» و «Runflare» هر دو دارن؛ `MONGO_URI` محلی روی Atlas است و heartbeat سرور production هم در همون دیتابیس دیده شد).
+**کارهای باز:** لوگوی فونیکس، کاپرا و الماری (`assets/vehicleBrands/`)؛ تأیید محل دیتابیس (مستندات «Atlas» و «Runflare» هر دو دارن؛ `MONGO_URI` محلی روی Atlas است و heartbeat سرور production هم در همون دیتابیس دیده شد).
 
 ## کارهای انجام‌شده در سشن 2026-10-08
 

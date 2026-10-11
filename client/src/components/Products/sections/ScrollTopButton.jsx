@@ -26,7 +26,7 @@ function ScrollTopButton() {
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 left-6 bg-black text-white w-12 h-12 rounded-full shadow-xl text-xl"
+      className="fixed bottom-6 left-6 z-40 bg-black text-white w-12 h-12 rounded-full shadow-xl text-xl"
       aria-label={t("products.scrollTop")}
     >
       ↑
