@@ -16,3 +16,5 @@ build/
 
 # uploads
 server/uploads/
+# Claude Code local settings and worktrees (not part of the app)
+.claude/
