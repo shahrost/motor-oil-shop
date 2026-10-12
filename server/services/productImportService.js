@@ -245,6 +245,7 @@ async function applyPlan(plan, results, imageFiles, onStage) {
 
   const failedRows = new Set(results.failed.map((f) => f.row));
   const linkEntries = [];
+  const withoutVehicles = [];
 
   plan.entries.forEach((entry) => {
     const { row, doc } = entry;
@@ -257,9 +258,13 @@ async function applyPlan(plan, results, imageFiles, onStage) {
     if (row.compatibleVehicles) {
       linkEntries.push({ row: row.__row, sku: doc.sku, vehicles: row.compatibleVehicles });
     } else {
-      results.noVehicles.push(summaryOf(entry));
+      withoutVehicles.push(summaryOf(entry));
     }
   });
+
+  // «بدون خودروی سازگار» فقط وقتی معنی داره که فایل واقعاً از این ستون استفاده کرده؛
+  // ستونِ کاملاً خالی (مثل فایل نمونه) یعنی ارتباط‌ها از ایمپورت خودرو میان
+  if (linkEntries.length) results.noVehicles = withoutVehicles;
 
   if (linkEntries.length) {
     onStage("اتصال به خودروهای سازگار");

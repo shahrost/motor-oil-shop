@@ -60,13 +60,24 @@ export function getMenuCategorySlug(product) {
       if (category === "Automatikgetriebe") return "automatic-transmission";
       if (category === "Schaltgetriebe" || category === "Getriebeöle") return "gear-oil";
       if (category === "Stoßdämpferöl / Gabelöl / Servolenkung") return "hydraulic-oil";
-      if (category === "Motorenöle") return "gasoline-engine-oil";
+      // PKW = خودروی سواری (مثل «PKW Gasbetriebene Motoren»)
+      if (category === "Motorenöle" || category.startsWith("PKW")) return "gasoline-engine-oil";
       if (category === "Motorradöle") return "motorcycle-oil";
       if (category === "Additive") return name === "اکتان" ? "octane-booster" : "other";
       return "other";
 
     case "فیلتر گیربکس ATFO":
       return "gearbox-filter";
+
+    case "توتال":
+      if (category.includes("PCMO")) return "gasoline-engine-oil";
+      return "other";
+
+    case "لوکینی":
+      if (category === "روغن موتورهای بنزینی") return "gasoline-engine-oil";
+      if (category === "ضد یخ") return "antifreeze";
+      if (category === "کولانت") return "coolant";
+      return "other";
 
     default:
       return "other";
