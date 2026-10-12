@@ -1,32 +1,20 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import VehicleContext from "./VehicleContext";
 import defaultVehicles from "../../data/vehicles";
-import { fetchVehicles } from "../../services/vehicleService";
+import { clearVehicleDataCache } from "../../services/vehicleDataCache";
 
-// تا وقتی خودرویی از ایمپورت ادمین توی دیتابیس نباشه، دیتای پیش‌فرض نشون داده می‌شه.
-// لیست کامل خودروها حجیمه و خودکار گرفته نمی‌شه: صفحه‌های مشتری داده‌ی سبک خودشون رو
-// می‌گیرن (برندها، مدل‌های یک برند، یک خودرو — Vehicles/hooks)؛ فقط بعد از ایمپورت
-// ادمین (reloadVehicles) لیست کامل دریافت می‌شه.
+// صفحه‌های خودرو داده‌ی سبک خودشون رو مستقیم می‌گیرن (برندها، مدل‌های یک برند، یک
+// خودرو — Vehicles/hooks). لیست کامل خودروها (با ده‌ها هزار لینک محصول) دیگه گرفته
+// نمی‌شه؛ vehicles فقط دیتای پیش‌فرض برای وقتیه که سرور برندی برنگردونه.
+// reloadVehicles (بعد از ایمپورت ادمین) کش صفحه‌های خودرو رو خالی می‌کنه.
 function VehicleProvider({ children }) {
-  const [dbVehicles, setDbVehicles] = useState([]);
-
-  const reloadVehicles = useCallback(async () => {
-    try {
-      const response = await fetchVehicles();
-
-      setDbVehicles(response.data || []);
-    } catch (error) {
-      console.log("خطا در دریافت خودروها", error);
-    }
-  }, []);
-
   const value = useMemo(
     () => ({
-      vehicles: dbVehicles.length > 0 ? dbVehicles : defaultVehicles,
-      reloadVehicles,
+      vehicles: defaultVehicles,
+      reloadVehicles: clearVehicleDataCache,
     }),
-    [dbVehicles, reloadVehicles],
+    [],
   );
 
   return (

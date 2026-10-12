@@ -11,13 +11,9 @@ const STATUS_FILTERS = {
   all: {},
 };
 
-// خودرو باید وجود داشته باشه (از کش حافظه‌ای لیست خودروها، بدون کوئری جدید)
+// خودرو باید وجود داشته باشه
 async function findVehicle(vehicleId) {
-  if (!mongoose.isValidObjectId(vehicleId)) return null;
-
-  const vehicles = await vehicleRepository.getAllVehicles();
-
-  return vehicles.find((vehicle) => vehicle.id === vehicleId) || null;
+  return vehicleRepository.findById(vehicleId);
 }
 
 // خلاصه‌ی امتیازها: میانگین (یک رقم اعشار)، تعداد و تعداد هر امتیاز
@@ -71,11 +67,10 @@ async function addReview(vehicleId, data) {
 // لیست ادمین (?status=pending|approved|all) با نام خودروی هر نظر
 async function getReviewsForAdmin(status) {
   const filter = STATUS_FILTERS[status] || STATUS_FILTERS.pending;
-  const [reviews, vehicles] = await Promise.all([
-    vehicleReviewRepository.findForAdmin(filter),
-    vehicleRepository.getAllVehicles(),
-  ]);
-  const names = new Map(vehicles.map((vehicle) => [vehicle.id, vehicle.name]));
+  const reviews = await vehicleReviewRepository.findForAdmin(filter);
+  const names = await vehicleRepository.findNamesByIds(
+    reviews.map((review) => review.vehicleId),
+  );
 
   return reviews.map((review) => ({
     ...review,

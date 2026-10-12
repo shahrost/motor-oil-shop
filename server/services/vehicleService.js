@@ -1,23 +1,21 @@
 const vehicleRepository = require("../repositories/vehicleRepository");
+const filterCompatibilityCache = require("../utils/filterCompatibilityCache");
 
 const { FILTER_KIND } = require("../data/vehicleLinkKinds");
 
+// همه‌ی خودروها بدون لینک محصولات (لیست کامل با لینک‌ها خیلی حجیمه و کش نمی‌شه)
 async function getVehicles() {
-  return vehicleRepository.getAllVehicles();
+  return vehicleRepository.getLightList();
 }
 
-// مدل‌های یک برند (برای صفحه‌ی /vehicles/:brand)؛ از کش لیست کامل، بدون کوئری جدید
+// مدل‌های یک برند (برای صفحه‌ی /vehicles/:brand)
 async function getBrandVehicles(brand) {
-  const vehicles = await vehicleRepository.getAllVehicles();
-
-  return vehicles.filter((vehicle) => vehicle.brand === brand);
+  return vehicleRepository.findByBrand(brand);
 }
 
 // یک خودرو با شناسه (برای صفحه‌ی /vehicle/:id)؛ نبود ← null
 async function getVehicleById(id) {
-  const vehicles = await vehicleRepository.getAllVehicles();
-
-  return vehicles.find((vehicle) => vehicle.id === id) || null;
+  return vehicleRepository.findById(id);
 }
 
 // برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»؛ خیلی سبک‌تر از لیست کامل)
@@ -26,26 +24,14 @@ async function getVehicleBrands() {
 }
 
 // خودروهای سازگار هر فیلتر، از همان لینک‌های فیلتر خودروها (بدون داده‌ی جدید):
-// { "<کد محصول>": [{ name, nameEn }] } — هر خودرو برای هر محصول یک بار
-async function getFilterCompatibility() {
-  const vehicles = await vehicleRepository.getVehiclesWithFilterLinks(FILTER_KIND);
-  const bySku = {};
+// '{ "<کد محصول>": [{ name, nameEn }] }' — هر خودرو برای هر محصول یک بار.
+// خروجی رشته‌ی JSON آماده است (کش‌شده؛ کم‌حافظه‌تر از نگه داشتن آبجکت‌ها)
+async function getFilterCompatibilityJson() {
+  return filterCompatibilityCache.get(async () => {
+    const rows = await vehicleRepository.getCompatibilityByProduct(FILTER_KIND);
 
-  vehicles.forEach((vehicle) => {
-    const skus = new Set(
-      (vehicle.productLinks || [])
-        .filter((link) => link.kind === FILTER_KIND)
-        .map((link) => String(link.sku).toUpperCase()),
-    );
-
-    skus.forEach((sku) => {
-      if (!bySku[sku]) bySku[sku] = [];
-
-      bySku[sku].push({ name: vehicle.name, nameEn: vehicle.nameEn || "" });
-    });
+    return JSON.stringify(Object.fromEntries(rows.map((row) => [row._id, row.vehicles])));
   });
-
-  return bySku;
 }
 
 module.exports = {
@@ -53,5 +39,5 @@ module.exports = {
   getBrandVehicles,
   getVehicleById,
   getVehicleBrands,
-  getFilterCompatibility,
+  getFilterCompatibilityJson,
 };

@@ -76,6 +76,13 @@ function VehicleImportForm() {
           )}
 
           <ResultList
+            title={`عکس پیدا نشد؛ این خودروها بدون عکس جدید ثبت شدند (${result.missingImages?.length}):`}
+            tone="text-amber-600"
+            items={result.missingImages}
+            renderItem={(m) => `ردیف ${m.row} (${m.sku}): ${m.image}`}
+          />
+
+          <ResultList
             title={`خودروهای حذف‌شده (در اکسل نبودند): ${result.removed?.length}`}
             tone="text-amber-600"
             items={result.removed}

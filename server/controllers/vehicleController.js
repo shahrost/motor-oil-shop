@@ -54,11 +54,12 @@ async function getVehicleBrands(req, res, next) {
 // خودروهای سازگار هر فیلتر (برای نمایش روی کارت محصول)
 async function getFilterCompatibility(req, res, next) {
   try {
-    const compatibility = await vehicleService.getFilterCompatibility();
+    const json = await vehicleService.getFilterCompatibilityJson();
 
     res.set("Cache-Control", "public, max-age=300");
 
-    return apiResponse.success(res, compatibility);
+    // هم‌شکل apiResponse.success؛ data از قبل JSON است و دوباره ساخته نمی‌شه
+    return res.type("json").send(`{"success":true,"message":"موفق","data":${json}}`);
   } catch (error) {
     next(error);
   }

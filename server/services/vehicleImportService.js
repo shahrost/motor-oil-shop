@@ -20,6 +20,9 @@ const {
   buildLinksMap,
 } = require("../utils/vehicleRowMapper");
 
+// تعداد خودرو در هر درخواست گروهی به دیتابیس؛ یک‌جا نوشتن ۱۲۰۰ خودرو با ۲۳ هزار
+// لینک حافظه‌ی سرور رو از سقف Runflare رد می‌کرد (PROJECT_STATE بخش ۳۱)
+const BULK_CHUNK = 100;
 
 // ذخیره‌ی خودروهای آماده (بعد از پردازش اکسل): entries = [{ row, doc, imageName }]
 async function persistVehicles(entries, failed, imageFiles, options, log) {
@@ -38,12 +41,13 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
     updated: 0,
     failed: [...failed],
     removed: [],
+    missingImages: [],
     linksCount: 0,
     missingProducts: [],
   };
 
   const linkedSkus = new Set();
-  const bulkOps = [];
+  const validDocs = [];
 
   entries.forEach(({ row, doc, imageName }) => {
     try {
@@ -53,29 +57,23 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
       if (!doc.name) throw new Error("نام خودرو خالی است");
       if (!doc.brand) throw new Error("برند خودرو خالی است");
 
+      // عکسِ پیدانشده ردیف رو رد نمی‌کنه (مثل ایمپورت محصولات): خودرو بدون عکس
+      // ثبت می‌شه (عکس قبلی‌اش دست نمی‌خوره) و در گزارش missingImages میاد
       if (imageName) {
         const imageFile = imagesByName.get(imageName);
 
-        if (!imageFile) {
-          throw new Error(
-            `فایل عکس «${imageName}» در بین عکس‌های ارسالی پیدا نشد`,
-          );
+        if (imageFile) {
+          usedFilenames.add(imageFile.filename);
+          doc.image = urlsByFilename.get(imageFile.filename);
+        } else {
+          results.missingImages.push({ row, sku: doc.sku, image: imageName });
         }
-
-        usedFilenames.add(imageFile.filename);
-        doc.image = urlsByFilename.get(imageFile.filename);
       }
 
       (doc.productLinks || []).forEach((link) => linkedSkus.add(link.sku));
       results.linksCount += (doc.productLinks || []).length;
 
-      bulkOps.push({
-        updateOne: {
-          filter: { sku: doc.sku },
-          update: { $set: doc },
-          upsert: true,
-        },
-      });
+      validDocs.push(doc);
     } catch (err) {
       results.failed.push({
         row,
@@ -86,12 +84,16 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
   });
 
   // یک درخواست گروهی به‌جای صدها رفت‌وبرگشت جدا به دیتابیس (سرعت و جلوگیری از timeout)
-  if (bulkOps.length) {
+  if (validDocs.length) {
     log("ثبت خودروها در دیتابیس");
-    const bulkResult = await vehicleRepository.bulkWrite(bulkOps);
 
-    results.created = bulkResult.upsertedCount || 0;
-    results.updated = bulkOps.length - results.created;
+    for (let i = 0; i < validDocs.length; i += BULK_CHUNK) {
+      results.created += await vehicleRepository.upsertManyBySku(
+        validDocs.slice(i, i + BULK_CHUNK),
+      );
+    }
+
+    results.updated = validDocs.length - results.created;
   }
 
   if (linkedSkus.size) {

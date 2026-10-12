@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
 
-// نتیجه‌ی هر loader به ازای هر ورودی نگه داشته می‌شه تا برگشت به صفحه فوری باشه
-const caches = new WeakMap();
-
-function getCache(loader) {
-  if (!caches.has(loader)) caches.set(loader, new Map());
-
-  return caches.get(loader);
-}
+import { getVehicleDataCache } from "../../../services/vehicleDataCache";
 
 // داده‌ی یک صفحه‌ی خودرو از سرور، با کش بین بازدیدها.
 // loader باید تابع ثابت (بیرون از کامپوننت) باشه. خروجی: undefined تا رسیدن،
 // بعد داده؛ در خطا null (خطا کش نمی‌شه تا دفعه‌ی بعد دوباره تلاش بشه).
 function useCachedLoad(loader, arg) {
-  const cache = getCache(loader);
+  const cache = getVehicleDataCache(loader);
   const [result, setResult] = useState(() => ({ arg, data: cache.get(arg) }));
 
   // ورودی عوض شد (مثلاً رفتن از یک برند به برند دیگه)

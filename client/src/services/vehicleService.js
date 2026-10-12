@@ -1,13 +1,5 @@
 import apiClient from "../api/apiClient";
 
-// دریافت همه خودروها
-
-export async function fetchVehicles() {
-  const response = await apiClient.get("/vehicles");
-
-  return response.data;
-}
-
 // مدل‌های یک برند (سبک‌تر از لیست کامل)
 
 export async function fetchBrandVehicles(brand) {
