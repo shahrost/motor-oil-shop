@@ -3,7 +3,7 @@ import { useContext } from "react";
 import LanguageContext from "../../../../context/LanguageContext";
 
 import ownerPhoto from "../../../../assets/logo/shahram-logo.webp";
-import useEscapeKey from "../hooks/useEscapeKey";
+import useEscapeKey from "../../../../hooks/useEscapeKey";
 
 // نمایش بزرگ عکس شهرام؛ با کلیک بیرون عکس یا کلید Escape بسته می‌شه
 function OwnerPhotoModal({ onClose }) {

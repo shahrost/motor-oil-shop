@@ -30,6 +30,7 @@ function useVehicleDetail() {
     setSearchParams(key === "oil" ? {} : { part: key }, { replace: true });
 
   return {
+    id,
     loading: loaded === undefined,
     vehicle,
     parts: vehicle ? getVehicleParts(vehicle, products) : null,

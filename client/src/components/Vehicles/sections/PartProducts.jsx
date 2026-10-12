@@ -1,16 +1,19 @@
 import OilGrid from "./OilGrid";
 
-// تیتر و محصولات دسته‌ی انتخاب‌شده (روغن موتور: اصلی + جایگزین)
-function PartProducts({ parts, selected, isElectric, t }) {
+// تیتر و محصولات دسته‌ی انتخاب‌شده (روغن موتور: اصلی + جایگزین). اولین روغن اصلی
+// (اولویت ۱ لینک‌های خودرو) «پیشنهاد شهرام روغن» نشون داده می‌شه
+function PartProducts({ parts, selected, vehicleName, isElectric, t }) {
+  const title = t("vehicles.parts.suitableFor")
+    .replace("{part}", t(`vehicles.parts.${selected}`))
+    .replace("{vehicle}", vehicleName);
+
   if (selected === "oil") {
     return (
       <>
-        <h2 className="text-2xl font-extrabold text-center mt-10">
-          {t("vehicles.recommendedOils")}
-        </h2>
+        <h2 className="text-xl sm:text-2xl font-extrabold text-center mt-8">{title}</h2>
 
         {parts.oil.main.length > 0 ? (
-          <OilGrid products={parts.oil.main} />
+          <OilGrid products={parts.oil.main} highlightLabel={t("vehicles.recommendedBadge")} />
         ) : (
           <p
             className={`text-center mt-6 font-bold ${
@@ -23,7 +26,7 @@ function PartProducts({ parts, selected, isElectric, t }) {
 
         {parts.oil.alt.length > 0 && (
           <>
-            <h2 className="text-2xl font-extrabold text-center mt-10">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-center mt-10">
               {t("vehicles.alternativeOils")}
             </h2>
 
@@ -36,9 +39,7 @@ function PartProducts({ parts, selected, isElectric, t }) {
 
   return (
     <>
-      <h2 className="text-2xl font-extrabold text-center mt-10">
-        {t(`vehicles.parts.${selected}`)} {t("vehicles.parts.forVehicle")}
-      </h2>
+      <h2 className="text-xl sm:text-2xl font-extrabold text-center mt-8">{title}</h2>
 
       {parts[selected].length > 0 ? (
         <OilGrid products={parts[selected]} />

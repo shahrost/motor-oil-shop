@@ -5,7 +5,8 @@ function buildVehicleSpecs(vehicle, language, t) {
   const withUnit = (value, unit) => value && `${value} ${unit}`;
 
   return [
-    [t("common.brand"), pick(vehicle.brand, vehicle.brandEn)],
+    [t("common.brandLabel"), pick(vehicle.brand, vehicle.brandEn)],
+    [t("vehicles.country"), vehicle.country],
     [t("vehicles.years"), pick(vehicle.years, vehicle.yearsEn)],
     [t("vehicles.engine"), pick(vehicle.engine, vehicle.engineEn)],
     [t("vehicles.engineSize"), withUnit(vehicle.engineSize, t("vehicles.liter"))],

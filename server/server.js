@@ -32,6 +32,10 @@ mongoose.connection.once("open", async () => {
 
 const app = express();
 
+// سرور پشت یک پراکسی Runflare اجرا می‌شه؛ بدون این، IP همه‌ی کاربران IP پراکسیه و
+// محدودیت تعداد درخواست (ورود، ثبت‌نام، ثبت نظر) بین همه‌ی کاربران مشترک می‌شد
+app.set("trust proxy", 1);
+
 // Middlewares
 const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
   .split(",")

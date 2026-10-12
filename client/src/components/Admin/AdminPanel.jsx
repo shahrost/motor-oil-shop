@@ -1,6 +1,7 @@
 import AdminHeader from "./AdminHeader";
 import Dashboard from "./Dashboard";
 import ProductManager from "./ProductManager";
+import ReviewManager from "./ReviewManager";
 
 function AdminPanel() {
   return (
@@ -10,6 +11,8 @@ function AdminPanel() {
       <Dashboard />
 
       <ProductManager />
+
+      <ReviewManager />
     </main>
   );
 }

@@ -1,7 +1,8 @@
 import { getVehicleBrandLogo } from "../../../utils/vehicleBrandLogo";
 
-// لوگوی برند خودرو؛ تا وقتی فایل لوگو نیست، حرف اول نام برند
-function VehicleBrandLogo({ nameEn, label }) {
+// لوگوی برند خودرو؛ تا وقتی فایل لوگو نیست، حرف اول نام برند. imgClassName = اندازه‌ی
+// لوگو (سقف عرض رو روی والد بذارید؛ قانون سراسری img { max-width: 100% } در index.css)
+function VehicleBrandLogo({ nameEn, label, imgClassName = "max-h-20" }) {
   const logo = getVehicleBrandLogo(nameEn);
 
   if (logo) {
@@ -11,7 +12,7 @@ function VehicleBrandLogo({ nameEn, label }) {
         alt={label}
         loading="lazy"
         draggable={false}
-        className="max-h-20 max-w-full object-contain"
+        className={`${imgClassName} object-contain`}
       />
     );
   }
