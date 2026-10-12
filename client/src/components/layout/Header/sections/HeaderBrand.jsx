@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import LanguageContext from "../../../../context/LanguageContext";
 
 import ownerPhoto from "../../../../assets/logo/shahram-avatar.webp";
-import brandLogo from "../../../../assets/logo/shahram-monogram-yellow.svg";
+import HeaderLogo3D from "./HeaderLogo3D";
 
 function HeaderBrand({ onPhotoClick }) {
   const { t } = useContext(LanguageContext);
@@ -12,12 +12,7 @@ function HeaderBrand({ onPhotoClick }) {
   return (
     <div className="flex items-center gap-3">
       <Link to="/" aria-label={t("nav.home")} className="shrink-0">
-        <img
-          src={brandLogo}
-          alt={t("site.name")}
-          className="h-9 md:h-10 w-auto select-none"
-          draggable="false"
-        />
+        <HeaderLogo3D label={t("site.name")} />
       </Link>
 
       <Link to="/" className="leading-tight">
