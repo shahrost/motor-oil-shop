@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import useLocationMap from "../hooks/useLocationMap";
+import LocationPinIcon from "../../common/LocationPinIcon";
 
 // نقشه‌ی انتخاب موقعیت؛ جدا (lazy) لود می‌شه تا Leaflet فقط برای کسی که نقشه رو باز می‌کنه دانلود بشه
 function LocationMap({ location, onPick }) {
@@ -20,17 +21,7 @@ function LocationMap({ location, onPick }) {
         <div ref={containerRef} className="h-full w-full" />
 
         {/* پین ثابت وسط نقشه؛ نوک پین دقیقاً روی مرکز */}
-        <svg
-          viewBox="0 0 24 36"
-          className="pointer-events-none absolute left-1/2 top-1/2 z-[1000] h-10 w-7 -translate-x-1/2 -translate-y-full drop-shadow"
-          aria-hidden="true"
-        >
-          <path
-            d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z"
-            fill="#dc2626"
-          />
-          <circle cx="12" cy="12" r="4.5" fill="#fff" />
-        </svg>
+        <LocationPinIcon className="pointer-events-none absolute left-1/2 top-1/2 z-[1000] h-10 w-7 -translate-x-1/2 -translate-y-full drop-shadow" />
 
         <button
           type="button"

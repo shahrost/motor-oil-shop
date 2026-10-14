@@ -294,8 +294,6 @@ const translations = {
         callUs: "تماس با ما",
       },
       info: {
-        salesTitle: "همکاری فروش",
-        salesText: "ویژه لوازم یدکی‌ها و اتوسرویس‌ها",
         areaTitle: "محدوده فعالیت",
         areaText:
           "سبزدشت، گلستان، بهارستان، پرند، رباط‌کریم، نسیم‌شهر، نصیرشهر، خیرآباد، همدانک، اورین، آدران، صباشهر، شاهدشهر، کهنز، جاده آدران، الارد، فردوسیه، حصارک، صالحیه، شترخوار",
@@ -751,8 +749,6 @@ const translations = {
         callUs: "Call Us",
       },
       info: {
-        salesTitle: "Sales Partnership",
-        salesText: "For auto-parts stores and auto service centers",
         areaTitle: "Service Area",
         areaText:
           "Sabzdasht, Golestan, Baharestan, Parand, Robat Karim, Nasim Shahr, Nasirshahr, Kheirabad, Hamedanak, Owrin, Adran, Sabashahr, Shahedshahr, Kohnooz, Adran Road, Alard, Ferdosieh, Hesarak, Salehieh, Shotorkhar",

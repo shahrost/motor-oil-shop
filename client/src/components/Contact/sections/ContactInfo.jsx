@@ -1,22 +1,17 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
+import LocationPinIcon from "../../common/LocationPinIcon";
 
 function ContactInfo() {
   const { t } = useContext(LanguageContext);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-      <div className="bg-gray-100 rounded-xl p-6 text-center">
-        <h2 className="text-xl font-bold">{t("contact.info.salesTitle")}</h2>
+    <div className="mt-10 bg-gray-100 rounded-xl p-6 text-center overflow-hidden">
+      <LocationPinIcon className="mx-auto h-12 w-8 drop-shadow" />
 
-        <p className="mt-3">{t("contact.info.salesText")}</p>
-      </div>
+      <h2 className="mt-3 text-xl font-bold">{t("contact.info.areaTitle")}</h2>
 
-      <div className="bg-gray-100 rounded-xl p-6 text-center overflow-hidden">
-        <h2 className="text-xl font-bold">{t("contact.info.areaTitle")}</h2>
-
-        <p className="mt-3 wrap-break-word">{t("contact.info.areaText")}</p>
-      </div>
+      <p className="mt-3 wrap-break-word">{t("contact.info.areaText")}</p>
     </div>
   );
 }
