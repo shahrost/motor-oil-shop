@@ -38,6 +38,12 @@ const OrderSchema = new mongoose.Schema(
         type: String,
         default: "",
       },
+
+      // موقعیت انتخابی روی نقشه (اختیاری)
+      location: {
+        lat: Number,
+        lng: Number,
+      },
     },
 
     items: [

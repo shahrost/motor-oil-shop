@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import orderAreas from "../../../data/orderAreas";
+import LocationPicker from "./LocationPicker";
 
-function CustomerInfo({ customer, onChange, onPhoneChange }) {
+function CustomerInfo({ customer, onChange, onPhoneChange, onLocationChange }) {
   const { t } = useContext(LanguageContext);
 
   return (
@@ -52,9 +53,11 @@ function CustomerInfo({ customer, onChange, onPhoneChange }) {
         onChange={onChange}
         placeholder={t("order.customerInfo.addressPlaceholder")}
         rows="4"
-        className="w-full border rounded-xl p-4 mb-5"
+        className="w-full border rounded-xl p-4 mb-3"
         required
       />
+
+      <LocationPicker location={customer.location} onChange={onLocationChange} />
     </>
   );
 }

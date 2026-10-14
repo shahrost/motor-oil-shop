@@ -7,6 +7,7 @@ function OrderForm({
   customer,
   onChange,
   onPhoneChange,
+  onLocationChange,
   onSubmit,
   submitting,
   submitError,
@@ -22,6 +23,7 @@ function OrderForm({
         customer={customer}
         onChange={onChange}
         onPhoneChange={onPhoneChange}
+        onLocationChange={onLocationChange}
       />
 
       <button

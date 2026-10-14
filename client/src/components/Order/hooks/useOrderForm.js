@@ -20,6 +20,7 @@ function useOrderForm() {
     phone: "",
     area: "",
     address: "",
+    location: null,
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -40,6 +41,11 @@ function useOrderForm() {
     if (digits.length <= PHONE_LENGTH) {
       setCustomer({ ...customer, phone: digits });
     }
+  }
+
+  // موقعیت روی نقشه (اختیاری)؛ از رویدادهای نقشه صدا زده می‌شه، پس state قبلی رو تابعی می‌گیره
+  function changeLocation(location) {
+    setCustomer((prev) => ({ ...prev, location }));
   }
 
   // سبد فقط بعد از ثبت موفق سفارش روی سرور خالی می‌شه
@@ -79,6 +85,7 @@ function useOrderForm() {
 
     handleChange,
     changePhone,
+    changeLocation,
     submitOrder,
     changeAllPaymentType,
   };

@@ -21,6 +21,7 @@ function Order() {
     submitError,
     handleChange,
     changePhone,
+    changeLocation,
     submitOrder,
     changeAllPaymentType,
   } = useOrderForm();
@@ -55,6 +56,7 @@ function Order() {
           customer={customer}
           onChange={handleChange}
           onPhoneChange={changePhone}
+          onLocationChange={changeLocation}
           onSubmit={submitOrder}
           submitting={submitting}
           submitError={submitError}

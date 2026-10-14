@@ -1,8 +1,10 @@
 import OrderProducts from "./OrderProducts";
 import orderStatusStyle from "../helpers/orderStatusStyle";
+import mapLink from "../helpers/mapLink";
 
 function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
   const style = orderStatusStyle(order.status);
+  const locationUrl = mapLink(order.customer?.location);
 
   return (
     <article
@@ -86,6 +88,17 @@ function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
           <p className="mt-2">
             <b>آدرس:</b> {order.customer?.address}
           </p>
+
+          {locationUrl && (
+            <a
+              href={locationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg"
+            >
+              📍 نمایش موقعیت روی نقشه
+            </a>
+          )}
         </div>
 
         <div>

@@ -23,6 +23,12 @@ async function createOrder(data) {
     id: crypto.randomUUID(),
   };
 
+  // موقعیت نقشه اختیاریه؛ null رو ذخیره نمی‌کنیم تا سفارش‌های بدون موقعیت فیلد خالی نداشته باشن
+  if (order.customer && order.customer.location == null) {
+    const { location, ...customer } = order.customer;
+    order.customer = customer;
+  }
+
   return await orderRepository.createOrder(order);
 }
 

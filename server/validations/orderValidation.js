@@ -1,3 +1,12 @@
+function isValidLocation({ lat, lng } = {}) {
+  return (
+    Number.isFinite(lat) &&
+    Number.isFinite(lng) &&
+    Math.abs(lat) <= 90 &&
+    Math.abs(lng) <= 180
+  );
+}
+
 function validateOrder(data) {
   const errors = [];
 
@@ -7,6 +16,12 @@ function validateOrder(data) {
 
   if (!data.customer?.phone) {
     errors.push("شماره تماس مشتری الزامی است");
+  }
+
+  const location = data.customer?.location;
+
+  if (location != null && !isValidLocation(location)) {
+    errors.push("موقعیت روی نقشه نامعتبر است");
   }
 
   if (!data.items || data.items.length === 0) {
