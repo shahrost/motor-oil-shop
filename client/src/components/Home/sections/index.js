@@ -6,3 +6,4 @@ export { default as TrackDescription } from "./TrackDescription";
 export { default as OilJugArt } from "./OilJugArt";
 export { default as VehiclesCard } from "./VehiclesCard";
 export { default as TrackWheel } from "./TrackWheel";
+export { default as GuideButton } from "./GuideButton";

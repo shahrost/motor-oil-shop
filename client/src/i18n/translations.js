@@ -123,6 +123,7 @@ const translations = {
           description: "برند و مدل خودروتون رو انتخاب کنید و روانکار و فیلتر مناسبش رو ببینید",
         },
       },
+      guide: "راهنمای سایت",
       productsTitle: "محصولات روغن موتور و فیلتر",
       productsSubtitle: "محصولات فروشگاه شهرام روغن",
       quickFilter: {
@@ -605,6 +606,7 @@ const translations = {
           description: "Pick your car brand and model to see its matching lubricants and filters",
         },
       },
+      guide: "Site Guide",
       productsTitle: "Engine Oil & Filter Products",
       productsSubtitle: "Products from Shahram Oil Shop",
       quickFilter: {

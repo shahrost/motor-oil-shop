@@ -1,0 +1,514 @@
+<!doctype html>
+<!--
+  منبع PDF «راهنمای سایت» (client/public/site-guide.pdf).
+  بعد از هر تغییر، با Chrome بی‌سر دوباره PDF بساز (دستورش در PROJECT_STATE بخش ۴۱).
+-->
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>راهنمای سایت شهرام روغن</title>
+<style>
+  @font-face { font-family: "Vazirmatn"; src: url("../../client/src/assets/fonts/Vazirmatn-Regular.woff2") format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Vazirmatn"; src: url("../../client/src/assets/fonts/Vazirmatn-Bold.woff2") format("woff2"); font-weight: 700; }
+  @font-face { font-family: "Vazirmatn"; src: url("../../client/src/assets/fonts/Vazirmatn-ExtraBold.woff2") format("woff2"); font-weight: 800; }
+
+  :root {
+    --yellow: #facc15;
+    --amber: #f59e0b;
+    --orange: #f97316;
+    --red: #ef4444;
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --violet: #8b5cf6;
+    --teal: #14b8a6;
+    --ink: #111827;
+    --muted: #4b5563;
+    --paper: #fffdf5;
+  }
+
+  @page { size: A4; margin: 0; }
+
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: "Vazirmatn", sans-serif;
+    color: var(--ink);
+    background: #e5e7eb;
+    line-height: 1.75;
+    font-size: 11.5pt;
+  }
+
+  .page {
+    position: relative;
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    background: var(--paper);
+    padding: 20mm 17mm 18mm;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  /* شکل‌های تزئینی پس‌زمینه */
+  .blob { position: absolute; border-radius: 50%; z-index: 0; }
+  .content { position: relative; z-index: 1; }
+
+  .page-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8mm;
+  }
+
+  .page-num {
+    width: 44px; height: 44px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 18pt; color: var(--ink);
+    background: var(--yellow);
+    box-shadow: 0 4px 0 var(--amber);
+  }
+
+  h2 { margin: 0; font-size: 22pt; font-weight: 800; }
+  h3 { margin: 0 0 4px; font-size: 13pt; font-weight: 800; }
+  p { margin: 0; }
+  .lead { color: var(--muted); margin-bottom: 6mm; }
+
+  .footer-bar {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 11mm;
+    background: var(--ink); color: var(--yellow);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 17mm; font-size: 9.5pt; font-weight: 700; z-index: 2;
+  }
+
+  /* کارت‌ها */
+  .grid { display: grid; gap: 4mm; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 4mm 5mm;
+    border: 2px solid #f3f4f6;
+    box-shadow: 0 3px 10px rgba(17, 24, 39, 0.06);
+  }
+
+  .card.accent { border-right: 7px solid var(--c, var(--yellow)); }
+
+  .icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--c, var(--yellow)); color: #fff; margin-bottom: 6px;
+  }
+
+  .icon svg { width: 22px; height: 22px; }
+
+  .chip {
+    display: inline-block; padding: 1px 10px; border-radius: 999px;
+    font-size: 9.5pt; font-weight: 700; background: #fef3c7; color: #92400e;
+    margin: 2px 0 2px 4px;
+  }
+
+  .small { font-size: 10pt; color: var(--muted); }
+
+  /* جلد */
+  .cover { background: var(--ink); color: #fff; padding: 0; }
+  .cover .content { padding: 26mm 18mm; height: 100%; display: flex; flex-direction: column; }
+  .cover .logo {
+    width: 120px; height: 120px; border-radius: 32px; background: rgba(250, 204, 21, 0.12);
+    display: flex; align-items: center; justify-content: center; border: 3px solid var(--yellow);
+  }
+  .cover .logo img { width: 84px; height: 84px; }
+  .cover h1 { font-size: 40pt; font-weight: 800; margin: 14mm 0 0; line-height: 1.3; }
+  .cover h1 span { color: var(--yellow); }
+  .cover .sub { font-size: 14pt; color: #d1d5db; margin-top: 4mm; }
+  .toc { margin-top: auto; display: grid; gap: 3mm; }
+  .toc-item {
+    display: flex; align-items: center; gap: 12px; padding: 3.5mm 5mm; border-radius: 14px;
+    background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); font-weight: 700;
+  }
+  .toc-item b {
+    width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    color: var(--ink); background: var(--c);
+  }
+  .toc-item small { margin-right: auto; color: #9ca3af; font-weight: 400; }
+
+  /* مراحل سفارش */
+  .steps { display: grid; gap: 3.2mm; }
+  .step { display: flex; gap: 4mm; align-items: stretch; }
+  .step-rail { display: flex; flex-direction: column; align-items: center; width: 46px; flex-shrink: 0; }
+  .step-dot {
+    width: 46px; height: 46px; border-radius: 50%; background: var(--c); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17pt;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--c) 22%, transparent);
+  }
+  .step-line { flex: 1; width: 4px; margin-top: 4px; border-radius: 4px; background: color-mix(in srgb, var(--c) 35%, transparent); }
+  .step .card { flex: 1; padding: 3mm 5mm; }
+
+  /* نوار وضعیت سفارش */
+  .status { display: flex; align-items: center; gap: 0; margin-top: 3mm; }
+  .status div {
+    flex: 1; text-align: center; padding: 3mm 1mm; font-weight: 800; font-size: 10pt; color: #fff;
+    background: var(--c); position: relative;
+    clip-path: polygon(100% 0, 12% 0, 0 50%, 12% 100%, 100% 100%, 88% 50%);
+    margin-left: -9px;
+  }
+  .status div:first-child { clip-path: polygon(100% 0, 12% 0, 0 50%, 12% 100%, 100% 100%); }
+
+  /* ماکت کوچیک صفحه */
+  .mock {
+    background: #fff; border-radius: 14px; border: 2px solid #e5e7eb; overflow: hidden;
+  }
+  .mock-bar { background: var(--ink); color: var(--yellow); font-size: 9pt; font-weight: 700; padding: 2mm 4mm; display: flex; gap: 4mm; align-items: center; }
+  .mock-bar i { font-style: normal; color: #fff; opacity: .85; }
+  .mock-body { padding: 4mm; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+  .mock-card { border-radius: 12px; padding: 3mm; text-align: center; font-weight: 800; font-size: 10.5pt; }
+  .mock-guide {
+    grid-column: 1 / -1; justify-self: end; font-size: 9pt; font-weight: 800; padding: 1mm 4mm;
+    border-radius: 999px; background: var(--yellow); color: var(--ink);
+  }
+
+  /* نقشه سایت */
+  .tree-root {
+    margin: 0 auto 6mm; width: 70mm; text-align: center; padding: 4mm; border-radius: 18px;
+    background: var(--ink); color: var(--yellow); font-weight: 800; font-size: 14pt;
+  }
+  .tree { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+  .branch { border-radius: 16px; background: #fff; border: 2px solid color-mix(in srgb, var(--c) 45%, #fff); overflow: hidden; }
+  .branch-head { background: var(--c); color: #fff; font-weight: 800; padding: 2.5mm 4mm; font-size: 11.5pt; }
+  .branch ul { list-style: none; margin: 0; padding: 2.5mm 4mm 3mm; }
+  .branch li { position: relative; padding-right: 14px; font-size: 10pt; line-height: 1.9; }
+  .branch li::before {
+    content: ""; position: absolute; right: 0; top: 0.75em; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--c);
+  }
+  .branch li code { font-family: Consolas, monospace; font-size: 8.5pt; color: #6b7280; direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+  .tip {
+    display: flex; gap: 4mm; align-items: flex-start; padding: 3.5mm 5mm; border-radius: 16px;
+    background: #fef9c3; border: 2px dashed var(--amber);
+  }
+  .tip .icon { flex-shrink: 0; margin: 0; }
+
+  .contact-box {
+    border-radius: 20px; background: var(--ink); color: #fff; padding: 6mm; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 4mm;
+  }
+  .contact-box .card { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: none; }
+  .contact-box .num { font-size: 16pt; font-weight: 800; color: var(--yellow); direction: ltr; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- ========== ۱. جلد ========== -->
+<section class="page cover">
+  <div class="blob" style="width:150mm;height:150mm;background:var(--yellow);opacity:.14;top:-50mm;left:-55mm"></div>
+  <div class="blob" style="width:90mm;height:90mm;background:var(--orange);opacity:.22;bottom:40mm;right:-35mm"></div>
+  <div class="blob" style="width:40mm;height:40mm;background:var(--yellow);opacity:.5;top:70mm;left:24mm"></div>
+  <div class="blob" style="width:16mm;height:16mm;background:var(--teal);opacity:.6;top:150mm;left:60mm"></div>
+
+  <div class="content">
+    <div class="logo"><img src="../../client/src/assets/logo/shahram-monogram-yellow.svg" alt=""></div>
+
+    <h1>راهنمای سایت<br><span>شهرام روغن</span></h1>
+    <p class="sub">آموزش قدم‌به‌قدم استفاده از سایت، پیدا کردن محصول، ثبت سفارش و نقشه‌ی کامل صفحه‌ها</p>
+
+    <div class="toc">
+      <div class="toc-item" style="--c:var(--yellow)"><b>۲</b>آشنایی با سایت<small>هدر، صفحه‌ی اصلی، منوها</small></div>
+      <div class="toc-item" style="--c:var(--blue)"><b>۳</b>پیدا کردن محصول مناسب<small>محصولات، برندها، خودروها</small></div>
+      <div class="toc-item" style="--c:var(--green)"><b>۴</b>ثبت سفارش قدم‌به‌قدم<small>از انتخاب کالا تا ثبت نهایی</small></div>
+      <div class="toc-item" style="--c:var(--violet)"><b>۵</b>حساب کاربری و پیگیری سفارش<small>خریدها، علاقه‌مندی‌ها</small></div>
+      <div class="toc-item" style="--c:var(--orange)"><b>۶</b>نقشه‌ی سایت و تماس با ما<small>همه‌ی صفحه‌ها در یک نگاه</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ۲. آشنایی با سایت ========== -->
+<section class="page">
+  <div class="blob" style="width:110mm;height:110mm;background:var(--yellow);opacity:.18;top:-45mm;left:-40mm"></div>
+  <div class="blob" style="width:60mm;height:60mm;background:var(--blue);opacity:.08;bottom:20mm;right:-25mm"></div>
+
+  <div class="content">
+    <div class="page-head"><div class="page-num">۲</div><h2>آشنایی با سایت</h2></div>
+    <p class="lead">سایت شهرام روغن فروشگاه آنلاین روغن موتور، فیلتر، ضدیخ، اسپری‌جات و اکتان برای فروشگاه‌های لوازم یدکی، اتوسرویس‌ها و مشتریان عمده و تکی است.</p>
+
+    <h3>صفحه‌ی اصلی</h3>
+    <div class="mock" style="margin-bottom:6mm">
+      <div class="mock-bar">شهرام روغن <i>خانه</i><i>محصولات</i><i>خودروها</i><i>برندها</i><i>طرح‌های فروش</i><i>سبد خرید</i><i>تماس با ما</i></div>
+      <div class="mock-body">
+        <div class="mock-guide">📘 راهنمای سایت</div>
+        <div class="mock-card" style="background:#fef3c7;color:#92400e">🛢️ روانکار<br><span class="small">روغن موتور، فیلتر و سایر روانکارها</span></div>
+        <div class="mock-card" style="background:#dbeafe;color:#1e3a8a">🚗 خودروهای من<br><span class="small">برند و مدل خودرو ← روانکار مناسب</span></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:6mm">
+      <div class="card accent" style="--c:var(--amber)">
+        <h3>🛢️ کارت «روانکار»</h3>
+        <p class="small">شما را به صفحه‌ی همه‌ی محصولات می‌برد؛ با فیلتر و جستجو محصول دلخواه را پیدا کنید.</p>
+      </div>
+      <div class="card accent" style="--c:var(--blue)">
+        <h3>🚗 کارت «خودروهای من»</h3>
+        <p class="small">برند خودرو و بعد مدل آن را انتخاب کنید تا روغن و فیلتر مخصوص همان خودرو را ببینید.</p>
+      </div>
+    </div>
+
+    <h3>بخش‌های بالای سایت (هدر)</h3>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon" style="--c:var(--yellow)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+        <h3>منوی اصلی</h3>
+        <p class="small">خانه، محصولات (با دسته‌بندی‌ها)، خودروها، برندها، طرح‌های فروش، سبد خرید و تماس با ما. در گوشی با دکمه‌ی ☰ باز می‌شود.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="--c:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11L21 7H6"/></svg></div>
+        <h3>سبد خرید</h3>
+        <p class="small">آیکون سبد همیشه بالای صفحه است و تعداد اقلام انتخاب‌شده را نشان می‌دهد.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="--c:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div>
+        <h3>ثبت‌نام / حساب</h3>
+        <p class="small">ثبت‌نام و ورود مشتری؛ بعد از ورود، با کلیک روی نامتان منوی حساب باز می‌شود.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="--c:var(--ink)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></div>
+        <h3>حالت شب و روز</h3>
+        <p class="small">با دکمه‌ی ماه/خورشید رنگ سایت را تیره یا روشن کنید.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="--c:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+        <h3>فارسی / English</h3>
+        <p class="small">زبان سایت را بین فارسی و انگلیسی عوض کنید.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="--c:var(--red)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div>
+        <h3>واتساپ و تماس</h3>
+        <p class="small">دکمه‌های تماس تلفنی و واتساپ برای مشاوره و قیمت روز.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"><span>شهرام روغن</span><span>راهنمای سایت</span></div>
+</section>
+
+<!-- ========== ۳. پیدا کردن محصول ========== -->
+<section class="page">
+  <div class="blob" style="width:120mm;height:120mm;background:var(--blue);opacity:.1;top:-50mm;right:-50mm"></div>
+  <div class="blob" style="width:70mm;height:70mm;background:var(--yellow);opacity:.2;bottom:15mm;left:-30mm"></div>
+
+  <div class="content">
+    <div class="page-head"><div class="page-num" style="background:var(--blue);color:#fff;box-shadow:0 4px 0 #1d4ed8">۳</div><h2>پیدا کردن محصول مناسب</h2></div>
+    <p class="lead">برای رسیدن به محصول دلخواه چهار راه دارید؛ هر کدام راحت‌تر است همان را انتخاب کنید.</p>
+
+    <div class="grid grid-2" style="margin-bottom:6mm">
+      <div class="card accent" style="--c:var(--amber)">
+        <div class="icon" style="--c:var(--amber)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div>
+        <h3>۱. صفحه‌ی محصولات</h3>
+        <p class="small">از منوی «محصولات» یا کارت «روانکار». با جستجو و فیلترهای <span class="chip">برند</span><span class="chip">گرید</span><span class="chip">لیتراژ</span><span class="chip">استاندارد API</span><span class="chip">نوع محصول</span> لیست را کوتاه کنید و دکمه‌ی «نمایش محصولات» را بزنید.</p>
+      </div>
+      <div class="card accent" style="--c:var(--blue)">
+        <div class="icon" style="--c:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l2-6h14l2 6v5h-3M3 13v5h3M3 13h18"/><circle cx="7.5" cy="18" r="2"/><circle cx="16.5" cy="18" r="2"/></svg></div>
+        <h3>۲. خودروهای من</h3>
+        <p class="small">برند خودرو (با لوگو) ← مدل خودرو ← صفحه‌ی خودرو. شش دکمه‌ی <span class="chip">روغن موتور</span><span class="chip">فیلتر</span><span class="chip">فیلتر گیربکس</span><span class="chip">ضدیخ</span><span class="chip">آب رادیاتور</span><span class="chip">شیشه‌شور</span> محصولات مناسب همان خودرو را نشان می‌دهند.</p>
+      </div>
+      <div class="card accent" style="--c:var(--green)">
+        <div class="icon" style="--c:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 2l3 6 6.5 1-4.7 4.6 1.1 6.4L12 17l-5.9 3 1.1-6.4L2.5 9 9 8z"/></svg></div>
+        <h3>۳. برندها</h3>
+        <p class="small">از منوی «برندها» روی لوگوی برند دلخواه بزنید تا همه‌ی محصولات آن برند را ببینید.</p>
+      </div>
+      <div class="card accent" style="--c:var(--violet)">
+        <div class="icon" style="--c:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
+        <h3>۴. دسته‌بندی‌ها</h3>
+        <p class="small">با نگه داشتن موس روی «محصولات» در منو، دسته‌ها باز می‌شوند: روغن موتور بنزینی، دیزلی، موتورسیکلت، روغن ترمز، ضدیخ، گریس، واسکازین، اکتان بوستر و…</p>
+      </div>
+    </div>
+
+    <h3>در صفحه‌ی هر محصول چه می‌بینید؟</h3>
+    <div class="grid grid-3" style="margin-bottom:6mm">
+      <div class="card"><h3 style="color:var(--amber)">مشخصات</h3><p class="small">برند، گرید، حجم، تعداد در کارتن و خودروهای سازگار (برای فیلترها).</p></div>
+      <div class="card"><h3 style="color:var(--green)">قیمت</h3><p class="small">قیمت نقدی و اعتباری جداست؛ با عوض کردن نوع پرداخت، قیمت همان نوع نمایش داده می‌شود.</p></div>
+      <div class="card"><h3 style="color:var(--red)">♥ علاقه‌مندی</h3><p class="small">با زدن قلب، محصول در «علاقه‌مندی‌های من» ذخیره می‌شود (نیاز به ورود).</p></div>
+    </div>
+
+    <div class="tip">
+      <div class="icon" style="--c:var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7S10 2 7.5 3 9 7 12 7zm0 0s2-5 4.5-4S15 7 12 7z"/></svg></div>
+      <div>
+        <h3>طرح‌های فروش (هدیه)</h3>
+        <p class="small">محصولاتی که نشان «طرح فروش ویژه» دارند، به ازای خرید تعداد مشخصی کارتن، کارتن هدیه می‌گیرند. شرایط نقدی و اعتباری می‌تواند فرق کند و بعضی طرح‌ها حداقل سفارش دارند. همه‌ی طرح‌ها در صفحه‌ی «طرح‌های فروش» هستند.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"><span>شهرام روغن</span><span>راهنمای سایت</span></div>
+</section>
+
+<!-- ========== ۴. ثبت سفارش ========== -->
+<section class="page">
+  <div class="blob" style="width:110mm;height:110mm;background:var(--green);opacity:.1;top:-40mm;left:-45mm"></div>
+  <div class="blob" style="width:50mm;height:50mm;background:var(--yellow);opacity:.25;bottom:25mm;right:-18mm"></div>
+
+  <div class="content">
+    <div class="page-head"><div class="page-num" style="background:var(--green);color:#fff;box-shadow:0 4px 0 #15803d">۴</div><h2>ثبت سفارش قدم‌به‌قدم</h2></div>
+    <p class="lead">ثبت سفارش بدون ثبت‌نام هم ممکن است؛ ولی اگر وارد حساب شوید، سفارش‌ها در «خریدهای من» برایتان می‌ماند.</p>
+
+    <div class="steps">
+      <div class="step" style="--c:var(--amber)">
+        <div class="step-rail"><div class="step-dot">۱</div><div class="step-line"></div></div>
+        <div class="card"><h3>محصول را پیدا کنید</h3><p class="small">از صفحه‌ی محصولات، برندها یا «خودروهای من» (صفحه‌ی قبل).</p></div>
+      </div>
+      <div class="step" style="--c:var(--orange)">
+        <div class="step-rail"><div class="step-dot">۲</div><div class="step-line"></div></div>
+        <div class="card"><h3>واحد خرید، نوع پرداخت و تعداد</h3><p class="small">روی کارت محصول <span class="chip">واحد خرید: عدد یا کارتن</span><span class="chip">پرداخت: 💵 نقدی یا 🧾 اعتباری</span> و تعداد را انتخاب کنید و «افزودن به سبد» را بزنید.</p></div>
+      </div>
+      <div class="step" style="--c:var(--blue)">
+        <div class="step-rail"><div class="step-dot">۳</div><div class="step-line"></div></div>
+        <div class="card"><h3>سبد خرید را بررسی کنید</h3><p class="small">در «سبد خرید» تعداد و گزینه‌ها را تغییر دهید یا کالایی را حذف کنید. مبلغ کل پایین صفحه است. سپس «ثبت سفارش» را بزنید.</p></div>
+      </div>
+      <div class="step" style="--c:var(--violet)">
+        <div class="step-rail"><div class="step-dot">۴</div><div class="step-line"></div></div>
+        <div class="card"><h3>اطلاعات مشتری را وارد کنید</h3><p class="small"><span class="chip">نام</span><span class="chip">شماره موبایل (۱۱ رقمی با ۰۹)</span><span class="chip">منطقه</span><span class="chip">آدرس دقیق</span> — اختیاری: «انتخاب موقعیت روی نقشه» و دکمه‌ی گرد «موقعیت فعلی من» تا محل دقیق تحویل ثبت شود.</p></div>
+      </div>
+      <div class="step" style="--c:var(--teal)">
+        <div class="step-rail"><div class="step-dot">۵</div><div class="step-line"></div></div>
+        <div class="card"><h3>روش پرداخت کل سفارش</h3><p class="small">با «همه نقدی» یا «همه اعتباری» روش پرداخت همه‌ی اقلام یک‌جا عوض می‌شود (یا برای هر کالا جدا انتخاب کنید). قیمت هر عدد و قیمت کل هر کالا روی کارتش نمایش داده می‌شود.</p></div>
+      </div>
+      <div class="step" style="--c:var(--green)">
+        <div class="step-rail"><div class="step-dot">✓</div></div>
+        <div class="card" style="border-color:#bbf7d0;background:#f0fdf4"><h3>«ثبت سفارش نهایی»</h3><p class="small">پیام «سفارش شما ثبت شد» نمایش داده می‌شود و همکاران ما برای هماهنگی تماس می‌گیرند. جزئیات «آخرین سفارش ثبت‌شده‌ی شما» در صفحه‌ی سبد خرید می‌ماند.</p></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:6mm">مناطق تحت پوشش ارسال</h3>
+    <p>
+      <span class="chip">پرند</span><span class="chip">رباط کریم</span><span class="chip">نسیم شهر</span><span class="chip">نصیرشهر</span><span class="chip">جاده ساوه</span><span class="chip">بهارستان</span><span class="chip">صباشهر</span><span class="chip">اسدآباد</span>
+    </p>
+  </div>
+  <div class="footer-bar"><span>شهرام روغن</span><span>راهنمای سایت</span></div>
+</section>
+
+<!-- ========== ۵. حساب کاربری و پیگیری ========== -->
+<section class="page">
+  <div class="blob" style="width:120mm;height:120mm;background:var(--violet);opacity:.09;top:-50mm;right:-45mm"></div>
+  <div class="blob" style="width:60mm;height:60mm;background:var(--yellow);opacity:.22;bottom:30mm;left:-25mm"></div>
+
+  <div class="content">
+    <div class="page-head"><div class="page-num" style="background:var(--violet);color:#fff;box-shadow:0 4px 0 #6d28d9">۵</div><h2>حساب کاربری و پیگیری سفارش</h2></div>
+    <p class="lead">با ثبت‌نام (نام، شماره موبایل و رمز عبور) سفارش‌ها و علاقه‌مندی‌هایتان همیشه در دسترس است.</p>
+
+    <div class="grid grid-2" style="margin-bottom:7mm">
+      <div class="card accent" style="--c:var(--violet)"><h3>📝 ثبت‌نام و ورود</h3><p class="small">از دکمه‌ی «ثبت‌نام» بالای سایت. اگر قبلاً ثبت‌نام کرده‌اید، «ورود به حساب کاربری» را بزنید.</p></div>
+      <div class="card accent" style="--c:var(--blue)"><h3>👤 منوی حساب</h3><p class="small">کلیک روی نامتان در هدر: حساب کاربری، خریدهای من، علاقه‌مندی‌های من، تماس با پشتیبانی و خروج.</p></div>
+      <div class="card accent" style="--c:var(--green)"><h3>📦 خریدهای من</h3><p class="small">لیست سفارش‌ها با شماره، تاریخ و وضعیت؛ با «مشاهده جزئیات» اقلام و مبلغ هر سفارش را ببینید.</p></div>
+      <div class="card accent" style="--c:var(--red)"><h3>♥ علاقه‌مندی‌های من</h3><p class="small">محصولاتی که قلبشان را زده‌اید، برای خرید دوباره‌ی سریع.</p></div>
+    </div>
+
+    <h3>مسیر وضعیت سفارش</h3>
+    <p class="small">وضعیت هر سفارش در «خریدهای من» به‌روز می‌شود:</p>
+    <div class="status">
+      <div style="--c:var(--blue)">جدید</div>
+      <div style="--c:var(--violet)">تماس گرفته شد</div>
+      <div style="--c:var(--amber)">آماده ارسال</div>
+      <div style="--c:var(--orange)">ارسال شد</div>
+      <div style="--c:var(--green)">تحویل شد</div>
+    </div>
+
+    <h3 style="margin-top:8mm">نظر و امتیاز شما</h3>
+    <div class="card" style="margin-bottom:7mm">
+      <p class="small">در صفحه‌ی هر خودرو می‌توانید به آن ستاره بدهید و نظرتان را بنویسید. امتیاز فوری ثبت می‌شود و متن نظر بعد از تأیید نمایش داده می‌شود. با دکمه‌ی اشتراک‌گذاری هم صفحه را در تلگرام، واتساپ یا با کپی لینک برای دیگران بفرستید.</p>
+    </div>
+
+    <div class="tip">
+      <div class="icon" style="--c:var(--amber)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></div>
+      <div>
+        <h3>چند نکته</h3>
+        <p class="small">• قیمت‌ها برای نقدی و اعتباری متفاوت است؛ قبل از ثبت، نوع پرداخت را چک کنید.<br>• شماره موبایل را درست وارد کنید؛ هماهنگی ارسال با همین شماره انجام می‌شود.<br>• اگر ثبت سفارش ناموفق بود، سبد خرید شما پاک نمی‌شود؛ دوباره امتحان کنید.<br>• برای مشاوره‌ی انتخاب روغن از دکمه‌ی واتساپ یا تماس استفاده کنید.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"><span>شهرام روغن</span><span>راهنمای سایت</span></div>
+</section>
+
+<!-- ========== ۶. نقشه سایت ========== -->
+<section class="page">
+  <div class="blob" style="width:100mm;height:100mm;background:var(--orange);opacity:.12;top:-40mm;left:-40mm"></div>
+  <div class="blob" style="width:40mm;height:40mm;background:var(--teal);opacity:.15;top:60mm;right:-14mm"></div>
+
+  <div class="content">
+    <div class="page-head"><div class="page-num" style="background:var(--orange);color:#fff;box-shadow:0 4px 0 #c2410c">۶</div><h2>نقشه‌ی سایت</h2></div>
+
+    <div class="tree-root">🏠 صفحه‌ی اصلی</div>
+
+    <div class="tree" style="margin-bottom:6mm">
+      <div class="branch" style="--c:var(--amber)">
+        <div class="branch-head">🛢️ محصولات</div>
+        <ul>
+          <li>همه‌ی محصولات <code>/products</code></li>
+          <li>دسته‌بندی‌ها <code>/category/…</code></li>
+          <li>گرید روغن <code>/viscosity</code></li>
+          <li>صفحه‌ی هر محصول <code>/product/…</code></li>
+        </ul>
+      </div>
+      <div class="branch" style="--c:var(--blue)">
+        <div class="branch-head">🚗 خودروها</div>
+        <ul>
+          <li>برندهای خودرو <code>/vehicles</code></li>
+          <li>مدل‌های هر برند <code>/vehicles/…</code></li>
+          <li>صفحه‌ی خودرو + روانکار مناسب <code>/vehicle/…</code></li>
+          <li>امتیاز و نظرات</li>
+        </ul>
+      </div>
+      <div class="branch" style="--c:var(--green)">
+        <div class="branch-head">⭐ برندها</div>
+        <ul>
+          <li>لیست برندها <code>/brands</code></li>
+          <li>محصولات هر برند <code>/brand/…</code></li>
+        </ul>
+      </div>
+      <div class="branch" style="--c:var(--red)">
+        <div class="branch-head">🎁 طرح‌های فروش</div>
+        <ul>
+          <li>طرح‌های فعال و هدیه‌ها <code>/promotions</code></li>
+        </ul>
+      </div>
+      <div class="branch" style="--c:var(--teal)">
+        <div class="branch-head">🛒 خرید</div>
+        <ul>
+          <li>سبد خرید <code>/cart</code></li>
+          <li>ثبت نهایی سفارش <code>/order</code></li>
+        </ul>
+      </div>
+      <div class="branch" style="--c:var(--violet)">
+        <div class="branch-head">👤 حساب کاربری</div>
+        <ul>
+          <li>ثبت‌نام <code>/register</code></li>
+          <li>ورود <code>/account-login</code></li>
+          <li>حساب کاربری <code>/account</code></li>
+          <li>خریدهای من <code>/account/orders</code></li>
+          <li>علاقه‌مندی‌ها <code>/account/favorites</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:6mm">
+      <div class="branch" style="--c:var(--ink)">
+        <div class="branch-head">📞 تماس با ما <code style="color:#d1d5db">/contact</code></div>
+        <ul><li>تلفن، واتساپ و محدوده‌ی فعالیت روی نقشه</li></ul>
+      </div>
+      <div class="branch" style="--c:var(--muted)">
+        <div class="branch-head">ℹ️ درباره ما <code style="color:#d1d5db">/about</code></div>
+        <ul><li>معرفی فروشگاه شهرام روغن</li></ul>
+      </div>
+    </div>
+
+    <div class="contact-box">
+      <div class="card"><h3>📞 تلفن و واتساپ</h3><div class="num">0919 833 4264</div></div>
+      <div class="card"><h3>💬 شبکه‌های اجتماعی</h3><p class="small" style="color:#d1d5db">تلگرام، روبیکا، ایتا و بله — لینک‌ها پایین همه‌ی صفحه‌های سایت</p></div>
+    </div>
+  </div>
+  <div class="footer-bar"><span>شهرام روغن</span><span>راهنمای سایت</span></div>
+</section>
+
+</body>
+</html>
