@@ -48,7 +48,7 @@ function Order() {
           {t("order.title")}
         </h1>
 
-        <OrderButtons changeAllPaymentType={changeAllPaymentType} />
+        <OrderButtons cart={cart} changeAllPaymentType={changeAllPaymentType} />
 
         <OrderProducts cart={cart} cartTotal={cartTotal} />
 
