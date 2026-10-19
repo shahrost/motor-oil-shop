@@ -4,7 +4,7 @@ import OrderHistoryItem from "./OrderHistoryItem";
 function OrderHistory({ orders, loadingOrders, language, t }) {
   return (
     <div className="bg-white rounded-3xl shadow p-8">
-      <h2 className="text-xl font-extrabold mb-5">{t("account.myOrders")}</h2>
+      <h2 className="text-xl font-extrabold mb-5">📦 {t("header.accountMenu.orders")}</h2>
 
       {loadingOrders && <p className="text-gray-600">{t("account.loading")}</p>}
 

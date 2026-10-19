@@ -80,8 +80,48 @@ async function getProfile(customerId) {
   return customer;
 }
 
+const MAX_FAVORITES = 300;
+const PRODUCT_ID_PATTERN = /^[a-f0-9]{24}$/i;
+
+function assertProductId(productId) {
+  if (!PRODUCT_ID_PATTERN.test(String(productId || ""))) {
+    throw new AppError("شناسه‌ی محصول نامعتبر است", 400);
+  }
+}
+
+// علاقه‌مندی‌ها فقط شناسه‌ی محصول‌اند؛ خود محصول‌ها رو کلاینت از لیست محصولات داره
+async function addFavorite(customerId, productId) {
+  assertProductId(productId);
+
+  const current = await getProfile(customerId);
+
+  if (current.favorites.includes(productId)) return current.favorites;
+
+  if (current.favorites.length >= MAX_FAVORITES) {
+    throw new AppError("تعداد علاقه‌مندی‌ها به سقف رسیده است", 400);
+  }
+
+  const customer = await customerRepository.addFavorite(customerId, productId);
+
+  return customer.favorites;
+}
+
+async function removeFavorite(customerId, productId) {
+  assertProductId(productId);
+
+  const customer = await customerRepository.removeFavorite(customerId, productId);
+
+  if (!customer) {
+    throw new AppError("کاربر یافت نشد", 404);
+  }
+
+  return customer.favorites;
+}
+
 module.exports = {
   register,
   login,
   getProfile,
+  addFavorite,
+  removeFavorite,
 };

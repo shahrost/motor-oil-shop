@@ -43,9 +43,37 @@ async function getMyOrders(req, res, next) {
   }
 }
 
+async function addFavorite(req, res, next) {
+  try {
+    const favorites = await customerAuthService.addFavorite(
+      req.customerId,
+      req.params.productId,
+    );
+
+    return apiResponse.success(res, favorites);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function removeFavorite(req, res, next) {
+  try {
+    const favorites = await customerAuthService.removeFavorite(
+      req.customerId,
+      req.params.productId,
+    );
+
+    return apiResponse.success(res, favorites);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   login,
   getMe,
   getMyOrders,
+  addFavorite,
+  removeFavorite,
 };

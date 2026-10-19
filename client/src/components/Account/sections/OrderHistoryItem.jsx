@@ -1,8 +1,12 @@
+import { useState } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import { statusColor, statusLabel } from "../../../utils/orderStatus";
+import OrderItemSummary from "../../common/OrderItemSummary";
 
-// یک سفارش در تاریخچه‌ی سفارش‌های مشتری
+// یک سفارش در «خریدهای من»؛ با «مشاهده جزئیات» اقلام سفارش باز می‌شن
 function OrderHistoryItem({ order, language, t }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="border border-gray-200 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-3">
@@ -23,9 +27,30 @@ function OrderHistoryItem({ order, language, t }) {
         {order.items?.length || 0} {t("account.itemsCount")}
       </p>
 
-      <p className="text-gray-950 font-extrabold">
-        {formatPrice(order.totalPrice, language)}
-      </p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-gray-950 font-extrabold">
+          {formatPrice(order.totalPrice, language)}
+        </p>
+
+        {order.items?.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            className="text-sm font-bold text-gray-700 border rounded-xl px-4 py-2"
+          >
+            {open ? t("account.hideDetails") : t("account.showDetails")}
+          </button>
+        )}
+      </div>
+
+      {open && (
+        <div className="grid md:grid-cols-2 gap-3 mt-4">
+          {order.items.map((item, index) => (
+            <OrderItemSummary key={`${item.productId}-${index}`} item={item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

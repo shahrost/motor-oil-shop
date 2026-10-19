@@ -2,3 +2,6 @@
 export const WHATSAPP_URL = "https://wa.me/989198334264";
 
 export const PHONE_URL = "tel:+989198334264";
+
+// شماره‌ی پشتیبانی برای نمایش (منوی پروفایل ← «تماس با پشتیبانی»)
+export const PHONE_DISPLAY = "09198334264";

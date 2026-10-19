@@ -28,6 +28,8 @@ const About = lazy(() => import("../pages/About"));
 const Register = lazy(() => import("../pages/Register"));
 const AccountLogin = lazy(() => import("../pages/AccountLogin"));
 const Account = lazy(() => import("../pages/Account"));
+const AccountOrders = lazy(() => import("../pages/AccountOrders"));
+const AccountFavorites = lazy(() => import("../pages/AccountFavorites"));
 
 // پنل ادمین حجیمه و مشتری‌ها لازمش ندارن
 const Admin = lazy(() => import("../pages/Admin"));
@@ -80,6 +82,24 @@ function AppRoutes() {
           element={
             <CustomerProtectedRoute>
               <Account />
+            </CustomerProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/account/orders"
+          element={
+            <CustomerProtectedRoute>
+              <AccountOrders />
+            </CustomerProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/account/favorites"
+          element={
+            <CustomerProtectedRoute>
+              <AccountFavorites />
             </CustomerProtectedRoute>
           }
         />

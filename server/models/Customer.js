@@ -19,6 +19,12 @@ const CustomerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    // شناسه‌ی محصولات «علاقه‌مندی‌های من»
+    favorites: {
+      type: [String],
+      default: [],
+    },
   },
 
   {

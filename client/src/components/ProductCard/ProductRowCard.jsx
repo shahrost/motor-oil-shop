@@ -12,6 +12,7 @@ import { getProductPrice } from "../../utils/productPrice";
 import DiscountBadge from "../common/DiscountBadge";
 import CompatibleVehicles from "../common/CompatibleVehicles";
 import { ProductBrandBadge, RowCardSpecs, RowCardPurchase } from "./sections";
+import FavoriteButton from "../common/FavoriteButton";
 import usePurchaseOptions from "../../hooks/usePurchaseOptions";
 
 // کارت فشرده‌ی محصول برای ردیف‌های افقی (صفحه‌ی اصلی)
@@ -28,6 +29,8 @@ function ProductRowCard({ product }) {
       className="relative h-full flex flex-col border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition"
     >
       <ProductBrandBadge product={product} />
+
+      <FavoriteButton productId={product.id} className="absolute top-2 right-2" />
 
       <img
         src={getProductImageSrc(product, 320)}

@@ -5,6 +5,8 @@ import LanguageContext from "../../../../context/LanguageContext";
 import menu from "../../../../data/menu";
 import useMobileMenu from "../hooks/useMobileMenu";
 import useAccountLink from "../hooks/useAccountLink";
+import useAccountMenu from "../hooks/useAccountMenu";
+import AccountMenuList from "./AccountMenuList";
 import LanguageSwitch from "./LanguageSwitch";
 import MobileCategoryList from "./MobileCategoryList";
 
@@ -18,6 +20,19 @@ function MobileMenu({ onClose }) {
   const { t } = useContext(LanguageContext);
   const { isOpen, toggleSubmenu, cartCount, isDark, toggleTheme } = useMobileMenu();
   const account = useAccountLink();
+  const {
+    rootRef: accountRef,
+    open: accountOpen,
+    toggle: toggleAccount,
+    showSupport,
+    toggleSupport,
+    handleLogout: logoutAccount,
+  } = useAccountMenu();
+
+  function handleLogout() {
+    logoutAccount();
+    onClose();
+  }
 
   return (
     <div className="lg:hidden bg-gray-900 rounded-2xl p-5 mb-4">
@@ -59,14 +74,39 @@ function MobileMenu({ onClose }) {
           </Link>
         </li>
 
-        <li>
-          <Link
-            to={account.to}
-            onClick={onClose}
-            className="block bg-gray-800 text-white py-3 rounded-xl"
-          >
-            👤 {account.firstName || t("header.register")}
-          </Link>
+        <li ref={accountRef}>
+          {account.firstName ? (
+            <>
+              <button
+                type="button"
+                onClick={toggleAccount}
+                aria-expanded={accountOpen}
+                className="w-full bg-gray-800 text-white py-3 rounded-xl"
+              >
+                👤 {account.firstName} {accountOpen ? "▴" : "▾"}
+              </button>
+
+              {accountOpen && (
+                <div className="mt-2 bg-gray-800 rounded-xl p-2">
+                  <AccountMenuList
+                    dark
+                    onNavigate={onClose}
+                    showSupport={showSupport}
+                    onToggleSupport={toggleSupport}
+                    onLogout={handleLogout}
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <Link
+              to={account.to}
+              onClick={onClose}
+              className="block bg-gray-800 text-white py-3 rounded-xl"
+            >
+              👤 {t("header.register")}
+            </Link>
+          )}
         </li>
 
         <li>

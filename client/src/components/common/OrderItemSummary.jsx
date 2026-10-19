@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import formatPrice from "../../../utils/formatPrice";
-import getBrandLabel from "../../../utils/brandLabel";
-import { getProductNameLabel } from "../../../utils/productNameLabel";
-import { formatVolume } from "../../../utils/formatVolume";
-import LanguageContext from "../../../context/LanguageContext";
-import GiftBadge from "../../common/GiftBadge";
+import formatPrice from "../../utils/formatPrice";
+import getBrandLabel from "../../utils/brandLabel";
+import { getProductNameLabel } from "../../utils/productNameLabel";
+import { formatVolume } from "../../utils/formatVolume";
+import LanguageContext from "../../context/LanguageContext";
+import GiftBadge from "./GiftBadge";
 
-// یک قلم از آخرین سفارش ثبت‌شده (فقط نمایشی)
-function LastOrderItem({ item }) {
+// یک قلم از سفارش ثبت‌شده (فقط نمایشی)؛ «آخرین سفارش» سبد خرید و «خریدهای من»
+function OrderItemSummary({ item }) {
   const { language, t } = useContext(LanguageContext);
 
   const unitCount = Number(item.totalCount || item.quantity || 0);
@@ -49,4 +49,4 @@ function LastOrderItem({ item }) {
   );
 }
 
-export default LastOrderItem;
+export default OrderItemSummary;

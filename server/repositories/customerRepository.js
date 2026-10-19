@@ -12,7 +12,25 @@ async function createCustomer(data) {
   return await Customer.create(data);
 }
 
+async function addFavorite(id, productId) {
+  return await Customer.findByIdAndUpdate(
+    id,
+    { $addToSet: { favorites: productId } },
+    { new: true },
+  );
+}
+
+async function removeFavorite(id, productId) {
+  return await Customer.findByIdAndUpdate(
+    id,
+    { $pull: { favorites: productId } },
+    { new: true },
+  );
+}
+
 module.exports = {
+  addFavorite,
+  removeFavorite,
   findByPhone,
   findById,
   createCustomer,

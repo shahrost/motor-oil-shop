@@ -24,6 +24,19 @@ const translations = {
       call: "تماس تلفنی",
       close: "بستن",
       cartLabel: "سبد خرید",
+      accountMenu: {
+        profile: "حساب کاربری",
+        orders: "خریدهای من",
+        favorites: "علاقه‌مندی‌های من",
+        support: "تماس با پشتیبانی",
+        logout: "خروج",
+      },
+    },
+
+    favorites: {
+      add: "افزودن به علاقه‌مندی‌ها",
+      remove: "حذف از علاقه‌مندی‌ها",
+      empty: "هنوز محصولی به علاقه‌مندی‌ها اضافه نکرده‌اید. روی قلب کارت محصول بزنید.",
     },
 
     footer: {
@@ -275,6 +288,8 @@ const translations = {
       noOrders: "هنوز سفارشی ثبت نکرده‌اید.",
       orderNumber: "سفارش",
       itemsCount: "قلم کالا",
+      showDetails: "مشاهده جزئیات",
+      hideDetails: "بستن جزئیات",
       orderStatus: {
         new: "جدید",
         contacted: "تماس گرفته شد",
@@ -491,6 +506,19 @@ const translations = {
       call: "Call Us",
       close: "Close",
       cartLabel: "Cart",
+      accountMenu: {
+        profile: "My Account",
+        orders: "My Orders",
+        favorites: "My Favorites",
+        support: "Contact Support",
+        logout: "Log Out",
+      },
+    },
+
+    favorites: {
+      add: "Add to favorites",
+      remove: "Remove from favorites",
+      empty: "You have no favorites yet. Tap the heart on a product card.",
     },
 
     footer: {
@@ -743,6 +771,8 @@ const translations = {
       noOrders: "You haven't placed any orders yet.",
       orderNumber: "Order",
       itemsCount: "items",
+      showDetails: "View Details",
+      hideDetails: "Hide Details",
       orderStatus: {
         new: "New",
         contacted: "Contacted",

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import getImageUrl from "../../../utils/getImageUrl";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
+import FavoriteButton from "../../common/FavoriteButton";
 import LanguageContext from "../../../context/LanguageContext";
 import {
   getProductImageSrc,
@@ -15,7 +16,9 @@ function ProductGallery({ product }) {
 
   return (
     <div>
-      <div className="bg-gray-50 rounded-3xl p-5 flex items-center justify-center">
+      <div className="relative bg-gray-50 rounded-3xl p-5 flex items-center justify-center">
+        <FavoriteButton productId={product.id} size="lg" className="absolute top-4 right-4" />
+
         <img
           src={getProductImageSrc(product)}
           alt={name}

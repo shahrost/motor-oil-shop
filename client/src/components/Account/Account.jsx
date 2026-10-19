@@ -1,22 +1,18 @@
 import { useContext } from "react";
 import useAccount from "./hooks/useAccount";
 import LanguageContext from "../../context/LanguageContext";
-import { ProfileCard, OrderHistory } from "./sections";
+import { AccountTabs, ProfileCard } from "./sections";
 
+// «حساب کاربری»: اطلاعات مشتری + خروج
 function Account() {
-  const { language, t } = useContext(LanguageContext);
-  const { customer, logout, orders, loadingOrders } = useAccount();
+  const { t } = useContext(LanguageContext);
+  const { customer, logout } = useAccount();
 
   return (
-    <div className="max-w-2xl mx-auto my-10 space-y-6">
-      <ProfileCard customer={customer} logout={logout} t={t} />
+    <div className="max-w-2xl mx-auto my-10 px-5 space-y-6">
+      <AccountTabs t={t} />
 
-      <OrderHistory
-        orders={orders}
-        loadingOrders={loadingOrders}
-        language={language}
-        t={t}
-      />
+      <ProfileCard customer={customer} logout={logout} t={t} />
     </div>
   );
 }

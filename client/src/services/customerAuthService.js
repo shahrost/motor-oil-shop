@@ -36,3 +36,24 @@ export async function fetchMyOrders() {
 
   return response.data.data;
 }
+
+// علاقه‌مندی‌ها: پاسخ سرور لیست کامل شناسه‌های علاقه‌مندی بعد از تغییره
+export async function addFavoriteService(productId) {
+  const response = await apiClient.put(`/customers/me/favorites/${productId}`, null, {
+    headers: {
+      Authorization: `Bearer ${getCustomerToken()}`,
+    },
+  });
+
+  return response.data.data;
+}
+
+export async function removeFavoriteService(productId) {
+  const response = await apiClient.delete(`/customers/me/favorites/${productId}`, {
+    headers: {
+      Authorization: `Bearer ${getCustomerToken()}`,
+    },
+  });
+
+  return response.data.data;
+}

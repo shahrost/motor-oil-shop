@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import CartContext from "../../../../context/CartContext";
 import LanguageContext from "../../../../context/LanguageContext";
 import { WHATSAPP_URL, PHONE_URL } from "../../../../data/contact";
-import useAccountLink from "../hooks/useAccountLink";
 import whatsappLogo from "../../../../assets/social/whatsapp.svg";
+import AccountMenu from "./AccountMenu";
 import LanguageSwitch from "./LanguageSwitch";
 import ThemeToggle from "./ThemeToggle";
 
@@ -15,7 +15,6 @@ const SUBTLE_BUTTON = "bg-white/10 hover:bg-white/20 ring-1 ring-white/15 text-w
 function HeaderActions({ menuOpen, onToggleMenu }) {
   const { t } = useContext(LanguageContext);
   const { cartCount } = useContext(CartContext);
-  const account = useAccountLink();
 
   return (
     <div className="flex items-center gap-2">
@@ -23,13 +22,7 @@ function HeaderActions({ menuOpen, onToggleMenu }) {
 
       <ThemeToggle />
 
-      <Link
-        to={account.to}
-        title={account.customerName || t("header.register")}
-        className={`hidden sm:flex items-center justify-center ${SUBTLE_BUTTON} w-11 h-11 rounded-xl font-bold text-[11px] leading-tight text-center px-1 truncate transition`}
-      >
-        {account.firstName ? `👤 ${account.firstName}` : t("header.register")}
-      </Link>
+      <AccountMenu buttonClass={SUBTLE_BUTTON} />
 
       <Link
         to="/cart"

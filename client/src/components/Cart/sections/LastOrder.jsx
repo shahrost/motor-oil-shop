@@ -2,7 +2,7 @@ import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import { statusColor, statusLabel } from "../../../utils/orderStatus";
 import LanguageContext from "../../../context/LanguageContext";
-import LastOrderItem from "./LastOrderItem";
+import OrderItemSummary from "../../common/OrderItemSummary";
 
 // «آخرین سفارش ثبت‌شده‌ی شما» در صفحه‌ی سبد خرید
 function LastOrder({ order, onHide }) {
@@ -52,7 +52,7 @@ function LastOrder({ order, onHide }) {
 
       <div className="grid md:grid-cols-2 gap-4">
         {order.items.map((item, index) => (
-          <LastOrderItem key={`${item.productId}-${index}`} item={item} />
+          <OrderItemSummary key={`${item.productId}-${index}`} item={item} />
         ))}
       </div>
 

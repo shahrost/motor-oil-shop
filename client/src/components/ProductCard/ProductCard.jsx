@@ -7,6 +7,7 @@ import {
   CardActions,
 } from "./sections";
 
+import FavoriteButton from "../common/FavoriteButton";
 import usePurchaseOptions from "../../hooks/usePurchaseOptions";
 import LanguageContext from "../../context/LanguageContext";
 
@@ -28,6 +29,8 @@ function ProductCard({ product }) {
     // relative: anchors the brand badge to the card's top-left corner
     <div className="relative flex flex-col border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition">
       <ProductBrandBadge product={product} />
+
+      <FavoriteButton productId={product.id} className="absolute top-2 right-2" />
 
       <ProductImage product={product} />
 
