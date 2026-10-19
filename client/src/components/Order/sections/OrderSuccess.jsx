@@ -15,12 +15,21 @@ function OrderSuccess() {
 
       <p className="mt-4 text-gray-600">{t("order.success.text")}</p>
 
-      <Link
-        to="/products"
-        className="inline-block mt-6 bg-yellow-400 text-gray-950 px-8 py-3 rounded-xl font-bold"
-      >
-        {t("common.continueShopping")}
-      </Link>
+      <div className="flex flex-wrap justify-center gap-3 mt-6">
+        <Link
+          to="/cart"
+          className="inline-block bg-gray-800 text-white px-8 py-3 rounded-xl font-bold"
+        >
+          {t("order.success.viewInCart")}
+        </Link>
+
+        <Link
+          to="/products"
+          className="inline-block bg-yellow-400 text-gray-950 px-8 py-3 rounded-xl font-bold"
+        >
+          {t("common.continueShopping")}
+        </Link>
+      </div>
     </div>
   );
 }

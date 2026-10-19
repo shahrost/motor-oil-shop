@@ -4,6 +4,7 @@ import CartContext from "../../../context/CartContext";
 import CustomerAuthContext from "../../../context/CustomerAuthContext";
 import LanguageContext from "../../../context/LanguageContext";
 import buildOrderData from "../helpers/buildOrderData";
+import { saveLastOrder } from "../../../services/lastOrderStorage";
 
 const PHONE_LENGTH = 11;
 
@@ -63,7 +64,11 @@ function useOrderForm() {
     setSubmitError("");
 
     try {
-      await addOrder(buildOrderData(cart, customer, cartTotal, account?.id));
+      const orderData = buildOrderData(cart, customer, cartTotal, account?.id);
+      const savedOrder = await addOrder(orderData);
+
+      // نسخه‌ی ثبت‌شده برای نمایش در سبد خرید (شماره و وضعیت از پاسخ سرور)
+      saveLastOrder({ ...orderData, ...savedOrder });
 
       clearCart();
       setSubmitted(true);

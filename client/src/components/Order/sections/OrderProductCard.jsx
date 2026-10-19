@@ -5,12 +5,14 @@ import LanguageContext from "../../../context/LanguageContext";
 import useCartItem from "../../../hooks/useCartItem";
 import GiftBadge from "../../common/GiftBadge";
 import { OrderUnitOptions } from "../../common/OrderOptions";
+import { getItemUnitCount } from "../../../utils/cartItemCalc";
 
 function OrderProductCard({ item, index }) {
   const { language, t } = useContext(LanguageContext);
   const {
     name,
     brandLabel,
+    priceLabel,
     totalLabel,
     giftQty,
     setQuantity,
@@ -72,10 +74,22 @@ function OrderProductCard({ item, index }) {
 
       <PaymentSelector paymentType={item.paymentType} onChange={setPaymentType} />
 
+      {/* قیمت هر عدد و زیرش جمع این ردیف با تعداد انتخاب‌شده */}
       <div className="mt-5 bg-yellow-50 border border-yellow-200 rounded-2xl p-4">
-        <p className="font-bold text-gray-600">{t("order.productCard.price")}</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="font-bold text-gray-600">{t("order.productCard.unitPrice")}</p>
 
-        <p className="text-2xl font-extrabold text-gray-950 mt-2">{totalLabel}</p>
+          <p className="text-lg font-bold text-gray-800">{priceLabel}</p>
+        </div>
+
+        <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t border-yellow-200">
+          <p className="font-bold text-gray-600">
+            {t("order.productCard.lineTotal")} ({getItemUnitCount(item)}{" "}
+            {t("common.orderUnit.number")})
+          </p>
+
+          <p className="text-2xl font-extrabold text-gray-950">{totalLabel}</p>
+        </div>
       </div>
 
       <GiftBadge giftQty={giftQty} className="mt-3 rounded-2xl p-3" />

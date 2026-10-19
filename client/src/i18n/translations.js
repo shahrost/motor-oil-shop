@@ -209,10 +209,23 @@ const translations = {
       success: {
         title: "سفارش شما ثبت شد",
         text: "سفارش شما برای بررسی ارسال شد.",
+        viewInCart: "مشاهده سفارش در سبد خرید",
+      },
+      lastOrder: {
+        title: "آخرین سفارش ثبت‌شده‌ی شما",
+        orderNumber: "شماره سفارش:",
+        date: "تاریخ:",
+        status: "وضعیت:",
+        unitPrice: "قیمت هر عدد:",
+        lineTotal: "جمع:",
+        total: "مبلغ کل سفارش:",
+        hide: "بستن",
       },
       productCard: {
         orderUnitLabel: "واحد سفارش",
         price: "قیمت محصول:",
+        unitPrice: "قیمت هر عدد:",
+        lineTotal: "قیمت کل",
       },
       paymentSelector: {
         label: "نحوه پرداخت",
@@ -664,10 +677,23 @@ const translations = {
       success: {
         title: "Your order has been placed",
         text: "Your order has been sent for review.",
+        viewInCart: "View order in cart",
+      },
+      lastOrder: {
+        title: "Your Last Submitted Order",
+        orderNumber: "Order No.:",
+        date: "Date:",
+        status: "Status:",
+        unitPrice: "Price per Unit:",
+        lineTotal: "Subtotal:",
+        total: "Order Total:",
+        hide: "Close",
       },
       productCard: {
         orderUnitLabel: "Order Unit",
         price: "Product Price:",
+        unitPrice: "Price per Unit:",
+        lineTotal: "Total",
       },
       paymentSelector: {
         label: "Payment Method",

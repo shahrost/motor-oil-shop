@@ -1,5 +1,5 @@
 import formatPrice from "../../../utils/formatPrice";
-import { statusColor, statusLabel } from "../helpers/orderStatus";
+import { statusColor, statusLabel } from "../../../utils/orderStatus";
 
 // یک سفارش در تاریخچه‌ی سفارش‌های مشتری
 function OrderHistoryItem({ order, language, t }) {
