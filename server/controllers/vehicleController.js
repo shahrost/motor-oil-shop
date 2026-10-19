@@ -1,6 +1,7 @@
 const vehicleService = require("../services/vehicleService");
 const vehicleImportService = require("../services/vehicleImportService");
 const apiResponse = require("../utils/apiResponse");
+const { sendGzippedJson } = require("../utils/gzipJson");
 const AppError = require("../utils/AppError");
 const { startJob, resolveUploadedImages } = require("../services/importJobService");
 
@@ -54,12 +55,11 @@ async function getVehicleBrands(req, res, next) {
 // خودروهای سازگار هر فیلتر (برای نمایش روی کارت محصول)
 async function getFilterCompatibility(req, res, next) {
   try {
-    const json = await vehicleService.getFilterCompatibilityJson();
+    const body = await vehicleService.getFilterCompatibilityBody();
 
     res.set("Cache-Control", "public, max-age=300");
 
-    // هم‌شکل apiResponse.success؛ data از قبل JSON است و دوباره ساخته نمی‌شه
-    return res.type("json").send(`{"success":true,"message":"موفق","data":${json}}`);
+    return sendGzippedJson(req, res, body);
   } catch (error) {
     next(error);
   }

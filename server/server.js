@@ -21,7 +21,7 @@ connectDB();
 // (لیست کامل خودروها دیگر کش نمی‌شود؛ هر صفحه داده‌ی خودش را از دیتابیس می‌گیرد)
 mongoose.connection.once("open", async () => {
   await productRepository
-    .getAllProducts()
+    .getAllProductsBody()
     .catch((error) => console.error("Product cache warm-up failed:", error.message));
 });
 

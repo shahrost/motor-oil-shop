@@ -1,5 +1,6 @@
 const vehicleRepository = require("../repositories/vehicleRepository");
 const filterCompatibilityCache = require("../utils/filterCompatibilityCache");
+const { gzipSuccessBody } = require("../utils/gzipJson");
 
 const { FILTER_KIND } = require("../data/vehicleLinkKinds");
 
@@ -25,12 +26,14 @@ async function getVehicleBrands() {
 
 // خودروهای سازگار هر فیلتر، از همان لینک‌های فیلتر خودروها (بدون داده‌ی جدید):
 // '{ "<کد محصول>": [{ name, nameEn }] }' — هر خودرو برای هر محصول یک بار.
-// خروجی رشته‌ی JSON آماده است (کش‌شده؛ کم‌حافظه‌تر از نگه داشتن آبجکت‌ها)
-async function getFilterCompatibilityJson() {
+// خروجی بافر gzip‌شده‌ی جواب کامله (کش‌شده؛ کم‌حافظه‌تر از رشته یا آبجکت‌ها)
+async function getFilterCompatibilityBody() {
   return filterCompatibilityCache.get(async () => {
     const rows = await vehicleRepository.getCompatibilityByProduct(FILTER_KIND);
 
-    return JSON.stringify(Object.fromEntries(rows.map((row) => [row._id, row.vehicles])));
+    return gzipSuccessBody(
+      JSON.stringify(Object.fromEntries(rows.map((row) => [row._id, row.vehicles]))),
+    );
   });
 }
 
@@ -39,5 +42,5 @@ module.exports = {
   getBrandVehicles,
   getVehicleById,
   getVehicleBrands,
-  getFilterCompatibilityJson,
+  getFilterCompatibilityBody,
 };

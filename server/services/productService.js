@@ -6,9 +6,10 @@ const { removeProductImages, removeUploadedImage } = require("../utils/removeUpl
 const { persistImage } = require("../utils/cloudStorage");
 
 
-async function getProducts() {
+// بافر gzip‌شده‌ی جواب کامل (کنترلر مستقیم می‌فرسته)
+async function getProductsBody() {
 
-  return await productRepository.getAllProducts();
+  return await productRepository.getAllProductsBody();
 
 }
 
@@ -177,7 +178,7 @@ async function deleteAllProducts() {
 
 module.exports = {
 
-  getProducts,
+  getProductsBody,
 
   createProduct,
 

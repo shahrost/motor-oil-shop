@@ -1,13 +1,21 @@
 const Product = require("../models/Product");
 const productListCache = require("../utils/productListCache");
 const leanToJSON = require("../utils/leanToJSON");
+const { gzipSuccessBody } = require("../utils/gzipJson");
 
-// خروجی آبجکت ساده (هم‌شکل toJSON) است تا کش‌شدنی باشد؛ lean تا موقع پر شدن کش
-// هزار سند کامل Mongoose هم‌زمان در حافظه نباشد
-async function getAllProducts() {
-  return productListCache.get(async () =>
-    (await Product.find().lean()).map((product) => leanToJSON(Product, product)),
-  );
+// جواب کامل GET /api/products به شکل بافر gzip‌شده (هم‌شکل toJSON هر محصول)؛ فقط همین
+// بافر کش می‌شه. محصولات با cursor و lean یکی‌یکی به JSON تبدیل می‌شن تا موقع پر شدن
+// کش هزار آبجکت محصول هم‌زمان در حافظه نباشه
+async function getAllProductsBody() {
+  return productListCache.get(async () => {
+    const parts = [];
+
+    for await (const product of Product.find().lean().cursor()) {
+      parts.push(JSON.stringify(leanToJSON(Product, product)));
+    }
+
+    return gzipSuccessBody(`[${parts.join(",")}]`);
+  });
 }
 
 async function createProduct(data) {
@@ -85,7 +93,7 @@ async function deleteWhereSkuNotIn(skus) {
 }
 
 module.exports = {
-  getAllProducts,
+  getAllProductsBody,
   findDuplicate,
   findBySkus,
   findByBrands,

@@ -1,11 +1,12 @@
 const productService = require("../services/productService");
 const apiResponse = require("../utils/apiResponse");
+const { sendGzippedJson } = require("../utils/gzipJson");
 
 async function getProducts(req, res, next) {
   try {
-    const products = await productService.getProducts();
+    const body = await productService.getProductsBody();
 
-    return apiResponse.success(res, products);
+    return sendGzippedJson(req, res, body);
   } catch (error) {
     next(error);
   }
