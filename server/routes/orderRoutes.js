@@ -4,6 +4,7 @@ const router = express.Router();
 const { auth } = require("../middleware/auth");
 const {
   getOrders,
+  exportOrdersExcel,
   createOrder,
   updateOrderStatus,
   deleteOrder,
@@ -12,6 +13,9 @@ const {
 
 // دریافت همه سفارش‌ها
 router.get("/", auth, getOrders);
+
+// اکسل سفارش‌های یک ماه شمسی (فقط ادمین)
+router.get("/export", auth, exportOrdersExcel);
 
 // ثبت سفارش جدید
 router.post("/", createOrder);

@@ -8,6 +8,13 @@ async function getOrdersByCustomer(customerId) {
   return await Order.find({ customerId }).sort({ createdAt: -1 });
 }
 
+// سفارش‌های یک بازه‌ی زمانی برای گزارش اکسل؛ lean تا حافظه‌ی سرور کم مصرف بشه
+async function getOrdersCreatedBetween(from, to) {
+  return await Order.find({ createdAt: { $gte: from, $lt: to } })
+    .sort({ createdAt: 1 })
+    .lean();
+}
+
 async function createOrder(data) {
   return await Order.create(data);
 }
@@ -40,6 +47,8 @@ module.exports = {
   getAllOrders,
 
   getOrdersByCustomer,
+
+  getOrdersCreatedBetween,
 
   createOrder,
 

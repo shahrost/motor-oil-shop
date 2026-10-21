@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { ProductContext } from "../../../context";
@@ -16,18 +16,34 @@ const DEFAULT_FILTERS = {
   onlyAvailable: false,
 };
 
-// مقدار اولیه‌ی فیلترها از آدرس (مثلاً وقتی از فیلتر سریع صفحه‌ی اصلی میاد)
+const URL_KEYS = ["search", "brand", "viscosity", "volume", "api", "productType", "priceRange", "sort"];
+
+// فیلترها در آدرس (query) نگه داشته می‌شن تا با Back از صفحه‌ی محصول همون فیلترها
+// برگرده و لینک فیلتر سریع صفحه‌ی اصلی هم کار کنه
 function filtersFromUrl(searchParams) {
   const filters = { ...DEFAULT_FILTERS };
 
-  ["search", "brand", "viscosity", "volume", "api", "productType", "priceRange", "sort"].forEach(
-    (key) => {
-      const value = searchParams.get(key);
-      if (value) filters[key] = value;
-    },
-  );
+  URL_KEYS.forEach((key) => {
+    const value = searchParams.get(key);
+    if (value) filters[key] = value;
+  });
+
+  filters.onlyAvailable = searchParams.get("available") === "1";
 
   return filters;
+}
+
+// فقط فیلترهای غیرپیش‌فرض در آدرس نوشته می‌شن
+function filtersToUrl(filters) {
+  const params = {};
+
+  URL_KEYS.forEach((key) => {
+    if (filters[key] !== DEFAULT_FILTERS[key]) params[key] = filters[key];
+  });
+
+  if (filters.onlyAvailable) params.available = "1";
+
+  return params;
 }
 
 // «قیمت» در UI یک لیست است که هم مرتب‌سازی و هم بازه‌ی قیمت رو انتخاب می‌کنه
@@ -43,14 +59,25 @@ function fromPriceOption(value) {
   return { sort: "default", priceRange: ALL };
 }
 
-// state فیلترهای صفحه‌ی محصولات + گزینه‌های هر فیلتر + لیست فیلترشده
+// state فیلترهای صفحه‌ی محصولات (همگام با آدرس) + گزینه‌های هر فیلتر + لیست فیلترشده
 function useProductsPage() {
   const { products } = useContext(ProductContext);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  // state محلی تا تایپ در جستجو روان بمونه (آپدیت آدرس در روتر با transition انجام می‌شه)
   const [filters, setFilters] = useState(() => filtersFromUrl(searchParams));
 
   const setFilter = (key) => (value) => setFilters((prev) => ({ ...prev, [key]: value }));
+
+  // آدرس آینه‌ی فیلترهاست؛ replace تا هر تغییر فیلتر صفحه‌ی جدیدی به تاریخچه اضافه نکنه.
+  // مقایسه‌ی رشته جلوی حلقه‌ی بی‌پایان رو می‌گیره
+  useEffect(() => {
+    const next = new URLSearchParams(filtersToUrl(filters));
+
+    if (next.toString() !== searchParams.toString()) {
+      setSearchParams(next, { replace: true });
+    }
+  }, [filters, searchParams, setSearchParams]);
 
   const filteredProducts = useMemo(() => filterProducts(products, filters), [products, filters]);
 

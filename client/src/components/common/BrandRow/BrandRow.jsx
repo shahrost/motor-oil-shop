@@ -30,6 +30,7 @@ function BrandRow({ brand, items }) {
 
       <div
         ref={rowRef}
+        data-scroll-row={brand.name}
         {...dragHandlers}
         className="
           flex

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
+import SelectedVehicleContext from "../../context/SelectedVehicleContext";
 import VehicleReviews, { useVehicleReviews } from "../VehicleReviews";
 import useVehicleDetail from "./hooks/useVehicleDetail";
 import buildVehicleSpecs from "./helpers/vehicleSpecs";
@@ -53,13 +54,16 @@ function VehicleDetail() {
 
           <PartButtons parts={parts} selected={selected} onSelect={selectPart} t={t} />
 
-          <PartProducts
-            parts={parts}
-            selected={selected}
-            vehicleName={name}
-            isElectric={(vehicle.fuel || "").trim() === "برقی"}
-            t={t}
-          />
+          {/* نام فارسی خودرو برای ردیف سفارش (پنل ادمین فارسیه) */}
+          <SelectedVehicleContext.Provider value={vehicle.name || ""}>
+            <PartProducts
+              parts={parts}
+              selected={selected}
+              vehicleName={name}
+              isElectric={(vehicle.fuel || "").trim() === "برقی"}
+              t={t}
+            />
+          </SelectedVehicleContext.Provider>
         </div>
       </section>
 

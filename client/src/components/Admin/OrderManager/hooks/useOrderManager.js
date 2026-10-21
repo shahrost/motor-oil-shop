@@ -3,6 +3,18 @@ import { useContext, useMemo, useState } from "react";
 import orderStats from "../../helpers/orderStats";
 import OrderContext from "../../../../context/OrderContext";
 import useOrdersAutoRefresh from "../../../../hooks/useOrdersAutoRefresh";
+import {
+  ALL_MONTHS,
+  ALL_STATUSES,
+  matchesFilters,
+  orderMonthOptions,
+  sortNewestFirst,
+} from "../helpers/orderListFilters";
+
+// هر بار چند سفارش نشون داده می‌شه؛ بقیه با «نمایش بیشتر»
+const PAGE_SIZE = 30;
+
+const statuses = ["جدید", "تماس گرفته شد", "آماده ارسال", "ارسال شد", "تحویل شد"];
 
 function useOrderManager() {
   const {
@@ -14,45 +26,46 @@ function useOrderManager() {
     deleteOrder,
   } = useContext(OrderContext);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearchState] = useState("");
+  const [filterStatus, setFilterStatusState] = useState(ALL_STATUSES);
+  const [filterMonth, setFilterMonthState] = useState(ALL_MONTHS);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const [filterStatus, setFilterStatus] = useState("همه");
-
-  const statuses = [
-    "جدید",
-    "تماس گرفته شد",
-    "آماده ارسال",
-    "ارسال شد",
-    "تحویل شد",
-  ];
+  // سفارش‌های باز (آکاردئون)؛ پیش‌فرض همه بسته. با بروزرسانی خودکار لیست، باز بودن می‌مونه
+  const [openIds, setOpenIds] = useState(() => new Set());
 
   useOrdersAutoRefresh(loadOrders);
 
-  const filteredOrders = useMemo(() => {
-    return orders
-      .filter((order) => {
-        const text = search.toLowerCase();
+  // هر تغییر فیلتر از صفحه‌ی اول لیست شروع می‌شه
+  const withPageReset = (setter) => (value) => {
+    setter(value);
+    setVisibleCount(PAGE_SIZE);
+  };
 
-        const productsText = order.items
-          ?.map((item) => item.productName)
-          .join(" ")
-          .toLowerCase();
+  const sortedOrders = useMemo(() => sortNewestFirst(orders), [orders]);
 
-        const searchMatch =
-          order.customer?.name?.toLowerCase().includes(text) ||
-          order.customer?.phone?.includes(text) ||
-          order.customer?.area?.toLowerCase().includes(text) ||
-          productsText?.includes(text);
+  const monthOptions = useMemo(() => orderMonthOptions(sortedOrders), [sortedOrders]);
 
-        const statusMatch =
-          filterStatus === "همه" || order.status === filterStatus;
-
-        return searchMatch && statusMatch;
-      })
-      .reverse();
-  }, [orders, search, filterStatus]);
+  const filteredOrders = useMemo(
+    () =>
+      sortedOrders.filter((order) =>
+        matchesFilters(order, { search, status: filterStatus, month: filterMonth }),
+      ),
+    [sortedOrders, search, filterStatus, filterMonth],
+  );
 
   const dashboard = useMemo(() => orderStats(orders), [orders]);
+
+  function toggleOrder(id) {
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+
+      return next;
+    });
+  }
 
   return {
     orders,
@@ -69,15 +82,29 @@ function useOrderManager() {
 
     search,
 
-    setSearch,
+    setSearch: withPageReset(setSearchState),
 
     filterStatus,
 
-    setFilterStatus,
+    setFilterStatus: withPageReset(setFilterStatusState),
+
+    filterMonth,
+
+    setFilterMonth: withPageReset(setFilterMonthState),
+
+    monthOptions,
 
     statuses,
 
     filteredOrders,
+
+    visibleOrders: filteredOrders.slice(0, visibleCount),
+
+    showMore: () => setVisibleCount((count) => count + PAGE_SIZE),
+
+    isOpen: (id) => openIds.has(id),
+
+    toggleOrder,
 
     dashboard,
   };

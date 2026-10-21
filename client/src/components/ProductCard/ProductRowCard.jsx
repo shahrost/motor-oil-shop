@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import LanguageContext from "../../context/LanguageContext";
+import SelectedVehicleContext from "../../context/SelectedVehicleContext";
 import { getProductNameLabel } from "../../utils/productNameLabel";
 import formatPrice from "../../utils/formatPrice";
 import {
@@ -20,10 +21,13 @@ function ProductRowCard({ product }) {
   const { language, t } = useContext(LanguageContext);
   const name = getProductNameLabel(product.name, language);
   const card = usePurchaseOptions(product);
+  const vehicle = useContext(SelectedVehicleContext);
 
   return (
     <Link
       to={`/product/${product.id}`}
+      data-product-id={product.id}
+      state={vehicle ? { vehicle } : undefined}
       draggable={false}
       onDragStart={(e) => e.preventDefault()}
       className="relative h-full flex flex-col border-2 border-gray-200 rounded-xl p-3 bg-white shadow-sm hover:shadow-md hover:border-yellow-400 transition"

@@ -192,6 +192,7 @@ const translations = {
       oilType: "نوع روغن:",
       description: "توضیحات محصول",
       notFound: "محصول پیدا نشد",
+      back: "بازگشت",
     },
 
     cart: {
@@ -676,6 +677,7 @@ const translations = {
       oilType: "Oil Type:",
       description: "Product Description",
       notFound: "Product not found",
+      back: "Back",
     },
 
     cart: {

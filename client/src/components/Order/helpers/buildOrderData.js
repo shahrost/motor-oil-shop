@@ -19,6 +19,8 @@ function buildOrderData(cart, customer, cartTotal, customerId) {
 
       volume: item.volume,
 
+      vehicle: item.vehicle || "",
+
       orderType: item.orderType || "number",
 
       paymentType: item.paymentType || "cash",

@@ -5,6 +5,7 @@ import formatPrice from "../../utils/formatPrice";
 import { getProductPrice } from "../../utils/productPrice";
 import CompatibleVehicles from "../common/CompatibleVehicles";
 import useProductDetail from "./hooks/useProductDetail";
+import useGoBack from "./hooks/useGoBack";
 import {
   ProductGallery,
   ProductSpecs,
@@ -12,11 +13,13 @@ import {
   PromotionInfo,
   ProductDescription,
   ProductPurchase,
+  BackButton,
 } from "./sections";
 
 function ProductDetail() {
   const { language, t } = useContext(LanguageContext);
   const { product, ...purchase } = useProductDetail();
+  const goBack = useGoBack();
 
   if (!product) {
     return (
@@ -30,6 +33,8 @@ function ProductDetail() {
 
   return (
     <div className="max-w-7xl mx-auto px-5 py-10">
+      <BackButton onBack={goBack} label={t("productDetail.back")} />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <ProductGallery product={product} />
 

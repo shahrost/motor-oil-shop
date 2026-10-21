@@ -1,3 +1,5 @@
+import { formatToman } from "../helpers/orderSummary";
+
 function OrderProducts({ items }) {
   return (
     <section>
@@ -13,6 +15,12 @@ function OrderProducts({ items }) {
             <p className="mt-2">
               <b>برند:</b> {item.brand}
             </p>
+
+            {item.vehicle && (
+              <p className="mt-2">
+                <b>خودرو:</b> {item.vehicle}
+              </p>
+            )}
 
             <p className="mt-2">
               <b>گرید:</b> {item.viscosity}
@@ -46,8 +54,11 @@ function OrderProducts({ items }) {
             </p>
 
             <p className="mt-2">
-              <b>قیمت واحد:</b> {Number(item.price || 0).toLocaleString()}
-              تومان
+              <b>قیمت واحد:</b> {formatToman(item.price)}
+            </p>
+
+            <p className="mt-2 font-bold">
+              <b>جمع ردیف:</b> {formatToman(Number(item.price || 0) * Number(item.totalCount || 0))}
             </p>
 
             {item.giftQty > 0 && (

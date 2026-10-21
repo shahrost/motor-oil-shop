@@ -1,23 +1,17 @@
 import OrderProducts from "./OrderProducts";
-import orderStatusStyle from "../helpers/orderStatusStyle";
 import mapLink from "../helpers/mapLink";
+import { formatToman, orderDateLabel } from "../helpers/orderSummary";
 
-function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
-  const style = orderStatusStyle(order.status);
+// جزئیات کامل یک سفارش (بخش بازشده‌ی ردیف): وضعیت، حذف، مشتری، اقلام و مبلغ
+function OrderDetails({ order, updateOrderStatus, deleteOrder, statuses }) {
   const locationUrl = mapLink(order.customer?.location);
 
   return (
-    <article
-      className={`bg-white rounded-xl shadow p-6 border-r-8 ${style.stripe}`}
-    >
-      <div className="flex justify-between items-center mb-5">
-        <div className="flex items-center gap-3 flex-wrap">
-          <h2 className="text-xl font-bold">سفارش #{order.id}</h2>
-
-          <span className={`px-3 py-1 rounded-full text-sm font-bold ${style.badge}`}>
-            {order.status}
-          </span>
-        </div>
+    <section>
+      <div className="flex justify-between items-center gap-3 mb-5">
+        <h2 className="text-lg sm:text-xl font-bold">
+          سفارش #{String(order.id).slice(0, 8)}
+        </h2>
 
         <button
           onClick={() => deleteOrder(order.id)}
@@ -118,8 +112,7 @@ function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
             font-bold
             "
             >
-              مبلغ کل سفارش: {Number(order.totalPrice || 0).toLocaleString()}
-              تومان
+              مبلغ کل سفارش: {formatToman(order.totalPrice)}
             </p>
           </div>
         </div>
@@ -132,10 +125,10 @@ function OrderCard({ order, updateOrderStatus, deleteOrder, statuses }) {
       text-sm
       "
       >
-        تاریخ ثبت: {order.date}
+        تاریخ ثبت: {orderDateLabel(order)}
       </p>
-    </article>
+    </section>
   );
 }
 
-export default OrderCard;
+export default OrderDetails;

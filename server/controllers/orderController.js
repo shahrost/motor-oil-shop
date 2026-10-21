@@ -1,5 +1,7 @@
 const orderService = require("../services/orderService");
 
+const orderExportService = require("../services/orderExportService");
+
 const apiResponse = require("../utils/apiResponse");
 
 async function getOrders(req, res, next) {
@@ -7,6 +9,34 @@ async function getOrders(req, res, next) {
     const orders = await orderService.getOrders();
 
     return apiResponse.success(res, orders);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// فایل اکسل سفارش‌های یک ماه شمسی (?year=1405&month=7)
+async function exportOrdersExcel(req, res, next) {
+  try {
+    const { workbook, fileName, asciiFileName } = await orderExportService.buildMonthlyWorkbook(
+      req.query.year,
+      req.query.month,
+    );
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    );
+
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${asciiFileName}"; filename*=UTF-8''${encodeURIComponent(fileName)}`,
+    );
+
+    res.setHeader("Cache-Control", "no-store");
+
+    await workbook.xlsx.write(res);
+
+    res.end();
   } catch (error) {
     next(error);
   }
@@ -57,6 +87,7 @@ async function deleteAllOrders(req, res, next) {
 
 module.exports = {
   getOrders,
+  exportOrdersExcel,
   createOrder,
   updateOrderStatus,
   deleteOrder,

@@ -1,6 +1,14 @@
 import useOrderManager from "./hooks/useOrderManager";
 
-import { OrderDashboard, OrderFilters, OrderCard, OrderListStatus } from "./sections";
+import {
+  OrderDashboard,
+  OrderExport,
+  OrderFilters,
+  OrderRowHeader,
+  OrderRow,
+  OrderListStatus,
+  ShowMoreOrders,
+} from "./sections";
 
 function OrderManager() {
   const {
@@ -9,6 +17,10 @@ function OrderManager() {
     loadError,
     loadOrders,
     filteredOrders,
+    visibleOrders,
+    showMore,
+    isOpen,
+    toggleOrder,
     dashboard,
 
     search,
@@ -16,6 +28,10 @@ function OrderManager() {
 
     filterStatus,
     setFilterStatus,
+
+    filterMonth,
+    setFilterMonth,
+    monthOptions,
 
     statuses,
 
@@ -27,33 +43,44 @@ function OrderManager() {
     <section>
       <OrderDashboard orders={orders} dashboard={dashboard} />
 
+      <OrderExport />
+
       <OrderFilters
         search={search}
         setSearch={setSearch}
         filterStatus={filterStatus}
         setFilterStatus={setFilterStatus}
         statuses={statuses}
+        filterMonth={filterMonth}
+        setFilterMonth={setFilterMonth}
+        monthOptions={monthOptions}
       />
 
-      <div className="space-y-5">
-        {loadingOrders || loadError || filteredOrders.length === 0 ? (
-          <OrderListStatus
-            loading={loadingOrders}
-            error={loadError}
-            onRetry={loadOrders}
-          />
-        ) : (
-          filteredOrders.map((order) => (
-            <OrderCard
+      {loadingOrders || loadError || filteredOrders.length === 0 ? (
+        <OrderListStatus loading={loadingOrders} error={loadError} onRetry={loadOrders} />
+      ) : (
+        <div className="space-y-2">
+          <OrderRowHeader />
+
+          {visibleOrders.map((order) => (
+            <OrderRow
               key={order.id}
               order={order}
+              open={isOpen(order.id)}
+              onToggle={() => toggleOrder(order.id)}
               statuses={statuses}
               updateOrderStatus={updateOrderStatus}
               deleteOrder={deleteOrder}
             />
-          ))
-        )}
-      </div>
+          ))}
+
+          <ShowMoreOrders
+            shown={visibleOrders.length}
+            total={filteredOrders.length}
+            onShowMore={showMore}
+          />
+        </div>
+      )}
     </section>
   );
 }

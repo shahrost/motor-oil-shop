@@ -73,6 +73,12 @@ const OrderSchema = new mongoose.Schema(
           default: "",
         },
 
+        // خودرویی که مشتری از صفحه‌اش محصول رو انتخاب کرده (اختیاری؛ سفارش‌های قدیمی ندارن)
+        vehicle: {
+          type: String,
+          default: "",
+        },
+
         orderType: {
           type: String,
           default: "",
