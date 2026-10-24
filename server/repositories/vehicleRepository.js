@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Vehicle = require("../models/Vehicle");
 const leanToJSON = require("../utils/leanToJSON");
 const filterCompatibilityCache = require("../utils/filterCompatibilityCache");
+const vehicleSearchCache = require("../utils/vehicleSearchCache");
 
 // لیست کامل خودروها (با ده‌ها هزار لینک محصول) دیگه در حافظه‌ی سرور نگه داشته نمی‌شه:
 // با ۱۱۹۱ خودرو / ۲۳ هزار لینک حافظه‌ی سرور به سقف Runflare می‌رسید (PROJECT_STATE بخش ۳۱).
@@ -36,6 +37,17 @@ async function findNamesByIds(ids) {
   const rows = await Vehicle.find({ _id: { $in: valid } }).select("name").lean();
 
   return new Map(rows.map((row) => [row._id.toString(), row.name]));
+}
+
+// همه‌ی خودروها فقط با فیلدهای کارت (برای جستجوی صفحه‌ی «خودروهای من»؛ فقط بافر gzip جواب کش می‌شه).
+// بدون applyDefaults: فیلد خالی در خروجی نمیاد و کلاینت پیش‌فرض می‌ذاره
+async function getSearchList() {
+  const rows = await Vehicle.find()
+    .select("name nameEn brand brandEn image viscosities oilCapacity")
+    .sort({ sku: 1 })
+    .lean();
+
+  return rows.map(({ _id, ...vehicle }) => ({ id: _id.toString(), ...vehicle }));
 }
 
 // برندها با تعداد مدل‌ها (بدون خواندن همه‌ی خودروها): [{ name, nameEn, count }]
@@ -114,6 +126,7 @@ async function upsertManyBySku(docs) {
 
   // نوشتن با درایور، پلاگین onAnyWrite مدل رو صدا نمی‌زنه
   filterCompatibilityCache.invalidate();
+  vehicleSearchCache.invalidate();
 
   return result.upsertedCount || 0;
 }
@@ -134,6 +147,7 @@ module.exports = {
   findByBrand,
   findById,
   findNamesByIds,
+  getSearchList,
   getBrandSummaries,
   getVehiclesForLinking,
   getCompatibilityByProduct,

@@ -52,6 +52,19 @@ async function getVehicleBrands(req, res, next) {
   }
 }
 
+// لیست سبک همه‌ی خودروها (فیلدهای کارت) برای جستجوی صفحه‌ی «خودروها»
+async function getVehicleSearchList(req, res, next) {
+  try {
+    const body = await vehicleService.getVehicleSearchListBody();
+
+    res.set("Cache-Control", "public, max-age=300");
+
+    return sendGzippedJson(req, res, body);
+  } catch (error) {
+    next(error);
+  }
+}
+
 // خودروهای سازگار هر فیلتر (برای نمایش روی کارت محصول)
 async function getFilterCompatibility(req, res, next) {
   try {
@@ -123,6 +136,7 @@ module.exports = {
   getBrandVehicles,
   getVehicleById,
   getVehicleBrands,
+  getVehicleSearchList,
   getFilterCompatibility,
   importVehicles,
   importParsedVehicles,

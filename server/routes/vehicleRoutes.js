@@ -6,6 +6,7 @@ const {
   getBrandVehicles,
   getVehicleById,
   getVehicleBrands,
+  getVehicleSearchList,
   getFilterCompatibility,
   importVehicles,
   importParsedVehicles,
@@ -22,6 +23,9 @@ router.get("/", getVehicles);
 
 // برندهای خودرو با تعداد مدل‌ها (برای صفحه‌ی «خودروها»؛ سبک‌تر از لیست کامل)
 router.get("/brands", getVehicleBrands);
+
+// همه‌ی خودروها فقط با فیلدهای کارت (جستجوی فارسی/انگلیسی در صفحه‌ی «خودروها»)
+router.get("/search-list", getVehicleSearchList);
 
 // مدل‌های یک برند و یک خودرو (برای صفحه‌های مدل و جزئیات؛ سبک‌تر از لیست کامل)
 router.get("/brand/:brand", getBrandVehicles);

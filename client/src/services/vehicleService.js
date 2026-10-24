@@ -34,6 +34,22 @@ export async function fetchVehicleBrands() {
   return response.data.data || [];
 }
 
+// همه‌ی خودروها فقط با فیلدهای کارت، برای جستجوی صفحه‌ی «خودروها» (فیلد خالی از سرور
+// نمیاد ← پیش‌فرض)
+
+export async function fetchVehicleSearchList() {
+  const response = await apiClient.get("/vehicles/search-list");
+
+  return (response.data.data || []).map((vehicle) => ({
+    nameEn: "",
+    brandEn: "",
+    image: "",
+    oilCapacity: "",
+    ...vehicle,
+    viscosities: vehicle.viscosities || [],
+  }));
+}
+
 // خودروهای سازگار هر فیلتر: { "<کد محصول>": [{ name, nameEn }] }
 
 export async function fetchFilterCompatibility() {

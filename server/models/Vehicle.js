@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const onAnyWrite = require("./plugins/onAnyWrite");
 const filterCompatibilityCache = require("../utils/filterCompatibilityCache");
+const vehicleSearchCache = require("../utils/vehicleSearchCache");
 
 const ProductLinkSchema = new mongoose.Schema(
   {
@@ -68,7 +69,12 @@ const VehicleSchema = new mongoose.Schema(
   },
 );
 
-// هر تغییر خودروها کش «خودروهای سازگار فیلترها» را فوراً باطل می‌کند
-VehicleSchema.plugin(onAnyWrite, { handler: filterCompatibilityCache.invalidate });
+// هر تغییر خودروها کش «خودروهای سازگار فیلترها» و لیست جستجو را فوراً باطل می‌کند
+VehicleSchema.plugin(onAnyWrite, {
+  handler: () => {
+    filterCompatibilityCache.invalidate();
+    vehicleSearchCache.invalidate();
+  },
+});
 
 module.exports = mongoose.model("Vehicle", VehicleSchema);
