@@ -3,6 +3,8 @@ const productModel = {
 
   name: "",
 
+  sku: "",
+
   brand: "",
 
   category: "",

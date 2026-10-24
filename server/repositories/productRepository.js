@@ -2,8 +2,9 @@ const Product = require("../models/Product");
 const productListCache = require("../utils/productListCache");
 const leanToJSON = require("../utils/leanToJSON");
 const { gzipSuccessBody } = require("../utils/gzipJson");
+const compactProduct = require("../utils/compactProduct");
 
-// جواب کامل GET /api/products به شکل بافر gzip‌شده (هم‌شکل toJSON هر محصول)؛ فقط همین
+// جواب کامل GET /api/products به شکل بافر gzip‌شده (toJSON هر محصول، فشرده با compactProduct)؛ فقط همین
 // بافر کش می‌شه. محصولات با cursor و lean یکی‌یکی به JSON تبدیل می‌شن تا موقع پر شدن
 // کش هزار آبجکت محصول هم‌زمان در حافظه نباشه
 async function getAllProductsBody() {
@@ -11,7 +12,7 @@ async function getAllProductsBody() {
     const parts = [];
 
     for await (const product of Product.find().lean().cursor()) {
-      parts.push(JSON.stringify(leanToJSON(Product, product)));
+      parts.push(JSON.stringify(compactProduct(leanToJSON(Product, product))));
     }
 
     return gzipSuccessBody(`[${parts.join(",")}]`);

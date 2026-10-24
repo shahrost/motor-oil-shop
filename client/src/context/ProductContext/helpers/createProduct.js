@@ -20,6 +20,9 @@ function createProduct(data = {}) {
 
     stock: Number(data.stock || 0),
 
+    // سرور در لیست، مقادیر پیش‌فرض طرح فروش رو نمی‌فرسته (server/utils/compactProduct)
+    promotion: { ...productModel.promotion, ...data.promotion },
+
     image:
       typeof data.image === "string"
         ? {
