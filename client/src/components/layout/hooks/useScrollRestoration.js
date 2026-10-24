@@ -1,7 +1,11 @@
 import { useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
 
-import { getScrollMemory, saveScrollMemory } from "../../../services/scrollMemoryStorage";
+import {
+  getScrollMemory,
+  saveScrollMemory,
+  scrollMemoryKey,
+} from "../../../services/scrollMemoryStorage";
 import {
   isBackForwardPageLoad,
   readScrollSnapshot,
@@ -20,12 +24,12 @@ if ("scrollRestoration" in window.history) {
 // - عوض شدن فقط query (فیلترها، تب دسته‌ی خودرو): اسکرول دست نمی‌خوره
 // - لود اول / رفرش: بالای صفحه (لود کامل با Back مرورگر: جای قبلی)
 function useScrollRestoration() {
-  const { key, pathname, search } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   const navigationType = useNavigationType();
   const lastPathname = useRef(null);
 
-  // اولین صفحه‌ی هر تب کلید "default" داره؛ آدرس کنارش میاد تا صفحه‌های مختلف قاطی نشن
-  const memoryKey = key === "default" ? `default:${pathname}${search}` : key;
+  const memoryKey = scrollMemoryKey(location);
 
   // جای اسکرول این صفحه‌ی تاریخچه مدام ثبت می‌شه. layout effect: پاکسازی قبل از
   // اولین رویداد اسکرولِ صفحه‌ی بعدی انجام می‌شه تا جای صفحه‌ی قبل خراب نشه

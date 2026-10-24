@@ -1,9 +1,10 @@
 // سناریوی کارت «خودروهای من»: لوگوی برندها از لبه‌های صفحه پرواز می‌کنن داخل کارت
 // و دور ماشین روی بیضی سه‌بعدی می‌چرخن (هندسه در logoOrbit).
 
-import { wait } from "./animate";
+import { wait, isFrozen } from "./animate";
 import {
   START_ANGLE,
+  artSize,
   orbitSlot,
   applySlot,
   edgePoint,
@@ -32,22 +33,46 @@ export function createLogoOrbit(art, brands) {
   flight.className = "logo-flight";
   document.body.appendChild(flight);
 
-  const layout = () => chips.forEach((chip, i) => chip && applySlot(chip, orbitSlot(art, i, n, angle)));
+  const layout = () => {
+    const size = artSize(art);
+    chips.forEach((chip, i) => chip && applySlot(chip, orbitSlot(size, i, n, angle)));
+  };
 
-  const startOrbit = () => {
-    let last = performance.now();
-    let speed = 0;
-    const tick = (now) => {
-      if (cancelled) return;
-      const dt = Math.min(50, now - last);
-      last = now;
-      speed = Math.min(MAX_SPEED, speed + ACCEL * dt); // آروم راه می‌افته
-      angle += speed * dt;
-      layout();
-      raf = requestAnimationFrame(tick);
-    };
+  // چرخش فقط وقتی کارت روی صفحه‌ست؛ بیرون از دید، CPU گوشی آزاد می‌مونه
+  let orbiting = false;
+  let onScreen = true;
+  let last = 0;
+  let speed = 0;
+
+  const tick = (now) => {
+    if (cancelled || !onScreen || isFrozen(art)) {
+      raf = 0;
+      return;
+    }
+    const dt = Math.min(50, now - last);
+    last = now;
+    speed = Math.min(MAX_SPEED, speed + ACCEL * dt); // آروم راه می‌افته
+    angle += speed * dt;
+    layout();
     raf = requestAnimationFrame(tick);
   };
+
+  const resume = () => {
+    if (!orbiting || raf || cancelled) return;
+    last = performance.now();
+    raf = requestAnimationFrame(tick);
+  };
+
+  const startOrbit = () => {
+    orbiting = true;
+    resume();
+  };
+
+  const visibility = new IntersectionObserver(([entry]) => {
+    onScreen = entry.isIntersecting;
+    if (onScreen) resume();
+  });
+  visibility.observe(art);
 
   const land = async (brand, i) => {
     await wait(i * 110);
@@ -57,7 +82,7 @@ export function createLogoOrbit(art, brands) {
     flight.appendChild(chip);
 
     const a = art.getBoundingClientRect();
-    const slot = orbitSlot(art, i, n, angle);
+    const slot = orbitSlot(artSize(art), i, n, angle);
     const to = { x: a.left + slot.x, y: a.top + slot.y };
 
     try {
@@ -75,7 +100,7 @@ export function createLogoOrbit(art, brands) {
     chip.getAnimations().forEach((an) => an.cancel());
     orbit.appendChild(chip);
     chips[i] = chip;
-    applySlot(chip, orbitSlot(art, i, n, angle));
+    applySlot(chip, orbitSlot(artSize(art), i, n, angle));
   };
 
   return {
@@ -101,6 +126,7 @@ export function createLogoOrbit(art, brands) {
     destroy() {
       cancelled = true;
       cancelAnimationFrame(raf);
+      visibility.disconnect();
       flight.querySelectorAll(".logo-chip").forEach((chip) => chip.getAnimations().forEach((an) => an.cancel()));
       flight.remove();
       orbit.remove();

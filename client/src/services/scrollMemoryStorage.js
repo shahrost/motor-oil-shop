@@ -3,6 +3,11 @@
 const STORAGE_KEY = "scrollMemory";
 const MAX_ENTRIES = 50;
 
+// اولین صفحه‌ی هر تب کلید "default" داره؛ آدرس کنارش میاد تا صفحه‌های مختلف قاطی نشن
+export function scrollMemoryKey({ key, pathname, search }) {
+  return key === "default" ? `default:${pathname}${search}` : key;
+}
+
 function readAll() {
   try {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY)) || {};

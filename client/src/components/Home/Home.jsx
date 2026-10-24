@@ -3,6 +3,14 @@ import { useContext } from "react";
 import LanguageContext from "../../context/LanguageContext";
 
 import { GuideButton, LubricantCard, VehiclesCard } from "./sections";
+import { freezeAnimations } from "./helpers/animate";
+
+// Link روتر فقط وقتی خودش ناوبری رو انجام بده preventDefault می‌کنه (نه کلیک با Ctrl یا تب جدید)
+function handleClick(event) {
+  if (event.defaultPrevented && event.target.closest("a")) {
+    freezeAnimations(event.currentTarget);
+  }
+}
 
 // صفحه‌ی اصلی: دو کارت ورودی «روانکار» و «خودروهای من» + دکمه‌ی «راهنمای سایت»
 // (justify-end: در فارسی سمت چپ، در انگلیسی سمت راست؛ همیشه بالای کارت «خودروهای من»)
@@ -10,7 +18,7 @@ function Home() {
   const { t } = useContext(LanguageContext);
 
   return (
-    <section className="px-5 mt-12 mb-16">
+    <section className="px-5 mt-12 mb-16" onClick={handleClick}>
       <div className="max-w-4xl mx-auto flex justify-end mb-3">
         <GuideButton label={t("home.guide")} />
       </div>

@@ -3,10 +3,14 @@
 
 export const START_ANGLE = -Math.PI / 2;
 
-// جای لوگوی i از n روی بیضی، به مختصات باکس تصویر (art)
-export function orbitSlot(art, i, n, angle) {
-  const w = art.clientWidth;
-  const h = art.clientHeight;
+// اندازه‌ی باکس تصویر (art)؛ هر فریم یک بار خونده می‌شه، نه برای تک‌تک لوگوها،
+// تا خوندن اندازه بین نوشتن transformها هر بار layout اجباری راه نندازه
+export function artSize(art) {
+  return { w: art.clientWidth, h: art.clientHeight };
+}
+
+// جای لوگوی i از n روی بیضی، به مختصات باکس تصویر (size از artSize)
+export function orbitSlot({ w, h }, i, n, angle) {
   const cx = w / 2;
   const cy = h / 2 + 4;
   const rx = Math.min(w / 2 - 26, 175);

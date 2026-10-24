@@ -5,11 +5,13 @@ import LanguageContext from "../../../context/LanguageContext";
 
 import { ProductRowCard } from "../../ProductCard";
 import useDragScroll from "./hooks/useDragScroll";
+import useRowWindow from "./hooks/useRowWindow";
 import { SwipeHint } from "./sections";
 
 function BrandRow({ brand, items }) {
   const { t } = useContext(LanguageContext);
   const { rowRef, dragHandlers } = useDragScroll();
+  const { visibleItems, onScroll } = useRowWindow(items, brand.name);
 
   return (
     <div>
@@ -32,6 +34,7 @@ function BrandRow({ brand, items }) {
         ref={rowRef}
         data-scroll-row={brand.name}
         {...dragHandlers}
+        onScroll={onScroll}
         className="
           flex
           items-stretch
@@ -43,7 +46,7 @@ function BrandRow({ brand, items }) {
           select-none
         "
       >
-        {items.map((product, index) => (
+        {visibleItems.map((product, index) => (
           <div
             key={product.id}
             className="

@@ -24,3 +24,15 @@ export function onceVisible(el, callback) {
 
   return () => observer.disconnect();
 }
+
+// موقع رفتن به صفحه‌ی بعد، روتر صفحه‌ی جدید رو تکه‌تکه (transition) رندر می‌کنه و
+// صفحه‌ی اصلی تا آخرش سر جاش می‌مونه؛ انیمیشن‌های پشت‌سرهم کارت‌ها CPU گوشی رو پر
+// می‌کردن و صفحه‌ی بعد چند ثانیه دیر می‌اومد. پس با کلیک لینک همه‌شون متوقف می‌شن.
+const FROZEN_ATTR = "data-animations-frozen";
+
+export function freezeAnimations(root) {
+  root.setAttribute(FROZEN_ATTR, "");
+  root.getAnimations({ subtree: true }).forEach((animation) => animation.pause());
+}
+
+export const isFrozen = (el) => Boolean(el.closest(`[${FROZEN_ATTR}]`));
