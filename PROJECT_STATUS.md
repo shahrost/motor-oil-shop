@@ -1,6 +1,6 @@
 # وضعیت پروژه — شهرام روغن
 
-آخرین بروزرسانی: 2026-10-26
+آخرین بروزرسانی: 2026-10-27
 
 ## معرفی
 
@@ -53,7 +53,7 @@ server/   Express + Mongoose — جدا دیپلوی می‌شه
 - حساب کاربری مشتری (ثبت‌نام/ورود جدا از ادمین).
 - خودروها: لیست کامل (با لینک محصولات) در حافظه‌ی سرور کش نمی‌شه؛ فقط «خودروهای سازگار فیلترها» به شکل رشته‌ی JSON کش می‌شه. ایمپورت خودرو با درایور MongoDB و ۱۰۰تا ۱۰۰تا.
 - سرور زیر سقف حافظه‌ی Runflare (~۱۱۵–۱۲۰MB) کار می‌کنه: کش لیست‌ها با `lean`، کتابخانه‌های ایمپورت/آپلود فقط موقع نیاز، `node --max-semi-space-size=2`؛ rss عادی ~۸۶–۹۵MB. قطعی ۲۰۲۶-۱۰-۱۰ (حدود نیم ساعت) از همین بود (بخش ۲۷ PROJECT_STATE، نکته‌ی ۴ DEPLOYMENT.md).
-- هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه. Cart، common و Home هم طبق معماری بازبینی شدن (منطق ردیف سبد در `useCartItem`، `PromotionFields` پوشه‌ای با hook، ابزار مشترک انیمیشن `Home/helpers/animate.js`). layout هم بازبینی شد: state هدر در `useHeader`/`useMobileMenu`، فوتر پوشه‌ای با sections، نام فروشگاه با کلید ترجمه‌ی `site.name` (هدر در EN «Shahram Roghan»). Order هم بازبینی شد (فرم در `OrderForm`، hook مشترک ردیف سبد `hooks/useCartItem.js`، سبد خالی مشترک `common/EmptyCart`، مناطق در `data/orderAreas.js`).
+- هدر پنل ادمین به sections تقسیم شده (`AdminBrand`, `AdminActions`, `AdminNav`) و توکن ادمین فقط از `services/adminTokenStorage.js` خونده/نوشته می‌شه. Cart، common و Home هم طبق معماری بازبینی شدن (منطق ردیف سبد در `useCartItem`، `PromotionFields` پوشه‌ای با hook، ابزار مشترک انیمیشن `Home/helpers/animate.js`). layout هم بازبینی شد: state هدر در `useHeader`/`useMobileMenu`، فوتر پوشه‌ای با sections، نام فروشگاه با کلید ترجمه‌ی `site.name` که از `data/brand.js` می‌آد (هدر در EN «Shahram Roghan»). Order هم بازبینی شد (فرم در `OrderForm`، hook مشترک ردیف سبد `hooks/useCartItem.js`، سبد خالی مشترک `common/EmptyCart`، مناطق در `data/orderAreas.js`).
 - صفحه‌ی هر خودرو (`/vehicle/:id`): مسیر بالای صفحه، عکس + مشخصات دوستونه با لوگوی برند، دکمه‌ی اشتراک‌گذاری (تلگرام، واتس‌اپ، کپی لینک، برنامه‌های گوشی)، نوار دسته‌ها و «پیشنهاد شهرام روغن»، و بخش امتیاز و نظرات کاربران (امتیاز فوری، متن نظر بعد از تأیید در پنل ادمین؛ `/api/vehicle-reviews`).
 - کارت‌های خودرو و روغن گوشه‌ی بالا-چپ نشان لوگوی برند دارن (`components/common/BrandBadge`؛ خودرو ۲۸/۴۰px، روغن ۲۰/۲۴px؛ بی‌لوگو ← حرف اول برند؛ محصول بی‌عکس نشان نمی‌گیره چون عکسش خود لوگوست).
 - ساختار پروژه طبق قوانین معماری مرتب شد (2026-10-11): هر فایل یک مسئولیت، `sections/index.js` در همه‌ی بخش‌ها، pageها فقط wrapper، ذخیره‌سازی مرورگر فقط از services.
@@ -63,6 +63,10 @@ server/   Express + Mongoose — جدا دیپلوی می‌شه
 
 - هاست: Runflare (سرور، کلاینت و دیتابیس). Liara و همه‌ی فایل‌هاش از پروژه حذف شدن.
 - دیپلوی دستی با `runflare deploy` از داخل `client/` یا `server/`؛ جزئیات و شناسه‌ها تو [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## کارهای انجام‌شده در سشن 2026-10-27
+
+- **SEO و برند و اعتماد (بخش ۴۸ PROJECT_STATE):** متاتگ‌های ثابت و Open Graph در `index.html` + `public/og-image.png`، عنوان/توضیح اختصاصی صفحه‌ها (`hooks/usePageMeta.js`)؛ نام و اطلاعات فروشگاه فقط در `client/src/data/brand.js` (پلاگین `brandFiles` در `vite.config.js` اون رو در index.html، manifest و offline.html می‌ذاره)؛ لوگوی هدر ثابت شد؛ منوی دسکتاپ از ۱۲۸۰px و رفع اسکرول افقی موبایل؛ «تماس با ما» در صفحه‌ی «درباره ما» ادغام شد (برندها، روش‌های پرداخت، آدرس/ساعت کاری، `/contact` ← `/about`) و فوتر آدرس/ساعت/تلفن ثابت و جایگاه اینماد گرفت؛ ایموجی‌های بخش مشتری با آیکون‌های `lucide-react` جایگزین شدن. **کارهای باقی‌مانده‌ی کاربر:** پر کردن `address`، `hours`، `landline` و `enamadHtml` در `brand.js` و شرایط پرداخت چکی در `translations.js`.
 
 ## کارهای انجام‌شده در سشن 2026-10-26
 
