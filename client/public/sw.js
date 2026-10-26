@@ -65,6 +65,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (NEVER_CACHE.test(url.pathname) || url.search) return;
+  if (url.pathname === "/sw.js") return;
   if (!STATIC_EXTENSIONS.test(url.pathname)) return;
 
   if (url.pathname.startsWith("/assets/")) {
