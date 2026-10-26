@@ -7,3 +7,4 @@ export { default as OilJugArt } from "./OilJugArt";
 export { default as VehiclesCard } from "./VehiclesCard";
 export { default as TrackWheel } from "./TrackWheel";
 export { default as GuideButton } from "./GuideButton";
+export { default as InstallAppButton } from "./InstallAppButton";

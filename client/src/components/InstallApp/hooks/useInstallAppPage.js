@@ -1,52 +1,13 @@
-import { useEffect, useState } from "react";
-import {
-  detectPlatform,
-  isInAppBrowser,
-  isStandalone,
-} from "../helpers/detectPlatform";
+import { useState } from "react";
+import { detectPlatform, isInAppBrowser } from "../../../utils/detectPlatform";
+import useInstallPrompt from "../../../hooks/useInstallPrompt";
 
-// رویداد beforeinstallprompt در index.html گرفته و در window نگه داشته می‌شه
 function useInstallAppPage() {
   const [platform] = useState(detectPlatform);
   const [inAppBrowser] = useState(isInAppBrowser);
-  const [installed, setInstalled] = useState(isStandalone);
-  const [promptEvent, setPromptEvent] = useState(
-    () => window.__shoilInstallPrompt || null,
-  );
+  const { installed, canPrompt, install } = useInstallPrompt();
 
-  useEffect(() => {
-    const onPrompt = () => setPromptEvent(window.__shoilInstallPrompt || null);
-    const onInstalled = () => {
-      window.__shoilInstallPrompt = null;
-      setPromptEvent(null);
-      setInstalled(true);
-    };
-
-    window.addEventListener("shoil:installprompt", onPrompt);
-    window.addEventListener("appinstalled", onInstalled);
-    return () => {
-      window.removeEventListener("shoil:installprompt", onPrompt);
-      window.removeEventListener("appinstalled", onInstalled);
-    };
-  }, []);
-
-  const install = async () => {
-    if (!promptEvent) return;
-    promptEvent.prompt();
-    const { outcome } = await promptEvent.userChoice;
-    // هر پیشنهاد فقط یک بار قابل استفاده است
-    window.__shoilInstallPrompt = null;
-    setPromptEvent(null);
-    if (outcome === "accepted") setInstalled(true);
-  };
-
-  return {
-    platform,
-    inAppBrowser,
-    installed,
-    canPrompt: Boolean(promptEvent),
-    install,
-  };
+  return { platform, inAppBrowser, installed, canPrompt, install };
 }
 
 export default useInstallAppPage;

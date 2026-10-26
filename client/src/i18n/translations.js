@@ -124,6 +124,7 @@ const translations = {
         },
       },
       guide: "راهنمای سایت",
+      installApp: "نصب اپلیکیشن",
       productsTitle: "محصولات روغن موتور و فیلتر",
       productsSubtitle: "محصولات فروشگاه شهرام روغن",
       quickFilter: {
@@ -613,6 +614,7 @@ const translations = {
         },
       },
       guide: "Site Guide",
+      installApp: "Install App",
       productsTitle: "Engine Oil & Filter Products",
       productsSubtitle: "Products from Shahram Oil Shop",
       quickFilter: {
