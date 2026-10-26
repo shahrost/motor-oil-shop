@@ -20,7 +20,9 @@ Status: Completed ✅ (شاخه‌ی `feature/pwa`، ۲۰۲۶-۱۰-۲۷)
 
 ✅ **۵. آیکون‌ها (`6491dc9`)**: `lucide-react@1.56.0` (tree-shake؛ فقط آیکون‌های استفاده‌شده). `App.jsx`: `LucideProvider size={20} strokeWidth={2}`؛ رنگ `currentColor`. استثناها: آیکون‌های ریز کنار متن‌های کوچک (text-xs: دکمه‌ی افزودن به سبد کارت، نشان طرح فروش، …) `size={16}`؛ تصویرهای بزرگ وضعیت (ثبت موفق سفارش ۶۴، سبد خالی ۴۸، دسته‌ی بی‌عکس خودرو ۴۰). `index.css`: `svg.lucide { display: inline-block; vertical-align: -0.2em }` چون preflight تیلویند svg رو block می‌کنه. داده‌ها آیکون رو به شکل کامپوننت نگه می‌دارن (`data/accountMenu.js`، `data/paymentTypes.js`، `data/socialLinks.js` ← `Icon`، `utils/vehicleParts.js`) و با `<item.icon />` رندر می‌شن. داخل `<option>` SVG نمی‌شه ← فقط برچسب. ایموجی‌ها از متن ترجمه‌ها (🔍، ⭐، ✓) حذف و آیکون در کامپوننت گذاشته شد. aria-label فارسی: سبد خرید، تماس تلفنی، باز/بستن منو (`header.openMenu`/`closeMenu`). فلش «بازگشت»: `ArrowLeft` + `rtl:rotate-180`. لوگوی پیام‌رسان‌ها و ایموجی‌های پنل ادمین دست نخورد.
 
-📝 placeholderها برای پر کردن: `brand.js` ← `address`، `hours`، `landline`، `enamadHtml`؛ `translations.js` ← `about.payment.checkText` («[شرایط پرداخت چکی]» / "[cheque payment terms]").
+✅ (همون روز) اطلاعات فروشگاه در `brand.js`: آدرس شهریار، ساعت ۸:۳۰ تا ۸:۳۰ شب، تلفن ثابت 021-91028636 (`landlineUrl` ← لینک تماس در «درباره ما» و فوتر).
+✅ (گزارش کاربر: «کلیک روی درباره ما کاری نمی‌کنه») دو علت: (۱) تبی که قبل از دیپلوی باز مونده فایل قدیمی صفحه‌ی lazy رو پیدا نمی‌کرد و کل صفحه سفید می‌شد ← `utils/lazyPage.js` (جای `React.lazy` در `AppRoutes`) یک بار صفحه رو رفرش می‌کنه (محافظ ۱۰ ثانیه‌ای در `services/chunkReloadStorage.js` تا حلقه نشه)؛ (۲) لینک به همون صفحه (فوتر روی `/about`) کاری نمی‌کرد ← `useScrollRestoration` در این حالت به بالای صفحه می‌بره. تست روی shoil.ir با puppeteer (منوی دسکتاپ، منوی موبایل، فوتر، شبیه‌سازی تب قدیمی).
+📝 placeholderهای باقی‌مونده: `brand.js` ← `enamadHtml`؛ `translations.js` ← `about.payment.checkText` («[شرایط پرداخت چکی]» / "[cheque payment terms]").
 
 ## ۴۷. PWA — نصب سایت روی اندروید و آیفون (مرحله‌ی ۱ از برنامه‌ی اپ)
 
