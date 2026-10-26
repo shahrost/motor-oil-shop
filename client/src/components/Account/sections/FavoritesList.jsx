@@ -1,3 +1,4 @@
+import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProductCard from "../../ProductCard";
 
@@ -5,7 +6,7 @@ import ProductCard from "../../ProductCard";
 function FavoritesList({ products, loading, t }) {
   return (
     <div className="bg-white rounded-3xl shadow p-6">
-      <h1 className="text-xl font-extrabold mb-5">❤️ {t("header.accountMenu.favorites")}</h1>
+      <h1 className="text-xl font-extrabold mb-5 flex items-center gap-2"><Heart /> {t("header.accountMenu.favorites")}</h1>
 
       {loading && <p className="text-gray-600">{t("account.loading")}</p>}
 

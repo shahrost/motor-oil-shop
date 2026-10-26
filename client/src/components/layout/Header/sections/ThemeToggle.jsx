@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Moon, Sun } from "lucide-react";
 
 import ThemeContext from "../../../../context/ThemeContext";
 import LanguageContext from "../../../../context/LanguageContext";
@@ -21,7 +22,7 @@ function ThemeToggle() {
       rounded-xl
       bg-gray-800
       hover:bg-gray-700
-      text-xl
+      text-gray-200
       flex
       items-center
       justify-center
@@ -33,7 +34,7 @@ function ThemeToggle() {
           isDark ? "opacity-0 rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"
         }`}
       >
-        🌙
+        <Moon />
       </span>
 
       <span
@@ -41,7 +42,7 @@ function ThemeToggle() {
           isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-50"
         }`}
       >
-        ☀️
+        <Sun />
       </span>
     </button>
   );

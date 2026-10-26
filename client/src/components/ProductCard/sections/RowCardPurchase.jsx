@@ -1,3 +1,4 @@
+import { CircleCheck, ShoppingCart } from "lucide-react";
 import orderUnits from "../../../data/orderUnits";
 import paymentTypes from "../../../data/paymentTypes";
 
@@ -45,7 +46,7 @@ function RowCardPurchase({
       >
         {paymentTypes.map((item) => (
           <option key={item.value} value={item.value}>
-            {item.icon} {t(`common.paymentType.${item.value}`)}
+            {t(`common.paymentType.${item.value}`)}
           </option>
         ))}
       </select>
@@ -53,14 +54,14 @@ function RowCardPurchase({
       <button
         type="button"
         onClick={onAddCart}
-        className="w-full mt-1 bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-1.5 rounded-lg text-xs font-bold transition"
+        className="w-full mt-1 flex items-center justify-center gap-1 bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-1.5 rounded-lg text-xs font-bold transition"
       >
-        🛒 {t("common.addToCart")}
+        <ShoppingCart size={16} /> {t("common.addToCart")}
       </button>
 
       {added && (
-        <p className="text-[11px] text-green-700 font-bold text-center">
-          ✅ {t("common.addedToCart")}
+        <p className="text-[11px] text-green-700 font-bold flex items-center justify-center gap-1">
+          <CircleCheck size={16} /> {t("common.addedToCart")}
         </p>
       )}
     </div>

@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { X } from "lucide-react";
 
 import LanguageContext from "../../../../context/LanguageContext";
 
@@ -34,11 +35,9 @@ function OwnerPhotoModal({ onClose }) {
         top-5
         left-5
         text-white
-        text-4xl
-        leading-none
         "
       >
-        ✕
+        <X size={36} />
       </button>
 
       <img

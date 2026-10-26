@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ChevronDown, ChevronUp, Moon, ShoppingCart, Sun, User } from "lucide-react";
 
 import LanguageContext from "../../../../context/LanguageContext";
 import menu from "../../../../data/menu";
@@ -52,9 +53,10 @@ function MobileMenu({ onClose }) {
                     type="button"
                     onClick={() => toggleSubmenu(item.key)}
                     aria-label={t(`nav.${item.key}`)}
+                    aria-expanded={isOpen(item.key)}
                     className="text-gray-400"
                   >
-                    {isOpen(item.key) ? "▴" : "▾"}
+                    {isOpen(item.key) ? <ChevronUp /> : <ChevronDown />}
                   </button>
                 )}
               </div>
@@ -68,9 +70,9 @@ function MobileMenu({ onClose }) {
           <Link
             to="/cart"
             onClick={onClose}
-            className="block bg-yellow-400 text-black py-3 rounded-xl"
+            className="flex items-center justify-center gap-2 bg-yellow-400 text-black py-3 rounded-xl"
           >
-            🛒 {t("header.cartLabel")} ({cartCount})
+            <ShoppingCart /> {t("header.cartLabel")} ({cartCount})
           </Link>
         </li>
 
@@ -81,9 +83,9 @@ function MobileMenu({ onClose }) {
                 type="button"
                 onClick={toggleAccount}
                 aria-expanded={accountOpen}
-                className="w-full bg-gray-800 text-white py-3 rounded-xl"
+                className="w-full flex items-center justify-center gap-2 bg-gray-800 text-white py-3 rounded-xl"
               >
-                👤 {account.firstName} {accountOpen ? "▴" : "▾"}
+                <User /> {account.firstName} {accountOpen ? <ChevronUp /> : <ChevronDown />}
               </button>
 
               {accountOpen && (
@@ -102,9 +104,9 @@ function MobileMenu({ onClose }) {
             <Link
               to={account.to}
               onClick={onClose}
-              className="block bg-gray-800 text-white py-3 rounded-xl"
+              className="flex items-center justify-center gap-2 bg-gray-800 text-white py-3 rounded-xl"
             >
-              👤 {t("header.register")}
+              <User /> {t("header.register")}
             </Link>
           )}
         </li>
@@ -113,9 +115,10 @@ function MobileMenu({ onClose }) {
           <button
             type="button"
             onClick={toggleTheme}
-            className="w-full bg-gray-800 text-gray-200 py-3 rounded-xl"
+            className="w-full flex items-center justify-center gap-2 bg-gray-800 text-gray-200 py-3 rounded-xl"
           >
-            {isDark ? `☀️ ${t("header.lightMode")}` : `🌙 ${t("header.darkMode")}`}
+            {isDark ? <Sun /> : <Moon />}
+            {isDark ? t("header.lightMode") : t("header.darkMode")}
           </button>
         </li>
 

@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Menu, Phone, ShoppingCart, X } from "lucide-react";
 
 import CartContext from "../../../../context/CartContext";
 import LanguageContext from "../../../../context/LanguageContext";
@@ -31,9 +32,10 @@ function HeaderActions({ menuOpen, onToggleMenu }) {
 
       <Link
         to="/cart"
+        aria-label={t("header.cartLabel")}
         className="relative flex items-center justify-center bg-yellow-400 text-black w-11 h-11 rounded-xl font-bold hover:bg-yellow-300 transition"
       >
-        🛒
+        <ShoppingCart />
         {cartCount > 0 && (
           <span className="absolute -top-2 -left-2 bg-red-600 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center">
             {cartCount}
@@ -52,17 +54,20 @@ function HeaderActions({ menuOpen, onToggleMenu }) {
 
       <a
         href={PHONE_URL}
+        aria-label={t("header.call")}
         className={`hidden md:flex items-center justify-center ${SUBTLE_BUTTON} w-11 h-11 rounded-xl font-bold`}
       >
-        📞
+        <Phone />
       </a>
 
       <button
         type="button"
         onClick={onToggleMenu}
-        className="xl:hidden text-white text-3xl"
+        aria-label={menuOpen ? t("header.closeMenu") : t("header.openMenu")}
+        aria-expanded={menuOpen}
+        className="xl:hidden text-white w-11 h-11 flex items-center justify-center"
       >
-        {menuOpen ? "✕" : "☰"}
+        {menuOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
     </div>
   );

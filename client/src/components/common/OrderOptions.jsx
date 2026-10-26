@@ -19,7 +19,7 @@ export function PaymentTypeOptions() {
 
   return paymentTypes.map((item) => (
     <option key={item.value} value={item.value}>
-      {item.icon} {t(`common.paymentType.${item.value}`)}
+      {t(`common.paymentType.${item.value}`)}
     </option>
   ));
 }

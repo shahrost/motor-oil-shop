@@ -1,3 +1,4 @@
+import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import { CartItems, CartSummary, LastOrder } from "./sections";
 import EmptyCart from "../common/EmptyCart";
@@ -28,7 +29,7 @@ function Cart() {
   return (
     <div className="px-5 py-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-extrabold mb-8">🛒 {t("nav.cart")}</h1>
+        <h1 className="text-3xl font-extrabold mb-8 flex items-center gap-3"><ShoppingCart size={28} /> {t("nav.cart")}</h1>
 
         <CartItems cart={cart} />
 

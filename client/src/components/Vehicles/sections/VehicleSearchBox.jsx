@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Search, X } from "lucide-react";
 
 import LanguageContext from "../../../context/LanguageContext";
 
@@ -12,7 +13,7 @@ function VehicleSearchBox({ value, onChange, onFocus }) {
         aria-hidden="true"
         className="absolute inset-y-0 start-3 flex items-center text-gray-400 pointer-events-none"
       >
-        🔍
+        <Search />
       </span>
 
       <input
@@ -31,9 +32,9 @@ function VehicleSearchBox({ value, onChange, onFocus }) {
           type="button"
           onClick={() => onChange("")}
           aria-label={t("vehicles.clearSearch")}
-          className="absolute inset-y-0 end-2 my-auto h-8 w-8 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 font-bold"
+          className="absolute inset-y-0 end-2 my-auto h-8 w-8 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800"
         >
-          ✕
+          <X />
         </button>
       )}
     </div>

@@ -1,3 +1,4 @@
+import { Star } from "lucide-react";
 import { useContext } from "react";
 
 import LanguageContext from "../../../context/LanguageContext";
@@ -37,7 +38,7 @@ function RatingSummary({ summary }) {
           return (
             <div key={star} className="flex items-center gap-2 text-xs font-bold text-gray-600">
               <span className="w-3 text-center">{star}</span>
-              <span className="text-yellow-500" aria-hidden="true">★</span>
+              <Star size={16} fill="currentColor" className="text-yellow-500" />
 
               <span className="flex-1 h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
                 <span

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Smartphone } from "lucide-react";
 import useInstallPrompt from "../../../hooks/useInstallPrompt";
 
 const className = `
@@ -28,7 +29,7 @@ function InstallAppButton({ label }) {
 
   const content = (
     <>
-      <span aria-hidden="true">📱</span>
+      <Smartphone size={16} />
       {label}
     </>
   );

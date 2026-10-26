@@ -1,3 +1,4 @@
+import { Check, MapPin } from "lucide-react";
 import { Suspense, lazy, useContext, useState } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 
@@ -17,7 +18,7 @@ function LocationPicker({ location, onChange }) {
           aria-expanded={open}
           className="flex items-center gap-2 border-2 border-blue-600 text-blue-700 rounded-xl px-4 py-3 font-bold hover:bg-blue-50 transition"
         >
-          📍{" "}
+          <MapPin />
           {open
             ? t("order.customerInfo.location.close")
             : t("order.customerInfo.location.open")}
@@ -25,8 +26,8 @@ function LocationPicker({ location, onChange }) {
 
         {location && (
           <>
-            <span className="text-green-700 font-bold text-sm">
-              ✓ {t("order.customerInfo.location.picked")}
+            <span className="text-green-700 font-bold text-sm flex items-center gap-1">
+              <Check size={16} /> {t("order.customerInfo.location.picked")}
             </span>
 
             <button

@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Phone } from "lucide-react";
 import whatsappLogo from "../../../assets/social/whatsapp.svg";
 import LanguageContext from "../../../context/LanguageContext";
 import { WHATSAPP_URL, PHONE_URL } from "../../../data/contact";
@@ -23,7 +24,7 @@ function ContactActions() {
         href={PHONE_URL}
         className="inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-bold"
       >
-        <span className="text-lg">📞</span>
+        <Phone />
         {t("contact.actions.callUs")}
       </a>
 

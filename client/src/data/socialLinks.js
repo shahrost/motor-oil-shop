@@ -1,3 +1,4 @@
+import { Phone } from "lucide-react";
 import telegramLogo from "../assets/social/telegram.svg";
 import whatsappLogo from "../assets/social/whatsapp.svg";
 import rubikaLogo from "../assets/social/rubika.png";
@@ -35,7 +36,7 @@ const socialLinks = [
   {
     key: "phone",
     href: PHONE_URL,
-    emoji: "📞",
+    Icon: Phone,
     isPhone: true,
   },
 ];

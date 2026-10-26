@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { User } from "lucide-react";
 
 import LanguageContext from "../../../../context/LanguageContext";
 import useAccountLink from "../hooks/useAccountLink";
@@ -33,7 +34,8 @@ function AccountMenu({ buttonClass }) {
         aria-expanded={open}
         className={className}
       >
-        👤 {account.firstName}
+        <User size={16} />
+        {account.firstName}
       </button>
 
       {open && (

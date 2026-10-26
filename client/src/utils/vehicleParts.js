@@ -1,3 +1,4 @@
+import { Barrel, Cog, Droplets, Funnel, Snowflake, Thermometer } from "lucide-react";
 import getRecommendedOils from "./vehicleOils";
 import getMenuCategorySlug from "./classifyMenuCategory";
 
@@ -5,12 +6,12 @@ import getMenuCategorySlug from "./classifyMenuCategory";
 // از لینک‌های ایمپورت اکسل (productLinks) میاد؛ بقیه (ضدیخ، آب رادیاتور،
 // شیشه‌شور) اگه لینک مشخص نداشته باشن همه‌ی محصولات فعال اون دسته نشون داده می‌شن.
 export const VEHICLE_PARTS = [
-  { key: "oil", icon: "🛢️" },
-  { key: "filter", icon: "🧰", slug: null, specific: true },
-  { key: "gearboxFilter", icon: "⚙️", slug: "gearbox-filter", specific: true },
-  { key: "antifreeze", icon: "❄️", slug: "antifreeze" },
-  { key: "coolant", icon: "💧", slug: "coolant" },
-  { key: "washer", icon: "🧽", slug: "windshield-washer" },
+  { key: "oil", icon: Barrel },
+  { key: "filter", icon: Funnel, slug: null, specific: true },
+  { key: "gearboxFilter", icon: Cog, slug: "gearbox-filter", specific: true },
+  { key: "antifreeze", icon: Snowflake, slug: "antifreeze" },
+  { key: "coolant", icon: Thermometer, slug: "coolant" },
+  { key: "washer", icon: Droplets, slug: "windshield-washer" },
 ];
 
 const PART_SLUGS = VEHICLE_PARTS.map((part) => part.slug).filter(Boolean);

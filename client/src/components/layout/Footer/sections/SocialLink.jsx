@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import LanguageContext from "../../../../context/LanguageContext";
 
-// یک دکمه‌ی گرد شبکه‌ی اجتماعی با برچسب؛ تماس تلفنی در همون تب و با ایموجی
+// یک دکمه‌ی گرد شبکه‌ی اجتماعی با برچسب؛ تماس تلفنی در همون تب و با آیکون
 function SocialLink({ item }) {
   const { t } = useContext(LanguageContext);
   const label = t(`footer.social.${item.key}`);
@@ -27,11 +27,11 @@ function SocialLink({ item }) {
         transition
         group-hover:scale-110
         group-hover:shadow-lg
-        ${item.isPhone ? "bg-yellow-400 text-2xl" : "bg-white p-2"}
+        ${item.isPhone ? "bg-yellow-400 text-gray-950" : "bg-white p-2"}
         `}
       >
         {item.isPhone ? (
-          item.emoji
+          <item.Icon />
         ) : (
           <img
             src={item.icon}

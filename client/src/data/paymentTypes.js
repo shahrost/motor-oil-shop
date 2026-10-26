@@ -1,13 +1,14 @@
+import { Banknote, FileText } from "lucide-react";
 const paymentTypes = [
   {
     value: "cash",
     title: "نقدی",
-    icon: "💵",
+    icon: Banknote,
   },
   {
     value: "check",
     title: "اعتباری",
-    icon: "📝",
+    icon: FileText,
   },
 ];
 

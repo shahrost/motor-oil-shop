@@ -11,12 +11,12 @@ function AccountTabs({ t }) {
           to={item.path}
           end
           className={({ isActive }) =>
-            `flex-1 whitespace-nowrap text-center px-4 py-3 rounded-xl font-bold transition ${
+            `flex-1 flex items-center justify-center gap-2 whitespace-nowrap px-4 py-3 rounded-xl font-bold transition ${
               isActive ? "bg-yellow-400 text-gray-950" : "text-gray-700 hover:bg-gray-100"
             }`
           }
         >
-          {item.icon} {t(`header.accountMenu.${item.key}`)}
+          <item.icon /> {t(`header.accountMenu.${item.key}`)}
         </NavLink>
       ))}
     </nav>

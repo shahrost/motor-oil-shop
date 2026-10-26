@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import LanguageContext from "../../context/LanguageContext";
 
 // «سبد خرید خالی است» + لینک محصولات؛ صفحه‌ی سبد و صفحه‌ی ثبت سفارش
-function EmptyCart({ icon }) {
+function EmptyCart({ icon: Icon }) {
   const { t } = useContext(LanguageContext);
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-5">
       <div className="bg-white rounded-3xl shadow-md p-10 text-center">
-        {icon && <div className="text-5xl">{icon}</div>}
+        {Icon && <Icon size={48} className="mx-auto text-gray-400" />}
 
-        <h2 className={`text-2xl font-bold ${icon ? "mt-4" : ""}`}>
+        <h2 className={`text-2xl font-bold ${Icon ? "mt-4" : ""}`}>
           {t("cart.empty.title")}
         </h2>
 

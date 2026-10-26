@@ -1,3 +1,4 @@
+import { CircleCheck } from "lucide-react";
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import { statusColor, statusLabel } from "../../../utils/orderStatus";
@@ -13,8 +14,8 @@ function LastOrder({ order, onHide }) {
   return (
     <div className="bg-white rounded-3xl shadow-md border p-5 mt-8">
       <div className="flex items-center justify-between gap-3 mb-4">
-        <h2 className="text-xl font-extrabold text-black">
-          ✅ {t("order.lastOrder.title")}
+        <h2 className="text-xl font-extrabold text-black flex items-center gap-2">
+          <CircleCheck className="text-green-600" /> {t("order.lastOrder.title")}
         </h2>
 
         <button

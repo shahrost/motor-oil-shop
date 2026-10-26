@@ -42,6 +42,8 @@ const translations = {
       darkMode: "حالت شب",
       whatsapp: "واتساپ",
       call: "تماس تلفنی",
+      openMenu: "باز کردن منو",
+      closeMenu: "بستن منو",
       close: "بستن",
       cartLabel: "سبد خرید",
       accountMenu: {
@@ -164,7 +166,7 @@ const translations = {
         viewAll: "مشاهده همه",
       },
       search: {
-        placeholder: "🔍 جستجوی سریع محصول، برند یا گرید...",
+        placeholder: "جستجوی سریع محصول، برند یا گرید...",
         button: "جستجو",
       },
       features: {
@@ -191,7 +193,7 @@ const translations = {
       filters: {
         title: "فیلتر محصولات",
         clear: "پاک کردن",
-        searchPlaceholder: "🔍 جستجوی محصول، برند، گرید...",
+        searchPlaceholder: "جستجوی محصول، برند، گرید...",
         onlyAvailable: "فقط محصولات موجود",
         submit: "نمایش محصولات",
       },
@@ -396,7 +398,7 @@ const translations = {
       telegram: "تلگرام",
       whatsapp: "واتس‌اپ",
       copy: "کپی لینک",
-      copied: "لینک کپی شد ✓",
+      copied: "لینک کپی شد",
       more: "برنامه‌های دیگر",
     },
 
@@ -457,7 +459,7 @@ const translations = {
       recommendedOils: "روغن‌های مناسب این خودرو",
       country: "کشور سازنده",
       shareText: `روغن و فیلتر مناسب در ${brand.name}`,
-      recommendedBadge: `⭐ پیشنهاد ${brand.name}`,
+      recommendedBadge: `پیشنهاد ${brand.name}`,
       parts: {
         oil: "روغن موتور",
         filter: "فیلتر",
@@ -560,6 +562,8 @@ const translations = {
       darkMode: "Dark Mode",
       whatsapp: "WhatsApp",
       call: "Call Us",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
       close: "Close",
       cartLabel: "Cart",
       accountMenu: {
@@ -682,7 +686,7 @@ const translations = {
         viewAll: "View All",
       },
       search: {
-        placeholder: "🔍 Quick search for a product, brand, or grade...",
+        placeholder: "Quick search for a product, brand, or grade...",
         button: "Search",
       },
       features: {
@@ -710,7 +714,7 @@ const translations = {
       filters: {
         title: "Product Filters",
         clear: "Clear",
-        searchPlaceholder: "🔍 Search by product, brand, grade...",
+        searchPlaceholder: "Search by product, brand, grade...",
         onlyAvailable: "In stock only",
         submit: "Show Products",
       },
@@ -915,7 +919,7 @@ const translations = {
       telegram: "Telegram",
       whatsapp: "WhatsApp",
       copy: "Copy link",
-      copied: "Link copied ✓",
+      copied: "Link copied",
       more: "Other apps",
     },
 
@@ -976,7 +980,7 @@ const translations = {
       recommendedOils: "Oils suitable for this vehicle",
       country: "Country",
       shareText: `suitable oils & filters at ${brand.nameEn}`,
-      recommendedBadge: `⭐ ${brand.nameEn} pick`,
+      recommendedBadge: `${brand.nameEn} pick`,
       parts: {
         oil: "Engine Oil",
         filter: "Filter",

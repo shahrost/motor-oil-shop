@@ -1,3 +1,4 @@
+import { Gift } from "lucide-react";
 import {
   hasActivePromotion,
   getPromotionRuleLines,
@@ -13,8 +14,8 @@ function PromotionInfo({ product, orderType, quantity, paymentType, t }) {
     <>
       {hasActivePromotion(product.promotion) && (
         <div className="mt-6 bg-amber-50 border border-amber-300 rounded-2xl p-5">
-          <h3 className="font-bold text-lg mb-3 text-amber-800">
-            🎁 {t("common.promotion.badge")}
+          <h3 className="font-bold text-lg mb-3 text-amber-800 flex items-center gap-2">
+            <Gift /> {t("common.promotion.badge")}
           </h3>
 
           <div className="space-y-1">

@@ -41,6 +41,13 @@
   --color-black: #0b1424;
 }
 
+/* آیکون‌های lucide-react: preflight تیلویند svg رو block می‌کنه؛ اینجا کنار متن می‌مونن و جمع نمی‌شن */
+svg.lucide {
+  display: inline-block;
+  vertical-align: -0.2em;
+  flex-shrink: 0;
+}
+
 /* =========================
       FONT
       فقط وزن‌هایی که واقعاً در پروژه استفاده

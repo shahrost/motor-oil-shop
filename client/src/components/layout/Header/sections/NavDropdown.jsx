@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 
 // آیتم منوی دسکتاپ با زیرمنوی هاوری؛ panelClassName چیدمان پنل رو تعیین می‌کنه
 function NavDropdown({ to, label, panelClassName, children }) {
@@ -18,7 +19,7 @@ function NavDropdown({ to, label, panelClassName, children }) {
         "
       >
         {label}
-        <span className="text-xs">▾</span>
+        <ChevronDown size={16} />
       </Link>
 
       <div

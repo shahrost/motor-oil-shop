@@ -1,3 +1,4 @@
+import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 
 import useOrderForm from "./hooks/useOrderForm";
@@ -38,7 +39,7 @@ function Order() {
   }
 
   if (cart.length === 0) {
-    return <EmptyCart icon="🛒" />;
+    return <EmptyCart icon={ShoppingCart} />;
   }
 
   return (

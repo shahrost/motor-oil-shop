@@ -1,3 +1,4 @@
+import { BookOpen } from "lucide-react";
 // فایل PDF راهنما در client/public است (منبعش docs/site-guide/site-guide.html)
 const GUIDE_URL = "/site-guide.pdf";
 
@@ -25,7 +26,7 @@ function GuideButton({ label }) {
         transition
       "
     >
-      <span aria-hidden="true">📘</span>
+      <BookOpen size={16} />
       {label}
     </a>
   );

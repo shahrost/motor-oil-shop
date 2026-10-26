@@ -40,9 +40,7 @@ function PartButtons({ parts, selected, onSelect, t }) {
                     className="h-full w-full object-contain"
                   />
                 ) : (
-                  <span className="text-4xl" aria-hidden="true">
-                    {part.icon}
-                  </span>
+                  <part.icon size={40} className="text-gray-400" />
                 )}
               </div>
 

@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Search } from "lucide-react";
 import LanguageContext from "../../../context/LanguageContext";
 
 function ProductSearch({ search, setSearch }) {
@@ -38,19 +39,7 @@ function ProductSearch({ search, setSearch }) {
           justify-center
         "
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="black"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-5 h-5 sm:w-4 sm:h-4"
-        >
-          <circle cx="11" cy="11" r="7" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
+        <Search className="text-black" />
       </span>
     </div>
   );

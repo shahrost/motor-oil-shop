@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Headset, LogOut, Phone } from "lucide-react";
 
 import LanguageContext from "../../../../context/LanguageContext";
 import accountMenu from "../../../../data/accountMenu";
@@ -20,7 +21,7 @@ function AccountMenuList({ onNavigate, showSupport, onToggleSupport, onLogout, d
       {accountMenu.map((item) => (
         <li key={item.key}>
           <Link to={item.path} onClick={onNavigate} className={`${ITEM_CLASS} ${itemColor}`}>
-            <span aria-hidden="true">{item.icon}</span>
+            <item.icon />
             {t(`header.accountMenu.${item.key}`)}
           </Link>
         </li>
@@ -33,7 +34,7 @@ function AccountMenuList({ onNavigate, showSupport, onToggleSupport, onLogout, d
           aria-expanded={showSupport}
           className={`${ITEM_CLASS} ${itemColor}`}
         >
-          <span aria-hidden="true">☎️</span>
+          <Headset />
           {t("header.accountMenu.support")}
         </button>
 
@@ -43,7 +44,7 @@ function AccountMenuList({ onNavigate, showSupport, onToggleSupport, onLogout, d
             href={PHONE_URL}
             className="mx-4 mt-1 mb-2 flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 font-extrabold"
           >
-            📞 <span dir="ltr">{PHONE_DISPLAY}</span>
+            <Phone /> <span dir="ltr">{PHONE_DISPLAY}</span>
           </a>
         )}
       </li>
@@ -54,7 +55,7 @@ function AccountMenuList({ onNavigate, showSupport, onToggleSupport, onLogout, d
           onClick={onLogout}
           className={`${ITEM_CLASS} ${dark ? "text-red-400 hover:bg-gray-700" : "text-red-600 hover:bg-red-50"}`}
         >
-          <span aria-hidden="true">🚪</span>
+          <LogOut />
           {t("header.accountMenu.logout")}
         </button>
       </li>

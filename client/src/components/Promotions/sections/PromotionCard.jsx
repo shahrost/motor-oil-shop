@@ -1,3 +1,4 @@
+import { Gift } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import getBrandLabel from "../../../utils/brandLabel";
@@ -36,8 +37,8 @@ function PromotionCard({ product, language, t }) {
 
       <div className="mt-4 space-y-1">
         {getPromotionRuleLines(product.promotion, t).map((line, index) => (
-          <p key={index} className="text-amber-800 font-bold text-sm">
-            🎁 {line}
+          <p key={index} className="text-amber-800 font-bold text-sm flex items-center gap-1.5">
+            <Gift size={16} /> {line}
           </p>
         ))}
       </div>

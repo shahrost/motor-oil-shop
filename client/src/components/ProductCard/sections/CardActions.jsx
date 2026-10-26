@@ -1,3 +1,4 @@
+import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import LanguageContext from "../../../context/LanguageContext";
@@ -47,7 +48,7 @@ function CardActions({ product, handleAddCart }) {
         transition
         "
       >
-        🛒 {t("common.addToCart")}
+        <ShoppingCart size={16} /> {t("common.addToCart")}
       </button>
     </div>
   );

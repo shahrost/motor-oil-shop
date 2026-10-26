@@ -1,7 +1,8 @@
+import { Gift } from "lucide-react";
 import { useContext } from "react";
 import LanguageContext from "../../context/LanguageContext";
 
-// «🎁 هدیه این خرید: N کارتن» — فقط وقتی هدیه‌ای تعلق بگیره نمایش داده می‌شه
+// «هدیه این خرید: N کارتن» — فقط وقتی هدیه‌ای تعلق بگیره نمایش داده می‌شه
 function GiftBadge({ giftQty, className = "" }) {
   const { t } = useContext(LanguageContext);
 
@@ -9,9 +10,9 @@ function GiftBadge({ giftQty, className = "" }) {
 
   return (
     <p
-      className={`bg-amber-50 border border-amber-300 text-amber-800 font-bold text-center ${className}`}
+      className={`bg-amber-50 border border-amber-300 text-amber-800 font-bold flex items-center justify-center gap-1.5 ${className}`}
     >
-      🎁 {t("common.promotion.giftEarned")} {giftQty}{" "}
+      <Gift size={16} /> {t("common.promotion.giftEarned")} {giftQty}{" "}
       {t("common.orderUnit.carton")}
     </p>
   );

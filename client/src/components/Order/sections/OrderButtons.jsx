@@ -1,9 +1,10 @@
+import { Banknote, Check, CreditCard, FileText } from "lucide-react";
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 
 const BUTTONS = [
-  { value: "cash", icon: "💵", labelKey: "order.buttons.allCash" },
-  { value: "check", icon: "📝", labelKey: "order.buttons.allCheck" },
+  { value: "cash", icon: Banknote, labelKey: "order.buttons.allCash" },
+  { value: "check", icon: FileText, labelKey: "order.buttons.allCheck" },
 ];
 
 const BASE_CLASS =
@@ -23,8 +24,8 @@ function OrderButtons({ cart, changeAllPaymentType }) {
 
   return (
     <div className="bg-white rounded-3xl shadow-md border p-5 mb-6">
-      <h2 className="text-xl font-bold text-black mb-5">
-        💳 {t("order.buttons.title")}
+      <h2 className="text-xl font-bold text-black mb-5 flex items-center gap-2">
+        <CreditCard /> {t("order.buttons.title")}
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -45,9 +46,9 @@ function OrderButtons({ cart, changeAllPaymentType }) {
                   active ? "bg-gray-950 border-gray-950 text-yellow-400" : "border-gray-400"
                 }`}
               >
-                {active ? "✓" : ""}
+                {active && <Check size={16} strokeWidth={3} />}
               </span>
-              {button.icon} {t(button.labelKey)}
+              <button.icon /> {t(button.labelKey)}
             </button>
           );
         })}

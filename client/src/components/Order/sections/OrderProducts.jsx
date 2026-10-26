@@ -1,3 +1,4 @@
+import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import OrderProductCard from "./OrderProductCard";
@@ -8,8 +9,8 @@ function OrderProducts({ cart, cartTotal }) {
 
   return (
     <div className="bg-white rounded-3xl shadow-md border p-5 mb-6">
-      <h2 className="text-xl font-bold text-black mb-6">
-        🛒 {t("order.products.title")}
+      <h2 className="text-xl font-bold text-black mb-6 flex items-center gap-2">
+        <ShoppingCart /> {t("order.products.title")}
       </h2>
 
       <div className="space-y-5">

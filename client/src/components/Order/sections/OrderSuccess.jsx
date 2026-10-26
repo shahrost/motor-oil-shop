@@ -1,3 +1,4 @@
+import { CircleCheck } from "lucide-react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import LanguageContext from "../../../context/LanguageContext";
@@ -7,7 +8,7 @@ function OrderSuccess() {
 
   return (
     <div className="bg-white rounded-3xl shadow-md border p-10 text-center">
-      <div className="text-6xl">✅</div>
+      <CircleCheck size={64} className="mx-auto text-green-600" />
 
       <h2 className="text-3xl font-extrabold text-green-600 mt-5">
         {t("order.success.title")}

@@ -1,3 +1,4 @@
+import { Star } from "lucide-react";
 import { ProductRowCard } from "../../ProductCard";
 
 // شبکه‌ی کارت‌های فشرده‌ی محصولات پیشنهادی خودرو. highlightLabel: اولین محصول
@@ -9,7 +10,8 @@ function OilGrid({ products, highlightLabel }) {
         highlightLabel && index === 0 ? (
           <div key={product.id} className="flex flex-col rounded-2xl bg-yellow-400 p-1 pt-0 shadow-md">
             {/* bg-yellow روی خود متن تا قانون حالت شب رنگش رو روشن نکنه */}
-            <p className="bg-yellow-400 text-gray-950 py-1 text-center text-xs font-extrabold">
+            <p className="bg-yellow-400 text-gray-950 py-1 text-xs font-extrabold flex items-center justify-center gap-1">
+              <Star size={16} fill="currentColor" />
               {highlightLabel}
             </p>
 

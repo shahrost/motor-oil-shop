@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 import LanguageContext from "../../context/LanguageContext";
 import { usePageMeta } from "../../hooks/usePageMeta";
@@ -27,8 +28,8 @@ function VehicleBrand() {
 
   return (
     <section className="px-5 mt-8 max-w-7xl mx-auto">
-      <Link to="/vehicles" className="text-yellow-700 hover:text-yellow-800 font-bold text-sm">
-        ← {t("vehicles.back")}
+      <Link to="/vehicles" className="inline-flex items-center gap-1 text-yellow-700 hover:text-yellow-800 font-bold text-sm">
+        <ArrowLeft size={16} className="rtl:rotate-180" /> {t("vehicles.back")}
       </Link>
 
       <h1 className="text-3xl font-extrabold text-center mt-4">

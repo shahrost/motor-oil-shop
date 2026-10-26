@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 import useViscosityProducts from "./hooks/useViscosityProducts";
 import { ViscosityProductsList } from "./sections";
@@ -18,9 +19,9 @@ function ViscosityProducts() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <Link
         to="/viscosity"
-        className="inline-block mb-6 font-bold text-yellow-700 hover:text-yellow-800"
+        className="inline-flex items-center gap-1 mb-6 font-bold text-yellow-700 hover:text-yellow-800"
       >
-        ← {t("viscosityProducts.back")}
+        <ArrowLeft className="rtl:rotate-180" /> {t("viscosityProducts.back")}
       </Link>
 
       <div className="bg-white rounded-2xl shadow-lg p-6">

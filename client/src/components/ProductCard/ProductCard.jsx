@@ -1,3 +1,4 @@
+import { CircleCheck } from "lucide-react";
 import { useContext } from "react";
 import {
   ProductBrandBadge,
@@ -63,7 +64,7 @@ function ProductCard({ product }) {
             font-bold
             "
           >
-            ✅ {t("common.addedToCart")}
+            <CircleCheck size={16} /> {t("common.addedToCart")}
           </div>
         )}
       </div>

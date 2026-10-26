@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
 import LanguageContext from "../../../context/LanguageContext";
 
 const SHOW_AFTER_PX = 500;
@@ -26,10 +27,10 @@ function ScrollTopButton() {
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 left-6 z-40 bg-black text-white w-12 h-12 rounded-full shadow-xl text-xl"
+      className="fixed bottom-6 left-6 z-40 bg-black text-white w-12 h-12 rounded-full shadow-xl flex items-center justify-center"
       aria-label={t("products.scrollTop")}
     >
-      ↑
+      <ArrowUp />
     </button>
   );
 }

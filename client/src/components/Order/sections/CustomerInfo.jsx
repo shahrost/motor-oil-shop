@@ -1,3 +1,4 @@
+import { User } from "lucide-react";
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import orderAreas from "../../../data/orderAreas";
@@ -8,8 +9,8 @@ function CustomerInfo({ customer, onChange, onPhoneChange, onLocationChange }) {
 
   return (
     <>
-      <h2 className="text-xl font-extrabold text-black mb-6">
-        👤 {t("order.customerInfo.title")}
+      <h2 className="text-xl font-extrabold text-black mb-6 flex items-center gap-2">
+        <User /> {t("order.customerInfo.title")}
       </h2>
 
       <input
