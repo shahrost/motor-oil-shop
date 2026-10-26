@@ -1,5 +1,6 @@
 import { formatVolume } from "../../../utils/formatVolume";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
+import { getAtfType, isAtfProduct } from "../../../utils/atfType";
 
 // مشخصات کارت ردیفی؛ گرید و API روی موبایل پنهان‌اند تا کارت جمع‌وجور بمونه
 function RowCardSpecs({ product, name, language, t }) {
@@ -10,20 +11,41 @@ function RowCardSpecs({ product, name, language, t }) {
       </h3>
 
       <div className="mt-2 text-xs sm:text-sm font-bold text-gray-700 space-y-1">
-        <SpecLine
-          className="hidden sm:line-clamp-1"
-          label={t("common.viscosity")}
-          value={product.viscosity}
-          reserveSpace
-        />
+        {/* روغن گیربکس اتوماتیک: به‌جای گرید و API فقط نوعش (CVT، DCT...) */}
+        {isAtfProduct(product) ? (
+          <>
+            <SpecLine
+              className="hidden sm:line-clamp-1"
+              label={t("common.atfType")}
+              value={getAtfType(product)}
+              reserveSpace
+              isolate
+            />
+            <SpecLine
+              className="hidden sm:block"
+              label="-"
+              value=""
+              reserveSpace
+            />
+          </>
+        ) : (
+          <>
+            <SpecLine
+              className="hidden sm:line-clamp-1"
+              label={t("common.viscosity")}
+              value={product.viscosity}
+              reserveSpace
+            />
 
-        <SpecLine
-          className="hidden sm:line-clamp-1"
-          label={<ApiLabel />}
-          value={product.api}
-          reserveSpace
-          isolate
-        />
+            <SpecLine
+              className="hidden sm:line-clamp-1"
+              label={<ApiLabel />}
+              value={product.api}
+              reserveSpace
+              isolate
+            />
+          </>
+        )}
 
         <SpecLine
           className="line-clamp-1"

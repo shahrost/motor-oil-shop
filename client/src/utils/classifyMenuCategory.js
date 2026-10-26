@@ -38,7 +38,9 @@ export function getMenuCategorySlug(product) {
       if (category === "روغن موتور") return "gasoline-engine-oil";
       if (category === "روغن موتورسیکلت") return "motorcycle-oil";
       if (category === "روغن دنده") return "gear-oil";
-      if (category === "روغن دنده اتومات") return "automatic-transmission";
+      if (category === "روغن دنده اتومات" || category === "روغن گیربکس اتومات") {
+        return "automatic-transmission";
+      }
       if (category === "روغن هیدرولیک") return "hydraulic-oil";
       return "other";
 
@@ -51,7 +53,7 @@ export function getMenuCategorySlug(product) {
     case "ایدلوب":
       if (category === "روغن موتور") return "gasoline-engine-oil";
       if (category === "روغن های گیربکس") {
-        return name === "روغن اتوماتیک" ? "automatic-transmission" : "gear-oil";
+        return name.includes("اتوماتیک") ? "automatic-transmission" : "gear-oil";
       }
       if (category === "سیالات عملکردی") return "antifreeze";
       return "other";

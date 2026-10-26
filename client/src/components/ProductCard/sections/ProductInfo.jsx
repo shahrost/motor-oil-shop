@@ -9,6 +9,7 @@ import PromotionBadge from "../../common/PromotionBadge";
 import DiscountBadge from "../../common/DiscountBadge";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 import CompatibleVehicles from "../../common/CompatibleVehicles";
+import { getAtfType, isAtfProduct } from "../../../utils/atfType";
 
 function ProductInfo({ product, paymentType }) {
   const { language, t } = useContext(LanguageContext);
@@ -31,22 +32,39 @@ function ProductInfo({ product, paymentType }) {
       </h2>
 
       <div className="mt-2 space-y-1 text-base font-bold text-gray-800">
-        <SpecLine
-          className="line-clamp-2 break-words"
-          label={t("common.viscosity")}
-          value={product.viscosity}
-          title={product.viscosity}
-          reserveSpace
-        />
+        {/* روغن گیربکس اتوماتیک گرید و API نداره؛ به‌جاش نوعش (CVT، DCT...) میاد
+            و یک خط خالی می‌مونه تا با کارت‌های کناری هم‌قد بمونه */}
+        {isAtfProduct(product) ? (
+          <>
+            <SpecLine
+              className="line-clamp-1 break-words"
+              label={t("common.atfType")}
+              value={getAtfType(product)}
+              reserveSpace
+              isolate
+            />
+            <SpecLine label="-" value="" reserveSpace />
+          </>
+        ) : (
+          <>
+            <SpecLine
+              className="line-clamp-2 break-words"
+              label={t("common.viscosity")}
+              value={product.viscosity}
+              title={product.viscosity}
+              reserveSpace
+            />
 
-        <SpecLine
-          className="line-clamp-1 break-words"
-          label={<ApiLabel />}
-          value={product.api}
-          title={product.api}
-          reserveSpace
-          isolate
-        />
+            <SpecLine
+              className="line-clamp-1 break-words"
+              label={<ApiLabel />}
+              value={product.api}
+              title={product.api}
+              reserveSpace
+              isolate
+            />
+          </>
+        )}
 
         <SpecLine
           className="line-clamp-2 break-words"
