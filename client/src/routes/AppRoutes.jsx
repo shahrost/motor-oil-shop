@@ -1,6 +1,7 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
+import lazyPage from "../utils/lazyPage";
 import Home from "../pages/Home";
 import Products from "../pages/Products";
 
@@ -9,31 +10,31 @@ import CustomerProtectedRoute from "../components/CustomerProtectedRoute";
 
 // فقط صفحه‌ی اصلی و محصولات (پربازدیدترین ورودی‌ها) همراه بسته‌ی اول می‌آن؛
 // بقیه‌ی صفحه‌ها اولین باری که باز می‌شن جدا لود می‌شن تا لود اول سبک‌تر باشه.
-// Suspense صفحه‌های مشتری در MainLayout است.
-const Login = lazy(() => import("../pages/Login"));
-const ProductDetail = lazy(() => import("../pages/ProductDetail"));
-const Cart = lazy(() => import("../pages/Cart"));
-const Order = lazy(() => import("../pages/Order"));
-const Viscosity = lazy(() => import("../pages/Viscosity"));
-const ViscosityProducts = lazy(() => import("../pages/ViscosityProducts"));
-const Brands = lazy(() => import("../pages/Brands"));
-const BrandProducts = lazy(() => import("../pages/BrandProducts"));
-const CategoryProducts = lazy(() => import("../pages/CategoryProducts"));
-const Vehicles = lazy(() => import("../pages/Vehicles"));
-const VehicleBrand = lazy(() => import("../pages/VehicleBrand"));
-const VehicleDetail = lazy(() => import("../pages/VehicleDetail"));
-const Promotions = lazy(() => import("../pages/Promotions"));
-const About = lazy(() => import("../pages/About"));
-const Register = lazy(() => import("../pages/Register"));
-const AccountLogin = lazy(() => import("../pages/AccountLogin"));
-const Account = lazy(() => import("../pages/Account"));
-const AccountOrders = lazy(() => import("../pages/AccountOrders"));
-const AccountFavorites = lazy(() => import("../pages/AccountFavorites"));
-const InstallApp = lazy(() => import("../pages/InstallApp"));
+// Suspense صفحه‌های مشتری در MainLayout است. lazyPage: بعد از دیپلوی، تب قدیمی یک بار رفرش می‌شه.
+const Login = lazyPage(() => import("../pages/Login"));
+const ProductDetail = lazyPage(() => import("../pages/ProductDetail"));
+const Cart = lazyPage(() => import("../pages/Cart"));
+const Order = lazyPage(() => import("../pages/Order"));
+const Viscosity = lazyPage(() => import("../pages/Viscosity"));
+const ViscosityProducts = lazyPage(() => import("../pages/ViscosityProducts"));
+const Brands = lazyPage(() => import("../pages/Brands"));
+const BrandProducts = lazyPage(() => import("../pages/BrandProducts"));
+const CategoryProducts = lazyPage(() => import("../pages/CategoryProducts"));
+const Vehicles = lazyPage(() => import("../pages/Vehicles"));
+const VehicleBrand = lazyPage(() => import("../pages/VehicleBrand"));
+const VehicleDetail = lazyPage(() => import("../pages/VehicleDetail"));
+const Promotions = lazyPage(() => import("../pages/Promotions"));
+const About = lazyPage(() => import("../pages/About"));
+const Register = lazyPage(() => import("../pages/Register"));
+const AccountLogin = lazyPage(() => import("../pages/AccountLogin"));
+const Account = lazyPage(() => import("../pages/Account"));
+const AccountOrders = lazyPage(() => import("../pages/AccountOrders"));
+const AccountFavorites = lazyPage(() => import("../pages/AccountFavorites"));
+const InstallApp = lazyPage(() => import("../pages/InstallApp"));
 
 // پنل ادمین حجیمه و مشتری‌ها لازمش ندارن
-const Admin = lazy(() => import("../pages/Admin"));
-const AdminOrders = lazy(() => import("../pages/AdminOrders"));
+const Admin = lazyPage(() => import("../pages/Admin"));
+const AdminOrders = lazyPage(() => import("../pages/AdminOrders"));
 
 function AppRoutes() {
   return (
