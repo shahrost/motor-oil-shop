@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import brandLogo from "../../../../assets/logo/shahram-monogram-yellow.svg";
 import LanguageContext from "../../../../context/LanguageContext";
+import brand from "../../../../data/brand";
 
 // لوگو، نام فروشگاه و معرفی کوتاه بالای فوتر
 function FooterBrand() {
@@ -26,7 +27,7 @@ function FooterBrand() {
         {t("footer.tagline")}
       </p>
 
-      <p className="text-gray-400 mt-3">shahram_roghan</p>
+      <p className="text-gray-400 mt-3">{brand.handle}</p>
     </div>
   );
 }

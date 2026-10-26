@@ -1,7 +1,7 @@
 {
-  "name": "شهرام روغن | فروشگاه روغن موتور",
-  "short_name": "شهرام روغن",
-  "description": "خرید روغن موتور، فیلتر و روانکار مناسب خودروی شما — پرداخت نقدی یا چکی",
+  "name": "%BRAND_TITLE%",
+  "short_name": "%BRAND_NAME%",
+  "description": "%BRAND_DESCRIPTION%",
   "lang": "fa",
   "dir": "rtl",
   "id": "/",
@@ -9,8 +9,8 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#0f1b2d",
-  "background_color": "#0f1b2d",
+  "theme_color": "%BRAND_THEME_COLOR%",
+  "background_color": "%BRAND_THEME_COLOR%",
   "categories": ["shopping", "business"],
   "icons": [
     {

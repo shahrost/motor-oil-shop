@@ -5,27 +5,28 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#0f1b2d" />
+    <meta name="theme-color" content="%BRAND_THEME_COLOR%" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- SEO و پیش‌نمایش لینک: ثابت در HTML چون ربات‌های تلگرام/واتساپ/ایتا/بله جاوااسکریپت اجرا نمی‌کنن.
-         عنوان و توضیح هر صفحه بعد از لود با common/PageMeta عوض می‌شه -->
-    <title>شهرام روغن | فروش عمده روغن موتور و روانکار</title>
-    <meta name="description" content="تأمین و فروش عمده‌ی روغن موتور، فیلتر، اسپری‌جات و اکتان برای فروشگاه‌های لوازم یدکی و اتوسرویس‌ها، با امکان پرداخت نقدی و چکی." />
-    <link rel="canonical" href="https://www.shoil.ir/" />
+         مقدارهای BRAND_ موقع build از src/data/brand.js پر می‌شن (vite.config.js)؛
+         عنوان و توضیح هر صفحه بعد از لود با hooks/usePageMeta عوض می‌شه -->
+    <title>%BRAND_TITLE%</title>
+    <meta name="description" content="%BRAND_DESCRIPTION%" />
+    <link rel="canonical" href="%BRAND_SITE_URL%/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="شهرام روغن" />
+    <meta property="og:site_name" content="%BRAND_NAME%" />
     <meta property="og:locale" content="fa_IR" />
-    <meta property="og:title" content="شهرام روغن | فروش عمده روغن موتور و روانکار" />
-    <meta property="og:description" content="تأمین و فروش عمده‌ی روغن موتور، فیلتر، اسپری‌جات و اکتان برای فروشگاه‌های لوازم یدکی و اتوسرویس‌ها، با امکان پرداخت نقدی و چکی." />
-    <meta property="og:url" content="https://www.shoil.ir/" />
-    <meta property="og:image" content="https://www.shoil.ir/og-image.png" />
+    <meta property="og:title" content="%BRAND_TITLE%" />
+    <meta property="og:description" content="%BRAND_DESCRIPTION%" />
+    <meta property="og:url" content="%BRAND_SITE_URL%/" />
+    <meta property="og:image" content="%BRAND_OG_IMAGE%" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="شهرام روغن — تأمین عمده‌ی روغن موتور و روانکار" />
+    <meta property="og:image:alt" content="%BRAND_NAME% — %BRAND_TAGLINE%" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="شهرام روغن | فروش عمده روغن موتور و روانکار" />
-    <meta name="twitter:description" content="تأمین و فروش عمده‌ی روغن موتور، فیلتر، اسپری‌جات و اکتان برای فروشگاه‌های لوازم یدکی و اتوسرویس‌ها، با امکان پرداخت نقدی و چکی." />
-    <meta name="twitter:image" content="https://www.shoil.ir/og-image.png" />
+    <meta name="twitter:title" content="%BRAND_TITLE%" />
+    <meta name="twitter:description" content="%BRAND_DESCRIPTION%" />
+    <meta name="twitter:image" content="%BRAND_OG_IMAGE%" />
     <!-- اتصال (DNS + TLS) به سرور API و عکس‌ها همزمان با دانلود JS باز می‌شه -->
     <link rel="preconnect" href="%VITE_API_URL%" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" />
@@ -34,7 +35,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="apple-mobile-web-app-title" content="شهرام روغن" />
+    <meta name="apple-mobile-web-app-title" content="%BRAND_NAME%" />
     <script>
       // پیشنهاد نصب اندروید زود (قبل از لود React) می‌رسه؛ نگهش می‌داریم تا صفحه‌ی /app ازش استفاده کنه
       window.addEventListener("beforeinstallprompt", function (event) {

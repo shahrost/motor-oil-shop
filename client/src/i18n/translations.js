@@ -1,3 +1,6 @@
+import brand from "../data/brand";
+
+// نام فروشگاه فقط در data/brand.js تعریف می‌شه
 const translations = {
   fa: {
     nav: {
@@ -11,7 +14,7 @@ const translations = {
     },
 
     site: {
-      name: "شهرام روغن",
+      name: brand.name,
     },
 
     // توضیح صفحه‌ها برای گوگل و تب مرورگر (hooks/usePageMeta)؛ {name} با نام محصول/برند/خودرو پر می‌شه
@@ -142,7 +145,7 @@ const translations = {
       guide: "راهنمای سایت",
       installApp: "نصب اپلیکیشن",
       productsTitle: "محصولات روغن موتور و فیلتر",
-      productsSubtitle: "محصولات فروشگاه شهرام روغن",
+      productsSubtitle: `محصولات فروشگاه ${brand.name}`,
       quickFilter: {
         title: "فیلتر سریع محصولات",
         allBrands: "همه برندها",
@@ -348,7 +351,7 @@ const translations = {
     },
 
     about: {
-      title: "درباره روغن موتور شهرام",
+      title: `درباره ${brand.name}`,
       intro:
         "تامین و فروش انواع روغن موتور و فیلتر و اسپری‌جات و انواع اکتان برای فروشگاه‌های لوازم یدکی، اتوسرویس‌ها و مشتریان عمده.",
       supply: {
@@ -440,8 +443,8 @@ const translations = {
       viewSpecs: "مشاهده مشخصات و روغن‌ها",
       recommendedOils: "روغن‌های مناسب این خودرو",
       country: "کشور سازنده",
-      shareText: "روغن و فیلتر مناسب در شهرام روغن",
-      recommendedBadge: "⭐ پیشنهاد شهرام روغن",
+      shareText: `روغن و فیلتر مناسب در ${brand.name}`,
+      recommendedBadge: `⭐ پیشنهاد ${brand.name}`,
       parts: {
         oil: "روغن موتور",
         filter: "فیلتر",
@@ -517,7 +520,7 @@ const translations = {
     },
 
     site: {
-      name: "Shahram Roghan",
+      name: brand.nameEn,
     },
 
     meta: {
@@ -647,7 +650,7 @@ const translations = {
       guide: "Site Guide",
       installApp: "Install App",
       productsTitle: "Engine Oil & Filter Products",
-      productsSubtitle: "Products from Shahram Oil Shop",
+      productsSubtitle: `Products from ${brand.nameEn}`,
       quickFilter: {
         title: "Quick Product Filter",
         allBrands: "All Brands",
@@ -854,7 +857,7 @@ const translations = {
     },
 
     about: {
-      title: "About Shahram Motor Oil",
+      title: `About ${brand.nameEn}`,
       intro:
         "Supplying and selling all kinds of engine oil, filters, sprays, and octane boosters for auto-parts stores, auto service centers, and wholesale customers.",
       supply: {
@@ -946,8 +949,8 @@ const translations = {
       viewSpecs: "View specs & suitable oils",
       recommendedOils: "Oils suitable for this vehicle",
       country: "Country",
-      shareText: "suitable oils & filters at Shahram Roghan",
-      recommendedBadge: "⭐ Shahram Roghan pick",
+      shareText: `suitable oils & filters at ${brand.nameEn}`,
+      recommendedBadge: `⭐ ${brand.nameEn} pick`,
       parts: {
         oil: "Engine Oil",
         filter: "Filter",

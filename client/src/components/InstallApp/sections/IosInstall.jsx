@@ -1,3 +1,4 @@
+import brand from "../../../data/brand";
 import { ShareIcon, AddSquareIcon } from "./IosIcons";
 
 const STEPS = [
@@ -15,7 +16,7 @@ const STEPS = [
   },
   {
     icon: null,
-    text: "بالای صفحه «Add» را بزنید. آیکون شهرام روغن روی صفحه‌ی گوشی اضافه می‌شود.",
+    text: `بالای صفحه «Add» را بزنید. آیکون ${brand.name} روی صفحه‌ی گوشی اضافه می‌شود.`,
   },
 ];
 

@@ -1,5 +1,6 @@
 import { AndroidInstall, IosInstall, InstallNotice } from "./sections";
 import useInstallAppPage from "./hooks/useInstallAppPage";
+import brand from "../../data/brand";
 
 // صفحه‌ی «نصب اپلیکیشن» (/app) — در منو نیست؛ لینکش در کانال‌ها پخش می‌شه
 function InstallApp() {
@@ -13,22 +14,22 @@ function InstallApp() {
       <section className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
         <img
           src="/icons/icon-192.png"
-          alt="شهرام روغن"
+          alt={brand.name}
           className="w-20 h-20 mx-auto rounded-2xl shadow"
         />
 
         <h1 className="text-3xl font-bold text-center text-gray-800 mt-4">
-          اپلیکیشن شهرام روغن
+          اپلیکیشن {brand.name}
         </h1>
 
         <p className="text-center mt-3 text-gray-700 leading-8">
-          شهرام روغن را روی گوشی نصب کنید تا همیشه با یک لمس، خودروی خود را
+          {brand.name} را روی گوشی نصب کنید تا همیشه با یک لمس، خودروی خود را
           انتخاب و سفارش ثبت کنید.
         </p>
 
         {installed && (
           <InstallNotice tone="success">
-            اپلیکیشن روی این گوشی نصب شده است. از آیکون شهرام روغن در صفحه‌ی
+            اپلیکیشن روی این گوشی نصب شده است. از آیکون {brand.name} در صفحه‌ی
             گوشی استفاده کنید.
           </InstallNotice>
         )}
