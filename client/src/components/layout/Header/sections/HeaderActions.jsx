@@ -11,16 +11,21 @@ import ThemeToggle from "./ThemeToggle";
 
 const SUBTLE_BUTTON = "bg-white/10 hover:bg-white/20 ring-1 ring-white/15 text-white";
 
-// دکمه‌های سمت چپ هدر: زبان، تم، حساب، سبد خرید، واتس‌اپ، تماس و دکمه‌ی منوی موبایل
+// دکمه‌های سمت چپ هدر: زبان، تم، حساب، سبد خرید، واتس‌اپ، تماس و دکمه‌ی منوی موبایل.
+// زیر sm زبان و تم فقط داخل منوی موبایل‌ان تا ردیف هدر در گوشی‌های ۳۲۰ تا ۳۷۵ پیکسلی جا بشه
 function HeaderActions({ menuOpen, onToggleMenu }) {
   const { t } = useContext(LanguageContext);
   const { cartCount } = useContext(CartContext);
 
   return (
     <div className="flex items-center gap-2">
-      <LanguageSwitch compact />
+      <div className="hidden sm:block">
+        <LanguageSwitch compact />
+      </div>
 
-      <ThemeToggle />
+      <div className="hidden sm:block">
+        <ThemeToggle />
+      </div>
 
       <AccountMenu buttonClass={SUBTLE_BUTTON} />
 
@@ -55,7 +60,7 @@ function HeaderActions({ menuOpen, onToggleMenu }) {
       <button
         type="button"
         onClick={onToggleMenu}
-        className="lg:hidden text-white text-3xl"
+        className="xl:hidden text-white text-3xl"
       >
         {menuOpen ? "✕" : "☰"}
       </button>

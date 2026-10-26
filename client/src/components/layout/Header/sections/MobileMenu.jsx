@@ -35,7 +35,7 @@ function MobileMenu({ onClose }) {
   }
 
   return (
-    <div className="lg:hidden bg-gray-900 rounded-2xl p-5 mb-4">
+    <div className="xl:hidden bg-gray-900 rounded-2xl p-5 mb-4">
       <ul className="flex flex-col gap-4 text-center font-bold">
         {menu.map((item) => {
           const Submenu = SUBMENUS[item.key];

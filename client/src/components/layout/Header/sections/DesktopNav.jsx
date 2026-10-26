@@ -8,12 +8,12 @@ import menuCategories from "../../../../data/menuCategories";
 import localizedLabel from "../../../../utils/localizedLabel";
 import NavDropdown from "./NavDropdown";
 
-// منوی دسکتاپ؛ «محصولات» با هاور زیرمنوی دسته‌ها رو باز می‌کنه
+// منوی دسکتاپ (از ۱۲۸۰ پیکسل؛ کمترش منوی همبرگری)؛ «محصولات» با هاور زیرمنوی دسته‌ها رو باز می‌کنه
 function DesktopNav() {
   const { language, t } = useContext(LanguageContext);
 
   return (
-    <nav className="hidden lg:flex items-center gap-6">
+    <nav className="hidden xl:flex items-center gap-6">
       {menu.map((item) => {
         const label = t(`nav.${item.key}`);
 
