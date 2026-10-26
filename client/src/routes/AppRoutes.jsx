@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Home from "../pages/Home";
 import Products from "../pages/Products";
@@ -23,7 +23,6 @@ const Vehicles = lazy(() => import("../pages/Vehicles"));
 const VehicleBrand = lazy(() => import("../pages/VehicleBrand"));
 const VehicleDetail = lazy(() => import("../pages/VehicleDetail"));
 const Promotions = lazy(() => import("../pages/Promotions"));
-const Contact = lazy(() => import("../pages/Contact"));
 const About = lazy(() => import("../pages/About"));
 const Register = lazy(() => import("../pages/Register"));
 const AccountLogin = lazy(() => import("../pages/AccountLogin"));
@@ -70,7 +69,8 @@ function AppRoutes() {
 
         <Route path="/promotions" element={<Promotions />} />
 
-        <Route path="/contact" element={<Contact />} />
+        {/* «تماس با ما» در «درباره ما» ادغام شد؛ لینک‌های قدیمی به اونجا می‌رن */}
+        <Route path="/contact" element={<Navigate to="/about" replace />} />
 
         <Route path="/about" element={<About />} />
 

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../../context/LanguageContext";
-import { FooterBrand, SocialLinks } from "./sections";
+import { FooterBrand, FooterStoreInfo, SocialLinks, EnamadSeal } from "./sections";
 
 function Footer() {
   const { t } = useContext(LanguageContext);
@@ -11,7 +11,11 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-5 py-10">
         <FooterBrand />
 
+        <FooterStoreInfo />
+
         <SocialLinks />
+
+        <EnamadSeal />
 
         <div
           className="

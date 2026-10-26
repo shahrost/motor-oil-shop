@@ -1,62 +1,44 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
-import whatsappLogo from "../../assets/social/whatsapp.svg";
-import LanguageContext from "../../context/LanguageContext";
-import { WHATSAPP_URL } from "../../data/contact";
 
+import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
+import {
+  AboutActivity,
+  AboutBrands,
+  PaymentMethods,
+  StoreDetails,
+  ContactInfo,
+  ContactActions,
+} from "./sections";
+
+// «درباره ما» (جای صفحه‌ی قدیمی «تماس با ما»؛ /contact به اینجا می‌آد):
+// معرفی، حوزه‌ی فعالیت، برندها، روش‌های پرداخت، اطلاعات تماس و محدوده‌ی فعالیت
 function About() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("nav.about"), t("meta.about"));
 
   return (
-    <div>
-      <section>
-        <h1>{t("about.title")}</h1>
+    <div className="min-h-screen bg-gray-100 p-4 md:p-10">
+      <section className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-12">
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800">
+          {t("about.title")}
+        </h1>
 
-        <p className="mt-8 text-lg leading-9 text-gray-700 text-center">
+        <p className="mt-6 text-lg leading-9 text-gray-700 text-center">
           {t("about.intro")}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-          <div className="bg-gray-100 rounded-xl p-6 text-center">
-            <h2 className="text-xl font-bold">{t("about.supply.title")}</h2>
-            <p className="mt-3">{t("about.supply.text")}</p>
-          </div>
+        <AboutActivity />
 
-          <div className="bg-gray-100 rounded-xl p-6 text-center">
-            <h2 className="text-xl font-bold">{t("about.partnership.title")}</h2>
-            <p className="mt-3">{t("about.partnership.text")}</p>
-          </div>
+        <AboutBrands />
 
-          <div className="bg-gray-100 rounded-xl p-6 text-center">
-            <h2 className="text-xl font-bold">{t("about.support.title")}</h2>
-            <p className="mt-3">{t("about.support.text")}</p>
-          </div>
-        </div>
+        <PaymentMethods />
 
-        <div className="mt-10 text-center">
-          <h2 className="text-2xl font-bold">{t("about.serviceArea.title")}</h2>
+        <StoreDetails />
 
-          <p className="mt-4 text-gray-700">{t("about.serviceArea.text")}</p>
-        </div>
+        <ContactInfo />
 
-        <div className="text-center mt-10">
-          <Link
-            to="/products"
-            className="inline-block bg-yellow-400 text-black px-8 py-3 rounded-lg font-bold"
-          >
-            {t("common.viewProducts")}
-          </Link>
-
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-3 rounded-lg font-bold mr-4"
-          >
-            <img src={whatsappLogo} alt="" className="w-5 h-5" />
-            {t("about.whatsappCta")}
-          </a>
-        </div>
+        <ContactActions />
       </section>
     </div>
   );

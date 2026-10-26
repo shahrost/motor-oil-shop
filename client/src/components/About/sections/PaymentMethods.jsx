@@ -1,0 +1,27 @@
+import { useContext } from "react";
+
+import LanguageContext from "../../../context/LanguageContext";
+
+const METHODS = ["cash", "check"];
+
+// روش‌های پرداخت: نقدی و چکی (اعتباری)
+function PaymentMethods() {
+  const { t } = useContext(LanguageContext);
+
+  return (
+    <div className="mt-12">
+      <h2 className="text-2xl font-bold text-center">{t("about.payment.title")}</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        {METHODS.map((method) => (
+          <div key={method} className="bg-gray-100 rounded-xl p-6 text-center">
+            <h3 className="text-lg font-bold">{t(`about.payment.${method}`)}</h3>
+            <p className="mt-3 text-gray-700">{t(`about.payment.${method}Text`)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default PaymentMethods;

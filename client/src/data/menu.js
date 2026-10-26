@@ -30,9 +30,9 @@ const menu = [
     path: "/cart",
   },
   {
-    key: "contact",
-    titleFa: "تماس با ما",
-    path: "/contact",
+    key: "about",
+    titleFa: "درباره ما",
+    path: "/about",
   },
 ];
 
