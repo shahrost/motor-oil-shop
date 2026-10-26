@@ -10,6 +10,26 @@
     <!-- اتصال (DNS + TLS) به سرور API و عکس‌ها همزمان با دانلود JS باز می‌شه -->
     <link rel="preconnect" href="%VITE_API_URL%" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" />
+    <!-- PWA: نصب سایت روی گوشی (اندروید و آیفون) -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="شهرام روغن" />
+    <script>
+      // پیشنهاد نصب اندروید زود (قبل از لود React) می‌رسه؛ نگهش می‌داریم تا صفحه‌ی /app ازش استفاده کنه
+      window.addEventListener("beforeinstallprompt", function (event) {
+        event.preventDefault();
+        window.__shoilInstallPrompt = event;
+        window.dispatchEvent(new Event("shoil:installprompt"));
+      });
+      // Service Worker فقط در نسخه‌ی build (نه npm run dev)
+      if ("%PROD%" === "true" && "serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js").catch(function () {});
+        });
+      }
+    </script>
     <title>شهرام روغن</title>
   </head>
   <body>
