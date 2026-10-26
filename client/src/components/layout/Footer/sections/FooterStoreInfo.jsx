@@ -11,7 +11,7 @@ function FooterStoreInfo() {
   const rows = [
     { key: "address", value: brand.address },
     { key: "hours", value: brand.hours },
-    { key: "landline", value: brand.landline },
+    { key: "landline", value: brand.landline, href: brand.landlineUrl },
   ];
 
   return (
@@ -19,7 +19,13 @@ function FooterStoreInfo() {
       {rows.map((row) => (
         <p key={row.key} className="wrap-break-word">
           <span className="text-gray-400">{t(`about.store.${row.key}`)}: </span>
-          {row.value}
+          {row.href ? (
+            <a href={row.href} dir="ltr" className="hover:text-yellow-400">
+              {row.value}
+            </a>
+          ) : (
+            row.value
+          )}
         </p>
       ))}
 

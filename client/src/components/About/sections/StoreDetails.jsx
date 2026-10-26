@@ -11,7 +11,7 @@ function StoreDetails() {
   const rows = [
     { key: "address", value: brand.address },
     { key: "hours", value: brand.hours },
-    { key: "landline", value: brand.landline },
+    { key: "landline", value: brand.landline, href: brand.landlineUrl },
     { key: "mobile", value: PHONE_DISPLAY, href: PHONE_URL },
   ];
 
