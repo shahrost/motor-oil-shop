@@ -66,7 +66,7 @@ server/   Express + Mongoose — جدا دیپلوی می‌شه
 
 ## کارهای انجام‌شده در سشن 2026-10-26
 
-- **PWA (بخش ۴۷ PROJECT_STATE):** سایت روی اندروید/آیفون نصب‌شدنی شد: `public/manifest.json`، آیکون‌های `public/icons/`، `public/sw.js` (فقط فایل‌های استاتیک همین دامنه کش می‌شن؛ صفحه‌ها network-first و API هیچ‌وقت)، `public/offline.html`، تگ‌های PWA/iOS در `<head>`، صفحه‌ی `/app` (`components/InstallApp/`، در منو نیست). شاخه `feature/pwa`، تگ پشتیبان `backup/before-pwa`؛ دیپلوی و تست‌شده روی shoil.ir (لینک نصب: `https://www.shoil.ir/app`). دکمه‌ی «نصب اپلیکیشن» وسط بالای کارت «روانکار» صفحه‌ی اصلی (Chrome: نصب مستقیم؛ آیفون/بقیه: صفحه‌ی `/app`). مرحله‌ی بعد: اپ اندروید Capacitor در `../shoil-app` بعد از تأیید کاربر
+- **PWA (بخش ۴۷ PROJECT_STATE):** سایت روی اندروید/آیفون نصب‌شدنی شد: `public/manifest.json`، آیکون‌های `public/icons/`، `public/sw.js` (فقط فایل‌های استاتیک همین دامنه کش می‌شن؛ صفحه‌ها network-first و API هیچ‌وقت)، `public/offline.html`، تگ‌های PWA/iOS در `<head>`، صفحه‌ی `/app` (`components/InstallApp/`، در منو نیست). شاخه `feature/pwa`، تگ پشتیبان `backup/before-pwa`؛ دیپلوی و تست‌شده روی shoil.ir (لینک نصب: `https://www.shoil.ir/app`). دکمه‌ی «نصب اپلیکیشن» صفحه‌ی اصلی: دسکتاپ وسط بالای کارت «روانکار»، موبایل روبه‌روی «راهنمای سایت» سمت راست (Chrome: نصب مستقیم؛ آیفون/بقیه: صفحه‌ی `/app`). مرحله‌ی بعد: اپ اندروید Capacitor در `../shoil-app` بعد از تأیید کاربر
 - **قیمت‌های آبان ۱۴۰۵ ایدلوب** (بخش ۴۶ PROJECT_STATE): ۱۹ کد (نقدی = اعتباری = لیست) در اکسل ایدلوب و سایت بروز شدن؛ فایل آپلود `price-update-aidlube-1405-08-04.xlsx`
 
 ## کارهای انجام‌شده در سشن 2026-10-24
