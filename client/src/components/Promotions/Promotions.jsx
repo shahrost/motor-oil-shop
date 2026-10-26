@@ -2,12 +2,14 @@ import { useContext } from "react";
 
 import { ProductContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import { hasActivePromotion } from "../../utils/promotionCalc";
 import { PromotionCard } from "./sections";
 
 function Promotions() {
   const { products } = useContext(ProductContext);
   const { language, t } = useContext(LanguageContext);
+  usePageMeta(t("promotions.title"), t("meta.promotions"));
 
   const promoProducts = products.filter((product) =>
     hasActivePromotion(product.promotion),

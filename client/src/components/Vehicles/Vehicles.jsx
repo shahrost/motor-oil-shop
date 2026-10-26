@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import useVehicleBrands from "./hooks/useVehicleBrands";
 import useVehicleSearch from "./hooks/useVehicleSearch";
 import { VehicleBrandCard, VehicleSearchBox, VehicleSearchResults } from "./sections";
@@ -9,6 +10,7 @@ import { VehicleBrandCard, VehicleSearchBox, VehicleSearchResults } from "./sect
 // خودرو در همه‌ی برندها (با عبارت جستجو، نتیجه‌ها جای برندها نشون داده می‌شن)
 function Vehicles() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("vehicles.title"), t("meta.vehicles"));
   const brands = useVehicleBrands();
   const search = useVehicleSearch(brands);
 

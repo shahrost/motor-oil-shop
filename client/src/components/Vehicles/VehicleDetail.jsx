@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import SelectedVehicleContext from "../../context/SelectedVehicleContext";
 import VehicleReviews, { useVehicleReviews } from "../VehicleReviews";
 import useVehicleDetail from "./hooks/useVehicleDetail";
@@ -18,6 +19,8 @@ function VehicleDetail() {
   const { language, t } = useContext(LanguageContext);
   const { id, loading, vehicle, parts, selected, selectPart } = useVehicleDetail();
   const reviews = useVehicleReviews(id);
+  const name = vehicle && (language === "en" ? vehicle.nameEn || vehicle.name : vehicle.name);
+  usePageMeta(name, t("meta.vehicle").replace("{name}", name));
 
   if (loading) {
     return <p className="text-center text-gray-500 mt-10">{t("vehicles.loading")}</p>;
@@ -30,8 +33,6 @@ function VehicleDetail() {
       </p>
     );
   }
-
-  const name = language === "en" ? vehicle.nameEn || vehicle.name : vehicle.name;
 
   return (
     <>

@@ -1,7 +1,9 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import formatPrice from "../../utils/formatPrice";
+import getBrandLabel from "../../utils/brandLabel";
 import { getProductPrice } from "../../utils/productPrice";
 import CompatibleVehicles from "../common/CompatibleVehicles";
 import useProductDetail from "./hooks/useProductDetail";
@@ -20,6 +22,11 @@ function ProductDetail() {
   const { language, t } = useContext(LanguageContext);
   const { product, ...purchase } = useProductDetail();
   const goBack = useGoBack();
+  // نام بعضی محصولات عمومیه («مکمل روغن موتور»)؛ برند کنارش میاد مگر اینکه خود نام داشته باشه‌ش
+  const brandLabel = product ? getBrandLabel(product.brand, language) : "";
+  const metaName =
+    product && (product.name.includes(brandLabel) ? product.name : `${product.name} ${brandLabel}`);
+  usePageMeta(metaName, t("meta.product").replace("{name}", metaName));
 
   if (!product) {
     return (

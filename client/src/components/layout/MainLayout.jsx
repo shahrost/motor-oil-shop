@@ -1,11 +1,15 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
+import { useCanonicalUrl } from "../../hooks/usePageMeta";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import ScrollRestoration from "./ScrollRestoration";
 
 function MainLayout() {
+  useCanonicalUrl();
+
   return (
     <>
       <ScrollRestoration />

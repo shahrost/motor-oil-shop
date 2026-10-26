@@ -1,10 +1,16 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+
+import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 import useProductsPage from "./hooks/useProductsPage";
 import { ProductSearch, ProductFilters, ScrollTopButton } from "./sections";
 import ProductRows from "../common/ProductRows";
 
 function Products() {
+  const { t } = useContext(LanguageContext);
+  usePageMeta(t("nav.products"), t("meta.products"));
+
   const {
     filteredProducts,
     search,

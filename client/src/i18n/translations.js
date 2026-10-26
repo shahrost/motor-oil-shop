@@ -14,6 +14,22 @@ const translations = {
       name: "شهرام روغن",
     },
 
+    // توضیح صفحه‌ها برای گوگل و تب مرورگر (hooks/usePageMeta)؛ {name} با نام محصول/برند/خودرو پر می‌شه
+    meta: {
+      products: "لیست روغن موتور، فیلتر، اسپری‌جات و اکتان برندهای مختلف با قیمت نقدی و چکی برای خرید عمده.",
+      product: "{name} — مشخصات، قیمت نقدی و چکی و خودروهای سازگار.",
+      brands: "برندهای روغن موتور و روانکار موجود برای خرید عمده.",
+      brand: "محصولات برند {name} با قیمت نقدی و چکی برای فروشگاه‌ها و اتوسرویس‌ها.",
+      category: "{name} — خرید عمده با قیمت نقدی و چکی.",
+      vehicles: "روغن موتور، فیلتر و روانکار مناسب خودروی خود را بر اساس برند و مدل پیدا کنید.",
+      vehicleBrand: "روغن موتور و فیلتر مناسب خودروهای {name}.",
+      vehicle: "روغن موتور، فیلتر و روانکار مناسب {name}.",
+      viscosity: "روغن موتورها بر اساس گرید ویسکوزیته.",
+      viscosityProducts: "روغن موتورهای گرید {name} با قیمت نقدی و چکی.",
+      promotions: "طرح‌های فروش و هدیه‌ی خرید عمده روی محصولات منتخب.",
+      about: "معرفی فروشگاه، حوزه‌ی فعالیت، برندها، روش‌های پرداخت نقدی و چکی، آدرس و راه‌های تماس.",
+    },
+
     header: {
       register: "ثبت‌نام",
       showPhoto: "نمایش بزرگ عکس",
@@ -502,6 +518,21 @@ const translations = {
 
     site: {
       name: "Shahram Roghan",
+    },
+
+    meta: {
+      products: "Motor oils, filters, sprays and octane boosters from many brands, with cash and cheque prices for wholesale.",
+      product: "{name} — specs, cash and cheque prices and compatible vehicles.",
+      brands: "Motor oil and lubricant brands available for wholesale.",
+      brand: "{name} products with cash and cheque prices for parts shops and auto services.",
+      category: "{name} — wholesale with cash and cheque prices.",
+      vehicles: "Find the right motor oil, filter and lubricant for your vehicle by make and model.",
+      vehicleBrand: "Motor oils and filters for {name} vehicles.",
+      vehicle: "Motor oil, filters and lubricants for {name}.",
+      viscosity: "Motor oils by viscosity grade.",
+      viscosityProducts: "{name} motor oils with cash and cheque prices.",
+      promotions: "Wholesale promotions and gift offers on selected products.",
+      about: "About the shop, what we supply, brands, cash and cheque payment, address and contact details.",
     },
 
     header: {

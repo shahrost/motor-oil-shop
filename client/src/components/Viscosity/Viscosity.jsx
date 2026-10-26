@@ -2,9 +2,11 @@ import { useContext } from "react";
 import useViscosity from "./hooks/useViscosity";
 import { ViscosityList } from "./sections";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 function Viscosity() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("viscosity.title"), t("meta.viscosity"));
   const { viscosities, getProductCount } = useViscosity();
 
   return (

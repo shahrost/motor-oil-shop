@@ -5,12 +5,15 @@ import { ProductContext } from "../../context";
 import ProductCard from "../ProductCard";
 import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 function BrandProducts() {
   const { brand } = useParams();
 
   const { products } = useContext(ProductContext);
   const { language, t } = useContext(LanguageContext);
+  const brandLabel = getBrandLabel(brand, language);
+  usePageMeta(`${t("brandProducts.title")} ${brandLabel}`, t("meta.brand").replace("{name}", brandLabel));
 
   const filteredProducts = products.filter(
     (product) => product.brand === brand,
@@ -20,7 +23,7 @@ function BrandProducts() {
     <div>
       <section>
         <h1 className="text-3xl font-extrabold text-center">
-          {t("brandProducts.title")} {getBrandLabel(brand, language)}
+          {t("brandProducts.title")} {brandLabel}
         </h1>
 
         <p className="text-center mt-3 text-gray-600">

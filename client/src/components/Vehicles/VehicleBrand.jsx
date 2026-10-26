@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import useVehicleBrandModels from "./hooks/useVehicleBrandModels";
 import { VehicleCard } from "./sections";
 
@@ -9,6 +10,8 @@ import { VehicleCard } from "./sections";
 function VehicleBrand() {
   const { language, t } = useContext(LanguageContext);
   const { loading, first, search, setSearch, filtered } = useVehicleBrandModels();
+  const brandName = first && (language === "en" ? first.brandEn || first.brand : first.brand);
+  usePageMeta(brandName, t("meta.vehicleBrand").replace("{name}", brandName));
 
   if (loading) {
     return <p className="text-center text-gray-500 mt-10">{t("vehicles.loading")}</p>;
@@ -29,7 +32,7 @@ function VehicleBrand() {
       </Link>
 
       <h1 className="text-3xl font-extrabold text-center mt-4">
-        {language === "en" ? first.brandEn || first.brand : first.brand}
+        {brandName}
       </h1>
 
       <input

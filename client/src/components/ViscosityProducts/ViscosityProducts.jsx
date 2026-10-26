@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 import useViscosityProducts from "./hooks/useViscosityProducts";
 import { ViscosityProductsList } from "./sections";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 function ViscosityProducts() {
   const { t } = useContext(LanguageContext);
   const { viscosity, filteredProducts } = useViscosityProducts();
+  usePageMeta(
+    `${t("viscosityProducts.titlePrefix")} ${viscosity}`,
+    t("meta.viscosityProducts").replace("{name}", viscosity),
+  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">

@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import brands from "../../data/brands";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 function Brands() {
   const { language, t } = useContext(LanguageContext);
+  usePageMeta(t("brands.title"), t("meta.brands"));
 
   return (
     <div>
