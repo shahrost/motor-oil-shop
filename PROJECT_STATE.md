@@ -9,6 +9,7 @@ Session Update 2026-10-27 — کارت روغن‌های گیربکس اتوما
 
 - `client/src/utils/atfType.js`: `isAtfProduct(product)` (= دسته‌ی منوی `automatic-transmission` از `classifyMenuCategory`) و `getAtfType(product)`. نوع از گرید (وم اویل) یا اسم/توضیحات (پترولکس، ایدلوب، ادینول، بهتام) خونده می‌شه؛ **اولین کدی که در متن اومده** برنده‌ست چون توضیحات از گیربکس‌های دیگه هم اسم می‌برن (ATF CVT ادینول از DCT). خروجی‌ها: `DCT`، `CVT`، `AL4`، `MVLV`، `MVLV-WS`، `XN 3/5/6/7/9` (ادینول)، `DEXRON VI` (ATF VI / DX6)، `DEXRON III` (ATF III / DX3)، `ATF IV`. با داده‌ی زنده هر ۲۶ روغن تشخیص داده شدن.
 - `ProductCard/sections/ProductInfo.jsx` و `RowCardSpecs.jsx`: برای ATF خط «نوع:» (`common.atfType` = «نوع:» / «Type:») + یک خط نامرئی جای خط دوم تا کارت با کارت‌های کناری هم‌قد بمونه؛ بقیه‌ی محصولات مثل قبل گرید و API.
+- **صفحه‌ی سفید بعد از دیپلوی:** Runflare برای HTML هدر `Cache-Control` نمی‌فرسته و مرورگر HTML قبلی رو چند دقیقه (heuristic) نگه می‌داشت؛ اون HTML به `index-*.js` پاک‌شده اشاره می‌کرد و کل سایت سفید می‌موند (`lazyPage` فقط chunkهای صفحه رو پوشش می‌ده نه فایل اصلی). `public/sw.js` حالا صفحه‌ها رو با `fetch(request, { cache: "no-cache" })` می‌گیره (همیشه با ETag از سرور چک می‌شه).
 - رفع دسته‌بندی: ATFهای ایدلوب (اسم «روغن دنده اتوماتیک»، نه «روغن اتوماتیک») توی «روغن دنده» می‌افتادن ← حالا `name.includes("اتوماتیک")`؛ و MVLV-WS وم اویل (category «روغن گیربکس اتومات») هم به «روغن دنده اتوماتیک» اومد.
 
 ## ۴۹. لوگوی جدید سایت و اپلیکیشن (کیت SHAHRAM — طرح ۲)

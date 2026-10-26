@@ -5,7 +5,8 @@
       api.shoil.ir است، پس قیمت، موجودی، سبد، سفارش، ورود و
       پرداخت هیچ‌وقت از اینجا رد نمی‌شن و کش نمی‌شن.
 
-      - صفحه‌ها (HTML): همیشه از اینترنت (network-first)؛ قطع بود ← offline.html.
+      - صفحه‌ها (HTML): همیشه از اینترنت (network-first، بدون کش HTTP مرورگر)؛
+        قطع بود ← offline.html.
         خود صفحه کش نمی‌شه تا اطلاعات کهنه هیچ‌وقت دیده نشه.
       - /assets/ (JS/CSS/فونت/عکس با اسم هش‌دار Vite): cache-first.
       - بقیه‌ی عکس/آیکون‌های همین دامنه: از کش + تازه‌سازی در پس‌زمینه.
@@ -77,7 +78,10 @@ self.addEventListener("fetch", (event) => {
 
 async function networkFirstPage(request) {
   try {
-    return await fetch(request);
+    // Runflare برای HTML هدر Cache-Control نمی‌فرسته و مرورگر خودش چند دقیقه
+    // نسخه‌ی قبلی رو نگه می‌داره؛ بعد از دیپلوی اون HTML به فایل‌های JS پاک‌شده
+    // اشاره می‌کرد و صفحه سفید می‌موند. no-cache همیشه با سرور چک می‌کنه (ETag).
+    return await fetch(request, { cache: "no-cache" });
   } catch {
     const offline = await caches.match(OFFLINE_URL);
     return offline || Response.error();
