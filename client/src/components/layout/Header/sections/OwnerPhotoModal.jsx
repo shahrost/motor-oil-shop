@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 
 import LanguageContext from "../../../../context/LanguageContext";
 
-import ownerPhoto from "../../../../assets/logo/shahram-logo.webp";
+import ownerPhoto from "../../../../assets/logo/shahram-photo.webp";
 import useEscapeKey from "../../../../hooks/useEscapeKey";
 
 // نمایش بزرگ عکس شهرام؛ با کلیک بیرون عکس یا کلید Escape بسته می‌شه

@@ -15,7 +15,7 @@
       فایل‌های build جدید اسم جدید دارن).
 ========================= */
 
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const STATIC_CACHE = `shoil-static-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline.html";
 const MAX_STATIC_ENTRIES = 120;

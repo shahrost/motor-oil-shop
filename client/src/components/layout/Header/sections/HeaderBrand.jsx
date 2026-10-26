@@ -5,7 +5,7 @@ import LanguageContext from "../../../../context/LanguageContext";
 import brand from "../../../../data/brand";
 
 import ownerPhoto from "../../../../assets/logo/shahram-avatar.webp";
-import brandLogo from "../../../../assets/logo/shahram-monogram-yellow.svg";
+import brandLogo from "../../../../assets/logo/shahram-logo.svg";
 
 function HeaderBrand({ onPhotoClick }) {
   const { t } = useContext(LanguageContext);
@@ -16,6 +16,8 @@ function HeaderBrand({ onPhotoClick }) {
         <img
           src={brandLogo}
           alt={t("site.name")}
+          width="52"
+          height="36"
           className="h-9 md:h-10 w-auto select-none"
           draggable="false"
         />

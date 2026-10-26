@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import brandLogo from "../../../../assets/logo/shahram-monogram-yellow.svg";
+import brandLogo from "../../../../assets/logo/shahram-logo.svg";
 import LanguageContext from "../../../../context/LanguageContext";
 import brand from "../../../../data/brand";
 
@@ -14,6 +14,8 @@ function FooterBrand() {
         <img
           src={brandLogo}
           alt=""
+          width="46"
+          height="32"
           className="h-8 md:h-9 w-auto select-none"
           draggable="false"
         />
