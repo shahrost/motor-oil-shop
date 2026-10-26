@@ -5,7 +5,7 @@ Session Update 2026-10-26 — PWA: نصب سایت روی اندروید/آیف�
 
 ## ۴۷. PWA — نصب سایت روی اندروید و آیفون (مرحله‌ی ۱ از برنامه‌ی اپ)
 
-Status: Completed ✅ (روی شاخه‌ی `feature/pwa`؛ تا تأیید کاربر دیپلوی نشده)
+Status: Completed ✅ (شاخه‌ی `feature/pwa`؛ کلاینت ۲۰۲۶-۱۰-۲۶ روی Runflare دیپلوی شد)
 
 درخواست کاربر (۲۰۲۶-۱۰-۲۶): سایت قابل نصب روی اندروید و iOS بشه (چون اپ‌استور/گوگل‌پلی در دسترس نیست). مرحله‌ی ۲ (اپ اندروید با Capacitor برای کافه‌بازار/مایکت) در پوشه‌ی جدا `../shoil-app` و فقط بعد از تأیید کاربر. قانون: هیچ منطق، ظاهر، دیتابیس، مسیر یا فرایند سفارش/پرداختی عوض نشه؛ فقط فایل جدید + حداقل تغییر.
 
@@ -22,6 +22,10 @@ Status: Completed ✅ (روی شاخه‌ی `feature/pwa`؛ تا تأیید کا
 ✅ `client/index.html` (فقط `<head>`): لینک manifest، `mobile-web-app-capable`، `apple-mobile-web-app-capable`، `apple-mobile-web-app-status-bar-style=black` (جای چیزی رو جابه‌جا نمی‌کنه)، `apple-mobile-web-app-title`. اسکریپت inline: `beforeinstallprompt` رو `preventDefault` و در `window.__shoilInstallPrompt` نگه می‌داره (+ رویداد `shoil:installprompt`) چون قبل از لود React می‌رسه؛ نوار نصب خودکار Chrome روی صفحه‌های سایت نمیاد. ثبت SW فقط وقتی `"%PROD%" === "true"` (Vite در build جایگزین می‌کنه) ← در `npm run dev` SW نیست
 ✅ صفحه‌ی `/app` (در منو نیست): `components/InstallApp/` (`InstallApp.jsx` ترکیب؛ `hooks/useInstallAppPage.js` پلتفرم، نصب‌شده، prompt، `appinstalled`؛ `helpers/detectPlatform.js` iOS (+آیپد مک‌نما)/اندروید/دسکتاپ، مرورگر داخلی تلگرام/اینستاگرام/WebView؛ `sections/` `AndroidInstall` (دکمه‌ی نصب یا راهنمای منوی ⋮ Chrome)، `StoreLinks` (کافه‌بازار/مایکت از `data/appStores.js`؛ لینک خالی ← «به‌زودی» غیرفعال)، `IosInstall` (۴ قدم با آیکون Share و Add)، `IosIcons`، `InstallNotice`). `pages/InstallApp.jsx` wrapper؛ `routes/AppRoutes.jsx` یک `lazy` + یک `Route` داخل `MainLayout`. متن فقط فارسی و داخل خود کامپوننت (به `translations.js` دست نخورده)
 ✅ تست: lint فایل‌های جدید و `npm run build` تمیز؛ `vite preview` در Chrome: SW فعال و کنترل‌کننده، کش فقط `/assets/*` + آیکون/offline، manifest خونده شد و Chrome پیشنهاد نصب داد (دکمه‌ی «نصب اپلیکیشن» ظاهر شد)، با خاموش کردن سرور `/cart` ← صفحه‌ی آفلاین
+✅ `sw.js` خودش هیچ‌وقت کش نمی‌شه (در تست، fetch مستقیم `/sw.js` وارد کش شده بود)
+✅ تست محلی دوم: نسخه‌بندی (کپی v2 فقط در `build/` ← `reg.update()` ← کش v1 پاک و v2 ساخته شد)؛ PDF، آدرس query‌دار، فایل نبود (index.html) و POST کش نشدن؛ `/app` با userAgent شبیه‌سازی‌شده: آیفون فقط راهنمای Safari، اندروید فقط دکمه‌ی نصب + فروشگاه‌ها، تلگرام اندروید پیام «در Chrome باز کنید»
+✅ تست روی shoil.ir بعد از دیپلوی: `/sw.js` ← `application/javascript`، manifest/آیکون/offline ‏200؛ SW فعال با scope ریشه؛ Chrome پیشنهاد نصب داد؛ صفحه‌ی محصولات با قیمت‌ها؛ `api/products` و `filter-compatibility` هر بار از شبکه (۲۰۰) و هیچ آدرس API یا HTML در کش نیست؛ سبد و `/app` درست؛ بدون خطای کنسول. (۵۰۲/۵۰۴ چندثانیه‌ای فقط لحظه‌ی جابه‌جایی کانتینر)
+⚠️ Lighthouse نسخه‌های جدید Chrome دیگه بخش PWA نداره؛ قابل نصب بودن در DevTools ← Application ← Manifest (بخش Installability) دیده می‌شه
 ⚠️ تنظیم خاص رانفلر لازم نیست: فایل‌های `public/` در ریشه‌ی خروجی build می‌آن و nginx مستقیم سروشون می‌کنه. قبل از دیپلوی `https://www.shoil.ir/sw.js` همون index.html رو برمی‌گردونه (SPA fallback) که طبیعیه
 ⚠️ برای پاک کردن کش همه‌ی کاربرها: `CACHE_VERSION` در `sw.js` عوض بشه. آپدیت معمولی سایت لازمش نداره
 ⚠️ لینک کافه‌بازار/مایکت بعد از انتشار اپ (مرحله‌ی ۲) در `client/src/data/appStores.js` گذاشته بشه
