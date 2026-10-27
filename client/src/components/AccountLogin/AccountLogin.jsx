@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import useAccountLogin from "./hooks/useAccountLogin";
 import LanguageContext from "../../context/LanguageContext";
+import { MOBILE_PATTERN, cleanPhoneInput } from "../../utils/phoneInput";
 
 function AccountLogin() {
   const { t } = useContext(LanguageContext);
@@ -22,15 +23,33 @@ function AccountLogin() {
       </h1>
 
       <form onSubmit={handleLogin}>
+        <label htmlFor="login-phone" className="sr-only">
+          {t("common.phonePlaceholder")}
+        </label>
         <input
-          className="border p-3 rounded-xl w-full mb-4"
+          id="login-phone"
+          type="tel"
+          inputMode="numeric"
+          autoComplete="tel"
+          maxLength={11}
+          dir="ltr"
+          required
+          pattern={MOBILE_PATTERN}
+          title={t("common.phoneFormat")}
+          className="border p-3 rounded-xl w-full mb-4 text-start rtl:placeholder:text-right"
           placeholder={t("common.phonePlaceholder")}
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => setPhone(cleanPhoneInput(e.target.value))}
         />
 
+        <label htmlFor="login-password" className="sr-only">
+          {t("common.passwordPlaceholder")}
+        </label>
         <input
+          id="login-password"
           type="password"
+          autoComplete="current-password"
+          required
           className="border p-3 rounded-xl w-full mb-4"
           placeholder={t("common.passwordPlaceholder")}
           value={password}

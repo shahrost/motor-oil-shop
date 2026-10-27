@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import useRegister from "./hooks/useRegister";
 import LanguageContext from "../../context/LanguageContext";
+import { MOBILE_PATTERN, cleanPhoneInput } from "../../utils/phoneInput";
 
 function Register() {
   const { t } = useContext(LanguageContext);
@@ -24,22 +25,46 @@ function Register() {
       </h1>
 
       <form onSubmit={handleRegister}>
+        <label htmlFor="register-name" className="sr-only">
+          {t("common.fullNamePlaceholder")}
+        </label>
         <input
+          id="register-name"
+          autoComplete="name"
+          required
           className="border p-3 rounded-xl w-full mb-4"
           placeholder={t("common.fullNamePlaceholder")}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
+        <label htmlFor="register-phone" className="sr-only">
+          {t("common.phonePlaceholder")}
+        </label>
         <input
-          className="border p-3 rounded-xl w-full mb-4"
+          id="register-phone"
+          type="tel"
+          inputMode="numeric"
+          autoComplete="tel"
+          maxLength={11}
+          dir="ltr"
+          required
+          pattern={MOBILE_PATTERN}
+          title={t("common.phoneFormat")}
+          className="border p-3 rounded-xl w-full mb-4 text-start rtl:placeholder:text-right"
           placeholder={t("common.phonePlaceholder")}
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => setPhone(cleanPhoneInput(e.target.value))}
         />
 
+        <label htmlFor="register-password" className="sr-only">
+          {t("common.passwordPlaceholder")}
+        </label>
         <input
+          id="register-password"
           type="password"
+          autoComplete="new-password"
+          required
           className="border p-3 rounded-xl w-full mb-4"
           placeholder={t("common.passwordPlaceholder")}
           value={password}

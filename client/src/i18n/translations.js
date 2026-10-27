@@ -116,6 +116,7 @@ const translations = {
       add: "افزودن",
       fullNamePlaceholder: "نام و نام خانوادگی",
       phonePlaceholder: "شماره موبایل",
+      phoneFormat: "شماره موبایل باید ۱۱ رقم باشد و با ۰۹ شروع شود",
       passwordPlaceholder: "رمز عبور",
       volumeLabels: {
         "300cc": "300cc",
@@ -650,6 +651,7 @@ const translations = {
       add: "Add",
       fullNamePlaceholder: "Full Name",
       phonePlaceholder: "Mobile Number",
+      phoneFormat: "Mobile number must be 11 digits starting with 09",
       passwordPlaceholder: "Password",
       volumeLabels: {
         "300cc": "300cc",
