@@ -366,7 +366,7 @@ const translations = {
         "تامین و فروش انواع روغن موتور و فیلتر و اسپری‌جات و انواع اکتان برای فروشگاه‌های لوازم یدکی، اتوسرویس‌ها و مشتریان عمده.",
       supply: {
         title: "تامین محصولات",
-        text: "ارائه روغن موتور سمن و محصولات مورد نیاز بازار خودرو",
+        text: "ارائه روغن موتور، فیلتر و روانکار از برندهای معتبر",
       },
       partnership: {
         title: "همکاری با همکاران",
@@ -396,7 +396,7 @@ const translations = {
     },
 
     brands: {
-      title: "برندهای روغن موتور",
+      title: "برندها",
       subtitle: "انتخاب برند مورد نظر",
     },
 
@@ -901,7 +901,7 @@ const translations = {
         "Supplying and selling all kinds of engine oil, filters, sprays, and octane boosters for auto-parts stores, auto service centers, and wholesale customers.",
       supply: {
         title: "Product Supply",
-        text: "Providing Seman motor oil and other products the auto market needs",
+        text: "Engine oil, filters and lubricants from trusted brands",
       },
       partnership: {
         title: "Partner Collaboration",
@@ -931,7 +931,7 @@ const translations = {
     },
 
     brands: {
-      title: "Engine Oil Brands",
+      title: "Brands",
       subtitle: "Choose a brand",
     },
 
