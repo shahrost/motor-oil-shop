@@ -1,4 +1,5 @@
-// فلش «بکش» روی کارت سوم در موبایل، وقتی ردیف بیشتر از سه کارت داره
+// فلش «بکش» روی کارت سوم در موبایل، وقتی ردیف بیشتر از سه کارت داره؛
+// کامل داخل کادر کارت (left-1) تا لبه‌ی ردیف اسکرولی نصفش رو نبره
 function SwipeHint() {
   return (
     <span
@@ -7,7 +8,7 @@ function SwipeHint() {
         pointer-events-none
         absolute
         top-10
-        -left-3
+        left-1
         z-10
         flex
         items-center
