@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import useAccountFavorites from "./hooks/useAccountFavorites";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import { AccountTabs, FavoritesList } from "./sections";
 
 // «علاقه‌مندی‌های من»
 function AccountFavorites() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("header.accountMenu.favorites"));
   const { favoriteProducts, loading } = useAccountFavorites();
 
   return (

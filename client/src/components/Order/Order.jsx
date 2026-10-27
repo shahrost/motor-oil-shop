@@ -10,9 +10,11 @@ import {
 } from "./sections";
 import EmptyCart from "../common/EmptyCart";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 function Order() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("order.title"));
   const {
     cart,
     cartTotal,

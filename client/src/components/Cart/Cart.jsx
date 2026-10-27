@@ -4,9 +4,11 @@ import { CartItems, CartSummary, LastOrder } from "./sections";
 import EmptyCart from "../common/EmptyCart";
 import useCartPage from "./hooks/useCartPage";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 function Cart() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("nav.cart"));
   const { cart, clearCart, cartTotal, lastOrder, hideLastOrder } = useCartPage();
 
   // بعد از ثبت سفارش سبد خالیه؛ آخرین سفارش زیر پیام «سبد خالی» دیده می‌شه

@@ -2,10 +2,12 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import useRegister from "./hooks/useRegister";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import { MOBILE_PATTERN, cleanPhoneInput } from "../../utils/phoneInput";
 
 function Register() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("register.title"));
   const {
     name,
     setName,

@@ -2,10 +2,12 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import useAccountLogin from "./hooks/useAccountLogin";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import { MOBILE_PATTERN, cleanPhoneInput } from "../../utils/phoneInput";
 
 function AccountLogin() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("accountLogin.title"));
   const {
     phone,
     setPhone,

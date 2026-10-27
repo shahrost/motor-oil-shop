@@ -1,6 +1,12 @@
+import { useContext } from "react";
+
 import useLogin from "./hooks/useLogin";
+import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 
 function Login() {
+  const { t } = useContext(LanguageContext);
+  usePageMeta(t("meta.adminLogin"));
   const { username, password, setUsername, setPassword, handleLogin } =
     useLogin();
 

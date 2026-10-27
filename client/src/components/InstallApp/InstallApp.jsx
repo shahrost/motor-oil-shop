@@ -1,9 +1,15 @@
+import { useContext } from "react";
+
 import { AndroidInstall, IosInstall, InstallNotice } from "./sections";
+import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import useInstallAppPage from "./hooks/useInstallAppPage";
 import brand from "../../data/brand";
 
 // صفحه‌ی «نصب اپلیکیشن» (/app) — در منو نیست؛ لینکش در کانال‌ها پخش می‌شه
 function InstallApp() {
+  const { t } = useContext(LanguageContext);
+  usePageMeta(t("home.installApp"));
   const { platform, inAppBrowser, installed, canPrompt, install } =
     useInstallAppPage();
 

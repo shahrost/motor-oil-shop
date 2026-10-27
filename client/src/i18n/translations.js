@@ -32,6 +32,7 @@ const translations = {
       viscosityProducts: "روغن موتورهای گرید {name} با قیمت نقدی و چکی.",
       promotions: "طرح‌های فروش و هدیه‌ی خرید عمده روی محصولات منتخب.",
       about: "معرفی فروشگاه، حوزه‌ی فعالیت، برندها، روش‌های پرداخت نقدی و چکی، آدرس و راه‌های تماس.",
+      adminLogin: "ورود ادمین",
     },
 
     header: {
@@ -567,6 +568,7 @@ const translations = {
       viscosityProducts: "{name} motor oils with cash and cheque prices.",
       promotions: "Wholesale promotions and gift offers on selected products.",
       about: "About the shop, what we supply, brands, cash and cheque payment, address and contact details.",
+      adminLogin: "Admin Login",
     },
 
     header: {

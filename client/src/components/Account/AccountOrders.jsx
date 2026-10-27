@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import useAccountOrders from "./hooks/useAccountOrders";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import { AccountTabs, OrderHistory } from "./sections";
 
 // «خریدهای من»
 function AccountOrders() {
   const { language, t } = useContext(LanguageContext);
+  usePageMeta(t("account.myOrders"));
   const { orders, loadingOrders } = useAccountOrders();
 
   return (

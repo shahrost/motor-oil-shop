@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import useAccount from "./hooks/useAccount";
 import LanguageContext from "../../context/LanguageContext";
+import { usePageMeta } from "../../hooks/usePageMeta";
 import { AccountTabs, ProfileCard } from "./sections";
 
 // «حساب کاربری»: اطلاعات مشتری + خروج
 function Account() {
   const { t } = useContext(LanguageContext);
+  usePageMeta(t("account.title"));
   const { customer, logout } = useAccount();
 
   return (
