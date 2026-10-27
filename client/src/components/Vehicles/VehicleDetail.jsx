@@ -4,6 +4,7 @@ import LanguageContext from "../../context/LanguageContext";
 import { usePageMeta } from "../../hooks/usePageMeta";
 import SelectedVehicleContext from "../../context/SelectedVehicleContext";
 import VehicleReviews, { useVehicleReviews } from "../VehicleReviews";
+import NotFound from "../NotFound";
 import useVehicleDetail from "./hooks/useVehicleDetail";
 import buildVehicleSpecs from "./helpers/vehicleSpecs";
 import {
@@ -26,13 +27,7 @@ function VehicleDetail() {
     return <p className="text-center text-gray-500 mt-10">{t("vehicles.loading")}</p>;
   }
 
-  if (!vehicle) {
-    return (
-      <p className="text-center text-red-500 mt-10 font-bold">
-        {t("vehicles.notFoundVehicle")}
-      </p>
-    );
-  }
+  if (!vehicle) return <NotFound message={t("vehicles.notFoundVehicle")} />;
 
   return (
     <>

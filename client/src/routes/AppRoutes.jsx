@@ -31,6 +31,7 @@ const Account = lazyPage(() => import("../pages/Account"));
 const AccountOrders = lazyPage(() => import("../pages/AccountOrders"));
 const AccountFavorites = lazyPage(() => import("../pages/AccountFavorites"));
 const InstallApp = lazyPage(() => import("../pages/InstallApp"));
+const NotFound = lazyPage(() => import("../pages/NotFound"));
 
 // پنل ادمین حجیمه و مشتری‌ها لازمش ندارن
 const Admin = lazyPage(() => import("../pages/Admin"));
@@ -107,6 +108,9 @@ function AppRoutes() {
             </CustomerProtectedRoute>
           }
         />
+
+        {/* هر آدرس نامعتبر: صفحه‌ی «پیدا نشد» با هدر و فوتر */}
+        <Route path="*" element={<NotFound />} />
       </Route>
 
       {/* Admin Routes جدا می‌ماند */}

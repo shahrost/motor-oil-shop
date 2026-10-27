@@ -9,11 +9,11 @@ import usePurchaseOptions from "../../../hooks/usePurchaseOptions";
 function useProductDetail() {
   const { id } = useParams();
   const { state } = useLocation();
-  const { products } = useContext(ProductContext);
+  const { products, loading } = useContext(ProductContext);
 
   const product = products.find((item) => item.id === id);
 
-  return { product, ...usePurchaseOptions(product, { vehicle: state?.vehicle }) };
+  return { product, loading, ...usePurchaseOptions(product, { vehicle: state?.vehicle }) };
 }
 
 export default useProductDetail;

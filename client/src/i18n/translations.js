@@ -528,6 +528,13 @@ const translations = {
         text: "قیمت روز روغن موتور و تخفیف مخصوص همکاران",
       },
     },
+
+    notFoundPage: {
+      title: "صفحه پیدا نشد",
+      text: "آدرسی که باز کردید وجود ندارد یا جابه‌جا شده است.",
+      home: "خانه",
+      products: "محصولات",
+    },
   },
 
   en: {
@@ -1055,6 +1062,13 @@ const translations = {
         title: "Featured Products",
         text: "Today's engine oil prices and special discounts for partners",
       },
+    },
+
+    notFoundPage: {
+      title: "Page not found",
+      text: "The address you opened does not exist or has moved.",
+      home: "Home",
+      products: "Products",
     },
   },
 };

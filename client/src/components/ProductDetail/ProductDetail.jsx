@@ -4,6 +4,7 @@ import LanguageContext from "../../context/LanguageContext";
 import { usePageMeta } from "../../hooks/usePageMeta";
 import getBrandLabel from "../../utils/brandLabel";
 import CompatibleVehicles from "../common/CompatibleVehicles";
+import NotFound from "../NotFound";
 import ProductPrice from "../common/ProductPrice";
 import useProductDetail from "./hooks/useProductDetail";
 import useGoBack from "./hooks/useGoBack";
@@ -19,7 +20,7 @@ import {
 
 function ProductDetail() {
   const { language, t } = useContext(LanguageContext);
-  const { product, ...purchase } = useProductDetail();
+  const { product, loading, ...purchase } = useProductDetail();
   const goBack = useGoBack();
   // نام بعضی محصولات عمومیه («مکمل روغن موتور»)؛ برند کنارش میاد مگر اینکه خود نام داشته باشه‌ش
   const brandLabel = product ? getBrandLabel(product.brand, language) : "";
@@ -27,15 +28,12 @@ function ProductDetail() {
     product && (product.name.includes(brandLabel) ? product.name : `${product.name} ${brandLabel}`);
   usePageMeta(metaName, t("meta.product").replace("{name}", metaName));
 
-  if (!product) {
-    return (
-      <div className="text-center py-20">
-        <p className="text-2xl font-bold text-gray-700">
-          {t("productDetail.notFound")}
-        </p>
-      </div>
-    );
+  // تا لیست محصولات نرسیده «پیدا نشد» نشون داده نمی‌شه
+  if (!product && loading) {
+    return <p className="text-center text-gray-500 py-20">{t("vehicles.loading")}</p>;
   }
+
+  if (!product) return <NotFound message={t("productDetail.notFound")} />;
 
   return (
     <div className="max-w-7xl mx-auto px-5 py-10">
