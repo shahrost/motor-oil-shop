@@ -37,32 +37,44 @@ export function getProductGroupKey(product) {
 }
 
 // Display order of product kinds in every listing (and so in each brand row):
-// engine oils, then gear oils, brake fluids, antifreeze; everything else after.
+// gasoline, diesel and motorcycle engine oils, then gear oils, brake fluids,
+// antifreeze; everything else after. Engine oils (ranks below GEAR_RANK) are
+// also ordered by grade.
+const GASOLINE_RANK = 0;
+const DIESEL_RANK = 1;
+const MOTORCYCLE_RANK = 2;
+const GEAR_RANK = 3;
+const BRAKE_FLUID_RANK = 4;
+const ANTIFREEZE_RANK = 5;
+const OTHER_RANK = 6;
+
 const KIND_RANKS = {
-  "gasoline-engine-oil": 0,
-  "diesel-engine-oil": 0,
-  "motorcycle-oil": 0,
-  "gear-oil": 1,
-  "extreme-pressure-gear-oil": 1,
-  "automatic-transmission": 1,
-  antifreeze: 3,
-  coolant: 3,
+  "gasoline-engine-oil": GASOLINE_RANK,
+  "diesel-engine-oil": DIESEL_RANK,
+  "motorcycle-oil": MOTORCYCLE_RANK,
+  "gear-oil": GEAR_RANK,
+  "extreme-pressure-gear-oil": GEAR_RANK,
+  "automatic-transmission": GEAR_RANK,
+  antifreeze: ANTIFREEZE_RANK,
+  coolant: ANTIFREEZE_RANK,
 };
-const BRAKE_FLUID_RANK = 2;
-const OTHER_RANK = 4;
 
 // Some brands (Woofer, part of Behtam) have no menu category, so the name decides.
+// Order matters: motorcycle and diesel before the generic «روغن موتور».
 const NAME_RANKS = [
-  { pattern: /روغن موتور/, rank: 0 },
-  { pattern: /روغن (?:دنده|گیربکس)/, rank: 1 },
-  { pattern: /ضد ?یخ|کولانت/, rank: 3 },
+  { pattern: /روغن موتور ?سیکلت/, rank: MOTORCYCLE_RANK },
+  { pattern: /روغن موتور.*دیزل/, rank: DIESEL_RANK },
+  { pattern: /روغن موتور/, rank: GASOLINE_RANK },
+  { pattern: /روغن (?:دنده|گیربکس)/, rank: GEAR_RANK },
+  { pattern: /ضد ?یخ|کولانت/, rank: ANTIFREEZE_RANK },
 ];
 
 function getKindRank(product) {
   if (isBrakeFluid(product)) return BRAKE_FLUID_RANK;
 
-  const rank = KIND_RANKS[getMenuCategorySlug(product)];
-  if (rank !== undefined) return rank;
+  // A known category that isn't listed (e.g. «مکمل روغن موتور») stays in "other"
+  const slug = getMenuCategorySlug(product);
+  if (slug !== "other") return KIND_RANKS[slug] ?? OTHER_RANK;
 
   const name = product.name || "";
   return NAME_RANKS.find(({ pattern }) => pattern.test(name))?.rank ?? OTHER_RANK;
@@ -96,7 +108,7 @@ export function sortProductsDefault(products) {
         product,
         {
           rank,
-          grade: rank === 0 ? getGradeKey(product) : NO_GRADE,
+          grade: rank < GEAR_RANK ? getGradeKey(product) : NO_GRADE,
           group: getProductGroupKey(product),
         },
       ];
