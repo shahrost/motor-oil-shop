@@ -1,0 +1,62 @@
+# نمونه‌ی کانفیگ nginx برای کلاینت (www.shoil.ir) — فقط مرجع؛ کانفیگ فعلی سرور با این فایل عوض نمی‌شه.
+# کجا اعمال بشه: سرویس استاتیک کلاینت روی Runflare (پروژه‌ی shoil-client، آیتم 80267).
+# اگه Runflare اجازه‌ی کانفیگ سفارشی nginx برای سرویس استاتیک می‌ده، بلوک server زیر جای
+# کانفیگ پیش‌فرضش می‌شینه (یا فقط بلوک‌های location و add_header داخل server فعلی کپی بشن)؛
+# اگه نمی‌ده، همین هدرها رو باید از پشتیبانی Runflare خواست.
+# root همون پوشه‌ی خروجی build است (با RUNFLARE=1 ← dist).
+
+server {
+    listen 80;
+    server_name www.shoil.ir;
+
+    root /usr/share/nginx/html;   # مسیر پوشه‌ی dist روی سرور
+    index index.html;
+
+    # فقط روی HTTPS معنی داره (اگه TLS پشت لود بالانسر Runflare تموم می‌شه، همونجا هم کافیه)
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    # فایل‌های build با اسم هش‌دار Vite: هیچ‌وقت عوض نمی‌شن ← کش یک‌ساله
+    # ^~: بر location regex پایین (پسوندها) مقدم باشه
+    location ^~ /assets/ {
+        try_files $uri =404;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    }
+
+    # Service Worker و manifest همیشه تازه (وگرنه نسخه‌ی جدید PWA دیر می‌رسه)
+    location = /sw.js {
+        try_files $uri =404;
+        add_header Cache-Control "no-cache" always;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    }
+
+    location = /manifest.json {
+        try_files $uri =404;
+        add_header Cache-Control "no-cache" always;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    }
+
+    # HTML همیشه با سرور چک بشه تا بعد از دیپلوی به فایل‌های JS پاک‌شده اشاره نکنه (صفحه‌ی سفید)
+    location = /index.html {
+        add_header Cache-Control "no-cache" always;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    }
+
+    # فایل‌های واقعی (robots.txt، sitemap.xml، آیکون‌ها، og-image، site-guide.pdf…) مستقیم؛
+    # بقیه‌ی آدرس‌ها مسیرهای React Router هستن ← index.html (SPA)
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # آدرس ناموجود با پسوند فایل (مثلاً /foo.png) به‌جای index.html خطای ۴۰۴ بده
+    location ~* \.(?:js|css|map|png|jpe?g|webp|avif|gif|svg|ico|woff2?|ttf|txt|xml|pdf|json)$ {
+        try_files $uri =404;
+    }
+}
+
+# shoil.ir بدون www ← www (آدرس canonical سایت https://www.shoil.ir است)
+# server {
+#     listen 80;
+#     server_name shoil.ir;
+#     return 301 https://www.shoil.ir$request_uri;
+# }
