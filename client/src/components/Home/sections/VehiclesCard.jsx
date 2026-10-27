@@ -30,7 +30,8 @@ function VehiclesCard({ to, title, description }) {
         transition
       "
     >
-      <div ref={artRef} className="relative w-full h-44 flex items-center justify-center">
+      {/* @container: اندازه‌ی ماشین (CarArt) از عرض همین باکس */}
+      <div ref={artRef} className="@container relative w-full h-44 flex items-center justify-center">
         <div className="relative z-[2]">
           <CarArt />
         </div>

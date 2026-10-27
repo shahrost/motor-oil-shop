@@ -3,18 +3,42 @@
 
 export const START_ANGLE = -Math.PI / 2;
 
-// اندازه‌ی باکس تصویر (art)؛ هر فریم یک بار خونده می‌شه، نه برای تک‌تک لوگوها،
+// بدنه‌ی ماشین CarArt نسبت به کادر SVG (viewBox 160×80: x از ۱۴ تا ۱۴۵، y از ۱۴ تا ته چرخ‌ها ۷۳)
+const BODY = { cx: 0.497, cy: 0.544, halfW: 0.41, halfH: 0.37 };
+
+// نیم‌قطر لوگو (۲۱px وقتی جلوست) + چند پیکسل فاصله تا بدنه
+const CHIP_CLEARANCE = 22;
+
+// اندازه‌ی باکس تصویر (art) و کادر ماشین داخلش؛ هر فریم یک بار خونده می‌شه، نه برای تک‌تک لوگوها،
 // تا خوندن اندازه بین نوشتن transformها هر بار layout اجباری راه نندازه
 export function artSize(art) {
-  return { w: art.clientWidth, h: art.clientHeight };
+  const car = art.querySelector("svg")?.getBoundingClientRect();
+  const box = art.getBoundingClientRect();
+
+  return {
+    w: art.clientWidth,
+    h: art.clientHeight,
+    car: car && { x: car.left - box.left, y: car.top - box.top, w: car.width, h: car.height },
+  };
+}
+
+// بیضی مدار دور بدنه‌ی ماشین: مستطیل بدنه + فاصله‌ی لوگو کامل داخل بیضی می‌افته، پس لوگوها
+// هیچ‌جای مسیر روی چرخ‌ها و بدنه نمی‌رن. اگه عرض کارت کم باشه rx کوچیک‌تر و ry بلندتر می‌شه
+// (هنوز دور مستطیل)؛ اندازه‌ی ماشین با عرض کارت کم می‌شه (CarArt) تا این حالت پیش نیاد.
+function orbitEllipse({ w, h, car }) {
+  if (!car) return { cx: w / 2, cy: h / 2 + 4, rx: Math.min(w / 2 - 26, 175), ry: 66 };
+
+  const hw = car.w * BODY.halfW + CHIP_CLEARANCE;
+  const hh = car.h * BODY.halfH + CHIP_CLEARANCE;
+  const rx = Math.min(hw * Math.SQRT2, w / 2 - 20);
+  const ry = rx > hw ? hh / Math.sqrt(1 - (hw / rx) ** 2) : hh * Math.SQRT2;
+
+  return { cx: car.x + car.w * BODY.cx, cy: car.y + car.h * BODY.cy, rx, ry };
 }
 
 // جای لوگوی i از n روی بیضی، به مختصات باکس تصویر (size از artSize)
-export function orbitSlot({ w, h }, i, n, angle) {
-  const cx = w / 2;
-  const cy = h / 2 + 4;
-  const rx = Math.min(w / 2 - 26, 175);
-  const ry = 66;
+export function orbitSlot(size, i, n, angle) {
+  const { cx, cy, rx, ry } = orbitEllipse(size);
 
   const a = angle + (i * 2 * Math.PI) / n;
   const depth = Math.sin(a); // ۱ = جلو، ۱- = پشت

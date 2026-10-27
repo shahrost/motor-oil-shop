@@ -1,7 +1,13 @@
-// تصویر کارت «خودروهای من»: یک خودروی فرضی بدون برند
+// تصویر کارت «خودروهای من»: یک خودروی فرضی بدون برند.
+// اندازه با عرض باکس تصویر (container query) کم و زیاد می‌شه تا مدار لوگوها دورش جا بشه
+// و لوگوها از روی چرخ‌ها و بدنه رد نشن (helpers/logoOrbit)
 function CarArt() {
   return (
-    <svg viewBox="0 0 160 80" aria-hidden="true" className="h-32 w-auto drop-shadow-lg">
+    <svg
+      viewBox="0 0 160 80"
+      aria-hidden="true"
+      className="h-12 @min-[248px]:h-16 @min-[286px]:h-20 @min-[322px]:h-24 w-auto drop-shadow-lg"
+    >
       <path
         d="M14 56V46c0-4 2.6-7.2 6.4-8.2l14-3.6 15-16.4A12 12 0 0 1 58.2 14h38.6a12 12 0 0 1 9.2 4.3l13 15.2 18 4.2c4.2 1 7 4.6 7 8.9V56c0 3-2.4 5.4-5.4 5.4H134a14 14 0 0 0-27.6 0H58.6a14 14 0 0 0-27.6 0h-11.6C16.4 61.4 14 59 14 56Z"
         className="fill-gray-800"
