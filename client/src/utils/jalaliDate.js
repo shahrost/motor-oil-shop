@@ -1,3 +1,5 @@
+import { toPersianDigits } from "./digits";
+
 // تاریخ شمسی با تقویم persian خود مرورگر (Intl)؛ همیشه به وقت تهران تا با گزارش سرور یکی باشه
 const TIME_ZONE = "Asia/Tehran";
 
@@ -25,17 +27,6 @@ const partsFormatter = new Intl.DateTimeFormat("en-US-u-ca-persian-nu-latn", {
   minute: "2-digit",
   hourCycle: "h23",
 });
-
-export function toPersianDigits(value) {
-  return String(value).replace(/\d/g, (digit) => "۰۱۲۳۴۵۶۷۸۹"[digit]);
-}
-
-// ارقام فارسی/عربی ← انگلیسی (برای جستجوی شماره تماس)
-export function toLatinDigits(value) {
-  return String(value)
-    .replace(/[۰-۹]/g, (digit) => "۰۱۲۳۴۵۶۷۸۹".indexOf(digit))
-    .replace(/[٠-٩]/g, (digit) => "٠١٢٣٤٥٦٧٨٩".indexOf(digit));
-}
 
 const pad2 = (number) => String(number).padStart(2, "0");
 

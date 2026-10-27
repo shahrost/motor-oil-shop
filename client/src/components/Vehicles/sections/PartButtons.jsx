@@ -1,4 +1,5 @@
-import { VEHICLE_PARTS, partProducts } from "../../../utils/vehicleParts";
+import { partProducts } from "../../../utils/vehicleParts";
+import VEHICLE_PARTS from "../../../data/vehicleParts";
 import {
   getProductImageSrc,
   handleProductImageError,

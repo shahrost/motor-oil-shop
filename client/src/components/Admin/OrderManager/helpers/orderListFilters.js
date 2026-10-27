@@ -1,4 +1,5 @@
-import { toJalali, toLatinDigits, jalaliMonthKey, jalaliMonthLabel } from "../../../../utils/jalaliDate";
+import { toJalali, jalaliMonthKey, jalaliMonthLabel } from "../../../../utils/jalaliDate";
+import { toLatinDigits } from "../../../../utils/digits";
 
 export const ALL_STATUSES = "همه";
 

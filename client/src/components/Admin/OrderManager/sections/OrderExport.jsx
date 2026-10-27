@@ -1,5 +1,6 @@
 import useOrderExport from "../hooks/useOrderExport";
-import { JALALI_MONTHS, toPersianDigits } from "../../../../utils/jalaliDate";
+import { JALALI_MONTHS } from "../../../../utils/jalaliDate";
+import { toPersianDigits } from "../../../../utils/digits";
 
 const FIELD_CLASS = "border p-3 rounded-lg bg-white text-black";
 

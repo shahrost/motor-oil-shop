@@ -1,12 +1,6 @@
-const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
-const ZWNJ = "‌";
+import { toLatinDigits } from "./digits";
 
-export function toLatinDigits(value) {
-  return String(value || "").replace(
-    /[۰-۹]/g,
-    (d) => PERSIAN_DIGITS.indexOf(d),
-  );
-}
+const ZWNJ = "‌";
 
 function stripSpacing(value) {
   return value.split(ZWNJ).join("").replace(/\s/g, "");

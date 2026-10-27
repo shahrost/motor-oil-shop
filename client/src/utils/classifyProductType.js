@@ -1,7 +1,6 @@
 import productTypes from "../data/productOptions/productTypes";
-import localizedLabel from "./localizedLabel";
 
-const OTHER_TYPE = { id: "other", label: "سایر", labelEn: "Other" };
+export const OTHER_TYPE = { id: "other", label: "سایر", labelEn: "Other" };
 
 export function classifyProductType(category) {
   const text = String(category || "").toLowerCase();
@@ -11,18 +10,4 @@ export function classifyProductType(category) {
   );
 
   return match ? match.id : OTHER_TYPE.id;
-}
-
-export function getProductTypeOptions(language = "fa") {
-  return [
-    { value: "همه", label: language === "en" ? "All" : "همه" },
-    ...productTypes.map((type) => ({
-      value: type.id,
-      label: localizedLabel(type, language),
-    })),
-    {
-      value: OTHER_TYPE.id,
-      label: localizedLabel(OTHER_TYPE, language),
-    },
-  ];
 }

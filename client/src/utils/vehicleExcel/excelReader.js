@@ -1,7 +1,6 @@
 // خواندن ردیف‌های یک شیت exceljs بر اساس نقشه‌ی ستون‌ها (مثل server/utils/excelReader.js)
 
-const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
-const ARABIC_DIGITS = "٠١٢٣٤٥٦٧٨٩";
+import { toLatinDigits } from "../digits";
 
 function cellToString(value) {
   if (value === null || value === undefined) return "";
@@ -31,9 +30,7 @@ function normalizeHeader(str) {
 }
 
 export function toNumber(raw) {
-  const str = String(raw ?? "")
-    .replace(/[۰-۹]/g, (d) => PERSIAN_DIGITS.indexOf(d))
-    .replace(/[٠-٩]/g, (d) => ARABIC_DIGITS.indexOf(d))
+  const str = toLatinDigits(raw)
     .replace(/[,٬\s]/g, "")
     .replace(/[^\d.-]/g, "");
 

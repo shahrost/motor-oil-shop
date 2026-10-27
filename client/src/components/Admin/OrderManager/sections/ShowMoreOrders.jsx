@@ -1,4 +1,4 @@
-import { toPersianDigits } from "../../../../utils/jalaliDate";
+import { toPersianDigits } from "../../../../utils/digits";
 
 // «نمایش بیشتر» زیر لیست + تعداد نمایش‌داده‌شده از کل
 function ShowMoreOrders({ shown, total, onShowMore }) {

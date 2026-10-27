@@ -4,7 +4,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { ProductContext } from "../../../context";
 import defaultVehicles from "../../../data/vehicles";
 import { fetchVehicleById } from "../../../services/vehicleService";
-import getVehicleParts, { VEHICLE_PARTS } from "../../../utils/vehicleParts";
+import getVehicleParts from "../../../utils/vehicleParts";
+import VEHICLE_PARTS from "../../../data/vehicleParts";
 import useCachedLoad from "./useCachedLoad";
 
 // خودروی صفحه، محصولات هر دسته‌اش و دسته‌ی انتخاب‌شده. دسته توی آدرس

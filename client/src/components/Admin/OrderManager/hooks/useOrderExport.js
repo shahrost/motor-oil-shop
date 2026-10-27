@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import { downloadOrdersExcel } from "../../../../services/orderService";
 import downloadBlob from "../../../../utils/downloadBlob";
-import { currentJalaliMonth, toPersianDigits } from "../../../../utils/jalaliDate";
+import { currentJalaliMonth } from "../../../../utils/jalaliDate";
+import { toPersianDigits } from "../../../../utils/digits";
 
 // سال‌های قابل انتخاب: از ۱۴۰۴ (شروع فروش آنلاین) تا سال جاری
 const FIRST_YEAR = 1404;

@@ -1,11 +1,4 @@
-const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
-
-function toLatinDigits(value) {
-  return String(value || "").replace(
-    /[۰-۹]/g,
-    (d) => PERSIAN_DIGITS.indexOf(d),
-  );
-}
+import { toLatinDigits } from "./digits";
 
 // Order matters: longer/compound units must be matched before the shorter
 // unit they contain (میلی‌لیتر contains لیتر, کیلوگرمی contains گرم).

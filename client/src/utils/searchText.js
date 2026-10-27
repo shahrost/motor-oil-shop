@@ -1,14 +1,14 @@
+import { toLatinDigits } from "./digits";
+
 // یکسان‌سازی متن برای جستجو تا «پراید»/«Pride»، «۱۴۱»/«141»، «كيا»/«کیا» و
 // «سانگ‌یانگ»/«سانگ یانگ» یکی دیده بشن: حروف کوچک، ارقام فارسی/عربی ← انگلیسی،
 // ي/ك عربی ← ی/ک فارسی، حذف اعراب و مد و همزه (آ ← ا، ë ← e)، حذف نیم‌فاصله،
 // علامت‌ها ← فاصله (به‌جز ممیز اعشار: «۱٫۵» ← «1.5»)
 export function normalizeSearchText(text) {
-  return String(text || "")
+  return toLatinDigits(text || "")
     .toLowerCase()
     .normalize("NFD")
     .replace(/[̀-ًͯ-ٰٟ]/g, "")
-    .replace(/[۰-۹]/g, (digit) => digit.charCodeAt(0) - 0x06f0)
-    .replace(/[٠-٩]/g, (digit) => digit.charCodeAt(0) - 0x0660)
     .replace(/[يى]/g, "ی")
     .replace(/ك/g, "ک")
     .replace(/ة/g, "ه")

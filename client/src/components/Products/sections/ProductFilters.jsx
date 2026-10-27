@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import FilterSelect from "../../common/FilterSelect";
-import getFilterFields from "../../../utils/filterFields";
+import getFilterFields from "../helpers/filterFields";
 import { ALL } from "../../../utils/filterProducts";
 
 // «API» قبل از سطح کیفیت نوشته می‌شه، به‌جز استانداردهای JASO

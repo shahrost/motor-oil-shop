@@ -1,9 +1,5 @@
-import {
-  normalizeViscosity,
-  normalizeApi,
-  compareVolumes,
-  toLatinDigits,
-} from "./normalizeSpec";
+import { normalizeViscosity, normalizeApi, compareVolumes } from "./normalizeSpec";
+import { toLatinDigits } from "./digits";
 import getMenuCategorySlug from "./classifyMenuCategory";
 import { isBrakeFluid } from "./brakeFluidStandard";
 

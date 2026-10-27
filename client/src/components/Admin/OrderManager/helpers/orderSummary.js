@@ -1,4 +1,5 @@
-import { formatJalaliDateTime, toPersianDigits } from "../../../../utils/jalaliDate";
+import { formatJalaliDateTime } from "../../../../utils/jalaliDate";
+import { toPersianDigits } from "../../../../utils/digits";
 
 // مبلغ با ارقام و جداکننده‌ی فارسی: «۱٬۲۵۰٬۰۰۰ تومان»
 export function formatToman(value) {
