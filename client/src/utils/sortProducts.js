@@ -2,7 +2,10 @@ import {
   normalizeViscosity,
   normalizeApi,
   compareVolumes,
+  toLatinDigits,
 } from "./normalizeSpec";
+import getMenuCategorySlug from "./classifyMenuCategory";
+import { isBrakeFluid } from "./brakeFluidStandard";
 
 // Most of the catalog was shortened to one generic name per category (e.g.
 // "معدنی"), so it's identical across volumes and useless for grouping. A few
@@ -33,14 +36,87 @@ export function getProductGroupKey(product) {
   ].join("|");
 }
 
-// Default listing order: group same-line products together, smallest volume first.
-export function sortProductsDefault(products) {
-  return [...products].sort((a, b) => {
-    const keyA = getProductGroupKey(a);
-    const keyB = getProductGroupKey(b);
+// Display order of product kinds in every listing (and so in each brand row):
+// engine oils, then gear oils, brake fluids, antifreeze; everything else after.
+const KIND_RANKS = {
+  "gasoline-engine-oil": 0,
+  "diesel-engine-oil": 0,
+  "motorcycle-oil": 0,
+  "gear-oil": 1,
+  "extreme-pressure-gear-oil": 1,
+  "automatic-transmission": 1,
+  antifreeze: 3,
+  coolant: 3,
+};
+const BRAKE_FLUID_RANK = 2;
+const OTHER_RANK = 4;
 
-    if (keyA !== keyB) {
-      return keyA < keyB ? -1 : 1;
+// Some brands (Woofer, part of Behtam) have no menu category, so the name decides.
+const NAME_RANKS = [
+  { pattern: /روغن موتور/, rank: 0 },
+  { pattern: /روغن (?:دنده|گیربکس)/, rank: 1 },
+  { pattern: /ضد ?یخ|کولانت/, rank: 3 },
+];
+
+function getKindRank(product) {
+  if (isBrakeFluid(product)) return BRAKE_FLUID_RANK;
+
+  const rank = KIND_RANKS[getMenuCategorySlug(product)];
+  if (rank !== undefined) return rank;
+
+  const name = product.name || "";
+  return NAME_RANKS.find(({ pattern }) => pattern.test(name))?.rank ?? OTHER_RANK;
+}
+
+// Engine oil grade as [winter, hot] so 0W-20 < 5W-30 < 10W-40 < 20W-50.
+// A monograde (SAE 40) counts as [40, 40]; no grade sorts last. Some brands
+// only carry the grade in the name ("RENOVATION SL 10W40 1L").
+const GRADE_PATTERN = /\b(\d{1,2})\s?W\s?-?\s?(\d{2})\b/i;
+const MONOGRADE_PATTERN = /\bSAE\s?(\d{1,2})\b/i;
+const NO_GRADE = [Infinity, Infinity];
+
+function getGradeKey(product) {
+  for (const text of [product.viscosity, product.name]) {
+    const value = toLatinDigits(text);
+    const multi = value.match(GRADE_PATTERN);
+    if (multi) return [Number(multi[1]), Number(multi[2])];
+    const mono = value.match(MONOGRADE_PATTERN);
+    if (mono) return [Number(mono[1]), Number(mono[1])];
+  }
+  return NO_GRADE;
+}
+
+// Default listing order: product kind, engine oils by grade (low to high), then
+// same-line products grouped together, smallest volume first.
+export function sortProductsDefault(products) {
+  const keys = new Map(
+    products.map((product) => {
+      const rank = getKindRank(product);
+      return [
+        product,
+        {
+          rank,
+          grade: rank === 0 ? getGradeKey(product) : NO_GRADE,
+          group: getProductGroupKey(product),
+        },
+      ];
+    }),
+  );
+
+  return [...products].sort((a, b) => {
+    const keyA = keys.get(a);
+    const keyB = keys.get(b);
+
+    if (keyA.rank !== keyB.rank) return keyA.rank - keyB.rank;
+
+    for (let i = 0; i < 2; i += 1) {
+      if (keyA.grade[i] !== keyB.grade[i]) {
+        return keyA.grade[i] < keyB.grade[i] ? -1 : 1;
+      }
+    }
+
+    if (keyA.group !== keyB.group) {
+      return keyA.group < keyB.group ? -1 : 1;
     }
 
     return compareVolumes(a.volume, b.volume);

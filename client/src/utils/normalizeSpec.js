@@ -1,7 +1,7 @@
 const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
 const ZWNJ = "‌";
 
-function toLatinDigits(value) {
+export function toLatinDigits(value) {
   return String(value || "").replace(
     /[۰-۹]/g,
     (d) => PERSIAN_DIGITS.indexOf(d),

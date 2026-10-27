@@ -66,6 +66,7 @@ server/   Express + Mongoose — جدا دیپلوی می‌شه
 
 ## کارهای انجام‌شده در سشن 2026-10-27
 
+- **ترتیب محصولات (بخش ۵۲ PROJECT_STATE):** ردیف هر برند با روغن موتور شروع می‌شه (گرید پایین به بالا)، بعد روغن گیربکس، روغن ترمز، ضدیخ و بقیه (`sortProductsDefault` در `utils/sortProducts.js`).
 - **کارت موبایل مثل دسکتاپ + استاندارد روغن ترمز (بخش ۵۱ PROJECT_STATE):** کارت ردیفی روی موبایل هم اسم، گرید و API رو نشون می‌ده؛ کارت روغن ترمز به‌جای گرید و API «استاندارد: DOT3 / DOT4» داره (`utils/brakeFluidStandard.js`، `utils/productTypeSpec.js`).
 - **نوع ATF روی کارت (بخش ۵۰ PROJECT_STATE):** کارت روغن‌های گیربکس اتوماتیک به‌جای گرید و API فقط «نوع: CVT / DCT / AL4 / DEXRON VI …» نشون می‌ده (`utils/atfType.js`)؛ ATFهای ایدلوب و MVLV-WS وم اویل هم به دسته‌ی «روغن دنده اتوماتیک» منتقل شدن. صفحه‌ی سفید بعد از دیپلوی (HTML کش‌شده‌ی مرورگر که به JS پاک‌شده اشاره می‌کرد) با `cache: "no-cache"` در `sw.js` رفع شد.
 - **لوگوی جدید (بخش ۴۹ PROJECT_STATE):** کیت SHAHRAM جایگزین مونوگرام قدیمی شد: favicon (ico/svg/png)، apple-touch-icon، آیکون‌های PWA (any + maskable)، og-image، لوگوی هدر/فوتر (`assets/logo/shahram-logo.svg`) و ادمین (روشن/شب)؛ کش Service Worker `v2`. ورودی‌های اپ Capacitor در `client/assets/` آماده‌ی مرحله‌ی ۲.
