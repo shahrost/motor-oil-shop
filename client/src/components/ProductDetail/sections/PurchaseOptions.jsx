@@ -21,6 +21,7 @@ function PurchaseOptions({
         <span className={LABEL_CLASS}>{t("common.orderUnitLabel")}</span>
 
         <select
+          aria-label={t("common.orderUnitLabel")}
           value={orderType}
           onChange={(e) => setOrderType(e.target.value)}
           className={SELECT_CLASS}
@@ -39,6 +40,9 @@ function PurchaseOptions({
         <input
           type="number"
           min="1"
+          step="1"
+          inputMode="numeric"
+          aria-label={t("common.quantity")}
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           className="w-24 border rounded-lg p-1 text-black"
@@ -49,6 +53,7 @@ function PurchaseOptions({
         <span className={LABEL_CLASS}>{t("common.payment")}</span>
 
         <select
+          aria-label={t("common.payment")}
           value={paymentType}
           onChange={(e) => setPaymentType(e.target.value)}
           className={SELECT_CLASS}

@@ -37,6 +37,7 @@ function PurchaseBox({
         </label>
 
         <select
+          aria-label={t("common.orderUnitLabel")}
           value={orderType}
           onChange={(e) => setOrderType(e.target.value)}
           className="
@@ -61,6 +62,9 @@ function PurchaseBox({
         <input
           type="number"
           min="1"
+          step="1"
+          inputMode="numeric"
+          aria-label={t("common.quantity")}
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           className="
@@ -80,6 +84,7 @@ function PurchaseBox({
         </label>
 
         <select
+          aria-label={t("common.payment")}
           value={paymentType}
           onChange={(e) => setPaymentType(e.target.value)}
           className="

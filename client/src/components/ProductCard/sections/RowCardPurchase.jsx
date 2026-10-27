@@ -22,6 +22,7 @@ function RowCardPurchase({
   return (
     <div className="mt-2 space-y-1" onClick={(e) => e.preventDefault()}>
       <select
+        aria-label={t("common.orderUnitLabel")}
         value={orderType}
         onChange={(e) => setOrderType(e.target.value)}
         className={CONTROL_CLASS}
@@ -36,12 +37,16 @@ function RowCardPurchase({
       <input
         type="number"
         min="1"
+        step="1"
+        inputMode="numeric"
+        aria-label={t("common.quantity")}
         value={quantity}
         onChange={(e) => setQuantity(e.target.value)}
         className={CONTROL_CLASS}
       />
 
       <select
+        aria-label={t("common.payment")}
         value={paymentType}
         onChange={(e) => setPaymentType(e.target.value)}
         className={CONTROL_CLASS}
