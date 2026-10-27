@@ -27,8 +27,9 @@
     <meta name="twitter:title" content="%BRAND_TITLE%" />
     <meta name="twitter:description" content="%BRAND_DESCRIPTION%" />
     <meta name="twitter:image" content="%BRAND_OG_IMAGE%" />
-    <!-- اتصال (DNS + TLS) به سرور API و عکس‌ها همزمان با دانلود JS باز می‌شه -->
-    <link rel="preconnect" href="%VITE_API_URL%" crossorigin />
+    <!-- اتصال (DNS + TLS) به سرور API و عکس‌ها همزمان با دانلود JS باز می‌شه.
+         preconnect فقط origin می‌گیره (VITE_API_URL مسیر /api داره)؛ با عوض شدن دامنه‌ی API اینجا هم عوض بشه -->
+    <link rel="preconnect" href="https://api.shoil.ir" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" />
     <!-- PWA: نصب سایت روی گوشی (اندروید و آیفون) -->
     <link rel="manifest" href="/manifest.json" />
