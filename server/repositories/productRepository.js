@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const Product = require("../models/Product");
 const productListCache = require("../utils/productListCache");
 const leanToJSON = require("../utils/leanToJSON");
@@ -60,6 +62,15 @@ async function findByBrands(brands, fields) {
   return Product.find({ brand: { $in: brands } }).select(["sku", ...fields]).lean();
 }
 
+// فیلدهای لازم برای قیمت‌گذاری سفارش (شناسه‌ی نامعتبر نادیده گرفته می‌شه)
+async function findPricingByIds(ids) {
+  const validIds = [...new Set(ids)].filter((id) => mongoose.isValidObjectId(id));
+
+  return Product.find({ _id: { $in: validIds } })
+    .select("name price priceCheck cartonCount promotion")
+    .lean();
+}
+
 async function setFieldsById(id, fields) {
   return Product.updateOne({ _id: id }, { $set: fields });
 }
@@ -98,6 +109,7 @@ module.exports = {
   findDuplicate,
   findBySkus,
   findByBrands,
+  findPricingByIds,
   setFieldsById,
   bulkWrite,
   findExistingSkus,
