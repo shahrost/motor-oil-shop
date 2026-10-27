@@ -97,7 +97,7 @@ const translations = {
       },
       paymentType: {
         cash: "نقدی",
-        check: "اعتباری",
+        check: "چکی",
       },
       promotion: {
         badge: "طرح فروش ویژه",
@@ -249,7 +249,7 @@ const translations = {
       buttons: {
         title: "روش پرداخت کل سفارش",
         allCash: "همه نقدی",
-        allCheck: "همه اعتباری",
+        allCheck: "همه چکی",
       },
       success: {
         title: "سفارش شما ثبت شد",
@@ -382,7 +382,7 @@ const translations = {
         title: "روش‌های پرداخت",
         cash: "نقدی",
         cashText: "قیمت نقدی هر محصول در صفحه‌ی همان محصول نمایش داده می‌شود.",
-        check: "چکی (اعتباری)",
+        check: "چکی",
         checkText: "قیمت چکی جداگانه نمایش داده می‌شود.",
         checkTerms: "شرایط: {terms}",
       },
@@ -631,7 +631,7 @@ const translations = {
       },
       paymentType: {
         cash: "Cash",
-        check: "Credit",
+        check: "Cheque",
       },
       promotion: {
         badge: "Special Offer",
@@ -784,7 +784,7 @@ const translations = {
       buttons: {
         title: "Payment Method for Entire Order",
         allCash: "All Cash",
-        allCheck: "All Credit",
+        allCheck: "All Cheque",
       },
       success: {
         title: "Your order has been placed",
@@ -917,7 +917,7 @@ const translations = {
         title: "Payment Methods",
         cash: "Cash",
         cashText: "Each product's cash price is shown on its page.",
-        check: "Cheque (credit)",
+        check: "Cheque",
         checkText: "Cheque prices are shown separately.",
         checkTerms: "Terms: {terms}",
       },

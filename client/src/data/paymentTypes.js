@@ -7,7 +7,7 @@ const paymentTypes = [
   },
   {
     value: "check",
-    title: "اعتباری",
+    title: "چکی",
     icon: FileText,
   },
 ];

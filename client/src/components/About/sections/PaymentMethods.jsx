@@ -5,7 +5,7 @@ import brand from "../../../data/brand";
 
 const METHODS = ["cash", "check"];
 
-// روش‌های پرداخت: نقدی و چکی (اعتباری)
+// روش‌های پرداخت: نقدی و چکی
 function PaymentMethods() {
   const { language, t } = useContext(LanguageContext);
   // شرایط چکی از data/brand.js؛ خالی ← جمله‌ی «شرایط: …» حذف
