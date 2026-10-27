@@ -155,17 +155,18 @@ svg.lucide {
   border-color: var(--border-light);
 }
 
+/* حاشیه‌ی فیلدها روشن‌تر از --border-light تا روی کارت هم‌رنگ (مثل فرم ثبت‌نام) دیده بشه (کنتراست ≥ ۳:۱) */
 .dark input,
 .dark select,
 .dark textarea {
   background-color: var(--card-bg);
   color: var(--text-main);
-  border-color: var(--border-light);
+  border-color: #5b6f91;
 }
 
 .dark input::placeholder,
 .dark textarea::placeholder {
-  color: var(--text-muted);
+  color: #a7b1c2;
 }
 
 /* =========================
