@@ -3,7 +3,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { VehicleContext } from "../../../context";
 import { fetchVehicleBrands } from "../../../services/vehicleService";
 import { getVehicleDataCache } from "../../../services/vehicleDataCache";
-import { getVehicleBrands } from "../../../utils/vehicleBrands";
+import { getVehicleBrands, sortVehicleBrands } from "../../../utils/vehicleBrands";
 
 // برندها بین بازدیدها در کش مشترک صفحه‌های خودرو نگه داشته می‌شن
 const KEY = "all";
@@ -45,7 +45,7 @@ function useVehicleBrands() {
   return useMemo(() => {
     if (brands === null) return null;
 
-    return brands.length > 0 ? brands : getVehicleBrands(vehicles);
+    return sortVehicleBrands(brands.length > 0 ? brands : getVehicleBrands(vehicles));
   }, [brands, vehicles]);
 }
 
