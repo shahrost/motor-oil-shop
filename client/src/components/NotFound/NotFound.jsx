@@ -31,7 +31,7 @@ function NotFound({ message }) {
 
         <Link
           to="/products"
-          className="bg-gray-950 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-bold transition"
+          className="bg-gray-950 hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-bold transition"
         >
           {t("notFoundPage.products")}
         </Link>
