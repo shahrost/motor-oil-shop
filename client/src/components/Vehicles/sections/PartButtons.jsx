@@ -17,6 +17,9 @@ function PartButtons({ parts, selected, onSelect, t }) {
           const sample = list[0];
           const active = selected === part.key;
 
+          // دسته‌ی بدون محصول نمایش داده نمی‌شه (مگر همونی که الان انتخاب شده، مثلاً از لینک ?part=)
+          if (!list.length && !active) return null;
+
           return (
             <button
               key={part.key}
