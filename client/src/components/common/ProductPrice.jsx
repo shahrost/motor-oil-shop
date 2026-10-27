@@ -27,18 +27,18 @@ function ProductPrice({ product, paymentType, orderType, className = "", noteCla
 
   return (
     <div>
+      {/* عدد و «تومان» همیشه یک خط؛ توضیح واحد همیشه خط زیرش تا قیمت کارت‌های هم‌ردیف هم‌تراز بمونه */}
       <p className={`whitespace-nowrap ${className}`}>
         {formatPrice(getUnitTotalPrice(product, paymentType, orderType), language)}
-        {!isCarton && <span className={`ms-1 ${note}`}>{t("productCard.perUnit")}</span>}
       </p>
 
-      {isCarton && (
-        <p className={note}>
-          {t("productCard.perCarton")
-            .replace("{count}", product.cartonCount || 1)
-            .replace("{price}", formatPrice(getProductPrice(product, paymentType), language))}
-        </p>
-      )}
+      <p className={note}>
+        {isCarton
+          ? t("productCard.perCarton")
+              .replace("{count}", product.cartonCount || 1)
+              .replace("{price}", formatPrice(getProductPrice(product, paymentType), language))
+          : t("productCard.perUnit")}
+      </p>
     </div>
   );
 }

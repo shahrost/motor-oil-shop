@@ -64,7 +64,7 @@ function ProductRowCard({ product }) {
             product={product}
             paymentType={card.paymentType}
             orderType={card.orderType}
-            className="text-sm sm:text-lg font-extrabold text-gray-950"
+            className="text-xs sm:text-lg font-extrabold text-gray-950"
             noteClassName="text-[11px]"
           />
 

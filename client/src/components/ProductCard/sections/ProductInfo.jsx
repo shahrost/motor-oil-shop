@@ -82,8 +82,9 @@ function ProductInfo({ product, paymentType, orderType }) {
 
       <CompatibleVehicles product={product} className="mt-2" />
 
-      {/* قیمت و نشان تخفیف تو یک ردیف تا کارت یک ردیف کوتاه‌تر بشه */}
-      <div className="mt-2 flex items-start justify-between gap-2">
+      {/* قیمت و نشان تخفیف تو یک ردیف تا کارت یک ردیف کوتاه‌تر بشه؛
+          mt-auto: قیمت و کنترل‌های خرید زیرش در کارت‌های هم‌ردیف ته کارت و هم‌ترازن */}
+      <div className="mt-auto pt-2 flex items-start justify-between gap-2">
         <ProductPrice
           product={product}
           paymentType={paymentType}
