@@ -26,6 +26,22 @@ const NAME_TRANSLATIONS = {
   "اکتان": "Octane Booster",
   "شیشه‌شوی": "Windshield Washer Fluid",
 
+  // توتال: اسم خط تولید توی اسم اومده تا کارت‌های روغن موتور از هم جدا باشن
+  "روغن موتور کوارتز 9000 MVP": "Quartz 9000 MVP Engine Oil",
+  "روغن موتور کوارتز 9000 انرژی": "Quartz 9000 Energy Engine Oil",
+  "روغن موتور کوارتز 9000 انرژی MVP": "Quartz 9000 Energy MVP Engine Oil",
+  "روغن موتور کوارتز 7000": "Quartz 7000 Engine Oil",
+  "روغن موتور کوارتز 7000 اروپا": "Quartz 7000 Engine Oil (Europe)",
+  "روغن موتور کوارتز 5000": "Quartz 5000 Engine Oil",
+  "روغن موتور Motor Oil": "TotalEnergies Motor Oil",
+  "روغن موتور الف Evolution 400": "ELF Evolution 400 Engine Oil",
+  "روغن دنده ترانسلف NFX": "ELF Tranself NFX Gear Oil",
+  "روغن هیدرولیک LHM پلاس": "LHM Plus Hydraulic Oil",
+  "گریس لیتیوم Multis EP3": "Multis EP3 Lithium Grease",
+  "انژکتورشوی": "Injector Cleaner",
+  "موتورشوی": "Engine Flush",
+  "اسپری روان‌کننده چندمنظوره": "Multifunction Lubricant Spray",
+
   // ووفر: برند دست‌نخورده مونده (خط تولید کاملاً متفاوته)، پس هر اسم
   // به‌صورت جداگانه ترجمه شده، نه با یه قاعده‌ی مشترک.
   "ستان بوستر ووفر | Cetane Booster": "Woofer Cetane Booster",

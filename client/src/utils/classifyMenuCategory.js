@@ -73,6 +73,11 @@ export function getMenuCategorySlug(product) {
 
     case "توتال":
       if (category.includes("PCMO")) return "gasoline-engine-oil";
+      if (category === "روغن دنده اتومات") return "automatic-transmission";
+      if (category === "روغن دنده") return "gear-oil";
+      if (category === "روغن هیدرولیک") return "hydraulic-oil";
+      if (category === "گریس") return "grease";
+      if (category === "مکمل روغن موتور") return "oil-additive";
       return "other";
 
     case "لوکینی":
