@@ -2,6 +2,7 @@ import { formatVolume } from "../../../utils/formatVolume";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 import { getProductTypeSpec } from "../../../utils/productTypeSpec";
 import { formatApi, formatViscosity } from "../../../utils/specLabel";
+import { untranslatedProps } from "../../../utils/untranslatedText";
 
 // مشخصات کارت ردیفی؛ روی موبایل هم دقیقاً همون خط‌های دسکتاپ نشون داده می‌شه
 function RowCardSpecs({ product, name, language, t }) {
@@ -9,7 +10,9 @@ function RowCardSpecs({ product, name, language, t }) {
 
   return (
     <>
-      <h3 className="line-clamp-2 mt-2 text-xs sm:text-sm font-bold text-gray-900">
+      <h3
+        {...untranslatedProps(name, language)}
+        className="line-clamp-2 mt-2 text-xs sm:text-sm font-bold text-gray-900">
         {name}
       </h3>
 

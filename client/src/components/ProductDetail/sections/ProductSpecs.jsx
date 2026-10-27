@@ -3,6 +3,7 @@ import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { formatVolume } from "../../../utils/formatVolume";
 import { hasActivePromotion } from "../../../utils/promotionCalc";
 import { formatApi, formatViscosity } from "../../../utils/specLabel";
+import { untranslatedProps } from "../../../utils/untranslatedText";
 import PromotionBadge from "../../common/PromotionBadge";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 
@@ -10,17 +11,22 @@ const LABEL_CLASS = "text-gray-500 font-bold";
 
 // عنوان و مشخصات فنی محصول؛ مشخصه‌های خالی نمایش داده نمی‌شن
 function ProductSpecs({ product, language, t }) {
+  const name = getProductNameLabel(product.name, language);
+  const brandLabel = getBrandLabel(product.brand, language);
+
   return (
     <div>
       {hasActivePromotion(product.promotion) && <PromotionBadge className="mb-3" />}
 
-      <h1 className="text-3xl font-extrabold text-black">
-        {getProductNameLabel(product.name, language)}
+      <h1 {...untranslatedProps(name, language)} className="text-3xl font-extrabold text-black">
+        {name}
       </h1>
 
       <div className="mt-6 space-y-3 text-black">
         <SpecLine
-          labelClassName={LABEL_CLASS} label={t("common.brand")} value={getBrandLabel(product.brand, language)} />
+          labelClassName={LABEL_CLASS} label={t("common.brand")}
+          value={<span {...untranslatedProps(brandLabel, language)}>{brandLabel}</span>}
+        />
 
         <SpecLine
           labelClassName={LABEL_CLASS}
@@ -50,7 +56,13 @@ function ProductSpecs({ product, language, t }) {
         />
 
         <SpecLine
-          labelClassName={LABEL_CLASS} label={t("productDetail.oilType")} value={product.oilType} />
+          labelClassName={LABEL_CLASS} label={t("productDetail.oilType")}
+          value={
+            product.oilType && (
+              <span {...untranslatedProps(product.oilType, language)}>{product.oilType}</span>
+            )
+          }
+        />
       </div>
     </div>
   );

@@ -10,10 +10,12 @@ import CompatibleVehicles from "../../common/CompatibleVehicles";
 import ProductPrice from "../../common/ProductPrice";
 import { getProductTypeSpec } from "../../../utils/productTypeSpec";
 import { formatApi, formatViscosity } from "../../../utils/specLabel";
+import { untranslatedProps } from "../../../utils/untranslatedText";
 
 function ProductInfo({ product, paymentType, orderType }) {
   const { language, t } = useContext(LanguageContext);
   const typeSpec = getProductTypeSpec(product);
+  const name = getProductNameLabel(product.name, language);
 
   return (
     <>
@@ -22,6 +24,7 @@ function ProductInfo({ product, paymentType, orderType }) {
       )}
 
       <h2
+        {...untranslatedProps(name, language)}
         className="
         text-xl
         font-extrabold
@@ -29,7 +32,7 @@ function ProductInfo({ product, paymentType, orderType }) {
         text-gray-900
         "
       >
-        {getProductNameLabel(product.name, language)}
+        {name}
       </h2>
 
       <div className="mt-2 space-y-1 text-base font-bold text-gray-800">

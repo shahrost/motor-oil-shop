@@ -3,6 +3,7 @@ import LanguageContext from "../../../context/LanguageContext";
 import GiftBadge from "../../common/GiftBadge";
 import ProductPrice from "../../common/ProductPrice";
 import { formatViscosity } from "../../../utils/specLabel";
+import { untranslatedProps } from "../../../utils/untranslatedText";
 import CartItemOptions from "./CartItemOptions";
 import useCartItem from "../../../hooks/useCartItem";
 import {
@@ -11,7 +12,7 @@ import {
 } from "../../../utils/productImage";
 
 function CartItem({ item, index }) {
-  const { t } = useContext(LanguageContext);
+  const { language, t } = useContext(LanguageContext);
   const {
     name,
     brandLabel,
@@ -34,11 +35,16 @@ function CartItem({ item, index }) {
       </div>
 
       <div>
-        <h2 className="text-xl font-bold text-black">{name}</h2>
+        <h2 {...untranslatedProps(name, language)} className="text-xl font-bold text-black">
+          {name}
+        </h2>
 
         <p className="mt-2 text-gray-500">
           {t("common.brand")}
-          <b className="text-black"> {brandLabel}</b>
+          <b {...untranslatedProps(brandLabel, language)} className="text-black">
+            {" "}
+            {brandLabel}
+          </b>
         </p>
 
         {item.viscosity && (

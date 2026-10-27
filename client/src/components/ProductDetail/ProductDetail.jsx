@@ -80,7 +80,7 @@ function ProductDetail() {
             t={t}
           />
 
-          <ProductDescription description={product.description} t={t} />
+          <ProductDescription description={product.description} language={language} t={t} />
 
           <ProductPurchase
             onAddCart={purchase.handleAddCart}
