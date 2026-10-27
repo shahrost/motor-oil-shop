@@ -880,6 +880,7 @@ Status: Completed ✅ (lint تمیز، build موفق، تست دستی هدر/�
 ✅ صفحه‌ی محصول: `ProductInfo` حذف و به `ProductSpecs`, `PurchaseOptions`, `PromotionInfo`, `ProductDescription` تقسیم شد
 ✅ صفحه‌ی محصولات: فیلتر/مرتب‌سازی خالص → `utils/filterProducts.js`؛ دکمه‌ی «برگشت به بالا» خودش اسکرول رو مدیریت می‌کنه
 ✅ جستجوی محصولات (`filterProducts.js` → `getSearchIndex`): هر متن روی کارت (اسم/برند فارسی و انگلیسی، گرید، API، حجم فارسی/انگلیسی، نوع ATF مثل CVT/DCT/AL4، استاندارد DOT، دسته، SKU) با `normalizeSearchText` یکسان و در WeakMap کش می‌شه؛ «5w30» با نسخه‌ی بی‌فاصله با «5W-30» جور می‌شه
+✅ جستجوی اسم خودرو برای فیلترها: `useProductsPage` با اولین جستجو `loadCompatibility` (همون کش مشترک کارت‌ها) رو می‌گیره و به `filterProducts(products, filters, compatibility)` می‌ده؛ اسم فارسی/انگلیسی خودروهای سازگار به ایندکس جستجو اضافه می‌شه (نوع گیربکس مثل CVT/6AT/دستی حذف تا جستجوی «cvt» فقط روغن‌ها رو بیاره)
 ✅ `CartContext`: تبدیل فرمت قدیمی سبد به `services/cartStorage.js` منتقل شد (+ محافظت در برابر JSON خراب)؛ به‌روزرسانی ردیف‌ها یک تابع
 ✅ `BulkTools`: هوک مشترک `useExcelImport` برای ایمپورت محصول و خودرو + `usePriceUpdate`؛ فرم‌ها در sections (`ProductImportForm`, `PriceUpdateForm`, `VehicleImportForm`, `ImportFields`, `SubmitStatus`, `ResultBox`, `ResultList`)
 ✅ `services/productImportService.js` (کلاینت) جدا از `productService.js`

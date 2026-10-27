@@ -3,6 +3,10 @@ import { useSearchParams } from "react-router-dom";
 
 import { ProductContext } from "../../../context";
 import { filterProducts, ALL } from "../../../utils/filterProducts";
+import {
+  getCachedCompatibility,
+  loadCompatibility,
+} from "../../../services/filterCompatibilityCache";
 
 const DEFAULT_FILTERS = {
   search: "",
@@ -79,7 +83,29 @@ function useProductsPage() {
     }
   }, [filters, searchParams, setSearchParams]);
 
-  const filteredProducts = useMemo(() => filterProducts(products, filters), [products, filters]);
+  // خودروهای سازگار فیلترها (برای جستجوی «پراید») فقط وقتی چیزی جستجو شد گرفته می‌شه؛
+  // همون درخواست مشترک کارت‌هاست و اگه قبلاً اومده باشه دوباره نمی‌ره
+  const [compatibility, setCompatibility] = useState(getCachedCompatibility);
+  const hasSearch = Boolean(filters.search.trim());
+
+  useEffect(() => {
+    if (!hasSearch || compatibility) return undefined;
+
+    let active = true;
+
+    loadCompatibility()
+      .then((result) => active && setCompatibility(result))
+      .catch(() => {});
+
+    return () => {
+      active = false;
+    };
+  }, [hasSearch, compatibility]);
+
+  const filteredProducts = useMemo(
+    () => filterProducts(products, filters, compatibility),
+    [products, filters, compatibility],
+  );
 
   return {
     filteredProducts,
