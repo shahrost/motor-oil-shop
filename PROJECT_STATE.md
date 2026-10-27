@@ -42,7 +42,9 @@ Session Update 2026-10-27 — بازبینی سایت (۲۶ مورد: قیمت �
 
 حجم build: index.js ۳۹۸٫۳KB (gzip ۱۳۸٫۹) ← ۴۰۲٫۶KB (gzip ۱۴۰٫۴)؛ ProductDetail ۶٫۴ ← ۶٫۹KB؛ Vehicles ۴۳٫۹ ← ۴۵٫۳KB.
 
-⚠️ سمت سرور (فقط گزارش): `orderValidation` قیمت و جمع رو از کلاینت قبول می‌کنه ← باید قیمت هر قلم از دیتابیس خونده و قلم بی‌قیمت/صفر رد بشه و `totalPrice` سمت سرور حساب بشه.
+✅ سمت سرور (بعد از تأیید کاربر، branch `fix/order-price-validation`، دیپلوی شد): `services/orderService.priceOrderItems` قیمت، `totalCount`، `giftQty` و `totalPrice` رو از محصول دیتابیس حساب می‌کنه (`utils/orderPricing.js` همون قاعده‌های کلاینت؛ `productRepository.findPricingByIds`)؛ محصول ناموجود یا بی‌قیمت برای روش پرداخت ← ۴۰۰. `orderValidation`: تعداد صحیح ≥ ۱، واحد number/carton، پرداخت cash/check. صفحه‌ی ثبت سفارش دلیل خطای ۴۰۰ سرور رو کنار پیام عمومی نشون می‌ده. روی سرور زنده تست شد (قلم بی‌قیمت بهتام و شناسه‌ی ناموجود رد شدن).
+⚠️ موقع تست، یک درخواست به نسخه‌ی قدیمی سرور (قبل از بالا اومدن دیپلوی) رسید و سفارش آزمایشی «test-validation» (09120000000، ۱ تومان) ثبت شد؛ باید از پنل ادمین حذف بشه.
+⚠️ هدرهای nginx (کش /assets/، no-cache برای index.html، HSTS) روی سایت زنده نیستن؛ مستندات Runflare برای سرویس React کانفیگ سفارشی nginx نداره ← یا از پشتیبانی Runflare، یا تبدیل سرویس کلاینت به Docker با `deploy/nginx.conf.example` (تصمیم کاربر).
 
 ## ۵۴. بازبینی معماری client/src/utils (2026-10-27)
 
