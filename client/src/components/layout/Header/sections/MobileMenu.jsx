@@ -16,6 +16,9 @@ const LINK_CLASS = "text-gray-200 hover:text-yellow-400";
 // زیرمنوی هر آیتمی که داره (کلید منو ← کامپوننت زیرمنو)
 const SUBMENUS = { products: MobileCategoryList };
 
+// سبد خرید فقط به شکل دکمه‌ی «سبد خرید (تعداد)» پایین منو میاد، نه لینک متنی
+const NAV_ITEMS = menu.filter((item) => item.key !== "cart");
+
 // منوی کشویی موبایل/تبلت؛ با انتخاب هر لینک بسته می‌شه
 function MobileMenu({ onClose }) {
   const { t } = useContext(LanguageContext);
@@ -36,9 +39,11 @@ function MobileMenu({ onClose }) {
   }
 
   return (
-    <div className="xl:hidden bg-gray-900 rounded-2xl p-5 mb-4">
+    // max-h + overflow: منوی بلند (با زیرمنوی باز) داخل خودش اسکرول می‌خوره تا گزینه‌های پایین در دسترس بمونن؛
+    // 6rem = ارتفاع هدر (h-20) + فاصله‌ی پایین منو (mb-4)
+    <div className="xl:hidden bg-gray-900 rounded-2xl p-5 mb-4 max-h-[calc(100dvh-6rem)] overflow-y-auto overscroll-contain">
       <ul className="flex flex-col gap-4 text-center font-bold">
-        {menu.map((item) => {
+        {NAV_ITEMS.map((item) => {
           const Submenu = SUBMENUS[item.key];
 
           return (

@@ -8,13 +8,16 @@ import menuCategories from "../../../../data/menuCategories";
 import localizedLabel from "../../../../utils/localizedLabel";
 import NavDropdown from "./NavDropdown";
 
+// سبد خرید در هدر فقط آیکون با شمارنده‌ست (HeaderActions)
+const NAV_ITEMS = menu.filter((item) => item.key !== "cart");
+
 // منوی دسکتاپ (از ۱۲۸۰ پیکسل؛ کمترش منوی همبرگری)؛ «محصولات» با هاور زیرمنوی دسته‌ها رو باز می‌کنه
 function DesktopNav() {
   const { language, t } = useContext(LanguageContext);
 
   return (
     <nav className="hidden xl:flex items-center gap-6">
-      {menu.map((item) => {
+      {NAV_ITEMS.map((item) => {
         const label = t(`nav.${item.key}`);
 
         if (item.key === "products") {
