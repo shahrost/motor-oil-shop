@@ -65,7 +65,6 @@ const translations = {
       tagline:
         "تامین و فروش انواع روغن موتور و فیلتر و اسپری‌جات و انواع اکتان برای فروشگاه‌های لوازم یدکی، اتوسرویس‌ها و مشتریان عمده.",
       rights: "تمامی حقوق محفوظ است",
-      enamad: "جایگاه نماد اعتماد الکترونیکی (اینماد)",
       social: {
         telegram: "تلگرام",
         whatsapp: "واتساپ",
@@ -384,7 +383,8 @@ const translations = {
         cash: "نقدی",
         cashText: "قیمت نقدی هر محصول در صفحه‌ی همان محصول نمایش داده می‌شود.",
         check: "چکی (اعتباری)",
-        checkText: "قیمت چکی جداگانه نمایش داده می‌شود. شرایط: [شرایط پرداخت چکی]",
+        checkText: "قیمت چکی جداگانه نمایش داده می‌شود.",
+        checkTerms: "شرایط: {terms}",
       },
       store: {
         title: "اطلاعات تماس فروشگاه",
@@ -599,7 +599,6 @@ const translations = {
       tagline:
         "Supplying and selling all kinds of engine oil, filters, sprays, and octane boosters for auto-parts stores, auto service centers, and wholesale customers.",
       rights: "All rights reserved",
-      enamad: "E-Namad trust seal placeholder",
       social: {
         telegram: "Telegram",
         whatsapp: "WhatsApp",
@@ -919,7 +918,8 @@ const translations = {
         cash: "Cash",
         cashText: "Each product's cash price is shown on its page.",
         check: "Cheque (credit)",
-        checkText: "Cheque prices are shown separately. Terms: [cheque payment terms]",
+        checkText: "Cheque prices are shown separately.",
+        checkTerms: "Terms: {terms}",
       },
       store: {
         title: "Store Contact Details",

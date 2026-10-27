@@ -1,12 +1,15 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../../context/LanguageContext";
+import brand from "../../../data/brand";
 
 const METHODS = ["cash", "check"];
 
 // روش‌های پرداخت: نقدی و چکی (اعتباری)
 function PaymentMethods() {
-  const { t } = useContext(LanguageContext);
+  const { language, t } = useContext(LanguageContext);
+  // شرایط چکی از data/brand.js؛ خالی ← جمله‌ی «شرایط: …» حذف
+  const checkTerms = language === "en" ? brand.checkTermsEn : brand.checkTerms;
 
   return (
     <div className="mt-12">
@@ -17,6 +20,12 @@ function PaymentMethods() {
           <div key={method} className="bg-gray-100 rounded-xl p-6 text-center">
             <h3 className="text-lg font-bold">{t(`about.payment.${method}`)}</h3>
             <p className="mt-3 text-gray-700">{t(`about.payment.${method}Text`)}</p>
+
+            {method === "check" && checkTerms && (
+              <p className="mt-2 text-gray-700">
+                {t("about.payment.checkTerms").replace("{terms}", checkTerms)}
+              </p>
+            )}
           </div>
         ))}
       </div>
