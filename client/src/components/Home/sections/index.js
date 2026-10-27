@@ -8,3 +8,4 @@ export { default as VehiclesCard } from "./VehiclesCard";
 export { default as TrackWheel } from "./TrackWheel";
 export { default as GuideButton } from "./GuideButton";
 export { default as InstallAppButton } from "./InstallAppButton";
+export { default as HomeHero } from "./HomeHero";

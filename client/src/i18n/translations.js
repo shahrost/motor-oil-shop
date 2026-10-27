@@ -152,6 +152,12 @@ const translations = {
       },
       guide: "راهنمای سایت",
       installApp: "نصب اپلیکیشن",
+      hero: {
+        viewProducts: "مشاهده محصولات",
+        findOil: "روغن مناسب خودروی من",
+        whatsapp: "سفارش در واتساپ",
+        call: "تماس",
+      },
       productsTitle: "محصولات روغن موتور و فیلتر",
       productsSubtitle: `محصولات فروشگاه ${brand.name}`,
       quickFilter: {
@@ -688,6 +694,12 @@ const translations = {
       },
       guide: "Site Guide",
       installApp: "Install App",
+      hero: {
+        viewProducts: "View Products",
+        findOil: "Find Oil for My Car",
+        whatsapp: "Order on WhatsApp",
+        call: "Call",
+      },
       productsTitle: "Engine Oil & Filter Products",
       productsSubtitle: `Products from ${brand.nameEn}`,
       quickFilter: {

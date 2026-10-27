@@ -1,7 +1,7 @@
-// تصویر کارت «روانکار»: یک قطره‌ی بزرگ روغن
-function OilDropArt() {
+// تصویر کارت «روانکار»: یک قطره‌ی بزرگ روغن (بخش معرفی هم نسخه‌ی کم‌رنگش رو با className خودش داره)
+function OilDropArt({ className = "h-40 w-auto drop-shadow-lg" }) {
   return (
-    <svg viewBox="0 0 120 140" aria-hidden="true" className="h-40 w-auto drop-shadow-lg">
+    <svg viewBox="0 0 120 140" aria-hidden="true" className={className}>
       <defs>
         <linearGradient id="oilDropFill" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#ffd36b" />

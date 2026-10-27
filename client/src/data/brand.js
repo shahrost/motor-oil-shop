@@ -22,6 +22,15 @@ const brand = {
   hours: "۸:۳۰ صبح تا ۸:۳۰ شب",
   landline: "021-91028636",
   landlineUrl: "tel:+982191028636",
+  hoursEn: "8:30 AM to 8:30 PM",
+
+  // صفحه‌ی اصلی: تیتر و زیرتیتر بخش معرفی (Hero) و متن ارسال نوار اعتماد (فارسی / انگلیسی)
+  heroTitle: "تأمین عمده‌ی روغن موتور و روانکار",
+  heroTitleEn: "Wholesale Engine Oil & Lubricants",
+  heroSubtitle: "برای لوازم یدکی‌ها و اتوسرویس‌ها — پرداخت نقدی و چکی",
+  heroSubtitleEn: "For auto parts stores and service shops — cash and cheque payment",
+  deliveryArea: "ارسال به شهریار، ملارد، رباط‌کریم و اطراف",
+  deliveryAreaEn: "Delivery to Shahriar, Malard, Robat Karim and nearby",
 
   // شرایط پرداخت چکی (صفحه‌ی درباره ما، زیر «چکی»)؛ تا خالیه جمله‌ی «شرایط: …» نمایش داده نمی‌شه
   checkTerms: "",
