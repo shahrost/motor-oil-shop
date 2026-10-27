@@ -158,6 +158,11 @@ const translations = {
         whatsapp: "سفارش در واتساپ",
         call: "تماس",
       },
+      promotions: {
+        all: "همه‌ی طرح‌ها",
+        view: "مشاهده",
+        productCount: "{count} محصول",
+      },
       productsTitle: "محصولات روغن موتور و فیلتر",
       productsSubtitle: `محصولات فروشگاه ${brand.name}`,
       quickFilter: {
@@ -699,6 +704,11 @@ const translations = {
         findOil: "Find Oil for My Car",
         whatsapp: "Order on WhatsApp",
         call: "Call",
+      },
+      promotions: {
+        all: "All Offers",
+        view: "View",
+        productCount: "{count} products",
       },
       productsTitle: "Engine Oil & Filter Products",
       productsSubtitle: `Products from ${brand.nameEn}`,

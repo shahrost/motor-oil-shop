@@ -7,6 +7,7 @@ import {
   HomeHero,
   InstallAppButton,
   LubricantCard,
+  PromotionsBanner,
   VehiclesCard,
 } from "./sections";
 import { freezeAnimations } from "./helpers/animate";
@@ -19,7 +20,7 @@ function handleClick(event) {
 }
 
 // صفحه‌ی اصلی از بالا به پایین: بخش معرفی (Hero) ← ردیف کوچیک «نصب اپلیکیشن» / «راهنمای سایت»
-// ← دسترسی سریع («روانکار» و «خودروهای من»).
+// ← بنر طرح‌های فروش ← دسترسی سریع («روانکار» و «خودروهای من»).
 // ردیف دکمه‌ها: «نصب اپلیکیشن» اول ردیف و «راهنمای سایت» ته ردیف (در فارسی نصب سمت راست
 // و راهنما سمت چپ؛ در انگلیسی برعکس). whitespace-nowrap: تا گوشی ۳۲۰px هر دو یک‌خطی می‌مونن
 function Home() {
@@ -37,6 +38,8 @@ function Home() {
             <GuideButton label={t("home.guide")} />
           </span>
         </div>
+
+        <PromotionsBanner />
 
         <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
           <LubricantCard
