@@ -2,6 +2,7 @@ import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import GiftBadge from "../../common/GiftBadge";
 import ProductPrice from "../../common/ProductPrice";
+import { formatViscosity } from "../../../utils/specLabel";
 import CartItemOptions from "./CartItemOptions";
 import useCartItem from "../../../hooks/useCartItem";
 import {
@@ -43,7 +44,7 @@ function CartItem({ item, index }) {
         {item.viscosity && (
           <p className="text-gray-500">
             {t("common.viscosity")}
-            <b className="text-black"> {item.viscosity}</b>
+            <b className="text-black"> {formatViscosity(item.viscosity)}</b>
           </p>
         )}
       </div>

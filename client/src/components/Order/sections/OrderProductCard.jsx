@@ -6,6 +6,7 @@ import useCartItem from "../../../hooks/useCartItem";
 import GiftBadge from "../../common/GiftBadge";
 import { OrderUnitOptions } from "../../common/OrderOptions";
 import { getItemUnitCount } from "../../../utils/cartItemCalc";
+import { formatViscosity } from "../../../utils/specLabel";
 
 function OrderProductCard({ item, index }) {
   const { language, t } = useContext(LanguageContext);
@@ -33,7 +34,7 @@ function OrderProductCard({ item, index }) {
         {item.viscosity && (
           <p>
             {t("common.viscosity")}
-            <span className="font-bold text-black"> {item.viscosity}</span>
+            <span className="font-bold text-black"> {formatViscosity(item.viscosity)}</span>
           </p>
         )}
 

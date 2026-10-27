@@ -9,6 +9,7 @@ import SpecLine, { ApiLabel } from "../../common/SpecLine";
 import CompatibleVehicles from "../../common/CompatibleVehicles";
 import ProductPrice from "../../common/ProductPrice";
 import { getProductTypeSpec } from "../../../utils/productTypeSpec";
+import { formatApi, formatViscosity } from "../../../utils/specLabel";
 
 function ProductInfo({ product, paymentType, orderType }) {
   const { language, t } = useContext(LanguageContext);
@@ -50,7 +51,7 @@ function ProductInfo({ product, paymentType, orderType }) {
             <SpecLine
               className="line-clamp-2 break-words"
               label={t("common.viscosity")}
-              value={product.viscosity}
+              value={formatViscosity(product.viscosity)}
               title={product.viscosity}
               reserveSpace
             />
@@ -58,7 +59,7 @@ function ProductInfo({ product, paymentType, orderType }) {
             <SpecLine
               className="line-clamp-1 break-words"
               label={<ApiLabel />}
-              value={product.api}
+              value={formatApi(product.api)}
               title={product.api}
               reserveSpace
               isolate

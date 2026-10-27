@@ -1,6 +1,7 @@
 import { formatVolume } from "../../../utils/formatVolume";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 import { getProductTypeSpec } from "../../../utils/productTypeSpec";
+import { formatApi, formatViscosity } from "../../../utils/specLabel";
 
 // مشخصات کارت ردیفی؛ روی موبایل هم دقیقاً همون خط‌های دسکتاپ نشون داده می‌شه
 function RowCardSpecs({ product, name, language, t }) {
@@ -31,14 +32,14 @@ function RowCardSpecs({ product, name, language, t }) {
             <SpecLine
               className="line-clamp-1"
               label={t("common.viscosity")}
-              value={product.viscosity}
+              value={formatViscosity(product.viscosity)}
               reserveSpace
             />
 
             <SpecLine
               className="line-clamp-1"
               label={<ApiLabel />}
-              value={product.api}
+              value={formatApi(product.api)}
               reserveSpace
               isolate
             />

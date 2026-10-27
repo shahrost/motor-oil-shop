@@ -2,6 +2,7 @@ import getBrandLabel from "../../../utils/brandLabel";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { formatVolume } from "../../../utils/formatVolume";
 import { hasActivePromotion } from "../../../utils/promotionCalc";
+import { formatApi, formatViscosity } from "../../../utils/specLabel";
 import PromotionBadge from "../../common/PromotionBadge";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 
@@ -25,7 +26,7 @@ function ProductSpecs({ product, language, t }) {
           labelClassName={LABEL_CLASS}
           className="break-words"
           label={t("common.viscosity")}
-          value={product.viscosity}
+          value={formatViscosity(product.viscosity)}
         />
 
         <SpecLine
@@ -35,7 +36,7 @@ function ProductSpecs({ product, language, t }) {
         />
 
         <SpecLine
-          labelClassName={LABEL_CLASS} label={<ApiLabel />} value={product.api} isolate />
+          labelClassName={LABEL_CLASS} label={<ApiLabel />} value={formatApi(product.api)} isolate />
 
         <SpecLine
           labelClassName={LABEL_CLASS}
