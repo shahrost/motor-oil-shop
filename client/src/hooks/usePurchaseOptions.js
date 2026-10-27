@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 
 import CartContext from "../context/CartContext";
 import SelectedVehicleContext from "../context/SelectedVehicleContext";
+import { hasProductPrice, resolvePaymentType } from "../utils/productPrice";
 
 // حداقل تعداد سفارش ۱ است؛ فیلد خالی موقع تایپ مجازه ولی موقع افزودن ۱ حساب می‌شه
 function sanitizeQuantity(raw) {
@@ -20,15 +21,19 @@ function usePurchaseOptions(product, { vehicle } = {}) {
 
   const [quantity, setQuantityState] = useState(1);
   const [orderType, setOrderType] = useState("number");
-  const [paymentType, setPaymentType] = useState("cash");
+  const [selectedPaymentType, setPaymentType] = useState("cash");
   const [added, setAdded] = useState(false);
+
+  // روش پرداخت بی‌قیمت (مثلاً نقدی خالی ولی چکی دارد) خودکار روی روش دارای قیمت می‌مونه
+  const paymentType = resolvePaymentType(product, selectedPaymentType);
+  const priceAvailable = hasProductPrice(product, paymentType);
 
   function setQuantity(raw) {
     setQuantityState(sanitizeQuantity(raw));
   }
 
   function handleAddCart() {
-    if (!product) return;
+    if (!product || !priceAvailable) return;
 
     addToCart({
       ...product,
@@ -52,6 +57,7 @@ function usePurchaseOptions(product, { vehicle } = {}) {
     setOrderType,
     paymentType,
     setPaymentType,
+    priceAvailable,
     added,
     handleAddCart,
   };

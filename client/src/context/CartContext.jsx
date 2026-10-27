@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { getCart, saveCart, clearCartStorage } from "../services/cartStorage";
 import { getItemTotal } from "../utils/cartItemCalc";
+import { isPaymentTypeDisabled } from "../utils/productPrice";
 
 const CartContext = createContext();
 
@@ -51,8 +52,13 @@ export function CartProvider({ children }) {
   const changeOrderType = (id, orderType, index) => updateItemAt(index, { orderType });
   const changePaymentType = (id, paymentType, index) => updateItemAt(index, { paymentType });
 
+  // ردیفی که روش انتخاب‌شده براش قیمت نداره (ولی روش فعلیش داره) دست نمی‌خوره
   function changeAllPaymentType(paymentType) {
-    setCart(cart.map((item) => ({ ...item, paymentType })));
+    setCart(
+      cart.map((item) =>
+        isPaymentTypeDisabled(item, paymentType) ? item : { ...item, paymentType },
+      ),
+    );
   }
 
   function clearCart() {

@@ -2,10 +2,9 @@ import { useContext } from "react";
 
 import LanguageContext from "../../context/LanguageContext";
 import { usePageMeta } from "../../hooks/usePageMeta";
-import formatPrice from "../../utils/formatPrice";
 import getBrandLabel from "../../utils/brandLabel";
-import { getProductPrice } from "../../utils/productPrice";
 import CompatibleVehicles from "../common/CompatibleVehicles";
+import ProductPrice from "../common/ProductPrice";
 import useProductDetail from "./hooks/useProductDetail";
 import useGoBack from "./hooks/useGoBack";
 import {
@@ -56,6 +55,7 @@ function ProductDetail() {
 
           <PurchaseOptions
             t={t}
+            product={product}
             orderType={purchase.orderType}
             setOrderType={purchase.setOrderType}
             quantity={purchase.quantity}
@@ -64,9 +64,15 @@ function ProductDetail() {
             setPaymentType={purchase.setPaymentType}
           />
 
-          <p className="mt-6 text-4xl font-extrabold text-gray-950">
-            {formatPrice(getProductPrice(product, purchase.paymentType), language)}
-          </p>
+          <div className="mt-6">
+            <ProductPrice
+              product={product}
+              paymentType={purchase.paymentType}
+              orderType={purchase.orderType}
+              className="text-3xl sm:text-4xl font-extrabold text-gray-950"
+              noteClassName="sm:text-sm"
+            />
+          </div>
 
           <PromotionInfo
             product={product}
@@ -78,7 +84,11 @@ function ProductDetail() {
 
           <ProductDescription description={product.description} t={t} />
 
-          <ProductPurchase onAddCart={purchase.handleAddCart} added={purchase.added} />
+          <ProductPurchase
+            onAddCart={purchase.handleAddCart}
+            added={purchase.added}
+            canAdd={purchase.priceAvailable}
+          />
         </div>
       </div>
     </div>

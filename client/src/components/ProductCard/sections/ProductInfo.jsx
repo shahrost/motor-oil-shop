@@ -1,17 +1,16 @@
 import { useContext } from "react";
-import formatPrice from "../../../utils/formatPrice";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import { formatVolume } from "../../../utils/formatVolume";
 import LanguageContext from "../../../context/LanguageContext";
 import { hasActivePromotion } from "../../../utils/promotionCalc";
-import { getProductPrice } from "../../../utils/productPrice";
 import PromotionBadge from "../../common/PromotionBadge";
 import DiscountBadge from "../../common/DiscountBadge";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 import CompatibleVehicles from "../../common/CompatibleVehicles";
+import ProductPrice from "../../common/ProductPrice";
 import { getProductTypeSpec } from "../../../utils/productTypeSpec";
 
-function ProductInfo({ product, paymentType }) {
+function ProductInfo({ product, paymentType, orderType }) {
   const { language, t } = useContext(LanguageContext);
   const typeSpec = getProductTypeSpec(product);
 
@@ -84,21 +83,12 @@ function ProductInfo({ product, paymentType }) {
 
       {/* قیمت و نشان تخفیف تو یک ردیف تا کارت یک ردیف کوتاه‌تر بشه */}
       <div className="mt-2 flex items-start justify-between gap-2">
-        <div>
-          <p
-            className="
-            text-xl
-            font-extrabold
-            text-gray-950
-            "
-          >
-            {formatPrice(getProductPrice(product, paymentType), language)}
-          </p>
-
-          <p className="text-sm text-gray-500">
-            {t("productCard.pricePerUnit")}
-          </p>
-        </div>
+        <ProductPrice
+          product={product}
+          paymentType={paymentType}
+          orderType={orderType}
+          className="text-lg sm:text-xl font-extrabold text-gray-950"
+        />
 
         <DiscountBadge percent={product.discountPercent || 0} />
       </div>

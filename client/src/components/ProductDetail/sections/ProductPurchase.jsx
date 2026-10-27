@@ -2,7 +2,8 @@ import { CircleCheck, ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 
-function ProductPurchase({ onAddCart, added }) {
+// canAdd: محصول بی‌قیمت به سبد اضافه نمی‌شه
+function ProductPurchase({ onAddCart, added, canAdd = true }) {
   const { t } = useContext(LanguageContext);
 
   return (
@@ -10,7 +11,8 @@ function ProductPurchase({ onAddCart, added }) {
       <button
         type="button"
         onClick={onAddCart}
-        className="w-full flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-4 rounded-2xl font-bold text-lg transition"
+        disabled={!canAdd}
+        className="w-full flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-yellow-400 text-gray-950 py-4 rounded-2xl font-bold text-lg transition"
       >
         <ShoppingCart /> {t("common.addToCart")}
       </button>

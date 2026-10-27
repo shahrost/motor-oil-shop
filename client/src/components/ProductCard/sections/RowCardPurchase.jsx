@@ -1,6 +1,6 @@
 import { CircleCheck, ShoppingCart } from "lucide-react";
 import orderUnits from "../../../data/orderUnits";
-import paymentTypes from "../../../data/paymentTypes";
+import { PaymentTypeOptions } from "../../common/OrderOptions";
 
 const CONTROL_CLASS = "w-full border rounded-lg p-1 text-xs bg-white text-black";
 
@@ -8,6 +8,8 @@ const CONTROL_CLASS = "w-full border rounded-lg p-1 text-xs bg-white text-black"
 // کلیک‌ها به لینک کارت نمی‌رسن تا با انتخاب گزینه‌ها صفحه‌ی محصول باز نشه.
 function RowCardPurchase({
   t,
+  product,
+  canAdd = true,
   orderType,
   setOrderType,
   quantity,
@@ -44,17 +46,14 @@ function RowCardPurchase({
         onChange={(e) => setPaymentType(e.target.value)}
         className={CONTROL_CLASS}
       >
-        {paymentTypes.map((item) => (
-          <option key={item.value} value={item.value}>
-            {t(`common.paymentType.${item.value}`)}
-          </option>
-        ))}
+        <PaymentTypeOptions product={product} />
       </select>
 
       <button
         type="button"
         onClick={onAddCart}
-        className="w-full mt-1 flex items-center justify-center gap-1 bg-yellow-400 hover:bg-yellow-500 text-gray-950 py-1.5 rounded-lg text-xs font-bold transition"
+        disabled={!canAdd}
+        className="w-full mt-1 flex items-center justify-center gap-1 bg-yellow-400 hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-yellow-400 text-gray-950 py-1.5 rounded-lg text-xs font-bold transition"
       >
         <ShoppingCart size={16} /> {t("common.addToCart")}
       </button>

@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import LanguageContext from "../../context/LanguageContext";
 import SelectedVehicleContext from "../../context/SelectedVehicleContext";
 import { getProductNameLabel } from "../../utils/productNameLabel";
-import formatPrice from "../../utils/formatPrice";
 import {
   getProductImageSrc,
   handleProductImageError,
 } from "../../utils/productImage";
-import { getProductPrice } from "../../utils/productPrice";
 import DiscountBadge from "../common/DiscountBadge";
 import CompatibleVehicles from "../common/CompatibleVehicles";
+import ProductPrice from "../common/ProductPrice";
 import { ProductBrandBadge, RowCardSpecs, RowCardPurchase } from "./sections";
 import FavoriteButton from "../common/FavoriteButton";
 import usePurchaseOptions from "../../hooks/usePurchaseOptions";
@@ -61,9 +60,13 @@ function ProductRowCard({ product }) {
       <div className="mt-auto">
         {/* قیمت و نشان تخفیف تو یک ردیف؛ بدون تخفیف نشان رندر نمی‌شه تا ردیف اضافه جا نگیره */}
         <div className="mt-2 flex flex-wrap items-center justify-between gap-1">
-          <p className="text-sm sm:text-lg font-extrabold text-gray-950">
-            {formatPrice(getProductPrice(product, card.paymentType), language)}
-          </p>
+          <ProductPrice
+            product={product}
+            paymentType={card.paymentType}
+            orderType={card.orderType}
+            className="text-sm sm:text-lg font-extrabold text-gray-950"
+            noteClassName="text-[11px]"
+          />
 
           {product.discountPercent > 0 && (
             <DiscountBadge percent={product.discountPercent} />
@@ -72,6 +75,8 @@ function ProductRowCard({ product }) {
 
         <RowCardPurchase
           t={t}
+          product={product}
+          canAdd={card.priceAvailable}
           orderType={card.orderType}
           setOrderType={card.setOrderType}
           quantity={card.quantity}

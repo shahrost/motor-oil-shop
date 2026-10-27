@@ -1,5 +1,5 @@
 import orderUnits from "../../../data/orderUnits";
-import paymentTypes from "../../../data/paymentTypes";
+import { PaymentTypeOptions } from "../../common/OrderOptions";
 
 const LABEL_CLASS = "text-gray-500 font-bold shrink-0";
 const SELECT_CLASS = "border rounded-lg p-1 bg-white text-black";
@@ -7,6 +7,7 @@ const SELECT_CLASS = "border rounded-lg p-1 bg-white text-black";
 // انتخاب واحد، تعداد و نوع پرداخت در صفحه‌ی محصول
 function PurchaseOptions({
   t,
+  product,
   orderType,
   setOrderType,
   quantity,
@@ -52,11 +53,7 @@ function PurchaseOptions({
           onChange={(e) => setPaymentType(e.target.value)}
           className={SELECT_CLASS}
         >
-          {paymentTypes.map((item) => (
-            <option key={item.value} value={item.value}>
-              {t(`common.paymentType.${item.value}`)}
-            </option>
-          ))}
+          <PaymentTypeOptions product={product} />
         </select>
       </div>
     </div>

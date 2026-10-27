@@ -2,7 +2,7 @@ import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import { PaymentTypeOptions } from "../../common/OrderOptions";
 
-function PaymentSelector({ paymentType, onChange }) {
+function PaymentSelector({ paymentType, onChange, product }) {
   const { t } = useContext(LanguageContext);
 
   return (
@@ -16,7 +16,7 @@ function PaymentSelector({ paymentType, onChange }) {
         onChange={(e) => onChange(e.target.value)}
         className="w-full border rounded-xl p-3"
       >
-        <PaymentTypeOptions />
+        <PaymentTypeOptions product={product} />
       </select>
     </div>
   );

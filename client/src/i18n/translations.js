@@ -113,6 +113,7 @@ const translations = {
       available: "موجود است",
       addToCart: "افزودن به سبد خرید",
       addedToCart: "به سبد خرید اضافه شد",
+      callForPrice: "برای قیمت تماس بگیرید",
       add: "افزودن",
       fullNamePlaceholder: "نام و نام خانوادگی",
       phonePlaceholder: "شماره موبایل",
@@ -213,7 +214,8 @@ const translations = {
 
     productCard: {
       cartonCount: "تعداد در کارتن:",
-      pricePerUnit: "قیمت هر عدد",
+      perUnit: "هر عدد",
+      perCarton: "هر کارتن {count} عدد — عددی {price}",
       view: "مشخصات",
     },
 
@@ -638,6 +640,7 @@ const translations = {
       available: "available",
       addToCart: "Add to Cart",
       addedToCart: "Added to cart",
+      callForPrice: "Call for price",
       add: "Add",
       fullNamePlaceholder: "Full Name",
       phonePlaceholder: "Mobile Number",
@@ -739,7 +742,8 @@ const translations = {
 
     productCard: {
       cartonCount: "Items per Carton:",
-      pricePerUnit: "Price per Unit",
+      perUnit: "per pc",
+      perCarton: "{count} pcs per carton — {price} each",
       view: "Specs",
     },
 

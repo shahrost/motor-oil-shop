@@ -41,7 +41,7 @@ function CartItemOptions({ item, onQuantityChange, onOrderTypeChange, onPaymentT
           onChange={(e) => onPaymentTypeChange(e.target.value)}
           className="w-full border rounded-xl p-3"
         >
-          <PaymentTypeOptions />
+          <PaymentTypeOptions product={item} />
         </select>
       </div>
     </div>

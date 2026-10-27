@@ -3,7 +3,8 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import LanguageContext from "../../../context/LanguageContext";
 
-function CardActions({ product, handleAddCart }) {
+// canAdd: محصول بی‌قیمت («برای قیمت تماس بگیرید») به سبد اضافه نمی‌شه
+function CardActions({ product, handleAddCart, canAdd = true }) {
   const { t } = useContext(LanguageContext);
 
   return (
@@ -35,10 +36,14 @@ function CardActions({ product, handleAddCart }) {
 
       <button
         onClick={handleAddCart}
+        disabled={!canAdd}
         className="
         flex-1
         bg-yellow-400
         hover:bg-yellow-500
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+        disabled:hover:bg-yellow-400
         text-gray-950
         px-3
         py-2

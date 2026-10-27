@@ -91,7 +91,7 @@ function PurchaseBox({
           text-base
           "
         >
-          <PaymentTypeOptions />
+          <PaymentTypeOptions product={product} />
         </select>
       </div>
 

@@ -21,6 +21,7 @@ function ProductCard({ product }) {
     setOrderType,
     paymentType,
     setPaymentType,
+    priceAvailable,
     added,
     handleAddCart,
   } = usePurchaseOptions(product);
@@ -35,7 +36,7 @@ function ProductCard({ product }) {
 
       <ProductImage product={product} />
 
-      <ProductInfo product={product} paymentType={paymentType} />
+      <ProductInfo product={product} paymentType={paymentType} orderType={orderType} />
 
       <PurchaseBox
         product={product}
@@ -49,7 +50,11 @@ function ProductCard({ product }) {
 
       {/* mt-auto: actions always sit at the card bottom, aligned across the row */}
       <div className="mt-auto">
-        <CardActions product={product} handleAddCart={handleAddCart} />
+        <CardActions
+          product={product}
+          handleAddCart={handleAddCart}
+          canAdd={priceAvailable}
+        />
 
         {added && (
           <div

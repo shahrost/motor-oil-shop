@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import GiftBadge from "../../common/GiftBadge";
+import ProductPrice from "../../common/ProductPrice";
 import CartItemOptions from "./CartItemOptions";
 import useCartItem from "../../../hooks/useCartItem";
 import {
@@ -13,7 +14,6 @@ function CartItem({ item, index }) {
   const {
     name,
     brandLabel,
-    priceLabel,
     giftQty,
     setQuantity,
     setOrderType,
@@ -56,7 +56,12 @@ function CartItem({ item, index }) {
       />
 
       <div className="flex flex-col justify-between">
-        <p className="text-gray-950 text-2xl font-extrabold">{priceLabel}</p>
+        <ProductPrice
+          product={item}
+          paymentType={item.paymentType}
+          orderType={item.orderType}
+          className="text-gray-950 text-xl sm:text-2xl font-extrabold"
+        />
 
         <GiftBadge giftQty={giftQty} className="rounded-lg p-2 text-sm" />
 

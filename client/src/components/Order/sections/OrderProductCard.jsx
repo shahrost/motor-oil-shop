@@ -72,7 +72,11 @@ function OrderProductCard({ item, index }) {
         />
       </div>
 
-      <PaymentSelector paymentType={item.paymentType} onChange={setPaymentType} />
+      <PaymentSelector
+        paymentType={item.paymentType}
+        onChange={setPaymentType}
+        product={item}
+      />
 
       {/* قیمت هر عدد و زیرش جمع این ردیف با تعداد انتخاب‌شده */}
       <div className="mt-5 bg-yellow-50 border border-yellow-200 rounded-2xl p-4">
