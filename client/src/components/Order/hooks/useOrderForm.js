@@ -74,7 +74,9 @@ function useOrderForm() {
       setSubmitted(true);
     } catch (error) {
       console.log("خطا در ثبت سفارش", error);
-      setSubmitError(t("order.submitError"));
+      // ۴۰۰: سرور دلیل مشخص داده (مثلاً قلمی که قیمت نداره)؛ بقیه‌ی خطاها پیام عمومی
+      const reason = error.response?.status === 400 && error.response.data?.message;
+      setSubmitError(reason ? `${t("order.submitError")} (${reason})` : t("order.submitError"));
     } finally {
       setSubmitting(false);
     }
