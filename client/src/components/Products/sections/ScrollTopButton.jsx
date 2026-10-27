@@ -2,19 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import LanguageContext from "../../../context/LanguageContext";
 
-const SHOW_AFTER_PX = 500;
+// فقط بعد از اسکرول قابل‌توجه (حدود دو صفحه) ظاهر می‌شه
+const SHOW_AFTER_SCREENS = 2;
 
-// دکمه‌ی «برگشت به بالا»؛ بعد از کمی اسکرول ظاهر می‌شه
+// دکمه‌ی «برگشت به بالا»؛ روی موبایل کوچیک‌تره و فاصله‌ی امن پایین گوشی (safe-area) رو رعایت می‌کنه
 function ScrollTopButton() {
   const { t } = useContext(LanguageContext);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
-      setShow(window.scrollY > SHOW_AFTER_PX);
+      setShow(window.scrollY > window.innerHeight * SHOW_AFTER_SCREENS);
     }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -27,10 +28,10 @@ function ScrollTopButton() {
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 left-6 z-40 bg-black text-white w-12 h-12 rounded-full shadow-xl flex items-center justify-center"
+      className="fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom))] left-3 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:left-6 z-40 bg-black/80 sm:bg-black text-white w-9 h-9 sm:w-12 sm:h-12 rounded-full shadow-xl flex items-center justify-center"
       aria-label={t("products.scrollTop")}
     >
-      <ArrowUp />
+      <ArrowUp size={18} className="sm:size-5" />
     </button>
   );
 }
