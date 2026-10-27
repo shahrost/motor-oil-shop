@@ -879,6 +879,7 @@ Status: Completed ✅ (lint تمیز، build موفق، تست دستی هدر/�
 ✅ `ProductRowCard` → sections `RowCardSpecs`, `RowCardPurchase` (گزینه‌ها از `data/orderUnits` و `data/paymentTypes`)
 ✅ صفحه‌ی محصول: `ProductInfo` حذف و به `ProductSpecs`, `PurchaseOptions`, `PromotionInfo`, `ProductDescription` تقسیم شد
 ✅ صفحه‌ی محصولات: فیلتر/مرتب‌سازی خالص → `utils/filterProducts.js`؛ دکمه‌ی «برگشت به بالا» خودش اسکرول رو مدیریت می‌کنه
+✅ جستجوی محصولات (`filterProducts.js` → `getSearchIndex`): هر متن روی کارت (اسم/برند فارسی و انگلیسی، گرید، API، حجم فارسی/انگلیسی، نوع ATF مثل CVT/DCT/AL4، استاندارد DOT، دسته، SKU) با `normalizeSearchText` یکسان و در WeakMap کش می‌شه؛ «5w30» با نسخه‌ی بی‌فاصله با «5W-30» جور می‌شه
 ✅ `CartContext`: تبدیل فرمت قدیمی سبد به `services/cartStorage.js` منتقل شد (+ محافظت در برابر JSON خراب)؛ به‌روزرسانی ردیف‌ها یک تابع
 ✅ `BulkTools`: هوک مشترک `useExcelImport` برای ایمپورت محصول و خودرو + `usePriceUpdate`؛ فرم‌ها در sections (`ProductImportForm`, `PriceUpdateForm`, `VehicleImportForm`, `ImportFields`, `SubmitStatus`, `ResultBox`, `ResultList`)
 ✅ `services/productImportService.js` (کلاینت) جدا از `productService.js`

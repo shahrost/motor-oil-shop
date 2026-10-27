@@ -1,17 +1,55 @@
 import priceRanges from "../data/productOptions/priceRanges";
 import { normalizeViscosity, normalizeVolume, normalizeApi } from "./normalizeSpec";
 import { classifyProductType } from "./classifyProductType";
+import { normalizeSearchText, searchWords } from "./searchText";
+import { getProductTypeSpec } from "./productTypeSpec";
+import { getProductNameLabel } from "./productNameLabel";
+import getBrandLabel from "./brandLabel";
+import { formatVolume } from "./formatVolume";
 
 export const ALL = "همه";
 
+// هر چیزی که روی کارت محصول نوشته شده (اسم و برند به هر دو زبان، گرید، API،
+// حجم، نوع گیربکس اتوماتیک مثل CVT/DCT/AL4، استاندارد روغن ترمز مثل DOT4،
+// دسته و کد کالا) جستجوپذیره. متن یکسان‌سازی می‌شه تا «۵w۳۰»، «5W-30» و
+// «5w30» یکی دیده بشن؛ نسخه‌ی بی‌فاصله برای همین «5w30» ← «5w 30» هم چک می‌شه.
+const searchIndexCache = new WeakMap();
+
+function getSearchIndex(product) {
+  if (searchIndexCache.has(product)) return searchIndexCache.get(product);
+
+  const typeSpec = getProductTypeSpec(product);
+  const text = normalizeSearchText(
+    [
+      product.name,
+      getProductNameLabel(product.name, "en"),
+      product.brand,
+      getBrandLabel(product.brand, "en"),
+      product.sku,
+      product.category,
+      product.oilType,
+      product.viscosity,
+      product.api,
+      product.volume,
+      formatVolume(product.volume, "en"),
+      typeSpec?.value,
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
+  const index = { text, compact: text.replace(/ /g, "") };
+
+  searchIndexCache.set(product, index);
+  return index;
+}
+
 function matchesSearch(product, search) {
-  if (!search.trim()) return true;
+  const words = searchWords(search);
+  if (!words.length) return true;
 
-  const words = search.toLowerCase().trim().split(/\s+/);
-  const haystack =
-    `${product.name} ${product.brand} ${product.sku || ""} ${product.category} ${product.viscosity} ${product.volume} ${product.oilType || ""}`.toLowerCase();
+  const { text, compact } = getSearchIndex(product);
 
-  return words.every((word) => haystack.includes(word));
+  return words.every((word) => text.includes(word) || compact.includes(word));
 }
 
 function matchesPriceRange(product, priceRange) {
