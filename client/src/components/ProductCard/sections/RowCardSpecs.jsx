@@ -1,44 +1,42 @@
 import { formatVolume } from "../../../utils/formatVolume";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
-import { getAtfType, isAtfProduct } from "../../../utils/atfType";
+import { getProductTypeSpec } from "../../../utils/productTypeSpec";
 
-// مشخصات کارت ردیفی؛ گرید و API روی موبایل پنهان‌اند تا کارت جمع‌وجور بمونه
+// مشخصات کارت ردیفی؛ روی موبایل هم دقیقاً همون خط‌های دسکتاپ نشون داده می‌شه
 function RowCardSpecs({ product, name, language, t }) {
+  const typeSpec = getProductTypeSpec(product);
+
   return (
     <>
-      <h3 className="hidden sm:line-clamp-2 mt-2 text-sm font-bold text-gray-900">
+      <h3 className="line-clamp-2 mt-2 text-xs sm:text-sm font-bold text-gray-900">
         {name}
       </h3>
 
       <div className="mt-2 text-xs sm:text-sm font-bold text-gray-700 space-y-1">
-        {/* روغن گیربکس اتوماتیک: به‌جای گرید و API فقط نوعش (CVT، DCT...) */}
-        {isAtfProduct(product) ? (
+        {/* گیربکس اتوماتیک و روغن ترمز: به‌جای گرید و API فقط نوع (CVT، DCT...)
+            یا استاندارد (DOT3، DOT4) */}
+        {typeSpec ? (
           <>
             <SpecLine
-              className="hidden sm:line-clamp-1"
-              label={t("common.atfType")}
-              value={getAtfType(product)}
+              className="line-clamp-1"
+              label={t(typeSpec.labelKey)}
+              value={typeSpec.value}
               reserveSpace
               isolate
             />
-            <SpecLine
-              className="hidden sm:block"
-              label="-"
-              value=""
-              reserveSpace
-            />
+            <SpecLine label="-" value="" reserveSpace />
           </>
         ) : (
           <>
             <SpecLine
-              className="hidden sm:line-clamp-1"
+              className="line-clamp-1"
               label={t("common.viscosity")}
               value={product.viscosity}
               reserveSpace
             />
 
             <SpecLine
-              className="hidden sm:line-clamp-1"
+              className="line-clamp-1"
               label={<ApiLabel />}
               value={product.api}
               reserveSpace

@@ -9,10 +9,11 @@ import PromotionBadge from "../../common/PromotionBadge";
 import DiscountBadge from "../../common/DiscountBadge";
 import SpecLine, { ApiLabel } from "../../common/SpecLine";
 import CompatibleVehicles from "../../common/CompatibleVehicles";
-import { getAtfType, isAtfProduct } from "../../../utils/atfType";
+import { getProductTypeSpec } from "../../../utils/productTypeSpec";
 
 function ProductInfo({ product, paymentType }) {
   const { language, t } = useContext(LanguageContext);
+  const typeSpec = getProductTypeSpec(product);
 
   return (
     <>
@@ -32,14 +33,14 @@ function ProductInfo({ product, paymentType }) {
       </h2>
 
       <div className="mt-2 space-y-1 text-base font-bold text-gray-800">
-        {/* روغن گیربکس اتوماتیک گرید و API نداره؛ به‌جاش نوعش (CVT، DCT...) میاد
-            و یک خط خالی می‌مونه تا با کارت‌های کناری هم‌قد بمونه */}
-        {isAtfProduct(product) ? (
+        {/* گیربکس اتوماتیک و روغن ترمز گرید و API ندارن؛ به‌جاش نوع (CVT، DCT...) یا
+            استاندارد (DOT3، DOT4) میاد و یک خط خالی می‌مونه تا با کارت‌های کناری هم‌قد بمونه */}
+        {typeSpec ? (
           <>
             <SpecLine
               className="line-clamp-1 break-words"
-              label={t("common.atfType")}
-              value={getAtfType(product)}
+              label={t(typeSpec.labelKey)}
+              value={typeSpec.value}
               reserveSpace
               isolate
             />

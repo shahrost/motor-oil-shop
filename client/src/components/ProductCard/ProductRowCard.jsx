@@ -45,7 +45,7 @@ function ProductRowCard({ product }) {
         height="128"
         draggable={false}
         onError={handleProductImageError(product)}
-        className="w-full h-24 sm:h-32 object-contain"
+        className="w-full h-32 object-contain"
       />
 
       <RowCardSpecs product={product} name={name} language={language} t={t} />
