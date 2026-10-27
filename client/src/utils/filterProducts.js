@@ -50,7 +50,10 @@ function getSearchIndex(product, compatibility) {
       product.viscosity,
       product.api,
       product.volume,
+      formatVolume(product.volume, "fa"),
       formatVolume(product.volume, "en"),
+      // «300cc»، «4l» فشرده (نمایش انگلیسی حالا «300 ml» است)
+      product.volume && normalizeVolume(product.volume),
       typeSpec?.value,
       getCompatibleVehicleText(product, compatibility),
     ]
