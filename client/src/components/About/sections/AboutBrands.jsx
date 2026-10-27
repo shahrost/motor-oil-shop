@@ -25,7 +25,7 @@ function AboutBrands() {
             >
               <div className="h-12 flex items-center justify-center">
                 {brand.image && (
-                  <img src={brand.image} alt="" className="max-h-12 object-contain" />
+                  <img src={brand.image} alt="" aria-hidden="true" className="max-h-12 object-contain" />
                 )}
               </div>
 

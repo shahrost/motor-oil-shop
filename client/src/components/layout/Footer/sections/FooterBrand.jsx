@@ -13,7 +13,7 @@ function FooterBrand() {
       <div className="flex items-center justify-center gap-3 mb-4">
         <img
           src={brandLogo}
-          alt=""
+          alt={t("site.name")}
           width="46"
           height="32"
           className="h-8 md:h-9 w-auto select-none"

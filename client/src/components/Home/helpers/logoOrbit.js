@@ -91,6 +91,7 @@ export function flightKeyframes(from, to, slot) {
 export function makeChip(brand) {
   const chip = document.createElement("div");
   chip.className = "logo-chip";
+  chip.setAttribute("aria-hidden", "true");
 
   const img = document.createElement("img");
   img.src = brand.logo;

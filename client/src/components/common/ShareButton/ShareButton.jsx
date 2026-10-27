@@ -41,7 +41,7 @@ function ShareButton({ text, className = "" }) {
               onClick={share.close}
               className={itemClass}
             >
-              <img src={link.icon} alt="" className="w-5 h-5" />
+              <img src={link.icon} alt="" aria-hidden="true" className="w-5 h-5" />
               {t(`share.${link.key}`)}
             </a>
           ))}

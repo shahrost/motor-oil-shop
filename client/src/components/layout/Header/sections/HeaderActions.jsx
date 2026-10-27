@@ -32,12 +32,12 @@ function HeaderActions({ menuOpen, onToggleMenu }) {
 
       <Link
         to="/cart"
-        aria-label={t("header.cartLabel")}
+        aria-label={`${t("header.cartLabel")} (${cartCount})`}
         className="relative flex items-center justify-center bg-yellow-400 text-black w-11 h-11 rounded-xl font-bold hover:bg-yellow-300 transition"
       >
         <ShoppingCart />
         {cartCount > 0 && (
-          <span className="absolute -top-2 -left-2 bg-red-600 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center">
+          <span aria-hidden="true" className="absolute -top-2 -left-2 bg-red-600 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center">
             {cartCount}
           </span>
         )}
@@ -47,9 +47,10 @@ function HeaderActions({ menuOpen, onToggleMenu }) {
         href={WHATSAPP_URL}
         target="_blank"
         rel="noreferrer"
+        aria-label={t("header.whatsapp")}
         className="hidden md:flex items-center justify-center bg-green-600 hover:bg-green-700 text-white w-11 h-11 rounded-xl font-bold"
       >
-        <img src={whatsappLogo} alt={t("header.whatsapp")} className="w-6 h-6" />
+        <img src={whatsappLogo} alt="" aria-hidden="true" className="w-6 h-6" />
       </a>
 
       <a

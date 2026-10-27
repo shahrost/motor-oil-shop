@@ -35,7 +35,8 @@ function SocialLink({ item }) {
         ) : (
           <img
             src={item.icon}
-            alt={label}
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-contain"
           />
         )}

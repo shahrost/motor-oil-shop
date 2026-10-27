@@ -16,7 +16,7 @@ function ContactActions() {
         rel="noreferrer"
         className="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3 rounded-lg font-bold"
       >
-        <img src={whatsappLogo} alt="" className="w-5 h-5" />
+        <img src={whatsappLogo} alt="" aria-hidden="true" className="w-5 h-5" />
         {t("contact.actions.whatsapp")}
       </a>
 
