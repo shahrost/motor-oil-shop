@@ -13,3 +13,4 @@ export { default as HomeSectionHeader } from "./HomeSectionHeader";
 export { default as PromotionSlide } from "./PromotionSlide";
 export { default as PromotionsBanner } from "./PromotionsBanner";
 export { default as EntryCta } from "./EntryCta";
+export { default as BrandStrip } from "./BrandStrip";
