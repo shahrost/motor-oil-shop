@@ -38,8 +38,14 @@ async function priceOrderItems(items) {
       errors.push(`ردیف ${index + 1} (${product.name}): قیمت ندارد؛ برای قیمت تماس بگیرید`);
     }
 
+    // فقط فیلدهای مشخص ذخیره می‌شن؛ نام و مشخصات از دیتابیس، نه از بدنه‌ی درخواست
     return {
-      ...item,
+      productId: String(item.productId),
+      productName: product.name || "",
+      brand: product.brand || "",
+      viscosity: product.viscosity || "",
+      volume: product.volume == null ? "" : String(product.volume),
+      vehicle: (item.vehicle || "").trim(),
       orderType,
       paymentType,
       quantity,
@@ -59,7 +65,21 @@ async function priceOrderItems(items) {
   };
 }
 
-async function createOrder(data) {
+// مشخصات مشتری فقط با فیلدهای مجاز. موقعیت نقشه اختیاریه؛ null ذخیره نمی‌شه
+// تا سفارش‌های بدون موقعیت فیلد خالی نداشته باشن
+function pickCustomer({ name, phone, area, address, location }) {
+  return {
+    name: name.trim(),
+    phone,
+    area: (area || "").trim(),
+    address: (address || "").trim(),
+    ...(location != null && { location: { lat: location.lat, lng: location.lng } }),
+  };
+}
+
+// customerId فقط از توکن مشتری (optionalCustomerAuth)؛ وضعیت و تاریخ هم سمت سرور تعیین می‌شن،
+// پس هیچ فیلدی از بدنه‌ی درخواست بدون بررسی ذخیره نمی‌شه
+async function createOrder(data, customerId) {
   const validation = validateOrder(data);
 
   if (!validation.valid) {
@@ -68,23 +88,15 @@ async function createOrder(data) {
 
   const { items, totalPrice } = await priceOrderItems(data.items);
 
-  const order = {
-    ...data,
-
-    items,
-
-    totalPrice,
-
+  return await orderRepository.createOrder({
     id: crypto.randomUUID(),
-  };
-
-  // موقعیت نقشه اختیاریه؛ null رو ذخیره نمی‌کنیم تا سفارش‌های بدون موقعیت فیلد خالی نداشته باشن
-  if (order.customer && order.customer.location == null) {
-    const { location, ...customer } = order.customer;
-    order.customer = customer;
-  }
-
-  return await orderRepository.createOrder(order);
+    customerId: customerId || "",
+    customer: pickCustomer(data.customer),
+    items,
+    totalPrice,
+    status: "جدید",
+    date: new Date().toLocaleDateString("fa-IR", { timeZone: "Asia/Tehran" }),
+  });
 }
 
 async function getOrdersByCustomer(customerId) {

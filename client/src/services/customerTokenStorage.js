@@ -1,13 +1,15 @@
+import { getItem, setItem, removeItem } from "./safeStorage";
+
 const STORAGE_KEY = "customerToken";
 
 export function getCustomerToken() {
-  return localStorage.getItem(STORAGE_KEY);
+  return getItem(STORAGE_KEY);
 }
 
 export function saveCustomerToken(token) {
-  localStorage.setItem(STORAGE_KEY, token);
+  setItem(STORAGE_KEY, token);
 }
 
 export function clearCustomerToken() {
-  localStorage.removeItem(STORAGE_KEY);
+  removeItem(STORAGE_KEY);
 }

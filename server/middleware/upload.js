@@ -1,6 +1,7 @@
 const multer = require("multer");
 
 const path = require("path");
+const AppError = require("../utils/AppError");
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -23,8 +24,9 @@ function fileFilter(req, file, cb) {
     cb(null, true);
   } else {
     cb(
-      new Error(
+      new AppError(
         `فرمت فایل «${file.originalname}» مجاز نیست (فرمت آن: ${ext || "نامشخص"}). فرمت‌های مجاز: jpg, jpeg, png, webp, jfif, gif, bmp`,
+        400,
       ),
     );
   }

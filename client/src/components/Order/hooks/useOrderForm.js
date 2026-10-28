@@ -5,8 +5,11 @@ import CustomerAuthContext from "../../../context/CustomerAuthContext";
 import LanguageContext from "../../../context/LanguageContext";
 import buildOrderData from "../helpers/buildOrderData";
 import { saveLastOrder } from "../../../services/lastOrderStorage";
+import { cleanPhoneInput } from "../../../utils/phoneInput";
 
 const PHONE_LENGTH = 11;
+
+const isValidPhone = (phone) => phone.length === PHONE_LENGTH && phone.startsWith("09");
 
 function useOrderForm() {
   const { cart, clearCart, changeAllPaymentType, cartTotal } =
@@ -16,37 +19,40 @@ function useOrderForm() {
   const { customer: account } = useContext(CustomerAuthContext);
   const { t } = useContext(LanguageContext);
 
-  const [customer, setCustomer] = useState({
-    name: "",
-    phone: "",
+  // null یعنی مشتری هنوز دست نزده: نام و موبایل مشتری واردشده (حتی اگه پروفایل دیرتر برسه) پیش‌فرضه
+  const [edits, setEdits] = useState({
+    name: null,
+    phone: null,
     area: "",
     address: "",
     location: null,
   });
 
-  const [submitted, setSubmitted] = useState(false);
+  const customer = {
+    ...edits,
+    name: edits.name ?? account?.name ?? "",
+    phone: edits.phone ?? account?.phone ?? "",
+  };
+
+  const [savedOrder, setSavedOrder] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   function handleChange(e) {
-    setCustomer({
-      ...customer,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setEdits((prev) => ({ ...prev, [name]: value }));
   }
 
-  // موبایل فقط رقم و حداکثر ۱۱ رقم
+  // موبایل: ارقام فارسی/عربی ← انگلیسی، فقط رقم و حداکثر ۱۱ رقم
   function changePhone(value) {
-    const digits = value.replace(/\D/g, "");
-
-    if (digits.length <= PHONE_LENGTH) {
-      setCustomer({ ...customer, phone: digits });
-    }
+    setEdits((prev) => ({ ...prev, phone: cleanPhoneInput(value) }));
+    setPhoneError("");
   }
 
   // موقعیت روی نقشه (اختیاری)؛ از رویدادهای نقشه صدا زده می‌شه، پس state قبلی رو تابعی می‌گیره
   function changeLocation(location) {
-    setCustomer((prev) => ({ ...prev, location }));
+    setEdits((prev) => ({ ...prev, location }));
   }
 
   // سبد فقط بعد از ثبت موفق سفارش روی سرور خالی می‌شه
@@ -55,8 +61,8 @@ function useOrderForm() {
 
     if (submitting) return;
 
-    if (customer.phone.length !== PHONE_LENGTH || !customer.phone.startsWith("09")) {
-      alert(t("order.invalidPhone"));
+    if (!isValidPhone(customer.phone)) {
+      setPhoneError(t("order.invalidPhone"));
       return;
     }
 
@@ -64,18 +70,20 @@ function useOrderForm() {
     setSubmitError("");
 
     try {
-      const orderData = buildOrderData(cart, customer, cartTotal, account?.id);
-      const savedOrder = await addOrder(orderData);
+      const orderData = buildOrderData(cart, customer);
+      const saved = await addOrder(orderData);
 
-      // نسخه‌ی ثبت‌شده برای نمایش در سبد خرید (شماره و وضعیت از پاسخ سرور)
-      saveLastOrder({ ...orderData, ...savedOrder });
+      // نسخه‌ی ثبت‌شده برای نمایش در سبد خرید (شماره، مبلغ و وضعیت از پاسخ سرور)
+      const lastOrder = { ...orderData, ...saved };
+      saveLastOrder(lastOrder);
 
       clearCart();
-      setSubmitted(true);
+      setSavedOrder(lastOrder);
     } catch (error) {
-      console.log("خطا در ثبت سفارش", error);
-      // ۴۰۰: سرور دلیل مشخص داده (مثلاً قلمی که قیمت نداره)؛ بقیه‌ی خطاها پیام عمومی
-      const reason = error.response?.status === 400 && error.response.data?.message;
+      console.error("خطا در ثبت سفارش", error);
+      // ۴۰۰/۴۲۹: سرور دلیل مشخص داده (مثلاً قلمی که قیمت نداره)؛ بقیه‌ی خطاها پیام عمومی
+      const status = error.response?.status;
+      const reason = (status === 400 || status === 429) && error.response.data?.message;
       setSubmitError(reason ? `${t("order.submitError")} (${reason})` : t("order.submitError"));
     } finally {
       setSubmitting(false);
@@ -86,9 +94,10 @@ function useOrderForm() {
     cart,
     cartTotal,
     customer,
-    submitted,
+    savedOrder,
     submitting,
     submitError,
+    phoneError,
 
     handleChange,
     changePhone,

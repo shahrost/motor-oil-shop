@@ -1,3 +1,5 @@
+import { getItem, setItem, removeItem } from "./safeStorage";
+
 const STORAGE_KEY = "cart";
 
 // سبدهای قدیمی عکس رو به‌صورت رشته ذخیره کرده بودن؛ به ساختار فعلی { main, gallery } تبدیل می‌شن
@@ -12,7 +14,7 @@ function normalizeItem(item) {
 
 export function getCart() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const saved = JSON.parse(getItem(STORAGE_KEY) || "[]");
 
     return Array.isArray(saved) ? saved.map(normalizeItem) : [];
   } catch {
@@ -21,9 +23,9 @@ export function getCart() {
 }
 
 export function saveCart(cart) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+  setItem(STORAGE_KEY, JSON.stringify(cart));
 }
 
 export function clearCartStorage() {
-  localStorage.removeItem(STORAGE_KEY);
+  removeItem(STORAGE_KEY);
 }

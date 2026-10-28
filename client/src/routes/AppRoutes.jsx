@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
+import ErrorBoundary from "../components/layout/ErrorBoundary";
 import lazyPage from "../utils/lazyPage";
 import Home from "../pages/Home";
 import Products from "../pages/Products";
@@ -119,9 +120,11 @@ function AppRoutes() {
         path="/admin"
         element={
           <ProtectedRoute>
-            <Suspense fallback={null}>
-              <Admin />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={null}>
+                <Admin />
+              </Suspense>
+            </ErrorBoundary>
           </ProtectedRoute>
         }
       />
@@ -130,9 +133,11 @@ function AppRoutes() {
         path="/admin/orders"
         element={
           <ProtectedRoute>
-            <Suspense fallback={null}>
-              <AdminOrders />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={null}>
+                <AdminOrders />
+              </Suspense>
+            </ErrorBoundary>
           </ProtectedRoute>
         }
       />

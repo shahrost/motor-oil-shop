@@ -1,7 +1,9 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext, useMemo } from "react";
 import { getCart, saveCart, clearCartStorage } from "../services/cartStorage";
 import { getItemTotal } from "../utils/cartItemCalc";
 import { isPaymentTypeDisabled } from "../utils/productPrice";
+import liveCartItems from "../utils/liveCartItems";
+import ProductContext from "./ProductContext/ProductContext";
 
 const CartContext = createContext();
 
@@ -10,89 +12,78 @@ const isSameLine = (a, b) =>
   a.id === b.id && a.orderType === b.orderType && a.paymentType === b.paymentType;
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState(getCart);
+  const { products } = useContext(ProductContext);
+  const [storedCart, setCart] = useState(getCart);
   // شمارنده‌ی «افزودن به سبد» برای انیمیشن کوچیک دکمه‌ی سبد هدر (با هر افزودن یکی زیاد می‌شه)
   const [addedCount, setAddedCount] = useState(0);
 
+  // قیمت و طرح فروش هر ردیف همیشه از لیست فعلی محصولات (نه نسخه‌ی قدیمی localStorage)
+  const cart = useMemo(() => liveCartItems(storedCart, products), [storedCart, products]);
+
   useEffect(() => {
-    saveCart(cart);
-  }, [cart]);
+    saveCart(storedCart);
+  }, [storedCart]);
 
-  function addToCart(product) {
-    setAddedCount((count) => count + 1);
+  const value = useMemo(() => {
+    function addToCart(product) {
+      setAddedCount((count) => count + 1);
 
-    const exists = cart.some((item) => isSameLine(item, product));
+      setCart((prev) => {
+        if (prev.some((item) => isSameLine(item, product))) {
+          return prev.map((item) =>
+            isSameLine(item, product)
+              ? { ...item, quantity: Number(item.quantity) + Number(product.quantity) }
+              : item,
+          );
+        }
 
-    if (exists) {
-      setCart(
-        cart.map((item) =>
-          isSameLine(item, product)
-            ? { ...item, quantity: Number(item.quantity) + Number(product.quantity) }
-            : item,
-        ),
-      );
-      return;
+        return [
+          ...prev,
+          {
+            ...product,
+            quantity: Number(product.quantity || 1),
+            orderType: product.orderType || "number",
+            paymentType: product.paymentType || "cash",
+          },
+        ];
+      });
     }
 
-    setCart([
-      ...cart,
-      {
-        ...product,
-        quantity: Number(product.quantity || 1),
-        orderType: product.orderType || "number",
-        paymentType: product.paymentType || "cash",
-      },
-    ]);
-  }
+    function updateItemAt(index, changes) {
+      setCart((prev) => prev.map((item, i) => (i === index ? { ...item, ...changes } : item)));
+    }
 
-  function updateItemAt(index, changes) {
-    setCart(cart.map((item, i) => (i === index ? { ...item, ...changes } : item)));
-  }
+    // ردیفی که روش انتخاب‌شده براش قیمت نداره (ولی روش فعلیش داره) دست نمی‌خوره
+    function changeAllPaymentType(paymentType) {
+      setCart((prev) =>
+        prev.map((item, i) =>
+          isPaymentTypeDisabled(cart[i] || item, paymentType) ? item : { ...item, paymentType },
+        ),
+      );
+    }
 
-  // پارامتر اول (id) برای سازگاری با فراخوانی‌های فعلی نگه داشته شده؛ ردیف با index مشخص می‌شه
-  const removeFromCart = (id, index) => setCart(cart.filter((_, i) => i !== index));
-  const updateQuantity = (id, quantity, index) =>
-    updateItemAt(index, { quantity: Number(quantity) });
-  const changeOrderType = (id, orderType, index) => updateItemAt(index, { orderType });
-  const changePaymentType = (id, paymentType, index) => updateItemAt(index, { paymentType });
+    function clearCart() {
+      setCart([]);
+      clearCartStorage();
+    }
 
-  // ردیفی که روش انتخاب‌شده براش قیمت نداره (ولی روش فعلیش داره) دست نمی‌خوره
-  function changeAllPaymentType(paymentType) {
-    setCart(
-      cart.map((item) =>
-        isPaymentTypeDisabled(item, paymentType) ? item : { ...item, paymentType },
-      ),
-    );
-  }
+    return {
+      cart,
+      addToCart,
+      // پارامتر اول (id) برای سازگاری با فراخوانی‌های فعلی نگه داشته شده؛ ردیف با index مشخص می‌شه
+      removeFromCart: (id, index) => setCart((prev) => prev.filter((_, i) => i !== index)),
+      updateQuantity: (id, quantity, index) => updateItemAt(index, { quantity: Number(quantity) }),
+      changeOrderType: (id, orderType, index) => updateItemAt(index, { orderType }),
+      changePaymentType: (id, paymentType, index) => updateItemAt(index, { paymentType }),
+      changeAllPaymentType,
+      clearCart,
+      cartCount: cart.reduce((total, item) => total + Number(item.quantity || 0), 0),
+      cartTotal: cart.reduce((total, item) => total + getItemTotal(item), 0),
+      addedCount,
+    };
+  }, [cart, addedCount]);
 
-  function clearCart() {
-    setCart([]);
-    clearCartStorage();
-  }
-
-  const cartCount = cart.reduce((total, item) => total + Number(item.quantity || 0), 0);
-
-  const cartTotal = cart.reduce((total, item) => total + getItemTotal(item), 0);
-
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        changeOrderType,
-        changePaymentType,
-        changeAllPaymentType,
-        clearCart,
-        cartCount,
-        cartTotal,
-        addedCount,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export default CartContext;

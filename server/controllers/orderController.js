@@ -44,7 +44,7 @@ async function exportOrdersExcel(req, res, next) {
 
 async function createOrder(req, res, next) {
   try {
-    const order = await orderService.createOrder(req.body);
+    const order = await orderService.createOrder(req.body, req.customerId);
 
     return apiResponse.created(res, order);
   } catch (error) {

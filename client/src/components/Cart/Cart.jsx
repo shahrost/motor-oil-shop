@@ -9,7 +9,7 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 function Cart() {
   const { t } = useContext(LanguageContext);
   usePageMeta(t("nav.cart"));
-  const { cart, clearCart, cartTotal, lastOrder, hideLastOrder } = useCartPage();
+  const { cart, clearRequest, cartTotal, lastOrder, hideLastOrder } = useCartPage();
 
   // بعد از ثبت سفارش سبد خالیه؛ آخرین سفارش زیر پیام «سبد خالی» دیده می‌شه
   if (cart.length === 0) {
@@ -35,7 +35,7 @@ function Cart() {
 
         <CartItems cart={cart} />
 
-        <CartSummary cartTotal={cartTotal} clearCart={clearCart} />
+        <CartSummary cartTotal={cartTotal} clearRequest={clearRequest} />
 
         <LastOrder order={lastOrder} onHide={hideLastOrder} />
       </div>

@@ -36,10 +36,7 @@ function Products() {
           <CategoryChips />
         </div>
 
-        <div ref={listRef} className="scroll-mt-24">
-          <ProductRows products={filteredProducts} />
-        </div>
-
+        {/* فیلترها بالای لیست تا کاربر موبایل برای رسیدن بهشون از کل لیست رد نشه */}
         <ProductFilters
           values={values}
           setValue={setValue}
@@ -48,6 +45,10 @@ function Products() {
           clearFilters={clearFilters}
           onSubmit={showProducts}
         />
+
+        <div ref={listRef} className="scroll-mt-24">
+          <ProductRows products={filteredProducts} />
+        </div>
       </div>
 
       <ScrollTopButton />

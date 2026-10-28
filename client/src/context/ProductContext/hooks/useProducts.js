@@ -25,18 +25,34 @@ function useProducts() {
   // تا اولین پاسخ سرور نرسیده، صفحه‌ها اسکلتون نشون می‌دن نه حالت «خالی»
   const [loading, setLoading] = useState(true);
 
+  // دریافت ناموفق (بعد از تلاش‌های خودکار apiClient): صفحه‌ها پیام خطا + «تلاش دوباره» نشون می‌دن
+  const [loadError, setLoadError] = useState(false);
+
   async function reloadProducts() {
     try {
       setProducts(await fetchSortedProducts());
+      setLoadError(false);
     } catch (error) {
-      console.log("خطا در دریافت محصولات", error);
+      console.error("خطا در دریافت محصولات", error);
+      setLoadError(true);
     }
+  }
+
+  // «تلاش دوباره» بعد از خطا: تا رسیدن جواب دوباره اسکلتون نشون داده می‌شه
+  async function retryProducts() {
+    setLoading(true);
+    setLoadError(false);
+    await reloadProducts();
+    setLoading(false);
   }
 
   useEffect(() => {
     fetchSortedProducts()
       .then(setProducts)
-      .catch((error) => console.log("خطا در دریافت محصولات", error))
+      .catch((error) => {
+        console.error("خطا در دریافت محصولات", error);
+        setLoadError(true);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -91,6 +107,8 @@ function useProducts() {
   return {
     products,
     loading,
+    loadError,
+    retryProducts,
     addProduct,
     deleteProduct,
     updateProduct,

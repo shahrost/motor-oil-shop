@@ -11,6 +11,7 @@ function OrderForm({
   onSubmit,
   submitting,
   submitError,
+  phoneError,
 }) {
   const { t } = useContext(LanguageContext);
 
@@ -21,6 +22,7 @@ function OrderForm({
     >
       <CustomerInfo
         customer={customer}
+        phoneError={phoneError}
         onChange={onChange}
         onPhoneChange={onPhoneChange}
         onLocationChange={onLocationChange}
@@ -35,7 +37,7 @@ function OrderForm({
       </button>
 
       {submitError && (
-        <p className="mt-4 bg-red-100 text-red-700 rounded-xl p-3 text-center font-bold">
+        <p role="alert" className="mt-4 bg-red-100 text-red-700 rounded-xl p-3 text-center font-bold">
           {submitError}
         </p>
       )}

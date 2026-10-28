@@ -1,29 +1,35 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import translations from "../i18n/translations";
+import { getSavedLanguage, saveLanguage } from "../services/preferenceStorage";
 
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(
-    () => localStorage.getItem("language") || "fa",
+    () => getSavedLanguage() || "fa",
   );
 
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === "fa" ? "rtl" : "ltr";
-    localStorage.setItem("language", language);
+    saveLanguage(language);
   }, [language]);
 
-  function t(key) {
-    const value = key
-      .split(".")
-      .reduce((obj, part) => obj?.[part], translations[language]);
+  // value و t فقط با عوض شدن زبان نو می‌شن تا مصرف‌کننده‌ها بی‌دلیل دوباره رندر نشن
+  const value = useMemo(() => {
+    function t(key) {
+      const text = key
+        .split(".")
+        .reduce((obj, part) => obj?.[part], translations[language]);
 
-    return value ?? key;
-  }
+      return text ?? key;
+    }
+
+    return { language, setLanguage, t };
+  }, [language]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

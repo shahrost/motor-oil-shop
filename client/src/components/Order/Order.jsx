@@ -19,9 +19,10 @@ function Order() {
     cart,
     cartTotal,
     customer,
-    submitted,
+    savedOrder,
     submitting,
     submitError,
+    phoneError,
     handleChange,
     changePhone,
     changeLocation,
@@ -30,11 +31,11 @@ function Order() {
   } = useOrderForm();
 
   // بعد از ثبت موفق سبد خالی می‌شه؛ پیام موفقیت باید قبل از حالت «سبد خالی» بررسی بشه
-  if (submitted) {
+  if (savedOrder) {
     return (
       <div className="px-5 py-8">
         <div className="max-w-5xl mx-auto">
-          <OrderSuccess />
+          <OrderSuccess order={savedOrder} />
         </div>
       </div>
     );
@@ -63,6 +64,7 @@ function Order() {
           onSubmit={submitOrder}
           submitting={submitting}
           submitError={submitError}
+          phoneError={phoneError}
         />
       </div>
     </div>

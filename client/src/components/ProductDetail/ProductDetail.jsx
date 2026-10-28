@@ -8,6 +8,7 @@ import NotFound from "../NotFound";
 import ProductPrice from "../common/ProductPrice";
 import useProductDetail from "./hooks/useProductDetail";
 import useGoBack from "./hooks/useGoBack";
+import useProductJsonLd from "./hooks/useProductJsonLd";
 import {
   ProductGallery,
   ProductSpecs,
@@ -29,6 +30,7 @@ function ProductDetail() {
   const metaName =
     product && (product.name.includes(brandLabel) ? product.name : `${product.name} ${brandLabel}`);
   usePageMeta(metaName, t("meta.product").replace("{name}", metaName));
+  useProductJsonLd(product, metaName);
 
   // تا لیست محصولات نرسیده «پیدا نشد» نشون داده نمی‌شه
   if (!product && loading) return <ProductDetailSkeleton />;

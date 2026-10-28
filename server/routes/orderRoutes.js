@@ -2,6 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 const { auth } = require("../middleware/auth");
+const { optionalCustomerAuth } = require("../middleware/customerAuth");
+const orderLimiter = require("../middleware/orderLimiter");
 const {
   getOrders,
   exportOrdersExcel,
@@ -17,8 +19,8 @@ router.get("/", auth, getOrders);
 // اکسل سفارش‌های یک ماه شمسی (فقط ادمین)
 router.get("/export", auth, exportOrdersExcel);
 
-// ثبت سفارش جدید
-router.post("/", createOrder);
+// ثبت سفارش جدید (مهمان یا مشتری واردشده؛ شناسه‌ی مشتری فقط از توکن)
+router.post("/", orderLimiter, optionalCustomerAuth, createOrder);
 
 // تغییر وضعیت سفارش
 router.put("/:id", auth, updateOrderStatus);

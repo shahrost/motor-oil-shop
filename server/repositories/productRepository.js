@@ -67,8 +67,13 @@ async function findPricingByIds(ids) {
   const validIds = [...new Set(ids)].filter((id) => mongoose.isValidObjectId(id));
 
   return Product.find({ _id: { $in: validIds } })
-    .select("name price priceCheck cartonCount promotion")
+    .select("name brand viscosity volume price priceCheck cartonCount promotion")
     .lean();
+}
+
+// فقط شناسه و تاریخ آخرین تغییر محصولات فعال (نقشه‌ی سایت)
+async function getSitemapEntries() {
+  return Product.find({ isActive: { $ne: false } }).select("_id updatedAt").lean();
 }
 
 async function setFieldsById(id, fields) {
@@ -110,6 +115,7 @@ module.exports = {
   findBySkus,
   findByBrands,
   findPricingByIds,
+  getSitemapEntries,
   setFieldsById,
   bulkWrite,
   findExistingSkus,

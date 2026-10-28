@@ -30,6 +30,24 @@ function customerAuth(req, res, next) {
   }
 }
 
+// برای مسیرهایی که مهمان هم می‌تونه صدا بزنه (ثبت سفارش): توکن معتبر مشتری ← req.customerId،
+// نبود توکن یا توکن نامعتبر/غیرمشتری ← مهمان (درخواست رد نمی‌شه)
+function optionalCustomerAuth(req, res, next) {
+  const token = (req.headers.authorization || "").split(" ")[1];
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      if (decoded.role === "customer") req.customerId = decoded.customerId;
+    } catch {
+      // توکن منقضی؛ سفارش به‌عنوان مهمان ثبت می‌شه
+    }
+  }
+
+  next();
+}
+
 function createCustomerToken(customer) {
   return jwt.sign(
     {
@@ -47,5 +65,6 @@ function createCustomerToken(customer) {
 
 module.exports = {
   customerAuth,
+  optionalCustomerAuth,
   createCustomerToken,
 };

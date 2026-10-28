@@ -38,13 +38,9 @@ export function OrderProvider({ children }) {
     }
   }, []);
 
-  // ثبت سفارش جدید؛ در صورت خطا throw می‌کنه تا فرم سفارش سبد رو پاک نکنه
+  // ثبت سفارش جدید (وضعیت و تاریخ رو سرور می‌ذاره)؛ در صورت خطا throw می‌کنه تا فرم سفارش سبد رو پاک نکنه
   async function addOrder(order) {
-    const savedOrder = await createOrder({
-      ...order,
-      status: "جدید",
-      date: new Date().toLocaleDateString("fa-IR"),
-    });
+    const savedOrder = await createOrder(order);
 
     setOrders((prev) => [...prev, savedOrder]);
 

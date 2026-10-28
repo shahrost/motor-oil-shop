@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+const AppError = require("../utils/AppError");
 const fs = require("fs");
 
 const TMP_DIR = "uploads/tmp";
@@ -26,20 +27,21 @@ function fileFilter(req, file, cb) {
   if (file.fieldname === "file") {
     const allowed = [".xlsx", ".xls", ".csv"];
     if (allowed.includes(ext)) return cb(null, true);
-    return cb(new Error("فایل داده باید xlsx یا xls یا csv باشد"));
+    return cb(new AppError("فایل داده باید xlsx یا xls یا csv باشد", 400));
   }
 
   if (file.fieldname === "images") {
     const allowed = [".jpg", ".jpeg", ".png", ".webp", ".jfif", ".gif", ".bmp"];
     if (allowed.includes(ext)) return cb(null, true);
     return cb(
-      new Error(
+      new AppError(
         `فرمت عکس «${file.originalname}» مجاز نیست (فرمت آن: ${ext || "نامشخص"}). فرمت‌های مجاز: jpg, jpeg, png, webp, jfif, gif, bmp`,
+        400,
       ),
     );
   }
 
-  cb(new Error("فیلد نامعتبر"));
+  cb(new AppError("فیلد نامعتبر", 400));
 }
 
 // عکس‌ها مستقیم روی دیسک نوشته می‌شوند (نه در حافظه) تا ایمپورت چند صد

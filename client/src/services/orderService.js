@@ -1,4 +1,5 @@
 import apiClient from "../api/apiClient";
+import { getCustomerToken } from "./customerTokenStorage";
 
 // دریافت سفارش‌ها
 export async function fetchOrders() {
@@ -29,9 +30,15 @@ export async function downloadOrdersExcel(year, month) {
   }
 }
 
-// ثبت سفارش جدید
+// ثبت سفارش جدید؛ مشتری واردشده توکن خودش رو می‌فرسته تا سفارش در «خریدهای من» بیاد
+// (شناسه‌ی مشتری فقط از توکن خونده می‌شه). مهمان: بدون هدر مشتری
 export async function createOrder(order) {
-  const response = await apiClient.post("/orders", order);
+  const token = getCustomerToken();
+  const response = await apiClient.post(
+    "/orders",
+    order,
+    token ? { headers: { Authorization: `Bearer ${token}` } } : undefined,
+  );
   return response.data.data;
 }
 

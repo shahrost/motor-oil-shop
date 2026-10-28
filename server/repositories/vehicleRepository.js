@@ -142,8 +142,14 @@ async function deleteWhereSkuNotIn(skus) {
   return stale.map((v) => ({ sku: v.sku, name: v.name }));
 }
 
+// فقط شناسه و تاریخ آخرین تغییر همه‌ی خودروها (نقشه‌ی سایت)
+async function getSitemapEntries() {
+  return Vehicle.find().select("_id updatedAt").lean();
+}
+
 module.exports = {
   getLightList,
+  getSitemapEntries,
   findByBrand,
   findById,
   findNamesByIds,
