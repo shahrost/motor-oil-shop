@@ -10,6 +10,8 @@ const validateOrder = require("../validations/orderValidation");
 
 const AppError = require("../utils/AppError");
 
+const { notifyNewOrder } = require("./orderNotificationService");
+
 async function getOrders() {
   return await orderRepository.getAllOrders();
 }
@@ -88,7 +90,7 @@ async function createOrder(data, customerId) {
 
   const { items, totalPrice } = await priceOrderItems(data.items);
 
-  return await orderRepository.createOrder({
+  const order = await orderRepository.createOrder({
     id: crypto.randomUUID(),
     customerId: customerId || "",
     customer: pickCustomer(data.customer),
@@ -97,6 +99,11 @@ async function createOrder(data, customerId) {
     status: "جدید",
     date: new Date().toLocaleDateString("fa-IR", { timeZone: "Asia/Tehran" }),
   });
+
+  // پیامک «سفارش جدید» برای صاحب فروشگاه (پس‌زمینه؛ منتظرش نمی‌مونیم)
+  notifyNewOrder(order);
+
+  return order;
 }
 
 async function getOrdersByCustomer(customerId) {
