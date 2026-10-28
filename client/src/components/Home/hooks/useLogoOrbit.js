@@ -1,19 +1,20 @@
 import { useEffect, useRef } from "react";
 
-import homeOrbitBrands from "../../../data/homeOrbitBrands";
 import { prefersReducedMotion, onceVisible } from "../helpers/animate";
 import { createLogoOrbit } from "../helpers/logoOrbitScenario";
 
-// انیمیشن کارت «خودروهای من» (سناریو در helpers/logoOrbitScenario).
-// ref رو به باکس تصویر (دور ماشین) بدید. فقط یک بار، وقتی کارت برای اولین بار دیده بشه.
-function useLogoOrbit() {
+// لوگوهای چرخان دور تصویر وسط کارت (سناریو در helpers/logoOrbitScenario).
+// ref رو به باکس تصویر بدید. فقط یک بار، وقتی کارت برای اولین بار دیده بشه.
+// ellipse: شکل مدار از helpers/logoOrbit؛ media: فقط وقتی این media query برقراره
+// (مثلاً قطره‌ی «روانکار» روی موبایل گوشه‌ی کارت و کوچیکه و جای مدار نداره)
+function useLogoOrbit(brands, ellipse, media) {
   const artRef = useRef(null);
 
   useEffect(() => {
     const art = artRef.current;
-    if (!art) return;
+    if (!art || (media && !window.matchMedia(media).matches)) return;
 
-    const orbit = createLogoOrbit(art, homeOrbitBrands);
+    const orbit = createLogoOrbit(art, brands, ellipse);
 
     let stopWatching = null;
     if (prefersReducedMotion()) {
@@ -30,7 +31,7 @@ function useLogoOrbit() {
       window.removeEventListener("resize", orbit.layout);
       orbit.destroy();
     };
-  }, []);
+  }, [brands, ellipse, media]);
 
   return artRef;
 }

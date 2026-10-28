@@ -1,5 +1,5 @@
-// هندسه‌ی چرخ‌وفلک لوگوها در کارت «خودروهای من»: بیضی سه‌بعدی دور ماشین
-// (بالای بیضی = پشت ماشین و کوچیک‌تر، پایینش = جلوی ماشین و بزرگ‌تر)
+// هندسه‌ی چرخ‌وفلک لوگوها: بیضی سه‌بعدی دور تصویر وسط کارت (ماشین «خودروهای من»
+// یا قطره‌ی «روانکار»)؛ بالای بیضی = پشت تصویر و کوچیک‌تر، پایینش = جلو و بزرگ‌تر
 
 export const START_ANGLE = -Math.PI / 2;
 
@@ -9,7 +9,7 @@ const BODY = { cx: 0.497, cy: 0.544, halfW: 0.41, halfH: 0.37 };
 // نیم‌قطر لوگو (۲۱px وقتی جلوست) + چند پیکسل فاصله تا بدنه
 const CHIP_CLEARANCE = 22;
 
-// اندازه‌ی باکس تصویر (art) و کادر ماشین داخلش؛ هر فریم یک بار خونده می‌شه، نه برای تک‌تک لوگوها،
+// اندازه‌ی باکس تصویر (art) و کادر SVG داخلش (ماشین یا قطره)؛ هر فریم یک بار خونده می‌شه، نه برای تک‌تک لوگوها،
 // تا خوندن اندازه بین نوشتن transformها هر بار layout اجباری راه نندازه
 export function artSize(art) {
   const car = art.querySelector("svg")?.getBoundingClientRect();
@@ -25,7 +25,7 @@ export function artSize(art) {
 // بیضی مدار دور بدنه‌ی ماشین: مستطیل بدنه + فاصله‌ی لوگو کامل داخل بیضی می‌افته، پس لوگوها
 // هیچ‌جای مسیر روی چرخ‌ها و بدنه نمی‌رن. اگه عرض کارت کم باشه rx کوچیک‌تر و ry بلندتر می‌شه
 // (هنوز دور مستطیل)؛ اندازه‌ی ماشین با عرض کارت کم می‌شه (CarArt) تا این حالت پیش نیاد.
-function orbitEllipse({ w, h, car }) {
+export function carEllipse({ w, h, car }) {
   if (!car) return { cx: w / 2, cy: h / 2 + 4, rx: Math.min(w / 2 - 26, 175), ry: 66 };
 
   const hw = car.w * BODY.halfW + CHIP_CLEARANCE;
@@ -38,9 +38,26 @@ function orbitEllipse({ w, h, car }) {
   return { cx: car.x + car.w * BODY.cx, cy: car.y + car.h * BODY.cy, rx, ry: Math.min(ry, h / 2 - 2) };
 }
 
+// قد CarArt بر اساس عرض باکس تصویر (همون پله‌های @min-[…] در className اون؛ viewBox 2:1)
+function carArtHeight(w) {
+  if (w >= 322) return 96;
+  if (w >= 286) return 80;
+  if (w >= 248) return 64;
+  return 48;
+}
+
+// کارت «روانکار»: مدار دقیقاً هم‌شکل کارت «خودروهای من» — بیضی carEllipse برای ماشینی فرضی
+// به همون اندازه و جای ماشین وسط باکس (از sm باکس تصویر دو کارت هم‌اندازه‌ست)
+export function dropEllipse({ w, h }) {
+  const ch = carArtHeight(w);
+  const cw = ch * 2;
+
+  return carEllipse({ w, h, car: { x: (w - cw) / 2, y: (h - ch) / 2, w: cw, h: ch } });
+}
+
 // جای لوگوی i از n روی بیضی، به مختصات باکس تصویر (size از artSize)
-export function orbitSlot(size, i, n, angle) {
-  const { cx, cy, rx, ry } = orbitEllipse(size);
+export function orbitSlot(size, i, n, angle, ellipse = carEllipse) {
+  const { cx, cy, rx, ry } = ellipse(size);
 
   const a = angle + (i * 2 * Math.PI) / n;
   const depth = Math.sin(a); // ۱ = جلو، ۱- = پشت

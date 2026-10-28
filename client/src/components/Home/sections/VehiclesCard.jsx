@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
+import homeOrbitBrands from "../../../data/homeOrbitBrands";
 import useLogoOrbit from "../hooks/useLogoOrbit";
+import { carEllipse } from "../helpers/logoOrbit";
 import CarArt from "./CarArt";
 import EntryCta from "./EntryCta";
 
@@ -8,7 +10,7 @@ import EntryCta from "./EntryCta";
 // (منطقش در useLogoOrbit). روی موبایل افقیه (تصویر یک طرف، متن و دکمه طرف دیگه)
 // تا ارتفاعش نصف بشه؛ از sm مثل قبل عمودی. توضیح کوتاه فقط موبایل، کامل از sm
 function VehiclesCard({ to, title, description, shortDescription, cta }) {
-  const artRef = useLogoOrbit();
+  const artRef = useLogoOrbit(homeOrbitBrands, carEllipse);
 
   return (
     <Link

@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 
+import homeOrbitOilBrands from "../../../data/homeOrbitOilBrands";
 import useOilPour from "../hooks/useOilPour";
+import useLogoOrbit from "../hooks/useLogoOrbit";
+import { dropEllipse } from "../helpers/logoOrbit";
 import OilDropArt from "./OilDropArt";
 import GearTitle from "./GearTitle";
 import TrackDescription from "./TrackDescription";
@@ -8,11 +11,15 @@ import OilJugArt from "./OilJugArt";
 import EntryCta from "./EntryCta";
 
 // کارت ورودی «روانکار»: قطره‌ی بزرگ، عنوان داخل چرخ‌دنده و توضیح داخل زنجیر تانک،
-// با انیمیشن ریختن روغن از گالن (منطقش در useOilPour).
+// با انیمیشن ریختن روغن از گالن (منطقش در useOilPour) و لوگوی برندهای روغن که از sm
+// دور قطره می‌چرخن (useLogoOrbit؛ روی موبایل قطره گوشه‌ی کارت و کوچیکه، جای مدار نداره).
 // روی موبایل کوتاه‌تره: قطره کوچیک گوشه‌ی راست بالا (سمت راست تا سر راه گالن که از چپ میاد نباشه)
 // و چرخ‌دنده کوچیک‌تر؛ pt-12 جای گالن بالای چرخ‌دنده‌ست
+const SM_UP = "(min-width: 640px)";
+
 function LubricantCard({ to, title, description, cta }) {
   const cardRef = useOilPour();
+  const artRef = useLogoOrbit(homeOrbitOilBrands, dropEllipse, SM_UP);
 
   return (
     <Link
@@ -40,11 +47,14 @@ function LubricantCard({ to, title, description, cta }) {
         transition
       "
     >
+      {/* باکس تصویر: لایه‌ی لوگوها اینجاست، نه روی خود قطره که موقع افتادن transform می‌گیره */}
       <div
-        data-oil="drop"
-        className="oil-big-drop absolute top-3 right-5 sm:static h-20 sm:h-44 flex items-center justify-center"
+        ref={artRef}
+        className="absolute top-3 right-5 sm:relative sm:top-auto sm:right-auto sm:w-full h-20 sm:h-44 flex items-center justify-center"
       >
-        <OilDropArt className="h-16 sm:h-40 w-auto drop-shadow-lg" />
+        <div data-oil="drop" className="oil-big-drop relative z-[2]">
+          <OilDropArt className="h-16 sm:h-40 w-auto drop-shadow-lg" />
+        </div>
       </div>
 
       <GearTitle title={title} />

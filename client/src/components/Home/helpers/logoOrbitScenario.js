@@ -1,5 +1,5 @@
-// سناریوی کارت «خودروهای من»: لوگوی برندها از لبه‌های صفحه پرواز می‌کنن داخل کارت
-// و دور ماشین روی بیضی سه‌بعدی می‌چرخن (هندسه در logoOrbit).
+// سناریوی لوگوهای چرخان (کارت «خودروهای من» و «روانکار»): لوگوی برندها از لبه‌های صفحه
+// پرواز می‌کنن داخل کارت و دور تصویر وسط روی بیضی سه‌بعدی می‌چرخن (هندسه در logoOrbit).
 
 import { wait, isFrozen } from "./animate";
 import {
@@ -15,9 +15,10 @@ import {
 const MAX_SPEED = 0.00035; // رادیان بر میلی‌ثانیه
 const ACCEL = 0.0000004;
 
-// art: باکس تصویر دور ماشین. خروجی: run (انیمیشن کامل)، showFinalState (حرکت کم)،
+// art: باکس تصویر وسط کارت؛ ellipse: شکل مدار (carEllipse یا dropEllipse از logoOrbit).
+// خروجی: run (انیمیشن کامل)، showFinalState (حرکت کم)،
 // layout (چیدن دوباره بعد از تغییر اندازه) و destroy (پاک‌سازی موقع unmount)
-export function createLogoOrbit(art, brands) {
+export function createLogoOrbit(art, brands, ellipse) {
   const n = brands.length;
   let cancelled = false;
   let raf = 0;
@@ -35,7 +36,7 @@ export function createLogoOrbit(art, brands) {
 
   const layout = () => {
     const size = artSize(art);
-    chips.forEach((chip, i) => chip && applySlot(chip, orbitSlot(size, i, n, angle)));
+    chips.forEach((chip, i) => chip && applySlot(chip, orbitSlot(size, i, n, angle, ellipse)));
   };
 
   // چرخش فقط وقتی کارت روی صفحه‌ست؛ بیرون از دید، CPU گوشی آزاد می‌مونه
@@ -82,7 +83,7 @@ export function createLogoOrbit(art, brands) {
     flight.appendChild(chip);
 
     const a = art.getBoundingClientRect();
-    const slot = orbitSlot(artSize(art), i, n, angle);
+    const slot = orbitSlot(artSize(art), i, n, angle, ellipse);
     const to = { x: a.left + slot.x, y: a.top + slot.y };
 
     try {
@@ -100,7 +101,7 @@ export function createLogoOrbit(art, brands) {
     chip.getAnimations().forEach((an) => an.cancel());
     orbit.appendChild(chip);
     chips[i] = chip;
-    applySlot(chip, orbitSlot(artSize(art), i, n, angle));
+    applySlot(chip, orbitSlot(artSize(art), i, n, angle, ellipse));
   };
 
   return {
