@@ -41,17 +41,20 @@ function Home() {
 
         <PromotionsBanner />
 
-        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-8">
           <LubricantCard
             to="/products"
             title={t("home.entries.lubricants.title")}
             description={t("home.entries.lubricants.description")}
+            cta={t("home.entries.lubricants.cta")}
           />
 
           <VehiclesCard
             to="/vehicles"
             title={t("home.entries.myVehicles.title")}
             description={t("home.entries.myVehicles.description")}
+            shortDescription={t("home.entries.myVehicles.shortDescription")}
+            cta={t("home.entries.myVehicles.cta")}
           />
         </div>
       </div>

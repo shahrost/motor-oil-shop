@@ -5,10 +5,13 @@ import OilDropArt from "./OilDropArt";
 import GearTitle from "./GearTitle";
 import TrackDescription from "./TrackDescription";
 import OilJugArt from "./OilJugArt";
+import EntryCta from "./EntryCta";
 
 // کارت ورودی «روانکار»: قطره‌ی بزرگ، عنوان داخل چرخ‌دنده و توضیح داخل زنجیر تانک،
-// با انیمیشن ریختن روغن از گالن (منطقش در useOilPour)
-function LubricantCard({ to, title, description }) {
+// با انیمیشن ریختن روغن از گالن (منطقش در useOilPour).
+// روی موبایل کوتاه‌تره: قطره کوچیک گوشه‌ی راست بالا (سمت راست تا سر راه گالن که از چپ میاد نباشه)
+// و چرخ‌دنده کوچیک‌تر؛ pt-12 جای گالن بالای چرخ‌دنده‌ست
+function LubricantCard({ to, title, description, cta }) {
   const cardRef = useOilPour();
 
   return (
@@ -16,6 +19,7 @@ function LubricantCard({ to, title, description }) {
       ref={cardRef}
       to={to}
       className="
+        group
         relative
         overflow-hidden
         flex
@@ -27,19 +31,27 @@ function LubricantCard({ to, title, description }) {
         shadow-md
         border-2
         border-transparent
-        p-8
+        px-4
+        pt-12
+        pb-4
+        sm:p-8
         hover:shadow-xl
         hover:border-yellow-400
         transition
       "
     >
-      <div data-oil="drop" className="oil-big-drop h-44 flex items-center justify-center">
-        <OilDropArt />
+      <div
+        data-oil="drop"
+        className="oil-big-drop absolute top-3 right-5 sm:static h-20 sm:h-44 flex items-center justify-center"
+      >
+        <OilDropArt className="h-16 sm:h-40 w-auto drop-shadow-lg" />
       </div>
 
       <GearTitle title={title} />
 
       <TrackDescription description={description} />
+
+      <EntryCta label={cta} className="mt-3 sm:mt-5" />
 
       {/* لایه‌ی انیمیشن: گالن، جریان روغن و پاشش‌ها */}
       <div data-oil="layer" className="oil-layer" aria-hidden="true">

@@ -33,7 +33,9 @@ function orbitEllipse({ w, h, car }) {
   const rx = Math.min(hw * Math.SQRT2, w / 2 - 20);
   const ry = rx > hw ? hh / Math.sqrt(1 - (hw / rx) ** 2) : hh * Math.SQRT2;
 
-  return { cx: car.x + car.w * BODY.cx, cy: car.y + car.h * BODY.cy, rx, ry };
+  // کارت افقی موبایل (باکس تصویر باریک): بیضی از قد باکس بیرون نمی‌زنه؛ لوگوهای جلو روی
+  // گوشه‌ی ماشین و پشتی‌ها زیرش رد می‌شن (z-index در applySlot)
+  return { cx: car.x + car.w * BODY.cx, cy: car.y + car.h * BODY.cy, rx, ry: Math.min(ry, h / 2 - 2) };
 }
 
 // جای لوگوی i از n روی بیضی، به مختصات باکس تصویر (size از artSize)

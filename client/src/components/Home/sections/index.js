@@ -12,3 +12,4 @@ export { default as HomeHero } from "./HomeHero";
 export { default as HomeSectionHeader } from "./HomeSectionHeader";
 export { default as PromotionSlide } from "./PromotionSlide";
 export { default as PromotionsBanner } from "./PromotionsBanner";
+export { default as EntryCta } from "./EntryCta";

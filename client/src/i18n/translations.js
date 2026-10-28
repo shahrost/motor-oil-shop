@@ -144,10 +144,13 @@ const translations = {
         lubricants: {
           title: "روانکار",
           description: "روغن موتور، فیلتر و سایر روانکارها",
+          cta: "مشاهده محصولات",
         },
         myVehicles: {
           title: "خودروهای من",
           description: "برند و مدل خودروتون رو انتخاب کنید و روانکار و فیلتر مناسبش رو ببینید",
+          shortDescription: "روغن و فیلتر مناسب خودروتون",
+          cta: "انتخاب خودرو",
         },
       },
       guide: "راهنمای سایت",
@@ -691,10 +694,13 @@ const translations = {
         lubricants: {
           title: "Lubricants",
           description: "Engine oils, filters and other lubricants",
+          cta: "View Products",
         },
         myVehicles: {
           title: "My Vehicles",
           description: "Pick your car brand and model to see its matching lubricants and filters",
+          shortDescription: "Oil and filters for your car",
+          cta: "Choose Car",
         },
       },
       guide: "Site Guide",

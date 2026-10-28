@@ -482,3 +482,17 @@ img {
   height: 30px;
   object-fit: contain;
 }
+
+/* کارت افقی موبایل «خودروهای من»: باکس تصویر باریکه، لوگوها کوچیک‌تر (باکس @container داره) */
+@container (max-width: 240px) {
+  .logo-chip {
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+  }
+
+  .logo-chip img {
+    width: 22px;
+    height: 22px;
+  }
+}
