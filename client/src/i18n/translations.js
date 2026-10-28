@@ -169,6 +169,11 @@ const translations = {
         view: "مشاهده",
         productCount: "{count} محصول",
       },
+      trust: {
+        payment: "پرداخت نقدی و چکی",
+        hours: "ساعت کاری",
+        whatsapp: "مشاوره و سفارش در واتساپ",
+      },
       productsTitle: "محصولات روغن موتور و فیلتر",
       productsSubtitle: `محصولات فروشگاه ${brand.name}`,
       quickFilter: {
@@ -727,6 +732,11 @@ const translations = {
         all: "All Offers",
         view: "View",
         productCount: "{count} products",
+      },
+      trust: {
+        payment: "Cash and cheque payment",
+        hours: "Open",
+        whatsapp: "Advice and orders on WhatsApp",
       },
       productsTitle: "Engine Oil & Filter Products",
       productsSubtitle: `Products from ${brand.nameEn}`,

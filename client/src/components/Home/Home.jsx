@@ -10,6 +10,7 @@ import {
   InstallAppButton,
   LubricantCard,
   PromotionsBanner,
+  TrustBar,
   VehiclesCard,
 } from "./sections";
 import { freezeAnimations } from "./helpers/animate";
@@ -22,7 +23,7 @@ function handleClick(event) {
 }
 
 // صفحه‌ی اصلی از بالا به پایین: بخش معرفی (Hero) ← ردیف کوچیک «نصب اپلیکیشن» / «راهنمای سایت»
-// ← بنر طرح‌های فروش ← دسترسی سریع («روانکار» و «خودروهای من») ← نوار برندها ← محصولات پیشنهادی.
+// ← بنر طرح‌های فروش ← دسترسی سریع («روانکار» و «خودروهای من») ← نوار برندها ← محصولات پیشنهادی ← نوار اعتماد.
 // ردیف دکمه‌ها: «نصب اپلیکیشن» اول ردیف و «راهنمای سایت» ته ردیف (در فارسی نصب سمت راست
 // و راهنما سمت چپ؛ در انگلیسی برعکس). whitespace-nowrap: تا گوشی ۳۲۰px هر دو یک‌خطی می‌مونن
 function Home() {
@@ -63,6 +64,8 @@ function Home() {
         <BrandStrip />
 
         <FeaturedProducts />
+
+        <TrustBar />
       </div>
     </div>
   );
