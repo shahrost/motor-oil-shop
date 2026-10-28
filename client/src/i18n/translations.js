@@ -184,6 +184,7 @@ const translations = {
         title: "برندهای موجود",
       },
       featured: {
+        title: "محصولات پیشنهادی",
         viewAll: "مشاهده همه",
       },
       search: {
@@ -742,6 +743,7 @@ const translations = {
         title: "Available Brands",
       },
       featured: {
+        title: "Recommended Products",
         viewAll: "View All",
       },
       search: {

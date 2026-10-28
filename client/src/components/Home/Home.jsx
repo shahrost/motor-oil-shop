@@ -4,6 +4,7 @@ import LanguageContext from "../../context/LanguageContext";
 
 import {
   BrandStrip,
+  FeaturedProducts,
   GuideButton,
   HomeHero,
   InstallAppButton,
@@ -21,7 +22,7 @@ function handleClick(event) {
 }
 
 // صفحه‌ی اصلی از بالا به پایین: بخش معرفی (Hero) ← ردیف کوچیک «نصب اپلیکیشن» / «راهنمای سایت»
-// ← بنر طرح‌های فروش ← دسترسی سریع («روانکار» و «خودروهای من») ← نوار برندها.
+// ← بنر طرح‌های فروش ← دسترسی سریع («روانکار» و «خودروهای من») ← نوار برندها ← محصولات پیشنهادی.
 // ردیف دکمه‌ها: «نصب اپلیکیشن» اول ردیف و «راهنمای سایت» ته ردیف (در فارسی نصب سمت راست
 // و راهنما سمت چپ؛ در انگلیسی برعکس). whitespace-nowrap: تا گوشی ۳۲۰px هر دو یک‌خطی می‌مونن
 function Home() {
@@ -60,6 +61,8 @@ function Home() {
         </div>
 
         <BrandStrip />
+
+        <FeaturedProducts />
       </div>
     </div>
   );
