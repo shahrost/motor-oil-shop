@@ -115,6 +115,9 @@ const translations = {
       addedToCart: "به سبد خرید اضافه شد",
       callForPrice: "برای قیمت تماس بگیرید",
       add: "افزودن",
+      added: "اضافه شد",
+      decrease: "کم کردن تعداد",
+      increase: "زیاد کردن تعداد",
       fullNamePlaceholder: "نام و نام خانوادگی",
       phonePlaceholder: "شماره موبایل",
       phoneFormat: "شماره موبایل باید ۱۱ رقم باشد و با ۰۹ شروع شود",
@@ -232,6 +235,11 @@ const translations = {
       perUnit: "هر عدد",
       perCarton: "هر کارتن {count} عدد — عددی {price}",
       view: "مشخصات",
+      cartonShort: "کارتن {count}تایی",
+      inquiry: "استعلام در واتساپ",
+      inquiryShort: "استعلام قیمت",
+      inquiryMessage: "سلام، قیمت «{name}» رو می‌خواستم.",
+      inquirySku: "کد کالا: {sku}",
     },
 
     productDetail: {
@@ -665,6 +673,9 @@ const translations = {
       addedToCart: "Added to cart",
       callForPrice: "Call for price",
       add: "Add",
+      added: "Added",
+      decrease: "Decrease quantity",
+      increase: "Increase quantity",
       fullNamePlaceholder: "Full Name",
       phonePlaceholder: "Mobile Number",
       phoneFormat: "Mobile number must be 11 digits starting with 09",
@@ -783,6 +794,11 @@ const translations = {
       perUnit: "per pc",
       perCarton: "{count} pcs per carton — {price} each",
       view: "Specs",
+      cartonShort: "{count} per carton",
+      inquiry: "Ask on WhatsApp",
+      inquiryShort: "Ask price",
+      inquiryMessage: "Hello, I'd like the price of \"{name}\".",
+      inquirySku: "SKU: {sku}",
     },
 
     productDetail: {

@@ -14,7 +14,7 @@ function ViscosityProductsList({ products }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-10">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-10">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}

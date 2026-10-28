@@ -496,3 +496,28 @@ img {
     height: 22px;
   }
 }
+
+/* =========================
+      دکمه‌ی سبد هدر بعد از «افزودن به سبد» یک بار کمی بزرگ و کوچیک می‌شه
+      (key در HeaderActions با هر افزودن عوض می‌شه)
+========================= */
+
+@keyframes cart-bump {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.3);
+  }
+}
+
+.cart-bump {
+  animation: cart-bump 0.45s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-bump {
+    animation: none;
+  }
+}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LanguageContext from "../../../context/LanguageContext";
 
-import { ProductRowCard } from "../../ProductCard";
+import ProductCard from "../../ProductCard";
 import useDragScroll from "./hooks/useDragScroll";
 import useRowWindow from "./hooks/useRowWindow";
 import { SwipeHint } from "./sections";
@@ -52,13 +52,13 @@ function BrandRow({ brand, items }) {
             className="
               relative
               flex-none
-              w-[calc((100%_-_1.5rem)*0.3334)]
-              sm:w-[calc((100%_-_2.25rem)*0.25)]
-              lg:w-[calc((100%_-_3rem)*0.2)]
-              xl:w-[calc((100%_-_4.5rem)*0.14286)]
+              w-[calc((100%_-_1.5rem)/2.2)]
+              sm:w-[calc((100%_-_2.25rem)/3.3)]
+              lg:w-[calc((100%_-_3rem)/4.3)]
+              xl:w-[calc((100%_-_3.75rem)/5.3)]
             "
           >
-            <ProductRowCard product={product} />
+            <ProductCard product={product} />
 
             {index === 2 && items.length > 3 && <SwipeHint />}
           </div>

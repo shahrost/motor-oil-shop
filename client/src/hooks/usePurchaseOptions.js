@@ -52,7 +52,7 @@ function usePurchaseOptions(product, { vehicle } = {}) {
 
     setTimeout(() => {
       setAdded(false);
-    }, 2000);
+    }, 1500);
   }
 
   return {

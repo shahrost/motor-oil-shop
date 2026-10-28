@@ -1,15 +1,18 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import getImageUrl from "../../../utils/getImageUrl";
 import { getProductNameLabel } from "../../../utils/productNameLabel";
 import FavoriteButton from "../../common/FavoriteButton";
+import ImageZoomModal from "../../common/ImageZoomModal";
 import LanguageContext from "../../../context/LanguageContext";
 import {
   getProductImageSrc,
   handleProductImageError,
 } from "../../../utils/productImage";
 
+// عکس اصلی با کلیک بزرگ می‌شه (بزرگ‌نمایی قبلاً روی کارت محصول بود؛ حالا عکس کارت لینک صفحه‌ی محصوله)
 function ProductGallery({ product }) {
   const { language } = useContext(LanguageContext);
+  const [zoomed, setZoomed] = useState(false);
   const name = getProductNameLabel(product.name, language);
 
   const handleImageError = handleProductImageError(product);
@@ -23,9 +26,19 @@ function ProductGallery({ product }) {
           src={getProductImageSrc(product)}
           alt={name}
           onError={handleImageError}
-          className="w-full h-80 object-contain hover:scale-105 transition"
+          onClick={() => setZoomed(true)}
+          className="w-full h-80 object-contain hover:scale-105 transition cursor-zoom-in"
         />
       </div>
+
+      {zoomed && (
+        <ImageZoomModal
+          src={getProductImageSrc(product)}
+          alt={name}
+          onError={handleImageError}
+          onClose={() => setZoomed(false)}
+        />
+      )}
 
       {product.image?.gallery?.length > 0 && (
         <div className="flex gap-3 mt-4 overflow-x-auto">

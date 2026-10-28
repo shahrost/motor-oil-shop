@@ -20,8 +20,8 @@ function BrandProducts() {
   );
 
   return (
-    <div>
-      <section>
+    <div className="px-5 mt-8 mb-16">
+      <section className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-extrabold text-center">
           {t("brandProducts.title")} {brandLabel}
         </h1>
@@ -30,7 +30,7 @@ function BrandProducts() {
           {filteredProducts.length} {t("common.productsAvailable")}
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-3 mt-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-10">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
