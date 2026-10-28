@@ -6,6 +6,7 @@ import LanguageContext from "../../../context/LanguageContext";
 import ProductCard from "../../ProductCard";
 import useDragScroll from "./hooks/useDragScroll";
 import useRowWindow from "./hooks/useRowWindow";
+import ROW_ITEM_WIDTH from "./helpers/rowItemWidth";
 import { SwipeHint } from "./sections";
 
 function BrandRow({ brand, items }) {
@@ -47,17 +48,7 @@ function BrandRow({ brand, items }) {
         "
       >
         {visibleItems.map((product, index) => (
-          <div
-            key={product.id}
-            className="
-              relative
-              flex-none
-              w-[calc((100%_-_1.5rem)/2.2)]
-              sm:w-[calc((100%_-_2.25rem)/3.3)]
-              lg:w-[calc((100%_-_3rem)/4.3)]
-              xl:w-[calc((100%_-_3.75rem)/5.3)]
-            "
-          >
+          <div key={product.id} className={`relative flex-none ${ROW_ITEM_WIDTH}`}>
             <ProductCard product={product} />
 
             {index === 2 && items.length > 3 && <SwipeHint />}

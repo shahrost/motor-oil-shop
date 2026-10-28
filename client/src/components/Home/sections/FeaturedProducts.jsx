@@ -1,16 +1,17 @@
 import { useContext } from "react";
 
 import LanguageContext from "../../../context/LanguageContext";
-import ProductCard from "../../ProductCard";
+import ProductCard, { ProductCardSkeleton } from "../../ProductCard";
 import useFeaturedProducts from "../hooks/useFeaturedProducts";
 import HomeSectionHeader from "./HomeSectionHeader";
 
-// «محصولات پیشنهادی» با کارت محصول؛ موبایل ۲ ستون، تبلت ۳، دسکتاپ ۴
+// «محصولات پیشنهادی» با کارت محصول؛ موبایل ۲ ستون، تبلت ۳، دسکتاپ ۴. تا رسیدن محصولات اسکلت کارت‌ها
 function FeaturedProducts() {
   const { t } = useContext(LanguageContext);
-  const { featured } = useFeaturedProducts();
+  const { featured, loading } = useFeaturedProducts();
+  const waiting = loading && featured.length === 0;
 
-  if (featured.length === 0) return null;
+  if (!waiting && featured.length === 0) return null;
 
   return (
     <section className="max-w-7xl mx-auto mt-10">
@@ -21,9 +22,9 @@ function FeaturedProducts() {
       />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-        {featured.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {waiting
+          ? Array.from({ length: 8 }, (_, index) => <ProductCardSkeleton key={index} />)
+          : featured.map((product) => <ProductCard key={product.id} product={product} />)}
       </div>
     </section>
   );

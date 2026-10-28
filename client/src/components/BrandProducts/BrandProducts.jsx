@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 
 import { ProductContext } from "../../context";
-import ProductCard from "../ProductCard";
+import ProductCard, { ProductCardSkeleton } from "../ProductCard";
 import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
 import { usePageMeta } from "../../hooks/usePageMeta";
@@ -10,7 +10,9 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 function BrandProducts() {
   const { brand } = useParams();
 
-  const { products } = useContext(ProductContext);
+  const { products, loading } = useContext(ProductContext);
+  // تا اولین پاسخ سرور اسکلت کارت‌ها، نه «۰ محصول» و «پیدا نشد»
+  const waiting = loading && products.length === 0;
   const { language, t } = useContext(LanguageContext);
   const brandLabel = getBrandLabel(brand, language);
   usePageMeta(`${t("brandProducts.title")} ${brandLabel}`, t("meta.brand").replace("{name}", brandLabel));
@@ -26,17 +28,17 @@ function BrandProducts() {
           {t("brandProducts.title")} {brandLabel}
         </h1>
 
-        <p className="text-center mt-3 text-gray-600">
+        <p className={`text-center mt-3 text-gray-600 ${waiting ? "invisible" : ""}`}>
           {filteredProducts.length} {t("common.productsAvailable")}
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-10">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {waiting
+            ? Array.from({ length: 10 }, (_, index) => <ProductCardSkeleton key={index} />)
+            : filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
 
-        {filteredProducts.length === 0 && (
+        {!waiting && filteredProducts.length === 0 && (
           <p className="text-center text-red-500 mt-10 font-bold">
             {t("brandProducts.notFound")}
           </p>

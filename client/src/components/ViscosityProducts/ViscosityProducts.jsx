@@ -9,7 +9,7 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 
 function ViscosityProducts() {
   const { t } = useContext(LanguageContext);
-  const { viscosity, filteredProducts } = useViscosityProducts();
+  const { viscosity, filteredProducts, loading } = useViscosityProducts();
   usePageMeta(
     `${t("viscosityProducts.titlePrefix")} ${viscosity}`,
     t("meta.viscosityProducts").replace("{name}", viscosity),
@@ -34,7 +34,7 @@ function ViscosityProducts() {
           {viscosity} {t("common.available")}
         </p>
 
-        <ViscosityProductsList products={filteredProducts} />
+        <ViscosityProductsList products={filteredProducts} loading={loading} />
       </div>
     </div>
   );
