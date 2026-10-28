@@ -11,15 +11,13 @@ import OilJugArt from "./OilJugArt";
 import EntryCta from "./EntryCta";
 
 // کارت ورودی «روانکار»: قطره‌ی بزرگ، عنوان داخل چرخ‌دنده و توضیح داخل زنجیر تانک،
-// با انیمیشن ریختن روغن از گالن (منطقش در useOilPour) و لوگوی برندهای روغن که از sm
-// دور قطره می‌چرخن (useLogoOrbit؛ روی موبایل قطره گوشه‌ی کارت و کوچیکه، جای مدار نداره).
-// روی موبایل کوتاه‌تره: قطره کوچیک گوشه‌ی راست بالا (سمت راست تا سر راه گالن که از چپ میاد نباشه)
-// و چرخ‌دنده کوچیک‌تر؛ pt-12 جای گالن بالای چرخ‌دنده‌ست
-const SM_UP = "(min-width: 640px)";
+// با انیمیشن ریختن روغن از گالن (منطقش در useOilPour) و لوگوی برندهای روغن که مثل کارت
+// «خودروهای من» دور قطره می‌چرخن (useLogoOrbit). روی موبایل قطره و چرخ‌دنده کوچیک‌ترن؛
+// گالن بالای چرخ‌دنده روی باکس قطره میاد (لایه‌ی oil-layer روی لوگوها)
 
 function LubricantCard({ to, title, description, cta }) {
   const cardRef = useOilPour();
-  const artRef = useLogoOrbit(homeOrbitOilBrands, dropEllipse, SM_UP);
+  const artRef = useLogoOrbit(homeOrbitOilBrands, dropEllipse);
 
   return (
     <Link
@@ -38,9 +36,7 @@ function LubricantCard({ to, title, description, cta }) {
         shadow-md
         border-2
         border-transparent
-        px-4
-        pt-12
-        pb-4
+        p-4
         sm:p-8
         hover:shadow-xl
         hover:border-yellow-400
@@ -50,10 +46,10 @@ function LubricantCard({ to, title, description, cta }) {
       {/* باکس تصویر: لایه‌ی لوگوها اینجاست، نه روی خود قطره که موقع افتادن transform می‌گیره */}
       <div
         ref={artRef}
-        className="absolute top-3 right-5 sm:relative sm:top-auto sm:right-auto sm:w-full h-20 sm:h-44 flex items-center justify-center"
+        className="relative w-full h-36 sm:h-44 flex items-center justify-center"
       >
         <div data-oil="drop" className="oil-big-drop relative z-[2]">
-          <OilDropArt className="h-16 sm:h-40 w-auto drop-shadow-lg" />
+          <OilDropArt className="h-24 sm:h-40 w-auto drop-shadow-lg" />
         </div>
       </div>
 
