@@ -25,7 +25,7 @@ function BrandRow({ brand, items }) {
 
         <Link
           to={`/brand/${brand.name}`}
-          className="text-yellow-700 hover:text-yellow-800 font-bold text-sm"
+          className="text-yellow-700 hover:text-yellow-800 dark:text-yellow-400 dark:hover:text-yellow-300 font-bold text-sm"
         >
           {t("home.featured.viewAll")}
         </Link>

@@ -44,7 +44,7 @@ function Home() {
 
         <PromotionsBanner />
 
-        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-8">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-10">
           <LubricantCard
             to="/products"
             title={t("home.entries.lubricants.title")}
