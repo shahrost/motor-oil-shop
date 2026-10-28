@@ -5,7 +5,7 @@ import ProductCard, { ProductCardSkeleton } from "../../ProductCard";
 import useFeaturedProducts from "../hooks/useFeaturedProducts";
 import HomeSectionHeader from "./HomeSectionHeader";
 
-// «محصولات پیشنهادی» با کارت محصول؛ موبایل ۲ ستون، تبلت ۳، دسکتاپ ۴. تا رسیدن محصولات اسکلت کارت‌ها
+// «محصولات پیشنهادی» با کارت محصول؛ موبایل ۲ ستون، از md چهار ستون (۸ کارت در ۳ ستون یک ردیف نصفه می‌داد). تا رسیدن محصولات اسکلت کارت‌ها
 function FeaturedProducts() {
   const { t } = useContext(LanguageContext);
   const { featured, loading } = useFeaturedProducts();
@@ -21,7 +21,7 @@ function FeaturedProducts() {
         linkLabel={t("home.featured.viewAll")}
       />
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {waiting
           ? Array.from({ length: 8 }, (_, index) => <ProductCardSkeleton key={index} />)
           : featured.map((product) => <ProductCard key={product.id} product={product} />)}
