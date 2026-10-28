@@ -56,15 +56,6 @@ export async function fallingDrip(layer, x, fromY, toY) {
   drip.remove();
 }
 
-// رنگ طلایی از نقطه‌ی برخورد (clientX) روی متن پخش می‌شه
-export function soakText(el, clientX) {
-  const rect = el.getBoundingClientRect();
-  const percent = ((clientX - rect.left) / rect.width) * 100;
-
-  el.style.setProperty("--oil-x", `${Math.min(100, Math.max(0, percent))}%`);
-  el.classList.add("oil-soaked");
-}
-
 // اندازه‌ی گالن و جای دهانه‌اش در viewBox (110×130)
 export const JUG_SCALE = 0.85;
 export const JUG_W = 110 * JUG_SCALE;

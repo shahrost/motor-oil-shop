@@ -25,8 +25,7 @@ function TrackDescription({ description }) {
       </svg>
 
       <p
-        data-oil="desc"
-        className={`oil-text oil-text-desc absolute inset-0 m-0 px-[15%] flex items-center justify-center whitespace-nowrap font-bold text-gray-600 ${
+        className={`absolute inset-0 m-0 px-[15%] flex items-center justify-center whitespace-nowrap font-bold text-gray-600 ${
           description.length > 36 ? "text-[12px]" : "text-[14.5px]"
         }`}
       >

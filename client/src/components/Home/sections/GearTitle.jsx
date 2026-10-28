@@ -28,8 +28,7 @@ function GearTitle({ title }) {
       </svg>
 
       <h2
-        data-oil="title"
-        className={`oil-text oil-text-title absolute inset-0 m-0 flex items-center justify-center leading-none font-extrabold text-gray-900 ${
+        className={`absolute inset-0 m-0 flex items-center justify-center leading-none font-extrabold text-gray-900 ${
           title.length > 8 ? "text-sm sm:text-base" : "text-lg sm:text-[22px]"
         }`}
       >

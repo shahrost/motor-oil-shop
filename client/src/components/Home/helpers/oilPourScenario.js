@@ -1,7 +1,7 @@
 // سناریوی انیمیشن کارت «روانکار»، مرحله به مرحله:
 // ۱) قطره‌ی بزرگ از بالای کارت می‌افته  ۲) گالن از چپ میاد و کج می‌شه
-// ۳) جریان روغن روی چرخ‌دنده؛ «روانکار» طلایی می‌شه و زنجیر تانک راه می‌افته
-// ۴) قطره‌ها روی زنجیر می‌چکن و توضیح هم طلایی می‌شه  ۵) گالن برمی‌گرده بیرون
+// ۳) جریان روغن روی چرخ‌دنده و راه افتادن چرخ‌دنده و زنجیر تانک (رنگ نوشته‌ها عوض نمی‌شه)
+// ۴) قطره‌ها روی زنجیر می‌چکن  ۵) گالن برمی‌گرده بیرون
 // alive() بعد از هر مرحله چک می‌شه تا با unmount ادامه پیدا نکنه.
 
 import { wait, play } from "./animate";
@@ -9,7 +9,6 @@ import {
   splashBeads,
   splashPuddle,
   fallingDrip,
-  soakText,
   JUG_W,
   jugPlacementFor,
   jugTransform,
@@ -28,8 +27,6 @@ export function collectOilParts(card) {
     gearRotor: part("gear-rotor"),
     track: part("track"),
     treads: part("treads"),
-    title: part("title"),
-    desc: part("desc"),
     layer: part("layer"),
     jug: part("jug"),
     stream: part("stream"),
@@ -102,7 +99,7 @@ async function jugIn({ jug }, m, alive) {
 }
 
 // ۳) جریان روغن تا روی «روانکار»، پاشش و راه افتادن چرخ‌دنده؛ خروجی: طول مسیر جریان
-async function pour({ stream, layer, title }, m, drive, alive) {
+async function pour({ stream, layer }, m, drive, alive) {
   const { spout, impact } = m;
 
   stream.setAttribute(
@@ -116,7 +113,6 @@ async function pour({ stream, layer, title }, m, drive, alive) {
   if (!alive()) return len;
 
   splashPuddle(layer, impact.x, impact.y + 4, 80);
-  soakText(title, impact.x + m.c.left);
   drive.lubricate();
   for (let i = 0; i < 8 && alive(); i++) {
     splashBeads(layer, impact.x, impact.y, 2, 30);
@@ -126,8 +122,8 @@ async function pour({ stream, layer, title }, m, drive, alive) {
   return len;
 }
 
-// ۴) قطره‌ها از چرخ‌دنده روی زنجیر می‌چکن و توضیح طلایی می‌شه
-function dripOnTrack({ layer, desc }, m, alive) {
+// ۴) قطره‌ها از چرخ‌دنده روی زنجیر می‌چکن
+function dripOnTrack({ layer }, m, alive) {
   return Promise.all([-14, 6, -2].map(async (offset, i) => {
     await wait(i * 260);
     if (!alive()) return;
@@ -136,7 +132,6 @@ function dripOnTrack({ layer, desc }, m, alive) {
     if (!alive()) return;
     splashBeads(layer, x, m.dripToY, 4, 26);
     splashPuddle(layer, x, m.dripToY, 60);
-    if (i === 0) soakText(desc, x + m.c.left);
   }));
 }
 
@@ -179,18 +174,14 @@ export async function runOilPour(el, drive, alive) {
 }
 
 // حالت نهایی برای کسانی که حرکت کم می‌خوان
-export function showOilFinalState({ drop, title, desc }) {
+export function showOilFinalState({ drop }) {
   drop.style.opacity = "1";
-  title.classList.add("oil-soaked");
-  desc.classList.add("oil-soaked");
 }
 
 // برگردوندن کارت به حالت اول (unmount)
 export function resetOilPour(el) {
   [el.drop, el.jug, el.stream].forEach((node) => node.getAnimations().forEach((a) => a.cancel()));
   el.layer.querySelectorAll(".oil-bead, .oil-puddle, .oil-drip").forEach((node) => node.remove());
-  el.title.classList.remove("oil-soaked");
-  el.desc.classList.remove("oil-soaked");
   el.drop.style.opacity = "";
   el.jug.style.opacity = "";
   el.stream.style.opacity = "";

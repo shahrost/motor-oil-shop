@@ -334,45 +334,6 @@ img {
   stroke: #24324a;
 }
 
-.oil-text-title {
-  --oil-base: var(--text-main);
-}
-
-.oil-text-desc {
-  --oil-base: var(--text-muted);
-}
-
-@property --oil-r {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-/* روغن از نقطه‌ی برخورد روی متن پخش می‌شه و رنگش رو طلایی می‌کنه */
-.oil-soaked {
-  background-image: radial-gradient(
-    circle at var(--oil-x, 50%) 0,
-    #ffc566 0%,
-    #faa61a calc(var(--oil-r) * 0.4),
-    #d67a00 calc(var(--oil-r) * 0.8),
-    #a85f00 calc(var(--oil-r) - 2%),
-    var(--oil-base) var(--oil-r)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
-  animation: oil-soak 1.6s cubic-bezier(0.25, 0.7, 0.3, 1) forwards;
-}
-
-@keyframes oil-soak {
-  from {
-    --oil-r: 0%;
-  }
-  to {
-    --oil-r: 170%;
-  }
-}
-
 .oil-layer {
   position: absolute;
   inset: 0;
@@ -432,12 +393,6 @@ img {
     rgb(250 166 26 / 0.65) 40%,
     rgb(214 122 0 / 0) 72%
   );
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .oil-soaked {
-    animation-duration: 1ms;
-  }
 }
 
 /* =========================
