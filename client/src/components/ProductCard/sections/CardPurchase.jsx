@@ -2,7 +2,7 @@ import { calcPromotionGift } from "../../../utils/promotionCalc";
 import GiftBadge from "../../common/GiftBadge";
 import QuantityStepper from "../../common/QuantityStepper";
 import { OrderUnitSegment, PaymentTypeSegment } from "../../common/OrderOptions";
-import AddToCartButton from "./AddToCartButton";
+import AddToCartButton from "../../common/AddToCartButton";
 
 // کنترل‌های خرید کارت: «عدد | کارتن» و «نقدی | چکی» (کارت پهن کنار هم، باریک زیر هم)،
 // شمارنده‌ی تعداد، هدیه‌ی طرح فروش و دکمه‌ی افزودن. state همه از usePurchaseOptions

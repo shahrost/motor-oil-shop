@@ -10,13 +10,8 @@ import DiscountBadge from "../common/DiscountBadge";
 import FavoriteButton from "../common/FavoriteButton";
 import ProductPrice from "../common/ProductPrice";
 import PromotionBadge from "../common/PromotionBadge";
-import {
-  CardImage,
-  CardPurchase,
-  CardSpecs,
-  ProductBrandBadge,
-  WhatsAppInquiry,
-} from "./sections";
+import WhatsAppInquiry from "../common/WhatsAppInquiry";
+import { CardImage, CardPurchase, CardSpecs, ProductBrandBadge } from "./sections";
 
 // کارت محصول (شبکه‌ها و ردیف‌های افقی، همه یک کارت):
 // عکس ← برند ← اسم ← «گرید · حجم» ← API ← قیمت ← کنترل‌ها ← دکمه.

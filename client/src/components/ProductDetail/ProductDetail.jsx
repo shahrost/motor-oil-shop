@@ -16,6 +16,8 @@ import {
   ProductDescription,
   ProductPurchase,
   BackButton,
+  StickyPurchaseBar,
+  ProductDetailSkeleton,
 } from "./sections";
 
 function ProductDetail() {
@@ -29,14 +31,13 @@ function ProductDetail() {
   usePageMeta(metaName, t("meta.product").replace("{name}", metaName));
 
   // تا لیست محصولات نرسیده «پیدا نشد» نشون داده نمی‌شه
-  if (!product && loading) {
-    return <p className="text-center text-gray-500 py-20">{t("vehicles.loading")}</p>;
-  }
+  if (!product && loading) return <ProductDetailSkeleton />;
 
   if (!product) return <NotFound message={t("productDetail.notFound")} />;
 
   return (
-    <div className="max-w-7xl mx-auto px-5 py-10">
+    // زیر lg نوار پایین (StickyPurchaseBar) آخرین بخش صفحه‌ست، پس padding پایین فقط دسکتاپ
+    <div className="max-w-7xl mx-auto px-5 pt-10 lg:pb-10">
       <BackButton onBack={goBack} label={t("productDetail.back")} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -82,13 +83,18 @@ function ProductDetail() {
 
           <ProductDescription description={product.description} language={language} t={t} />
 
-          <ProductPurchase
-            onAddCart={purchase.handleAddCart}
-            added={purchase.added}
-            canAdd={purchase.priceAvailable}
-          />
+          {/* دکمه‌ی داخل صفحه فقط دسکتاپ؛ موبایل و تبلت نوار ثابت پایین دارن */}
+          <div className="hidden lg:block">
+            <ProductPurchase
+              onAddCart={purchase.handleAddCart}
+              added={purchase.added}
+              canAdd={purchase.priceAvailable}
+            />
+          </div>
         </div>
       </div>
+
+      <StickyPurchaseBar product={product} purchase={purchase} t={t} />
     </div>
   );
 }

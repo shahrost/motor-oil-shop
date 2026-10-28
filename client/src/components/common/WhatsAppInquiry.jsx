@@ -1,9 +1,9 @@
-import whatsappLogo from "../../../assets/social/whatsapp.svg";
-import { whatsappMessageUrl } from "../../../utils/whatsappLink";
+import whatsappLogo from "../../assets/social/whatsapp.svg";
+import { whatsappMessageUrl } from "../../utils/whatsappLink";
 
 // محصول بی‌قیمت: به‌جای دکمه‌ی غیرفعال، «استعلام در واتساپ» با پیام آماده (اسم و کد کالا)؛
-// کارت باریک فقط «استعلام قیمت»
-function WhatsAppInquiry({ product, t }) {
+// کارت باریک فقط «استعلام قیمت» (والد @container داره). کارت محصول و نوار پایین صفحه‌ی محصول
+function WhatsAppInquiry({ product, t, className = "mt-2" }) {
   const message = [
     t("productCard.inquiryMessage").replace("{name}", product.name),
     product.sku ? t("productCard.inquirySku").replace("{sku}", product.sku) : "",
@@ -16,7 +16,7 @@ function WhatsAppInquiry({ product, t }) {
       href={whatsappMessageUrl(message)}
       target="_blank"
       rel="noreferrer"
-      className="mt-2 w-full h-9 flex items-center justify-center gap-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-bold whitespace-nowrap transition"
+      className={`${className} w-full h-9 flex items-center justify-center gap-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-bold whitespace-nowrap transition`}
     >
       <img src={whatsappLogo} alt="" aria-hidden="true" className="w-4 h-4" />
       <span className="@min-[11rem]:hidden">{t("productCard.inquiryShort")}</span>

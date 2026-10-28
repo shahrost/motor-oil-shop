@@ -1,7 +1,7 @@
 import { Check, ShoppingCart } from "lucide-react";
 
 // دکمه‌ی یک‌خطی تمام‌عرض «افزودن به سبد»؛ کارت باریک (container کمتر از 11rem) فقط «افزودن» + آیکون.
-// بعد از افزودن تا ۱٫۵ ثانیه سبز و «اضافه شد» (added از usePurchaseOptions)
+// بعد از افزودن تا ۱٫۵ ثانیه سبز و «اضافه شد» (added از usePurchaseOptions). کارت محصول و نوار پایین صفحه‌ی محصول
 function AddToCartButton({ added, onClick, t }) {
   return (
     <button

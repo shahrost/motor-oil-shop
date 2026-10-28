@@ -9,6 +9,14 @@ import SpecLine, { ApiLabel } from "../../common/SpecLine";
 
 const LABEL_CLASS = "text-gray-500 font-bold";
 
+function scrollToPromotion() {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document
+    .getElementById("promotion-info")
+    ?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+}
+
 // عنوان و مشخصات فنی محصول؛ مشخصه‌های خالی نمایش داده نمی‌شن
 function ProductSpecs({ product, language, t }) {
   const name = getProductNameLabel(product.name, language);
@@ -16,7 +24,12 @@ function ProductSpecs({ product, language, t }) {
 
   return (
     <div>
-      {hasActivePromotion(product.promotion) && <PromotionBadge className="mb-3" />}
+      {/* نشان طرح فروش فقط اینجا؛ کلیکش به کادر شرایط طرح (PromotionInfo) پایین‌تر می‌ره */}
+      {hasActivePromotion(product.promotion) && (
+        <button type="button" onClick={scrollToPromotion} className="mb-3 block hover:opacity-90">
+          <PromotionBadge />
+        </button>
+      )}
 
       <h1 {...untranslatedProps(name, language)} className="text-3xl font-extrabold text-black">
         {name}
