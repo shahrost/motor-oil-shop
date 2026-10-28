@@ -4,7 +4,7 @@ import LanguageContext from "../../context/LanguageContext";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 import useProductsPage from "./hooks/useProductsPage";
-import { ProductSearch, ProductFilters, ScrollTopButton } from "./sections";
+import { CategoryChips, ProductSearch, ProductFilters, ScrollTopButton } from "./sections";
 import ProductRows from "../common/ProductRows";
 
 function Products() {
@@ -30,7 +30,11 @@ function Products() {
   return (
     <div className="px-5 mt-8">
       <div className="max-w-7xl mx-auto space-y-8">
-        <ProductSearch search={search} setSearch={setSearch} />
+        <div className="space-y-4">
+          <ProductSearch search={search} setSearch={setSearch} />
+
+          <CategoryChips />
+        </div>
 
         <div ref={listRef} className="scroll-mt-24">
           <ProductRows products={filteredProducts} />

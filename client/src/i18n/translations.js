@@ -229,6 +229,7 @@ const translations = {
       },
       notFound: "محصولی پیدا نشد",
       scrollTop: "بازگشت به بالای صفحه",
+      categories: "دسته‌های محصولات",
     },
 
     compatibleVehicles: {
@@ -794,6 +795,7 @@ const translations = {
       },
       notFound: "No products found",
       scrollTop: "Back to top",
+      categories: "Product categories",
     },
 
     compatibleVehicles: {
