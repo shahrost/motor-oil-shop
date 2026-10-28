@@ -5,7 +5,7 @@ Session Update 2026-10-28 — بازطراحی فروش‌محور: Hero، بن�
 
 ## ۵۶. بازطراحی فروش‌محور صفحه‌ی اول، کارت محصول و صفحه‌ی محصول (2026-10-28، branch `feature/homepage-redesign`)
 
-هر مورد یک commit جدا؛ هنوز merge و دیپلوی نشده (منتظر تأیید کاربر). lint و build بعد از هر مورد پاس. تست ظاهری با dev server + پروکسی فقط‌خواندنی (فقط GET) به api.shoil.ir و Chrome بدون رابط (puppeteer-core در پوشه‌ی موقت، نه در پروژه) در ۳۶۰/۳۹۰/۷۶۸/۱۲۸۰، روز/شب، FA/EN. هیچ پکیج، روت، endpoint یا apiClient عوض نشد.
+هر مورد یک commit جدا؛ بعد از تأیید کاربر در `feature/pwa` merge، push و روی Runflare دیپلوی شد (2026-10-28؛ صفحه‌ی اول سایت زنده در ۳۹۰ چک شد). lint و build بعد از هر مورد پاس. تست ظاهری با dev server + پروکسی فقط‌خواندنی (فقط GET) به api.shoil.ir و Chrome بدون رابط (puppeteer-core در پوشه‌ی موقت، نه در پروژه) در ۳۶۰/۳۹۰/۷۶۸/۱۲۸۰، روز/شب، FA/EN. هیچ پکیج، روت، endpoint یا apiClient عوض نشد.
 
 **صفحه‌ی اول** (`components/Home`): Hero ← ردیف «نصب اپلیکیشن»/«راهنمای سایت» ← بنر طرح‌ها ← دسترسی سریع ← برندها ← پیشنهادی ← نوار اعتماد.
 - `sections/HomeHero`: سرمه‌ای هم‌رنگ هدر، تیتر/زیرتیتر از `data/brand.js` (`heroTitle(En)`، `heroSubtitle(En)`)، دکمه‌ها /products و /vehicles، واتساپ/تماس از `data/contact.js`، `OilDropArt` کم‌رنگ (prop `className` اضافه شد).
