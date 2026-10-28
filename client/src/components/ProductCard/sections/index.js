@@ -1,7 +1,4 @@
 export { default as ProductBrandBadge } from "./ProductBrandBadge";
-export { default as ProductImage } from "./ProductImage";
-export { default as ProductInfo } from "./ProductInfo";
-export { default as PurchaseBox } from "./PurchaseBox";
-export { default as CardActions } from "./CardActions";
-export { default as RowCardSpecs } from "./RowCardSpecs";
-export { default as RowCardPurchase } from "./RowCardPurchase";
+export { default as CardImage } from "./CardImage";
+export { default as CardSpecs } from "./CardSpecs";
+export { default as CardPurchase } from "./CardPurchase";

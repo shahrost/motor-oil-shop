@@ -5,3 +5,5 @@ export { default as PromotionInfo } from "./PromotionInfo";
 export { default as ProductDescription } from "./ProductDescription";
 export { default as ProductPurchase } from "./ProductPurchase";
 export { default as BackButton } from "./BackButton";
+export { default as StickyPurchaseBar } from "./StickyPurchaseBar";
+export { default as ProductDetailSkeleton } from "./ProductDetailSkeleton";

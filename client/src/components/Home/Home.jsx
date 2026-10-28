@@ -3,9 +3,14 @@ import { useContext } from "react";
 import LanguageContext from "../../context/LanguageContext";
 
 import {
+  BrandStrip,
+  FeaturedProducts,
   GuideButton,
+  HomeHero,
   InstallAppButton,
   LubricantCard,
+  PromotionsBanner,
+  TrustBar,
   VehiclesCard,
 } from "./sections";
 import { freezeAnimations } from "./helpers/animate";
@@ -17,37 +22,52 @@ function handleClick(event) {
   }
 }
 
-// صفحه‌ی اصلی: دو کارت ورودی «روانکار» و «خودروهای من» + دکمه‌های «نصب اپلیکیشن» و «راهنمای سایت»
-// ردیف دکمه‌ها (موبایل و دسکتاپ): «نصب اپلیکیشن» اول ردیف و «راهنمای سایت» مثل قبل ته ردیف،
-// هم‌تراز لبه‌ی کارت‌ها (در فارسی نصب سمت راست و راهنما سمت چپ؛ در انگلیسی برعکس).
-// whitespace-nowrap: تا گوشی ۳۲۰px هر دو یک‌خطی می‌مونن
+// صفحه‌ی اصلی از بالا به پایین: بخش معرفی (Hero) ← ردیف کوچیک «نصب اپلیکیشن» / «راهنمای سایت»
+// ← بنر طرح‌های فروش ← دسترسی سریع («روانکار» و «خودروهای من») ← نوار برندها ← محصولات پیشنهادی ← نوار اعتماد.
+// ردیف دکمه‌ها: «نصب اپلیکیشن» اول ردیف و «راهنمای سایت» ته ردیف (در فارسی نصب سمت راست
+// و راهنما سمت چپ؛ در انگلیسی برعکس). whitespace-nowrap: تا گوشی ۳۲۰px هر دو یک‌خطی می‌مونن
 function Home() {
   const { t } = useContext(LanguageContext);
 
   return (
-    <section className="px-5 mt-12 mb-16" onClick={handleClick}>
-      <div className="max-w-4xl mx-auto flex justify-between gap-3 whitespace-nowrap mb-3">
-        <InstallAppButton label={t("home.installApp")} />
+    <div className="mb-16" onClick={handleClick}>
+      <HomeHero />
 
-        <span className="ms-auto">
-          <GuideButton label={t("home.guide")} />
-        </span>
+      <div className="px-5">
+        <div className="max-w-7xl mx-auto flex justify-between gap-3 whitespace-nowrap mt-4">
+          <InstallAppButton label={t("home.installApp")} />
+
+          <span className="ms-auto">
+            <GuideButton label={t("home.guide")} />
+          </span>
+        </div>
+
+        <PromotionsBanner />
+
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-10">
+          <LubricantCard
+            to="/products"
+            title={t("home.entries.lubricants.title")}
+            description={t("home.entries.lubricants.description")}
+            cta={t("home.entries.lubricants.cta")}
+          />
+
+          <VehiclesCard
+            to="/vehicles"
+            title={t("home.entries.myVehicles.title")}
+            description={t("home.entries.myVehicles.description")}
+            shortDescription={t("home.entries.myVehicles.shortDescription")}
+            cta={t("home.entries.myVehicles.cta")}
+          />
+        </div>
+
+        <BrandStrip />
+
+        <FeaturedProducts />
+
+        <TrustBar />
       </div>
-
-      <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <LubricantCard
-          to="/products"
-          title={t("home.entries.lubricants.title")}
-          description={t("home.entries.lubricants.description")}
-        />
-
-        <VehiclesCard
-          to="/vehicles"
-          title={t("home.entries.myVehicles.title")}
-          description={t("home.entries.myVehicles.description")}
-        />
-      </div>
-    </section>
+    </div>
   );
 }
 

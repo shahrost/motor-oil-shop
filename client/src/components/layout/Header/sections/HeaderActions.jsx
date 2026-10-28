@@ -16,7 +16,9 @@ const SUBTLE_BUTTON = "bg-white/10 hover:bg-white/20 ring-1 ring-white/15 text-w
 // زیر sm زبان و تم فقط داخل منوی موبایل‌ان تا ردیف هدر در گوشی‌های ۳۲۰ تا ۳۷۵ پیکسلی جا بشه
 function HeaderActions({ menuOpen, onToggleMenu }) {
   const { t } = useContext(LanguageContext);
-  const { cartCount } = useContext(CartContext);
+  const { cartCount, addedCount } = useContext(CartContext);
+  // key عوض می‌شه ← انیمیشن cart-bump (index.css) دوباره اجرا می‌شه؛ قبل از اولین افزودن انیمیشنی نیست
+  const bump = addedCount > 0 ? "cart-bump" : "";
 
   return (
     <div className="flex items-center gap-2">
@@ -35,9 +37,9 @@ function HeaderActions({ menuOpen, onToggleMenu }) {
         aria-label={`${t("header.cartLabel")} (${cartCount})`}
         className="relative flex items-center justify-center bg-yellow-400 text-black w-11 h-11 rounded-xl font-bold hover:bg-yellow-300 transition"
       >
-        <ShoppingCart />
+        <ShoppingCart key={`icon-${addedCount}`} className={bump} />
         {cartCount > 0 && (
-          <span aria-hidden="true" className="absolute -top-2 -left-2 bg-red-600 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center">
+          <span key={`count-${addedCount}`} aria-hidden="true" className={`${bump} absolute -top-2 -left-2 bg-red-600 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center`}>
             {cartCount}
           </span>
         )}

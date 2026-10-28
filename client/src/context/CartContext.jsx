@@ -11,12 +11,16 @@ const isSameLine = (a, b) =>
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(getCart);
+  // شمارنده‌ی «افزودن به سبد» برای انیمیشن کوچیک دکمه‌ی سبد هدر (با هر افزودن یکی زیاد می‌شه)
+  const [addedCount, setAddedCount] = useState(0);
 
   useEffect(() => {
     saveCart(cart);
   }, [cart]);
 
   function addToCart(product) {
+    setAddedCount((count) => count + 1);
+
     const exists = cart.some((item) => isSameLine(item, product));
 
     if (exists) {
@@ -83,6 +87,7 @@ export function CartProvider({ children }) {
         clearCart,
         cartCount,
         cartTotal,
+        addedCount,
       }}
     >
       {children}

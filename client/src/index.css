@@ -482,3 +482,42 @@ img {
   height: 30px;
   object-fit: contain;
 }
+
+/* کارت افقی موبایل «خودروهای من»: باکس تصویر باریکه، لوگوها کوچیک‌تر (باکس @container داره) */
+@container (max-width: 240px) {
+  .logo-chip {
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+  }
+
+  .logo-chip img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* =========================
+      دکمه‌ی سبد هدر بعد از «افزودن به سبد» یک بار کمی بزرگ و کوچیک می‌شه
+      (key در HeaderActions با هر افزودن عوض می‌شه)
+========================= */
+
+@keyframes cart-bump {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.3);
+  }
+}
+
+.cart-bump {
+  animation: cart-bump 0.45s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-bump {
+    animation: none;
+  }
+}

@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 
 import LanguageContext from "../../../context/LanguageContext";
 
-import { ProductRowCard } from "../../ProductCard";
+import ProductCard from "../../ProductCard";
 import useDragScroll from "./hooks/useDragScroll";
 import useRowWindow from "./hooks/useRowWindow";
+import ROW_ITEM_WIDTH from "./helpers/rowItemWidth";
 import { SwipeHint } from "./sections";
 
 function BrandRow({ brand, items }) {
@@ -24,7 +25,7 @@ function BrandRow({ brand, items }) {
 
         <Link
           to={`/brand/${brand.name}`}
-          className="text-yellow-700 hover:text-yellow-800 font-bold text-sm"
+          className="text-yellow-700 hover:text-yellow-800 dark:text-yellow-400 dark:hover:text-yellow-300 font-bold text-sm"
         >
           {t("home.featured.viewAll")}
         </Link>
@@ -47,18 +48,8 @@ function BrandRow({ brand, items }) {
         "
       >
         {visibleItems.map((product, index) => (
-          <div
-            key={product.id}
-            className="
-              relative
-              flex-none
-              w-[calc((100%_-_1.5rem)*0.3334)]
-              sm:w-[calc((100%_-_2.25rem)*0.25)]
-              lg:w-[calc((100%_-_3rem)*0.2)]
-              xl:w-[calc((100%_-_4.5rem)*0.14286)]
-            "
-          >
-            <ProductRowCard product={product} />
+          <div key={product.id} className={`relative flex-none ${ROW_ITEM_WIDTH}`}>
+            <ProductCard product={product} />
 
             {index === 2 && items.length > 3 && <SwipeHint />}
           </div>

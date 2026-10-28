@@ -115,6 +115,9 @@ const translations = {
       addedToCart: "به سبد خرید اضافه شد",
       callForPrice: "برای قیمت تماس بگیرید",
       add: "افزودن",
+      added: "اضافه شد",
+      decrease: "کم کردن تعداد",
+      increase: "زیاد کردن تعداد",
       fullNamePlaceholder: "نام و نام خانوادگی",
       phonePlaceholder: "شماره موبایل",
       phoneFormat: "شماره موبایل باید ۱۱ رقم باشد و با ۰۹ شروع شود",
@@ -144,14 +147,33 @@ const translations = {
         lubricants: {
           title: "روانکار",
           description: "روغن موتور، فیلتر و سایر روانکارها",
+          cta: "مشاهده محصولات",
         },
         myVehicles: {
           title: "خودروهای من",
           description: "برند و مدل خودروتون رو انتخاب کنید و روانکار و فیلتر مناسبش رو ببینید",
+          shortDescription: "روغن و فیلتر مناسب خودروتون",
+          cta: "انتخاب خودرو",
         },
       },
       guide: "راهنمای سایت",
       installApp: "نصب اپلیکیشن",
+      hero: {
+        viewProducts: "مشاهده محصولات",
+        findOil: "روغن مناسب خودروی من",
+        whatsapp: "سفارش در واتساپ",
+        call: "تماس",
+      },
+      promotions: {
+        all: "همه‌ی طرح‌ها",
+        view: "مشاهده",
+        productCount: "{count} محصول",
+      },
+      trust: {
+        payment: "پرداخت نقدی و چکی",
+        hours: "ساعت کاری",
+        whatsapp: "مشاوره و سفارش در واتساپ",
+      },
       productsTitle: "محصولات روغن موتور و فیلتر",
       productsSubtitle: `محصولات فروشگاه ${brand.name}`,
       quickFilter: {
@@ -167,6 +189,7 @@ const translations = {
         title: "برندهای موجود",
       },
       featured: {
+        title: "محصولات پیشنهادی",
         viewAll: "مشاهده همه",
       },
       search: {
@@ -206,6 +229,7 @@ const translations = {
       },
       notFound: "محصولی پیدا نشد",
       scrollTop: "بازگشت به بالای صفحه",
+      categories: "دسته‌های محصولات",
     },
 
     compatibleVehicles: {
@@ -218,6 +242,11 @@ const translations = {
       perUnit: "هر عدد",
       perCarton: "هر کارتن {count} عدد — عددی {price}",
       view: "مشخصات",
+      cartonShort: "کارتن {count}تایی",
+      inquiry: "استعلام در واتساپ",
+      inquiryShort: "استعلام قیمت",
+      inquiryMessage: "سلام، قیمت «{name}» رو می‌خواستم.",
+      inquirySku: "کد کالا: {sku}",
     },
 
     productDetail: {
@@ -651,6 +680,9 @@ const translations = {
       addedToCart: "Added to cart",
       callForPrice: "Call for price",
       add: "Add",
+      added: "Added",
+      decrease: "Decrease quantity",
+      increase: "Increase quantity",
       fullNamePlaceholder: "Full Name",
       phonePlaceholder: "Mobile Number",
       phoneFormat: "Mobile number must be 11 digits starting with 09",
@@ -680,14 +712,33 @@ const translations = {
         lubricants: {
           title: "Lubricants",
           description: "Engine oils, filters and other lubricants",
+          cta: "View Products",
         },
         myVehicles: {
           title: "My Vehicles",
           description: "Pick your car brand and model to see its matching lubricants and filters",
+          shortDescription: "Oil and filters for your car",
+          cta: "Choose Car",
         },
       },
       guide: "Site Guide",
       installApp: "Install App",
+      hero: {
+        viewProducts: "View Products",
+        findOil: "Find Oil for My Car",
+        whatsapp: "Order on WhatsApp",
+        call: "Call",
+      },
+      promotions: {
+        all: "All Offers",
+        view: "View",
+        productCount: "{count} products",
+      },
+      trust: {
+        payment: "Cash and cheque payment",
+        hours: "Open",
+        whatsapp: "Advice and orders on WhatsApp",
+      },
       productsTitle: "Engine Oil & Filter Products",
       productsSubtitle: `Products from ${brand.nameEn}`,
       quickFilter: {
@@ -703,6 +754,7 @@ const translations = {
         title: "Available Brands",
       },
       featured: {
+        title: "Recommended Products",
         viewAll: "View All",
       },
       search: {
@@ -743,6 +795,7 @@ const translations = {
       },
       notFound: "No products found",
       scrollTop: "Back to top",
+      categories: "Product categories",
     },
 
     compatibleVehicles: {
@@ -755,6 +808,11 @@ const translations = {
       perUnit: "per pc",
       perCarton: "{count} pcs per carton — {price} each",
       view: "Specs",
+      cartonShort: "{count} per carton",
+      inquiry: "Ask on WhatsApp",
+      inquiryShort: "Ask price",
+      inquiryMessage: "Hello, I'd like the price of \"{name}\".",
+      inquirySku: "SKU: {sku}",
     },
 
     productDetail: {

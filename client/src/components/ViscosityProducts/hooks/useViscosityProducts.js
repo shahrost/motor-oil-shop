@@ -5,7 +5,7 @@ import { ProductContext } from "../../../context";
 
 function useViscosityProducts() {
   const { viscosity } = useParams();
-  const { products } = useContext(ProductContext);
+  const { products, loading } = useContext(ProductContext);
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => product.viscosity === viscosity);
@@ -14,6 +14,7 @@ function useViscosityProducts() {
   return {
     viscosity,
     filteredProducts,
+    loading: loading && products.length === 0,
   };
 }
 

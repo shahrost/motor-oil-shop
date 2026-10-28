@@ -1,2 +1,2 @@
 export { default } from "./ProductCard";
-export { default as ProductRowCard } from "./ProductRowCard";
+export { default as ProductCardSkeleton } from "./ProductCardSkeleton";
