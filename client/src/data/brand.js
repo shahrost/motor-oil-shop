@@ -25,8 +25,8 @@ const brand = {
   hoursEn: "8:30 AM to 8:30 PM",
 
   // صفحه‌ی اصلی: تیتر و زیرتیتر بخش معرفی (Hero) و متن ارسال نوار اعتماد (فارسی / انگلیسی)
-  heroTitle: "تأمین عمده‌ی روغن موتور و روانکار",
-  heroTitleEn: "Wholesale Engine Oil & Lubricants",
+  heroTitle: "تأمین روغن موتور و فیلتر",
+  heroTitleEn: "Engine Oil & Filter Supply",
   heroSubtitle: "برای لوازم یدکی‌ها و اتوسرویس‌ها — پرداخت نقدی و چکی",
   heroSubtitleEn: "For auto parts stores and service shops — cash and cheque payment",
   deliveryArea: "پرند - رباط‌کریم - الارد - فردوسیه - نصیرشهر - نسیم‌شهر - کهنز - جاده آدران و اطراف",
