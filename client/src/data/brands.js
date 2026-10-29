@@ -17,24 +17,9 @@ const brands = [
     image: brandImages.womOil,
   },
   {
-    name: "بهتام",
-    nameEn: "Behtam",
-    image: brandImages.behtam,
-  },
-  {
-    name: "توتال",
-    nameEn: "Total",
-    image: brandImages.total,
-  },
-  {
     name: "ایدلوب",
     nameEn: "Aidlube",
     image: brandImages.aidlube,
-  },
-  {
-    name: "لوکینی",
-    nameEn: "Lookini",
-    image: brandImages.lookini,
   },
   {
     name: "ووفر",
@@ -42,9 +27,19 @@ const brands = [
     image: brandImages.woofer,
   },
   {
-    name: "فیلتر لوکومبیل",
-    nameEn: "Locomobil",
-    image: brandImages.locomobil,
+    name: "ادینول",
+    nameEn: "Addinol",
+    image: brandImages.addinol,
+  },
+  {
+    name: "توتال",
+    nameEn: "Total",
+    image: brandImages.total,
+  },
+  {
+    name: "بهتام",
+    nameEn: "Behtam",
+    image: brandImages.behtam,
   },
   {
     name: "فیلتر میهن",
@@ -52,9 +47,19 @@ const brands = [
     image: brandImages.mihan,
   },
   {
+    name: "فیلتر لوکومبیل",
+    nameEn: "Locomobil",
+    image: brandImages.locomobil,
+  },
+  {
     name: "فیلتر گیربکس ATFO",
     nameEn: "ATFO",
     image: brandImages.atfo,
+  },
+  {
+    name: "لوکینی",
+    nameEn: "Lookini",
+    image: brandImages.lookini,
   },
   {
     name: "بهران",
@@ -80,11 +85,6 @@ const brands = [
     name: "سرکان",
     nameEn: "Serkan",
     image: brandImages.serkan,
-  },
-  {
-    name: "ادینول",
-    nameEn: "Addinol",
-    image: brandImages.addinol,
   },
 ];
 
