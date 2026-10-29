@@ -3,6 +3,7 @@ import { useContext } from "react";
 import LanguageContext from "../../context/LanguageContext";
 import getBrandLabel from "../../utils/brandLabel";
 import { findBrandLogo } from "../../utils/brandLogo";
+import { getMenuCategorySlug } from "../../utils/classifyMenuCategory";
 import { untranslatedProps } from "../../utils/untranslatedText";
 
 // فیلترهای میهن و لوکومبیل به‌جای گالن، طرح یک فیلتر روغن دارن
@@ -111,6 +112,78 @@ function FilterSilhouette() {
   );
 }
 
+// فیلتر گیربکس: بدنه‌ی تخت با لبه‌ی دورتادور، لوله‌ی مکش با اورینگ و جای برچسب
+function GearboxFilterSilhouette() {
+  return (
+    <svg viewBox="0 0 110 130" aria-hidden="true" className="h-[62%] w-auto">
+      <rect
+        x="44"
+        y="14"
+        width="22"
+        height="34"
+        rx="3"
+        className="fill-gray-300 dark:fill-gray-700"
+      />
+      <rect
+        x="41"
+        y="22"
+        width="28"
+        height="6"
+        rx="3"
+        className="fill-gray-400 dark:fill-gray-600"
+      />
+      <rect
+        x="4"
+        y="44"
+        width="102"
+        height="12"
+        rx="4"
+        className="fill-gray-400 dark:fill-gray-600"
+      />
+      <rect
+        x="10"
+        y="54"
+        width="90"
+        height="56"
+        rx="8"
+        className="fill-gray-300 dark:fill-gray-700"
+      />
+      <rect
+        x="24"
+        y="64"
+        width="62"
+        height="36"
+        rx="5"
+        className="fill-gray-100 dark:fill-gray-800"
+      />
+      <rect
+        x="34"
+        y="74"
+        width="42"
+        height="6"
+        rx="3"
+        className="fill-gray-300 dark:fill-gray-600"
+      />
+      <rect
+        x="40"
+        y="86"
+        width="30"
+        height="5"
+        rx="2.5"
+        className="fill-gray-200 dark:fill-gray-700"
+      />
+    </svg>
+  );
+}
+
+function PlaceholderSilhouette({ product }) {
+  if (getMenuCategorySlug(product) === "gearbox-filter")
+    return <GearboxFilterSilhouette />;
+  if (FILTER_SILHOUETTE_BRANDS.includes(product?.brand))
+    return <FilterSilhouette />;
+  return <OilSilhouette />;
+}
+
 // تصویر جایگزین محصول بی‌عکس: طرح ساده‌ی یک گالن روغن (همون شکل گالن صفحه‌ی اصلی) به رنگ
 // خاکستری روشن، در حالت شب هم‌رنگ تم تیره. لوگوی برند رو نشان گوشه‌ی کارت (ProductBrandBadge)
 // نشون می‌ده؛ برند بی‌لوگو اسمش زیر گالن میاد
@@ -121,11 +194,7 @@ function ProductPlaceholder({ product }) {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-1">
-      {FILTER_SILHOUETTE_BRANDS.includes(product?.brand) ? (
-        <FilterSilhouette />
-      ) : (
-        <OilSilhouette />
-      )}
+      <PlaceholderSilhouette product={product} />
 
       {!hasLogo && label && (
         <span
