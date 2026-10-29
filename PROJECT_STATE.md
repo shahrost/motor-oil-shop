@@ -129,7 +129,7 @@ Status: Completed ✅ (روی production چک شد: هر ۱۳ کد در `/api/pr
 - `sections/HomeSectionHeader`: تیتر + «مشاهده همه» یکسان همه‌ی بخش‌ها.
 
 **کارت محصول** (`components/ProductCard`): یک کارت برای همه (`ProductRowCard`، `ProductInfo`، `PurchaseBox`، `CardActions`، `RowCardSpecs`، `RowCardPurchase`، `ProductImage` حذف). `sections/CardImage` (۴:۳، زمینه‌ی روشن، لینک)، `CardSpecs` (برند، اسم دو خط، «گرید · حجم»، «API · کارتن Nتایی»)، `CardPurchase`. `@container` روی کارت: کنترل‌ها و متن دکمه با عرض کارت.
-- مشترک جدید در `common/`: `SegmentedControl`، `QuantityStepper` (− ۱ +، همون `setQuantity`)، `OrderUnitSegment`/`PaymentTypeSegment` در `OrderOptions` (روش بی‌قیمت غیرفعال)، `AddToCartButton` (کوتاه «افزودن» زیر 11rem، «اضافه شد» ۱٫۵ ثانیه — `usePurchaseOptions` 2000←1500)، `WhatsAppInquiry` (`utils/whatsappLink`، پیام با اسم و SKU)، `ProductPlaceholder` (گالن SVG خاکستری/تم تیره)، `ImageZoomModal` (از کارت به `ProductGallery` صفحه‌ی محصول منتقل شد).
+- مشترک جدید در `common/`: `SegmentedControl`، `QuantityStepper` (− ۱ +، همون `setQuantity`)، `OrderUnitSegment`/`PaymentTypeSegment` در `OrderOptions` (روش بی‌قیمت غیرفعال)، `AddToCartButton` (کوتاه «افزودن» زیر 11rem، «اضافه شد» ۱٫۵ ثانیه — `usePurchaseOptions` 2000←1500)، `WhatsAppInquiry` (`utils/whatsappLink`، پیام با اسم و SKU)، `ProductPlaceholder` (گالن SVG خاکستری/تم تیره؛ برای «فیلتر میهن» و «فیلتر لوکومبیل» طرح فیلتر روغن)، `ImageZoomModal` (از کارت به `ProductGallery` صفحه‌ی محصول منتقل شد).
 - `CartContext.addedCount` ← `HeaderActions` با key انیمیشن `cart-bump` (index.css، reduced-motion خاموش).
 - شبکه‌ها ۲/۳/۴/۵ (برند، گرید، علاقه‌مندی، خودرو)؛ ردیف‌ها `BrandRow/helpers/rowItemWidth` ۲٫۲/۳٫۳/۴٫۳/۵٫۳.
 - `ProductBrandBadge` حالا روی تصویر جایگزین محصول بی‌عکس هم میاد.
