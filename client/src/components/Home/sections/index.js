@@ -10,8 +10,6 @@ export { default as GuideButton } from "./GuideButton";
 export { default as InstallAppButton } from "./InstallAppButton";
 export { default as HomeHero } from "./HomeHero";
 export { default as HomeSectionHeader } from "./HomeSectionHeader";
-export { default as PromotionSlide } from "./PromotionSlide";
-export { default as PromotionsBanner } from "./PromotionsBanner";
 export { default as EntryCta } from "./EntryCta";
 export { default as BrandStrip } from "./BrandStrip";
 export { default as FeaturedProducts } from "./FeaturedProducts";

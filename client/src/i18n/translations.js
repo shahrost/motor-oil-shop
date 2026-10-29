@@ -166,11 +166,6 @@ const translations = {
       hero: {
         promotions: "طرح‌های فروش",
       },
-      promotions: {
-        all: "همه‌ی طرح‌ها",
-        view: "مشاهده",
-        productCount: "{count} محصول",
-      },
       trust: {
         payment: "پرداخت نقدی و چکی",
         hours: "ساعت کاری",
@@ -741,11 +736,6 @@ const translations = {
       installApp: "Install App",
       hero: {
         promotions: "Sales Promotions",
-      },
-      promotions: {
-        all: "All Offers",
-        view: "View",
-        productCount: "{count} products",
       },
       trust: {
         payment: "Cash and cheque payment",

@@ -9,7 +9,6 @@ import {
   HomeHero,
   InstallAppButton,
   LubricantCard,
-  PromotionsBanner,
   TrustBar,
   VehiclesCard,
 } from "./sections";
@@ -22,7 +21,7 @@ function handleClick(event) {
   }
 }
 
-// صفحه‌ی اصلی از بالا به پایین: بخش معرفی (Hero، با دکمه‌ی «طرح‌های فروش») ← بنر طرح‌های فروش
+// صفحه‌ی اصلی از بالا به پایین: بخش معرفی (Hero، با دکمه‌ی «طرح‌های فروش»)
 // ← دسترسی سریع («روغن موتور» و «خودروهای من») ← ردیف کوچیک «نصب اپلیکیشن» / «راهنمای سایت»
 // ← نوار برندها ← محصولات پیشنهادی ← نوار اعتماد.
 // ردیف دکمه‌ها: «نصب اپلیکیشن» اول ردیف و «راهنمای سایت» ته ردیف (در فارسی نصب سمت راست
@@ -35,8 +34,6 @@ function Home() {
       <HomeHero />
 
       <div className="px-5">
-        <PromotionsBanner />
-
         <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-10">
           <LubricantCard
             to="/products"
