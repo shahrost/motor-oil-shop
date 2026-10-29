@@ -29,7 +29,7 @@ function GearTitle({ title }) {
 
       <h2
         className={`absolute inset-0 m-0 flex items-center justify-center leading-none font-extrabold text-gray-900 ${
-          title.length > 8 ? "text-sm sm:text-base" : "text-lg sm:text-[22px]"
+          title.length > 8 ? "px-6 sm:px-8 text-center leading-tight text-[15px] sm:text-lg" : "text-lg sm:text-[22px]"
         }`}
       >
         {title}

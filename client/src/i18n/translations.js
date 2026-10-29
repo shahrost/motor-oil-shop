@@ -22,12 +22,12 @@ const translations = {
     meta: {
       products: "لیست روغن موتور، فیلتر، اسپری‌جات و اکتان برندهای مختلف با قیمت نقدی و چکی برای خرید عمده.",
       product: "{name} — مشخصات، قیمت نقدی و چکی و خودروهای سازگار.",
-      brands: "برندهای روغن موتور و روانکار موجود برای خرید عمده.",
+      brands: "برندهای روغن موتور موجود برای خرید عمده.",
       brand: "محصولات برند {name} با قیمت نقدی و چکی برای فروشگاه‌ها و اتوسرویس‌ها.",
       category: "{name} — خرید عمده با قیمت نقدی و چکی.",
-      vehicles: "روغن موتور، فیلتر و روانکار مناسب خودروی خود را بر اساس برند و مدل پیدا کنید.",
+      vehicles: "روغن موتور و فیلتر مناسب خودروی خود را بر اساس برند و مدل پیدا کنید.",
       vehicleBrand: "روغن موتور و فیلتر مناسب خودروهای {name}.",
-      vehicle: "روغن موتور، فیلتر و روانکار مناسب {name}.",
+      vehicle: "روغن موتور و فیلتر مناسب {name}.",
       viscosity: "روغن موتورها بر اساس گرید ویسکوزیته.",
       viscosityProducts: "روغن موتورهای گرید {name} با قیمت نقدی و چکی.",
       promotions: "طرح‌های فروش و هدیه‌ی خرید عمده روی محصولات منتخب.",
@@ -150,13 +150,13 @@ const translations = {
     home: {
       entries: {
         lubricants: {
-          title: "روانکار",
-          description: "روغن موتور، فیلتر و سایر روانکارها",
+          title: "روغن موتور",
+          description: "انواع روغن موتور و فیلتر",
           cta: "مشاهده محصولات",
         },
         myVehicles: {
           title: "خودروهای من",
-          description: "برند و مدل خودروتون رو انتخاب کنید و روانکار و فیلتر مناسبش رو ببینید",
+          description: "برند و مدل خودروتون رو انتخاب کنید و روغن موتور و فیلتر مناسبش رو ببینید",
           shortDescription: "روغن و فیلتر مناسب خودروتون",
           cta: "انتخاب خودرو",
         },
@@ -164,10 +164,7 @@ const translations = {
       guide: "راهنمای سایت",
       installApp: "نصب اپلیکیشن",
       hero: {
-        viewProducts: "مشاهده محصولات",
-        findOil: "روغن مناسب خودروی من",
-        whatsapp: "سفارش در واتساپ",
-        call: "تماس",
+        promotions: "طرح‌های فروش",
       },
       promotions: {
         all: "همه‌ی طرح‌ها",
@@ -411,7 +408,7 @@ const translations = {
         "تامین و فروش انواع روغن موتور و فیلتر و اسپری‌جات و انواع اکتان برای فروشگاه‌های لوازم یدکی، اتوسرویس‌ها و مشتریان عمده.",
       supply: {
         title: "تامین محصولات",
-        text: "ارائه روغن موتور، فیلتر و روانکار از برندهای معتبر",
+        text: "ارائه روغن موتور و فیلتر از برندهای معتبر",
       },
       partnership: {
         title: "همکاری با همکاران",
@@ -601,12 +598,12 @@ const translations = {
     meta: {
       products: "Motor oils, filters, sprays and octane boosters from many brands, with cash and cheque prices for wholesale.",
       product: "{name} — specs, cash and cheque prices and compatible vehicles.",
-      brands: "Motor oil and lubricant brands available for wholesale.",
+      brands: "Motor oil brands available for wholesale.",
       brand: "{name} products with cash and cheque prices for parts shops and auto services.",
       category: "{name} — wholesale with cash and cheque prices.",
-      vehicles: "Find the right motor oil, filter and lubricant for your vehicle by make and model.",
+      vehicles: "Find the right motor oil and filter for your vehicle by make and model.",
       vehicleBrand: "Motor oils and filters for {name} vehicles.",
-      vehicle: "Motor oil, filters and lubricants for {name}.",
+      vehicle: "Motor oil and filters for {name}.",
       viscosity: "Motor oils by viscosity grade.",
       viscosityProducts: "{name} motor oils with cash and cheque prices.",
       promotions: "Wholesale promotions and gift offers on selected products.",
@@ -729,13 +726,13 @@ const translations = {
     home: {
       entries: {
         lubricants: {
-          title: "Lubricants",
-          description: "Engine oils, filters and other lubricants",
+          title: "Engine Oil",
+          description: "Engine oils and filters",
           cta: "View Products",
         },
         myVehicles: {
           title: "My Vehicles",
-          description: "Pick your car brand and model to see its matching lubricants and filters",
+          description: "Pick your car brand and model to see its matching engine oil and filters",
           shortDescription: "Oil and filters for your car",
           cta: "Choose Car",
         },
@@ -743,10 +740,7 @@ const translations = {
       guide: "Site Guide",
       installApp: "Install App",
       hero: {
-        viewProducts: "View Products",
-        findOil: "Find Oil for My Car",
-        whatsapp: "Order on WhatsApp",
-        call: "Call",
+        promotions: "Sales Promotions",
       },
       promotions: {
         all: "All Offers",
@@ -991,7 +985,7 @@ const translations = {
         "Supplying and selling all kinds of engine oil, filters, sprays, and octane boosters for auto-parts stores, auto service centers, and wholesale customers.",
       supply: {
         title: "Product Supply",
-        text: "Engine oil, filters and lubricants from trusted brands",
+        text: "Engine oil and filters from trusted brands",
       },
       partnership: {
         title: "Partner Collaboration",

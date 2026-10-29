@@ -2,7 +2,7 @@ import { BookOpen } from "lucide-react";
 // فایل PDF راهنما در client/public است (منبعش docs/site-guide/site-guide.html)
 const GUIDE_URL = "/site-guide.pdf";
 
-// دکمه‌ی کوچیک «راهنمای سایت» بالای کارت «خودروهای من»؛ PDF رو در تب جدید باز می‌کنه
+// دکمه‌ی کوچیک «راهنمای سایت» زیر کارت‌های دسترسی سریع؛ PDF رو در تب جدید باز می‌کنه
 function GuideButton({ label }) {
   return (
     <a
