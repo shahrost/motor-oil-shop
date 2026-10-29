@@ -76,6 +76,7 @@ function ProductCard({ product }) {
           product={product}
           paymentType={purchase.paymentType}
           orderType={purchase.orderType}
+          quantity={purchase.quantity}
           className="text-base sm:text-lg font-extrabold text-gray-950"
           noteClassName="text-[11px]"
         />
