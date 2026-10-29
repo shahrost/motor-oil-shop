@@ -403,6 +403,7 @@ Status: Completed ✅
 ✅ `sections/OrderExport.jsx` + `hooks/useOrderExport.js`: ماه و سال شمسی (پیش‌فرض ماه جاری، سال‌ها از ۱۴۰۴)، `services/orderService.downloadOrdersExcel` (`responseType: "blob"`؛ پیام خطای JSON از داخل Blob خونده می‌شه) ← `utils/downloadBlob.js`
 ✅ `OrderDashboard`: روی موبایل دوستونه و فشرده‌تر تا لیست زودتر دیده بشه. `OrderProducts`: خودرو و «جمع ردیف»
 ✅ تست با Chrome بی‌سر و API ساختگی (۴۵ سفارش): ۳۰ ردیف بسته، باز/بسته شدن، تغییر وضعیت از داخل جزئیات، جستجوی «۰۹۱۲۱۰۰۰۰۰۷»، فیلتر ماه، نمایش بیشتر ← ۴۵، اکسل ماه جاری و پیام ماه خالی؛ ارتفاع ردیف دسکتاپ ۴۴px، موبایل ۹۲px
+✅ تیک «انجام شد» (2026-10-29): فیلد `done` (Boolean، پیش‌فرض false) در `models/Order.js`، جدا از `status`. `PUT /api/orders/:id/done` با `auth` ← `orderController.setOrderDone` ← `orderService.setOrderDone` (فقط boolean، وگرنه ۴۰۰؛ سفارش ناموجود ۴۰۴) ← `orderRepository.setOrderDone`. کلاینت: `services/orderService.setOrderDoneService` ← `OrderContext.setOrderDone` (خوش‌بینانه؛ خطا ← برگشت تیک) ← `OrderRow` دکمه‌ی `DoneTick` (کنار دکمه‌ی باز/بسته، `aria-pressed`). سفارش تیک‌خورده زمینه‌ی سبز کم‌رنگ و متن کم‌رنگ‌تر؛ `OrderRowHeader` جای خالی هم‌عرض تیک داره
 ⚠️ دیتابیس فعلاً هیچ سفارشی نداره (تست اکسل روی دیتابیس واقعی فقط پیام «سفارشی ثبت نشده» رو داد؛ فایل کامل با داده‌ی ساختگی تست شد)
 
 ## ۴۱. دکمه‌ی «راهنمای سایت» در صفحه‌ی اصلی (PDF رنگی)

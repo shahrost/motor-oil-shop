@@ -50,6 +50,14 @@ export async function updateOrderStatusService(id, status) {
   return response.data.data;
 }
 
+// تیک «انجام شد» سفارش (ادمین)
+export async function setOrderDoneService(id, done) {
+  const response = await apiClient.put(`/orders/${id}/done`, {
+    done,
+  });
+  return response.data.data;
+}
+
 // حذف سفارش
 export async function deleteOrderService(id) {
   await apiClient.delete(`/orders/${id}`);

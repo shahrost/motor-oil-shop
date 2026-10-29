@@ -155,6 +155,21 @@ async function updateOrderStatus(id, status) {
   return order;
 }
 
+// فقط true/false پذیرفته می‌شه تا مقدار دلخواه از بدنه‌ی درخواست ذخیره نشه
+async function setOrderDone(id, done) {
+  if (typeof done !== "boolean") {
+    throw new AppError("مقدار تیک سفارش نامعتبر است", 400);
+  }
+
+  const order = await orderRepository.setOrderDone(id, done);
+
+  if (!order) {
+    throw new AppError("سفارش یافت نشد", 404);
+  }
+
+  return order;
+}
+
 async function deleteOrder(id) {
   const order = await orderRepository.deleteOrder(id);
 
@@ -177,6 +192,8 @@ module.exports = {
   getOrdersByCustomer,
 
   updateOrderStatus,
+
+  setOrderDone,
 
   deleteOrder,
 

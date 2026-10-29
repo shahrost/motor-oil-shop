@@ -4,6 +4,7 @@ import {
   fetchOrders,
   createOrder,
   updateOrderStatusService,
+  setOrderDoneService,
   deleteOrderService,
 } from "../services/orderService";
 
@@ -57,6 +58,21 @@ export function OrderProvider({ children }) {
     }
   }
 
+  // تیک فوراً روی صفحه عوض می‌شه؛ اگه سرور خطا داد برمی‌گرده
+  async function setOrderDone(id, done) {
+    const markDone = (value) =>
+      setOrders((prev) => prev.map((order) => (order.id === id ? { ...order, done: value } : order)));
+
+    markDone(done);
+
+    try {
+      await setOrderDoneService(id, done);
+    } catch (error) {
+      console.log("خطا در ثبت تیک سفارش", error);
+      markDone(!done);
+    }
+  }
+
   async function deleteOrder(id) {
     try {
       await deleteOrderService(id);
@@ -76,6 +92,7 @@ export function OrderProvider({ children }) {
         loadOrders,
         addOrder,
         updateOrderStatus,
+        setOrderDone,
         deleteOrder,
       }}
     >

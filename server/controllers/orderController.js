@@ -65,6 +65,16 @@ async function updateOrderStatus(req, res, next) {
   }
 }
 
+async function setOrderDone(req, res, next) {
+  try {
+    const order = await orderService.setOrderDone(req.params.id, req.body.done);
+
+    return apiResponse.success(res, order);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function deleteOrder(req, res, next) {
   try {
     await orderService.deleteOrder(req.params.id);
@@ -90,6 +100,7 @@ module.exports = {
   exportOrdersExcel,
   createOrder,
   updateOrderStatus,
+  setOrderDone,
   deleteOrder,
   deleteAllOrders,
 };

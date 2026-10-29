@@ -151,6 +151,13 @@ const OrderSchema = new mongoose.Schema(
       index: true,
     },
 
+    // تیک «انجام شد» ادمین: سفارش رسیدگی شده، جدا از وضعیت ارسال
+    done: {
+      type: Boolean,
+
+      default: false,
+    },
+
     date: {
       type: String,
 

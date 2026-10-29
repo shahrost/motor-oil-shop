@@ -23,6 +23,7 @@ function useOrderManager() {
     loadError,
     loadOrders,
     updateOrderStatus,
+    setOrderDone,
     deleteOrder,
   } = useContext(OrderContext);
 
@@ -77,6 +78,8 @@ function useOrderManager() {
     loadOrders,
 
     updateOrderStatus,
+
+    setOrderDone,
 
     deleteOrder,
 

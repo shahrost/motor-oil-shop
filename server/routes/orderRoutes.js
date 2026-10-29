@@ -9,6 +9,7 @@ const {
   exportOrdersExcel,
   createOrder,
   updateOrderStatus,
+  setOrderDone,
   deleteOrder,
   deleteAllOrders,
 } = require("../controllers/orderController");
@@ -24,6 +25,9 @@ router.post("/", orderLimiter, optionalCustomerAuth, createOrder);
 
 // تغییر وضعیت سفارش
 router.put("/:id", auth, updateOrderStatus);
+
+// تیک «انجام شد» سفارش
+router.put("/:id/done", auth, setOrderDone);
 
 // حذف یک سفارش
 router.delete("/:id", auth, deleteOrder);

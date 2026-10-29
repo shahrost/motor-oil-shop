@@ -36,6 +36,7 @@ function OrderManager() {
     statuses,
 
     updateOrderStatus,
+    setOrderDone,
     deleteOrder,
   } = useOrderManager();
 
@@ -70,6 +71,7 @@ function OrderManager() {
               onToggle={() => toggleOrder(order.id)}
               statuses={statuses}
               updateOrderStatus={updateOrderStatus}
+              onToggleDone={() => setOrderDone(order.id, !order.done)}
               deleteOrder={deleteOrder}
             />
           ))}

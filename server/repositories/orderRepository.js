@@ -33,6 +33,20 @@ async function updateOrderStatus(id, status) {
   );
 }
 
+async function setOrderDone(id, done) {
+  return await Order.findOneAndUpdate(
+    {
+      id,
+    },
+    {
+      done,
+    },
+    {
+      new: true,
+    },
+  );
+}
+
 async function deleteOrder(id) {
   return await Order.findOneAndDelete({
     id,
@@ -53,6 +67,8 @@ module.exports = {
   createOrder,
 
   updateOrderStatus,
+
+  setOrderDone,
 
   deleteOrder,
 
