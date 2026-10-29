@@ -428,7 +428,7 @@ const translations = {
         address: "آدرس",
         hours: "ساعت کاری",
         landline: "تلفن ثابت",
-        mobile: "تلفن همراه",
+        mobile: "همراه",
       },
     },
 

@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 import LanguageContext from "../../../../context/LanguageContext";
 import brand from "../../../../data/brand";
+import { PHONE_DISPLAY, PHONE_URL } from "../../../../data/contact";
 
-// آدرس، ساعت کاری و تلفن ثابت فروشگاه (از data/brand.js) + لینک «درباره ما»
+// آدرس، ساعت کاری، تلفن ثابت و همراه فروشگاه (از data/brand.js و data/contact.js) + لینک «درباره ما»
 function FooterStoreInfo() {
   const { t } = useContext(LanguageContext);
 
@@ -12,6 +13,7 @@ function FooterStoreInfo() {
     { key: "address", value: brand.address },
     { key: "hours", value: brand.hours },
     { key: "landline", value: brand.landline, href: brand.landlineUrl },
+    { key: "mobile", value: PHONE_DISPLAY, href: PHONE_URL },
   ];
 
   return (
