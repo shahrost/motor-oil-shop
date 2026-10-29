@@ -73,6 +73,32 @@ const OrderSchema = new mongoose.Schema(
           default: "",
         },
 
+        // مشخصات فنی محصول در لحظه‌ی سفارش (برای اینکه ادمین بدونه دقیقاً چه روغنی سفارش داده شده)
+        sku: {
+          type: String,
+          default: "",
+        },
+
+        category: {
+          type: String,
+          default: "",
+        },
+
+        api: {
+          type: String,
+          default: "",
+        },
+
+        acea: {
+          type: String,
+          default: "",
+        },
+
+        oilType: {
+          type: String,
+          default: "",
+        },
+
         // خودرویی که مشتری از صفحه‌اش محصول رو انتخاب کرده (اختیاری؛ سفارش‌های قدیمی ندارن)
         vehicle: {
           type: String,

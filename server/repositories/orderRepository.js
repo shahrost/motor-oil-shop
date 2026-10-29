@@ -1,7 +1,7 @@
 const Order = require("../models/Order");
 
 async function getAllOrders() {
-  return await Order.find().sort({ createdAt: -1 });
+  return await Order.find().sort({ createdAt: -1 }).lean();
 }
 
 async function getOrdersByCustomer(customerId) {

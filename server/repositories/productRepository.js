@@ -67,7 +67,16 @@ async function findPricingByIds(ids) {
   const validIds = [...new Set(ids)].filter((id) => mongoose.isValidObjectId(id));
 
   return Product.find({ _id: { $in: validIds } })
-    .select("name brand viscosity volume price priceCheck cartonCount promotion")
+    .select("name sku brand category viscosity volume api acea oilType price priceCheck cartonCount promotion")
+    .lean();
+}
+
+// مشخصات فنی محصولات (برای تکمیل اقلام سفارش‌های قدیمی که این مشخصات رو ذخیره نکرده بودن)
+async function findSpecsByIds(ids) {
+  const validIds = [...new Set(ids)].filter((id) => mongoose.isValidObjectId(id));
+
+  return Product.find({ _id: { $in: validIds } })
+    .select("sku category api acea oilType")
     .lean();
 }
 
@@ -115,6 +124,7 @@ module.exports = {
   findBySkus,
   findByBrands,
   findPricingByIds,
+  findSpecsByIds,
   getSitemapEntries,
   setFieldsById,
   bulkWrite,

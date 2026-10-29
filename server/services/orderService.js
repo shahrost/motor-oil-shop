@@ -12,8 +12,38 @@ const AppError = require("../utils/AppError");
 
 const { notifyNewOrder } = require("./orderNotificationService");
 
+const SPEC_FIELDS = ["sku", "category", "api", "acea", "oilType"];
+
+// سفارش‌های قدیمی مشخصات فنی (API، ACEA، نوع روغن، کد کالا) رو ذخیره نکرده بودن؛
+// برای اونها مشخصات فعلی محصول از دیتابیس پر می‌شه (فقط فیلدهای خالی)
+async function fillMissingItemSpecs(orders) {
+  const missingIds = orders.flatMap((order) =>
+    (order.items || [])
+      .filter((item) => item.productId && SPEC_FIELDS.every((field) => !item[field]))
+      .map((item) => item.productId),
+  );
+
+  if (!missingIds.length) return orders;
+
+  const products = await productRepository.findSpecsByIds(missingIds);
+  const byId = new Map(products.map((product) => [product._id.toString(), product]));
+
+  orders.forEach((order) => {
+    (order.items || []).forEach((item) => {
+      const product = byId.get(String(item.productId));
+      if (!product) return;
+
+      SPEC_FIELDS.forEach((field) => {
+        if (!item[field]) item[field] = product[field] || "";
+      });
+    });
+  });
+
+  return orders;
+}
+
 async function getOrders() {
-  return await orderRepository.getAllOrders();
+  return await fillMissingItemSpecs(await orderRepository.getAllOrders());
 }
 
 // قیمت، تعداد کل و هدیه‌ی هر قلم و جمع سفارش از روی محصول دیتابیس (نه عددی که مرورگر فرستاده)؛
@@ -47,6 +77,11 @@ async function priceOrderItems(items) {
       brand: product.brand || "",
       viscosity: product.viscosity || "",
       volume: product.volume == null ? "" : String(product.volume),
+      sku: product.sku || "",
+      category: product.category || "",
+      api: product.api || "",
+      acea: product.acea || "",
+      oilType: product.oilType || "",
       vehicle: (item.vehicle || "").trim(),
       orderType,
       paymentType,
