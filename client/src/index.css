@@ -476,3 +476,61 @@ img {
     animation: none;
   }
 }
+
+/* =========================
+      دکمه‌ی «طرح‌های فروش» Hero به شکل خودرو: بدنه کمی درجا می‌لرزه (موتور روشنه)،
+      چرخ‌ها می‌چرخن و از اگزوز (سمت شروع = عقب خودرو) دود بیرون میاد.
+      جهت دود با --smoke-x: در rtl عقب خودرو سمت راسته
+========================= */
+
+@keyframes car-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes car-wheel {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes car-smoke {
+  0% {
+    transform: translate(0, 0) scale(0.4);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(calc(var(--smoke-x) * 26px), -16px) scale(1.9);
+    opacity: 0;
+  }
+}
+
+.car-idle {
+  animation: car-idle 0.35s ease-in-out infinite;
+}
+
+.car-wheel {
+  animation: car-wheel 1.2s linear infinite;
+}
+
+.car-smoke {
+  --smoke-x: -1;
+  animation: car-smoke 1.8s ease-out infinite;
+}
+
+[dir="rtl"] .car-smoke {
+  --smoke-x: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .car-idle,
+  .car-wheel,
+  .car-smoke {
+    animation: none;
+  }
+}
