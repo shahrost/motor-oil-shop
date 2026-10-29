@@ -5,7 +5,7 @@ import LanguageContext from "../../../context/LanguageContext";
 import localizedLabel from "../../../utils/localizedLabel";
 import useCategoryChips from "../hooks/useCategoryChips";
 
-// ردیف افقی قابل‌اسکرول دکمه‌های دسته زیر جستجوی صفحه‌ی محصولات؛ هر دکمه به /category/...
+// ردیف افقی قابل‌اسکرول دکمه‌های دسته در انتهای صفحه‌ی محصولات؛ هر دکمه به /category/...
 function CategoryChips() {
   const { language, t } = useContext(LanguageContext);
   const categories = useCategoryChips();

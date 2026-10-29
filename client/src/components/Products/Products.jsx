@@ -30,13 +30,13 @@ function Products() {
   return (
     <div className="px-5 mt-8">
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="space-y-4">
-          <ProductSearch search={search} setSearch={setSearch} />
+        <ProductSearch search={search} setSearch={setSearch} />
 
-          <CategoryChips />
+        <div ref={listRef} className="scroll-mt-24">
+          <ProductRows products={filteredProducts} />
         </div>
 
-        {/* فیلترها بالای لیست تا کاربر موبایل برای رسیدن بهشون از کل لیست رد نشه */}
+        {/* محصولات اول دیده بشن؛ فیلترها و دسته‌ها/برندها آخر صفحه */}
         <ProductFilters
           values={values}
           setValue={setValue}
@@ -46,9 +46,7 @@ function Products() {
           onSubmit={showProducts}
         />
 
-        <div ref={listRef} className="scroll-mt-24">
-          <ProductRows products={filteredProducts} />
-        </div>
+        <CategoryChips />
       </div>
 
       <ScrollTopButton />
