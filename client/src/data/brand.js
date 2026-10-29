@@ -29,8 +29,8 @@ const brand = {
   heroTitleEn: "Wholesale Engine Oil & Lubricants",
   heroSubtitle: "برای لوازم یدکی‌ها و اتوسرویس‌ها — پرداخت نقدی و چکی",
   heroSubtitleEn: "For auto parts stores and service shops — cash and cheque payment",
-  deliveryArea: "ارسال به شهریار، ملارد، رباط‌کریم و اطراف",
-  deliveryAreaEn: "Delivery to Shahriar, Malard, Robat Karim and nearby",
+  deliveryArea: "پرند - رباط‌کریم - الارد - فردوسیه - نصیرشهر - نسیم‌شهر - کهنز - جاده آدران و اطراف",
+  deliveryAreaEn: "Parand - Robat Karim - Alard - Ferdowsieh - Nasirshahr - Nasimshahr - Kahnez - Adran Road and nearby",
 
   // شرایط پرداخت چکی (صفحه‌ی درباره ما، زیر «چکی»)؛ تا خالیه جمله‌ی «شرایط: …» نمایش داده نمی‌شه
   checkTerms: "",
