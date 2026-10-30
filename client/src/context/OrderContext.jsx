@@ -5,6 +5,7 @@ import {
   createOrder,
   updateOrderStatusService,
   setOrderDoneService,
+  setItemUnavailableService,
   deleteOrderService,
 } from "../services/orderService";
 
@@ -73,6 +74,32 @@ export function OrderProvider({ children }) {
     }
   }
 
+  // تیک ناموجود هم مثل تیک «انجام شد» فوراً عوض می‌شه و با خطای سرور برمی‌گرده
+  async function setItemUnavailable(id, index, unavailable) {
+    const markItem = (value) =>
+      setOrders((prev) =>
+        prev.map((order) =>
+          order.id === id
+            ? {
+                ...order,
+                items: order.items.map((item, i) =>
+                  i === index ? { ...item, unavailable: value } : item,
+                ),
+              }
+            : order,
+        ),
+      );
+
+    markItem(unavailable);
+
+    try {
+      await setItemUnavailableService(id, index, unavailable);
+    } catch (error) {
+      console.log("خطا در ثبت ناموجود", error);
+      markItem(!unavailable);
+    }
+  }
+
   async function deleteOrder(id) {
     try {
       await deleteOrderService(id);
@@ -93,6 +120,7 @@ export function OrderProvider({ children }) {
         addOrder,
         updateOrderStatus,
         setOrderDone,
+        setItemUnavailable,
         deleteOrder,
       }}
     >

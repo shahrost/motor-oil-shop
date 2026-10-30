@@ -47,6 +47,21 @@ async function setOrderDone(id, done) {
   );
 }
 
+async function setItemUnavailable(id, index, unavailable) {
+  return await Order.findOneAndUpdate(
+    {
+      id,
+      [`items.${index}`]: { $exists: true },
+    },
+    {
+      $set: { [`items.${index}.unavailable`]: unavailable },
+    },
+    {
+      new: true,
+    },
+  );
+}
+
 async function deleteOrder(id) {
   return await Order.findOneAndDelete({
     id,
@@ -69,6 +84,8 @@ module.exports = {
   updateOrderStatus,
 
   setOrderDone,
+
+  setItemUnavailable,
 
   deleteOrder,
 

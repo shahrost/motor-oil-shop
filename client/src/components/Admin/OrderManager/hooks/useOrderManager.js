@@ -24,6 +24,7 @@ function useOrderManager() {
     loadOrders,
     updateOrderStatus,
     setOrderDone,
+    setItemUnavailable,
     deleteOrder,
   } = useContext(OrderContext);
 
@@ -80,6 +81,8 @@ function useOrderManager() {
     updateOrderStatus,
 
     setOrderDone,
+
+    setItemUnavailable,
 
     deleteOrder,
 

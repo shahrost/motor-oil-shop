@@ -1,10 +1,13 @@
 import OrderProducts from "./OrderProducts";
+import OrderPdf from "./OrderPdf";
 import mapLink from "../helpers/mapLink";
+import { availableTotal } from "../helpers/orderInvoice";
 import { formatToman, orderDateLabel } from "../helpers/orderSummary";
 
 // جزئیات کامل یک سفارش (بخش بازشده‌ی ردیف): وضعیت، حذف، مشتری، اقلام و مبلغ
-function OrderDetails({ order, updateOrderStatus, deleteOrder, statuses }) {
+function OrderDetails({ order, updateOrderStatus, setItemUnavailable, deleteOrder, statuses }) {
   const locationUrl = mapLink(order.customer?.location);
+  const hasUnavailable = order.items?.some((item) => item.unavailable);
 
   return (
     <section>
@@ -96,7 +99,12 @@ function OrderDetails({ order, updateOrderStatus, deleteOrder, statuses }) {
         </div>
 
         <div>
-          <OrderProducts items={order.items} />
+          <OrderProducts
+            items={order.items}
+            onToggleUnavailable={(index, unavailable) =>
+              setItemUnavailable(order.id, index, unavailable)
+            }
+          />
 
           <div
             className="
@@ -114,7 +122,15 @@ function OrderDetails({ order, updateOrderStatus, deleteOrder, statuses }) {
             >
               مبلغ کل سفارش: {formatToman(order.totalPrice)}
             </p>
+
+            {hasUnavailable && (
+              <p className="mt-2 text-lg font-bold text-green-700">
+                مبلغ نهایی (بدون اقلام ناموجود): {formatToman(availableTotal(order.items))}
+              </p>
+            )}
           </div>
+
+          <OrderPdf order={order} />
         </div>
       </div>
 

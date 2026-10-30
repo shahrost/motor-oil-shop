@@ -16,15 +16,42 @@ function itemSpecs(item) {
   ].filter(([, value]) => value);
 }
 
-function OrderProducts({ items }) {
+// تیک «ناموجود»: قلمی که مشتری خواسته ولی در انبار نیست؛ از جمع و فاکتور PDF کنار می‌ره
+function UnavailableToggle({ unavailable, onToggle }) {
+  return (
+    <label className="shrink-0 inline-flex items-center gap-2 cursor-pointer select-none text-sm font-bold">
+      <input
+        type="checkbox"
+        checked={unavailable}
+        onChange={onToggle}
+        className="w-5 h-5 accent-red-600"
+      />
+      <span className={unavailable ? "text-red-700" : "text-gray-600"}>ناموجود</span>
+    </label>
+  );
+}
+
+function OrderProducts({ items, onToggleUnavailable }) {
   return (
     <section>
       <h3 className="font-bold text-lg mb-3">🛒 محصولات سفارش</h3>
 
       <div className="space-y-3">
         {items?.map((item, index) => (
-          <div key={index} className="border rounded-xl p-4 bg-gray-50">
-            <p className="font-extrabold text-base">{item.productName}</p>
+          <div
+            key={index}
+            className={`border rounded-xl p-4 ${item.unavailable ? "bg-red-50 border-red-300" : "bg-gray-50"}`}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <p className={`font-extrabold text-base ${item.unavailable ? "line-through text-gray-500" : ""}`}>
+                {item.productName}
+              </p>
+
+              <UnavailableToggle
+                unavailable={!!item.unavailable}
+                onToggle={() => onToggleUnavailable(index, !item.unavailable)}
+              />
+            </div>
 
             <div className="mt-2 flex flex-wrap gap-2 text-sm">
               {itemSpecs(item).map(([label, value]) => (

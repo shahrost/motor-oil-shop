@@ -170,6 +170,27 @@ async function setOrderDone(id, done) {
   return order;
 }
 
+// تیک «ناموجود» یک قلم؛ شماره‌ی ردیف باید عدد صحیح باشه تا مسیر دلخواه در $set ساخته نشه
+async function setItemUnavailable(id, index, unavailable) {
+  const itemIndex = Number(index);
+
+  if (!Number.isInteger(itemIndex) || itemIndex < 0 || itemIndex > 99) {
+    throw new AppError("ردیف سفارش نامعتبر است", 400);
+  }
+
+  if (typeof unavailable !== "boolean") {
+    throw new AppError("مقدار ناموجود نامعتبر است", 400);
+  }
+
+  const order = await orderRepository.setItemUnavailable(id, itemIndex, unavailable);
+
+  if (!order) {
+    throw new AppError("سفارش یا ردیف یافت نشد", 404);
+  }
+
+  return order;
+}
+
 async function deleteOrder(id) {
   const order = await orderRepository.deleteOrder(id);
 
@@ -194,6 +215,8 @@ module.exports = {
   updateOrderStatus,
 
   setOrderDone,
+
+  setItemUnavailable,
 
   deleteOrder,
 

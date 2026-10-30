@@ -63,6 +63,7 @@ function OrderRow({
   open,
   onToggle,
   onToggleDone,
+  setItemUnavailable,
   statuses,
   updateOrderStatus,
   deleteOrder,
@@ -151,6 +152,7 @@ function OrderRow({
             order={order}
             statuses={statuses}
             updateOrderStatus={updateOrderStatus}
+            setItemUnavailable={setItemUnavailable}
             deleteOrder={deleteOrder}
           />
         </div>

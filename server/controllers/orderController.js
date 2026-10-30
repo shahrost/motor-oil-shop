@@ -75,6 +75,20 @@ async function setOrderDone(req, res, next) {
   }
 }
 
+async function setItemUnavailable(req, res, next) {
+  try {
+    const order = await orderService.setItemUnavailable(
+      req.params.id,
+      req.params.index,
+      req.body.unavailable,
+    );
+
+    return apiResponse.success(res, order);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function deleteOrder(req, res, next) {
   try {
     await orderService.deleteOrder(req.params.id);
@@ -101,6 +115,7 @@ module.exports = {
   createOrder,
   updateOrderStatus,
   setOrderDone,
+  setItemUnavailable,
   deleteOrder,
   deleteAllOrders,
 };

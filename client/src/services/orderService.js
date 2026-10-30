@@ -58,6 +58,14 @@ export async function setOrderDoneService(id, done) {
   return response.data.data;
 }
 
+// تیک «ناموجود» یک قلم سفارش (ادمین)؛ index = شماره‌ی ردیف در order.items
+export async function setItemUnavailableService(id, index, unavailable) {
+  const response = await apiClient.put(`/orders/${id}/items/${index}/unavailable`, {
+    unavailable,
+  });
+  return response.data.data;
+}
+
 // حذف سفارش
 export async function deleteOrderService(id) {
   await apiClient.delete(`/orders/${id}`);

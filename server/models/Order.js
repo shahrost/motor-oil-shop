@@ -134,6 +134,12 @@ const OrderSchema = new mongoose.Schema(
           type: Number,
           default: 0,
         },
+
+        // تیک «ناموجود» ادمین: قلمی که مشتری خواسته ولی در انبار نیست (از فاکتور PDF کنار می‌ره)
+        unavailable: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
 

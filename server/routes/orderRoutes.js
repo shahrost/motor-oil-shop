@@ -10,6 +10,7 @@ const {
   createOrder,
   updateOrderStatus,
   setOrderDone,
+  setItemUnavailable,
   deleteOrder,
   deleteAllOrders,
 } = require("../controllers/orderController");
@@ -28,6 +29,9 @@ router.put("/:id", auth, updateOrderStatus);
 
 // تیک «انجام شد» سفارش
 router.put("/:id/done", auth, setOrderDone);
+
+// تیک «ناموجود» یک قلم سفارش
+router.put("/:id/items/:index/unavailable", auth, setItemUnavailable);
 
 // حذف یک سفارش
 router.delete("/:id", auth, deleteOrder);

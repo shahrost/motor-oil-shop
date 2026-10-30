@@ -37,6 +37,7 @@ function OrderManager() {
 
     updateOrderStatus,
     setOrderDone,
+    setItemUnavailable,
     deleteOrder,
   } = useOrderManager();
 
@@ -72,6 +73,7 @@ function OrderManager() {
               statuses={statuses}
               updateOrderStatus={updateOrderStatus}
               onToggleDone={() => setOrderDone(order.id, !order.done)}
+              setItemUnavailable={setItemUnavailable}
               deleteOrder={deleteOrder}
             />
           ))}
