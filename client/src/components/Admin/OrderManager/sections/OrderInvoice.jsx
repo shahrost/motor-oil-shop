@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 
 import brand from "../../../../data/brand";
+import brandLogo from "../../../../assets/logo/shahram-logo-light.svg";
 import { formatToman, orderDateLabel } from "../helpers/orderSummary";
 import { lineTotal, splitAvailability } from "../helpers/orderInvoice";
 import { INVOICE_WIDTH } from "../hooks/useOrderPdf";
@@ -41,11 +42,14 @@ const OrderInvoice = forwardRef(function OrderInvoice({ order }, ref) {
         lineHeight: 1.7,
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "3px solid #fbbf24", paddingBottom: 12 }}>
+      {/* سه ستون هم‌عرض تا لوگو دقیقاً وسط سربرگ بمونه */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 16, borderBottom: "3px solid #fbbf24", paddingBottom: 12 }}>
         <div>
           <div style={{ fontSize: 24, fontWeight: 800 }}>{brand.name}</div>
           <div style={{ color: "#4b5563" }}>{brand.tagline}</div>
         </div>
+
+        <img src={brandLogo} alt="" style={{ width: 110, height: "auto", display: "block" }} />
 
         <div style={{ textAlign: "left" }}>
           <div style={{ fontSize: 18, fontWeight: 800 }}>فاکتور سفارش</div>
