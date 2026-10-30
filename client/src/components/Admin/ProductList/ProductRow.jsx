@@ -8,13 +8,16 @@ function ProductRow({ product, startEdit, deleteProduct }) {
       flex
       justify-between
       items-center
+      gap-3
       mb-3
       "
     >
-      <div>
-        <h3 className="font-bold">{product.name}</h3>
+      {/* min-w-0 + شکستن کلمه: اسم‌های بلندِ بی‌فاصله (مثل لیست مدل‌های موتور با ویرگول)
+          ردیف رو روی موبایل از صفحه بیرون نزنن */}
+      <div className="min-w-0 flex-1">
+        <h3 className="font-bold [overflow-wrap:anywhere]">{product.name}</h3>
 
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 [overflow-wrap:anywhere]">
           {[
             product.sku && `کد: ${product.sku}`,
             product.brand && `برند: ${product.brand}`,
@@ -26,7 +29,7 @@ function ProductRow({ product, startEdit, deleteProduct }) {
         </p>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 shrink-0">
         <button
           onClick={() => startEdit(product)}
           className="
