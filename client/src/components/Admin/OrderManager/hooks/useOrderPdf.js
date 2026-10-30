@@ -7,7 +7,16 @@ export const INVOICE_WIDTH = 794;
 
 const A4_RATIO = 297 / 210;
 
-const pdfFileName = (order) => `فاکتور-${String(order.id).slice(0, 8)}.pdf`;
+// اسم فایل = اسم مشتری (نویسه‌هایی که در اسم فایل مجاز نیستن حذف)؛ بی‌اسم ← شماره‌ی سفارش
+function pdfFileName(order) {
+  const name = String(order.customer?.name || "")
+    .replace(/[\\/:*?"<>|]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 80);
+
+  return `${name || `فاکتور-${String(order.id).slice(0, 8)}`}.pdf`;
+}
 
 // عکس فاکتور ← PDF چندصفحه‌ای A4 (متن فارسی با فونت سایت درست دیده می‌شه، چون مرورگر رسمش می‌کنه)
 async function renderPdf(element) {
