@@ -8,7 +8,7 @@ const translations = {
       products: "محصولات",
       brands: "برندها",
       myVehicles: "خودروها",
-      promotions: "طرح‌های فروش",
+      promotions: "طرح فروش و سبد کالا",
       cart: "سبد خرید",
       contact: "تماس با ما",
       about: "درباره ما",
@@ -30,7 +30,7 @@ const translations = {
       vehicle: "روغن موتور و فیلتر مناسب {name}.",
       viscosity: "روغن موتورها بر اساس گرید ویسکوزیته.",
       viscosityProducts: "روغن موتورهای گرید {name} با قیمت نقدی و چکی.",
-      promotions: "طرح‌های فروش و هدیه‌ی خرید عمده روی محصولات منتخب.",
+      promotions: "طرح‌های فروش، هدیه‌ی خرید عمده و سبدهای ترکیبی کالا.",
       about: "معرفی فروشگاه، حوزه‌ی فعالیت، برندها، روش‌های پرداخت نقدی و چکی، آدرس و راه‌های تماس.",
       adminLogin: "ورود ادمین",
     },
@@ -168,7 +168,7 @@ const translations = {
         text: "فروش محصولات سمن شیمی، ایدلوب و ووفر تا اطلاع ثانوی بسته شده است.",
       },
       hero: {
-        promotions: "طرح‌های فروش",
+        promotions: "طرح فروش و سبد کالا",
       },
       trust: {
         payment: "پرداخت نقدی و چکی",
@@ -542,8 +542,10 @@ const translations = {
     },
 
     promotions: {
-      title: "طرح‌های فروش",
+      title: "طرح فروش و سبد کالا",
       subtitle: "طرح‌های ویژه هدیه‌دار روی محصولات منتخب",
+      bundlesTitle: "سبدهای ترکیبی",
+      bundlesHint: "برای دیدن جدول در اندازه‌ی کامل روی آن بزنید",
       notFound: "در حال حاضر طرح فروش فعالی وجود ندارد",
     },
 
@@ -585,7 +587,7 @@ const translations = {
       products: "Products",
       brands: "Brands",
       myVehicles: "My Vehicles",
-      promotions: "Sales Promotions",
+      promotions: "Promotions & Bundles",
       cart: "Cart",
       contact: "Contact Us",
       about: "About Us",
@@ -606,7 +608,7 @@ const translations = {
       vehicle: "Motor oil and filters for {name}.",
       viscosity: "Motor oils by viscosity grade.",
       viscosityProducts: "{name} motor oils with cash and cheque prices.",
-      promotions: "Wholesale promotions and gift offers on selected products.",
+      promotions: "Wholesale promotions, gift offers and combo product bundles.",
       about: "About the shop, what we supply, brands, cash and cheque payment, address and contact details.",
       adminLogin: "Admin Login",
     },
@@ -744,7 +746,7 @@ const translations = {
         text: "Sales of Seman Chimie, Aidlube and Woofer products are closed until further notice.",
       },
       hero: {
-        promotions: "Sales Promotions",
+        promotions: "Promotions & Bundles",
       },
       trust: {
         payment: "Cash and cheque payment",
@@ -1119,8 +1121,10 @@ const translations = {
     },
 
     promotions: {
-      title: "Sales Promotions",
+      title: "Promotions & Bundles",
       subtitle: "Special gift-with-purchase offers on selected products",
+      bundlesTitle: "Combo Bundles",
+      bundlesHint: "Tap a table to view it full size",
       notFound: "There are no active sales promotions right now",
     },
 

@@ -21,7 +21,7 @@ const menu = [
   },
   {
     key: "promotions",
-    titleFa: "طرح‌های فروش",
+    titleFa: "طرح فروش و سبد کالا",
     path: "/promotions",
   },
   {

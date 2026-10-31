@@ -2147,3 +2147,5 @@ server
 - Models only define database schema.
 - New features must follow the same layered architecture.
 - Customer auth و Admin auth کاملاً جدا نگه داشته می‌شن (توکن‌های متفاوت، middleware متفاوت).
+
+✅ (۱۴۰۵/۰۸/۰۹) صفحه‌ی `/promotions` = «طرح فروش و سبد کالا»: `Promotions/sections/BundleImages.jsx` جدول‌های سبد ترکیبی (عکس WebP در `assets/bundles/`، آرایه‌ی ثابت `BUNDLES`، لینک به عکس کامل) زیر کارت‌های طرح؛ کلیدهای `promotions.bundlesTitle/bundlesHint`؛ عنوان در nav، menu.js، home.hero و meta.promotions عوض شد. هر عکسی که کاربر می‌ده قبل از افزودن به WebP تبدیل می‌شه.
