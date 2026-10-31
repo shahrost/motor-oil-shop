@@ -478,8 +478,8 @@ img {
 }
 
 /* =========================
-      دکمه‌ی «طرح‌های فروش» Hero به شکل خودرو: بدنه کمی درجا می‌لرزه (موتور روشنه)،
-      چرخ‌ها می‌چرخن و از اگزوز (سمت شروع = عقب خودرو) دود بیرون میاد.
+      دکمه‌ی «طرح فروش و سبد کالا» Hero به شکل لیموزین: بدنه کمی درجا می‌لرزه (موتور روشنه)،
+      از اگزوز (سمت شروع = عقب خودرو) دود بیرون میاد (چرخ‌ها: limo-wheel پایین‌تر).
       جهت دود با --smoke-x: در rtl عقب خودرو سمت راسته
 ========================= */
 
@@ -490,12 +490,6 @@ img {
   }
   50% {
     transform: translateY(-1.5px);
-  }
-}
-
-@keyframes car-wheel {
-  to {
-    transform: rotate(360deg);
   }
 }
 
@@ -514,10 +508,6 @@ img {
   animation: car-idle 0.35s ease-in-out infinite;
 }
 
-.car-wheel {
-  animation: car-wheel 1.2s linear infinite;
-}
-
 .car-smoke {
   --smoke-x: -1;
   animation: car-smoke 1.8s ease-out infinite;
@@ -527,10 +517,307 @@ img {
   --smoke-x: 1;
 }
 
+/* =========================
+      صحنه‌ی لیموزین Hero (PromoLimo / LimoHandoff / PersonArt)، همه روی یک چرخه‌ی ۹ ثانیه‌ای:
+      ۲–۱۸٪ اتوسرویس‌کار میاد؛ ۶–۹٪ چرخ‌ها آروم می‌ایستن ← ۱۰–۱۶٪ در باز می‌شه و راننده پیاده می‌شه ← ۲۱–۳۸٪ تا مشتری راه می‌ره ←
+      ۳۸–۵۲٪ گالن رو می‌ده ← ۵۲–۷۰٪ برمی‌گرده (اتوسرویس‌کار خلاف جهت می‌ره) ← ۷۰–۸۰٪ سوار می‌شه و در بسته می‌شه ← ۸۲٪ به بعد چرخ‌ها دوباره می‌چرخن.
+      حالت بدون انیمیشن (پایه‌ی کلاس‌ها) = لحظه‌ی دادن گالن. جهت راه رفتن با --limo-dir
+========================= */
+
+/* دو دور کامل در هر چرخه (۷۲۰ درجه) تا شروع دوباره پرش نداشته باشه */
+@keyframes limo-wheel {
+  0% {
+    transform: rotate(0);
+  }
+  6% {
+    transform: rotate(180deg);
+  }
+  9%,
+  82% {
+    transform: rotate(230deg);
+  }
+  85% {
+    transform: rotate(280deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes limo-door {
+  0%,
+  10%,
+  80%,
+  100% {
+    transform: scaleX(1);
+  }
+  16%,
+  74% {
+    transform: scaleX(0.15);
+  }
+}
+
+@keyframes limo-seat {
+  0%,
+  13%,
+  77%,
+  100% {
+    opacity: 1;
+  }
+  15%,
+  75% {
+    opacity: 0;
+  }
+}
+
+@keyframes limo-driver {
+  0%,
+  13% {
+    opacity: 0;
+    transform: translate(0, 6px) scale(0.85);
+  }
+  19%,
+  21% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  38%,
+  52% {
+    opacity: 1;
+    transform: translate(calc(var(--limo-dir) * var(--limo-walk)), 0) scale(1);
+  }
+  /* برگشت: راننده رو به ماشین برمی‌گرده */
+  53% {
+    opacity: 1;
+    transform: translate(calc(var(--limo-dir) * var(--limo-walk)), 0) scale(-1, 1);
+  }
+  69% {
+    opacity: 1;
+    transform: translate(0, 0) scale(-1, 1);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  76%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 6px) scale(0.85);
+  }
+}
+
+/* تاب پاها موقع راه رفتن؛ پای دوم (limo-leg-alt) با --swing منفی برعکس تاب می‌خوره */
+@keyframes limo-leg {
+  0%,
+  21%,
+  38%,
+  52%,
+  70%,
+  100% {
+    transform: rotate(0);
+  }
+  25%,
+  33%,
+  56%,
+  64% {
+    transform: rotate(var(--swing));
+  }
+  29%,
+  36%,
+  60%,
+  68% {
+    transform: rotate(calc(-1 * var(--swing)));
+  }
+}
+
+@keyframes limo-arm-give {
+  0%,
+  44% {
+    transform: rotate(0);
+  }
+  50%,
+  100% {
+    transform: rotate(55deg);
+  }
+}
+
+/* اتوسرویس‌کار: ۲–۱۸٪ از دور میاد، منتظر می‌مونه، بعد از گرفتن گالن ۵۳٪ برمی‌گرده و تا ۷۶٪ خلاف جهت ماشین می‌ره و محو می‌شه */
+@keyframes limo-mechanic {
+  0%,
+  2% {
+    opacity: 0;
+    transform: translate(calc(var(--limo-dir) * 44px), 0) scale(1);
+  }
+  5% {
+    opacity: 1;
+  }
+  18%,
+  52% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  53% {
+    opacity: 1;
+    transform: translate(0, 0) scale(-1, 1);
+  }
+  68% {
+    opacity: 1;
+  }
+  76%,
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--limo-dir) * 50px), 0) scale(-1, 1);
+  }
+}
+
+@keyframes limo-mech-leg {
+  0%,
+  2%,
+  18%,
+  53%,
+  76%,
+  100% {
+    transform: rotate(0);
+  }
+  5%,
+  13%,
+  57%,
+  65%,
+  73% {
+    transform: rotate(var(--swing));
+  }
+  9%,
+  16%,
+  61%,
+  69% {
+    transform: rotate(calc(-1 * var(--swing)));
+  }
+}
+
+/* دست جلو: تا راننده برسه پایینه، گالن رو می‌گیره و با گالن نیمه‌پایین می‌ره */
+@keyframes limo-arm-take {
+  0%,
+  32% {
+    transform: rotate(55deg);
+  }
+  38%,
+  50% {
+    transform: rotate(0);
+  }
+  56%,
+  100% {
+    transform: rotate(30deg);
+  }
+}
+
+/* گالن دست راننده؛ برگشتنش به ۱ سر چرخه‌ی بعد وقتیه که راننده هنوز داخل ماشینه */
+@keyframes limo-jug-give {
+  0%,
+  44% {
+    opacity: 1;
+  }
+  45%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes limo-jug-take {
+  0%,
+  44% {
+    opacity: 0;
+  }
+  45%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.limo-wheel {
+  animation: limo-wheel 9s linear infinite;
+}
+
+.limo-door {
+  animation: limo-door 9s ease-in-out infinite;
+}
+
+.limo-seat {
+  opacity: 0;
+  animation: limo-seat 9s linear infinite;
+}
+
+/* جهت راه رفتن هر دو آدمک: + یعنی سمت جلوی ماشین (پایان) */
+.limo-scene {
+  --limo-dir: 1;
+}
+
+[dir="rtl"] .limo-scene {
+  --limo-dir: -1;
+}
+
+.limo-driver {
+  --limo-walk: 80px;
+  transform: translateX(calc(var(--limo-dir) * var(--limo-walk)));
+  animation: limo-driver 9s linear infinite;
+}
+
+.limo-mechanic {
+  animation: limo-mechanic 9s linear infinite;
+}
+
+.limo-leg,
+.limo-mech-leg {
+  --swing: 18deg;
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: limo-leg 9s linear infinite;
+}
+
+.limo-mech-leg {
+  animation-name: limo-mech-leg;
+}
+
+.limo-leg-alt {
+  --swing: -18deg;
+}
+
+/* دست از شونه (14,19 در viewBox آدمک) می‌چرخه */
+.limo-arm {
+  transform-box: view-box;
+  transform-origin: 14px 19px;
+}
+
+.limo-arm-give {
+  animation: limo-arm-give 9s ease-in-out infinite;
+}
+
+.limo-arm-take {
+  animation: limo-arm-take 9s ease-in-out infinite;
+}
+
+.limo-jug-give {
+  animation: limo-jug-give 9s linear infinite;
+}
+
+.limo-jug-take {
+  opacity: 0;
+  animation: limo-jug-take 9s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .car-idle,
-  .car-wheel,
-  .car-smoke {
+  .car-smoke,
+  .limo-wheel,
+  .limo-door,
+  .limo-seat,
+  .limo-driver,
+  .limo-mechanic,
+  .limo-leg,
+  .limo-mech-leg,
+  .limo-arm-give,
+  .limo-arm-take,
+  .limo-jug-give,
+  .limo-jug-take {
     animation: none;
   }
 }
