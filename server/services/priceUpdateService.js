@@ -7,14 +7,20 @@ const PRODUCT_COLUMN_MAP = require("../utils/productColumns");
 function rowToUpdate(row) {
   if (!row.sku) throw new Error("کد محصول خالی است");
 
-  const price = toNumber(row.price);
+  // خانه‌ی خالی قیمت ← ۰ (محصول بدون قیمت، «تماس بگیرید»)؛ متن غیرعددی خطاست
+  const price = row.price ? toNumber(row.price) : 0;
 
   if (isNaN(price)) throw new Error("قیمت نامعتبر است");
 
   const update = { price };
 
-  const priceCheck = toNumber(row.priceCheck);
-  if (!isNaN(priceCheck)) update.priceCheck = priceCheck;
+  // مثل ایمپورت محصولات: خانه‌ی خالی ← ۰؛ نبودن ستون و خالی بودن قیمت نقدی هم یعنی بدون قیمت
+  if (row.priceCheck !== undefined) {
+    const priceCheck = row.priceCheck ? toNumber(row.priceCheck) : 0;
+    if (!isNaN(priceCheck)) update.priceCheck = priceCheck;
+  } else if (price === 0) {
+    update.priceCheck = 0;
+  }
 
   const stock = toNumber(row.stock);
   if (!isNaN(stock)) update.stock = stock;

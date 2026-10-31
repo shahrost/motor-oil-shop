@@ -163,6 +163,10 @@ const translations = {
       },
       guide: "راهنمای سایت",
       installApp: "نصب اپلیکیشن",
+      notice: {
+        title: "توجه توجه:",
+        text: "فروش محصولات سمن شیمی، ایدلوب و ووفر تا اطلاع ثانوی بسته شده است.",
+      },
       hero: {
         promotions: "طرح‌های فروش",
       },
@@ -735,6 +739,10 @@ const translations = {
       },
       guide: "Site Guide",
       installApp: "Install App",
+      notice: {
+        title: "Attention:",
+        text: "Sales of Seman Chimie, Aidlube and Woofer products are closed until further notice.",
+      },
       hero: {
         promotions: "Sales Promotions",
       },

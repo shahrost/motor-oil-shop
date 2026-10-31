@@ -101,10 +101,13 @@ function rowToProductDoc(row) {
   if (row.cartonCount !== undefined) doc.cartonCount = toNumber(row.cartonCount) || 1;
   if (row.stock !== undefined) doc.stock = parseStock(row.stock);
 
-  const priceCheck = toNumber(row.priceCheck);
-
-  if (!isNaN(priceCheck)) {
-    doc.priceCheck = priceCheck;
+  // قیمت اعتباری هم مثل قیمت نقدی: خانه‌ی خالی ← ۰ (بدون قیمت). اگه ستونش در فایل نیست
+  // ولی قیمت نقدی خالی شده، یعنی محصول دیگه قیمت نداره (مثلاً فروش برند بسته شده) و
+  // قیمت اعتباری قبلی هم نباید روی سایت بمونه
+  if (row.priceCheck !== undefined) {
+    doc.priceCheck = toNumber(row.priceCheck) || 0;
+  } else if (doc.price === 0) {
+    doc.priceCheck = 0;
   }
 
   return doc;

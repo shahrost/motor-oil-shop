@@ -9,6 +9,7 @@ import {
   HomeHero,
   InstallAppButton,
   LubricantCard,
+  SalesNotice,
   TrustBar,
   VehiclesCard,
 } from "./sections";
@@ -34,6 +35,8 @@ function Home() {
       <HomeHero />
 
       <div className="px-5">
+        <SalesNotice title={t("home.notice.title")} text={t("home.notice.text")} />
+
         <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-10">
           <LubricantCard
             to="/products"
