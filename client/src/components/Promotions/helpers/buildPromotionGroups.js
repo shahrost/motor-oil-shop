@@ -22,7 +22,10 @@ function buildPromotionGroups(products, configuredGroups) {
   return [...brandGroups, ...extraGroups, ...otherGroups]
     .map((group) => ({
       ...group,
-      products: promoProducts.filter((product) => group.brands.includes(product.brand)),
+      products: [
+        ...promoProducts.filter((product) => group.brands.includes(product.brand)),
+        ...products.filter((product) => group.skus?.includes(product.sku)),
+      ],
     }))
     .filter((group) => group.products.length > 0 || group.images.length > 0);
 }

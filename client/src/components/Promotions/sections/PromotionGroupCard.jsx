@@ -5,7 +5,7 @@ import GroupLogos from "./GroupLogos";
 
 // کارت یک گروه در صفحه‌ی طرح فروش؛ کلیک ← طرح‌های گروه با امکان سفارش
 function PromotionGroupCard({ group, title, t }) {
-  const planCount = group.products.length + group.images.length;
+  const planCount = group.products.length || group.images.length;
 
   return (
     <Link

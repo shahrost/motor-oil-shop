@@ -5,7 +5,7 @@ import GroupLogos from "./GroupLogos";
 import PlanImage from "./PlanImage";
 import PromotionProduct from "./PromotionProduct";
 
-// طرح‌های یک گروه: جدول‌های عکسی با سفارش واتساپ + محصولات طرح‌دار با کنترل خرید
+// طرح‌های یک گروه: محصولات با کنترل خرید + جدول‌های آماده‌ی طرح
 function PromotionGroupDetail({ group, title, t }) {
   return (
     <div>

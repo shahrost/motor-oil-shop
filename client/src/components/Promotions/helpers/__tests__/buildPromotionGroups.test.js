@@ -45,6 +45,16 @@ describe("buildPromotionGroups", () => {
     expect(groups.map((group) => group.id)).toEqual(["lookini", "وم اویل", "bundles"]);
   });
 
+  it("adds listed skus to a group without a promotion", () => {
+    const groups = buildPromotionGroups(
+      [{ id: "1", sku: "BT-BUNDLE-1", brand: "بهتام" }],
+      [{ id: "bundles", brands: [], skus: ["BT-BUNDLE-1"], images: [] }],
+    );
+
+    expect(groups).toHaveLength(1);
+    expect(groups[0].products.map((item) => item.id)).toEqual(["1"]);
+  });
+
   it("drops groups with no products and no images", () => {
     expect(buildPromotionGroups([], CONFIG).map((group) => group.id)).toEqual(["bundles"]);
   });
