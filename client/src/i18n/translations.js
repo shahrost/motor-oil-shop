@@ -118,7 +118,7 @@ const translations = {
       available: "موجود است",
       addToCart: "افزودن به سبد خرید",
       addedToCart: "به سبد خرید اضافه شد",
-      callForPrice: "برای قیمت تماس بگیرید",
+      callForPrice: "استعلام قیمت",
       add: "افزودن",
       added: "اضافه شد",
       decrease: "کم کردن تعداد",
@@ -544,6 +544,7 @@ const translations = {
     promotions: {
       title: "طرح فروش و سبد کالا",
       subtitle: "طرح‌های ویژه هدیه‌دار روی محصولات منتخب",
+      salePlansTitle: "طرح‌های فروش",
       bundlesTitle: "سبدهای ترکیبی",
       bundlesHint: "برای دیدن جدول در اندازه‌ی کامل روی آن بزنید",
       notFound: "در حال حاضر طرح فروش فعالی وجود ندارد",
@@ -696,7 +697,7 @@ const translations = {
       available: "available",
       addToCart: "Add to Cart",
       addedToCart: "Added to cart",
-      callForPrice: "Call for price",
+      callForPrice: "Price on request",
       add: "Add",
       added: "Added",
       decrease: "Decrease quantity",
@@ -1123,6 +1124,7 @@ const translations = {
     promotions: {
       title: "Promotions & Bundles",
       subtitle: "Special gift-with-purchase offers on selected products",
+      salePlansTitle: "Sale Plans",
       bundlesTitle: "Combo Bundles",
       bundlesHint: "Tap a table to view it full size",
       notFound: "There are no active sales promotions right now",

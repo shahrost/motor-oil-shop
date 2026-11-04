@@ -4,7 +4,7 @@ import { getProductPrice } from "../../../utils/productPrice";
 
 // داده‌ی ساختاریافته‌ی schema.org/Product برای نمایش نام، عکس و قیمت در نتایج گوگل.
 // قیمت سایت تومانه و schema فقط کد ارز ISO می‌پذیره، پس به ریال (IRR) نوشته می‌شه.
-// محصول بی‌قیمت («تماس بگیرید») offers نداره.
+// محصول بی‌قیمت («استعلام قیمت») offers نداره.
 function buildProductJsonLd(product, name) {
   const url = new URL(`/product/${product.id}`, brand.siteUrl).href;
   const price = getProductPrice(product, "cash") || getProductPrice(product, "check");

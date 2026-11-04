@@ -4,7 +4,7 @@ import { ProductContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
 import { usePageMeta } from "../../hooks/usePageMeta";
 import { hasActivePromotion } from "../../utils/promotionCalc";
-import { BundleImages, PromotionCard } from "./sections";
+import { BundleImages, PromotionCard, SalePlanImages } from "./sections";
 
 function Promotions() {
   const { products, loading } = useContext(ProductContext);
@@ -51,6 +51,8 @@ function Promotions() {
           ))}
         </div>
       )}
+
+      <SalePlanImages t={t} />
 
       <BundleImages t={t} />
     </div>

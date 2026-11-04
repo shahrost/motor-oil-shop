@@ -6,7 +6,7 @@ export function getProductPrice(product, paymentType) {
   return Number(product?.price || 0);
 }
 
-// قیمت روش پرداخت خالی یا صفر یعنی «برای قیمت تماس بگیرید» و افزودن به سبد بسته‌ست
+// قیمت روش پرداخت خالی یا صفر یعنی «استعلام قیمت» و افزودن به سبد بسته‌ست
 export function hasProductPrice(product, paymentType) {
   return getProductPrice(product, paymentType) > 0;
 }

@@ -17,7 +17,7 @@ import { CardImage, CardPurchase, CardSpecs, ProductBrandBadge } from "./section
 // عکس ← برند ← اسم ← «گرید · حجم» ← API ← قیمت ← کنترل‌ها ← دکمه.
 // h-full + flex-col + mt-auto: کارت‌های یک ردیف هم‌قد و قیمت و دکمه‌ها ته کارت هم‌تراز.
 // @container: کنترل‌ها و متن دکمه با عرض خود کارت (نه صفحه) جمع‌وجور می‌شن.
-// محصول بی‌قیمت: «برای قیمت تماس بگیرید» + «استعلام در واتساپ» به‌جای کنترل‌های خرید
+// محصول بی‌قیمت: «استعلام قیمت» + «استعلام در واتساپ» به‌جای کنترل‌های خرید
 function ProductCard({ product }) {
   const { language, t } = useContext(LanguageContext);
   const vehicle = useContext(SelectedVehicleContext);
