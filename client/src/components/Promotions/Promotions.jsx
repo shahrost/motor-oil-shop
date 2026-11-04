@@ -1,19 +1,28 @@
 import { useContext } from "react";
 
-import { ProductContext } from "../../context";
 import LanguageContext from "../../context/LanguageContext";
 import { usePageMeta } from "../../hooks/usePageMeta";
-import { hasActivePromotion } from "../../utils/promotionCalc";
-import { BundleImages, PromotionCard, SalePlanImages } from "./sections";
+import getBrandLabel from "../../utils/brandLabel";
+import usePromotionGroups from "./hooks/usePromotionGroups";
+import { PromotionGroupCard, PromotionGroupDetail } from "./sections";
 
 function Promotions() {
-  const { products, loading } = useContext(ProductContext);
+  const { groups, selectedGroup, loading } = usePromotionGroups();
   const { language, t } = useContext(LanguageContext);
   usePageMeta(t("promotions.title"), t("meta.promotions"));
 
-  const promoProducts = products.filter((product) =>
-    hasActivePromotion(product.promotion),
-  );
+  const titleOf = (group) =>
+    group.titleKey
+      ? t(group.titleKey)
+      : group.brands.map((brand) => getBrandLabel(brand, language)).join(t("promotions.and"));
+
+  if (selectedGroup) {
+    return (
+      <div className="max-w-6xl mx-auto px-5 py-8">
+        <PromotionGroupDetail group={selectedGroup} title={titleOf(selectedGroup)} t={t} />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-5 py-10">
@@ -25,36 +34,27 @@ function Promotions() {
         {t("promotions.subtitle")}
       </p>
 
-      {/* تا اولین پاسخ سرور اسکلت کارت‌های طرح، نه «طرح فعالی وجود ندارد» */}
-      {loading && products.length === 0 ? (
-        <div aria-hidden="true" className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
-          {Array.from({ length: 4 }, (_, index) => (
+      {/* تا اولین پاسخ سرور اسکلت کارت‌ها */}
+      {loading ? (
+        <div aria-hidden="true" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+          {Array.from({ length: 3 }, (_, index) => (
             <div
               key={index}
-              className="h-44 rounded-2xl border-2 border-amber-300 bg-amber-50 animate-pulse motion-reduce:animate-none"
+              className="h-52 rounded-2xl border-2 border-amber-300 bg-amber-50 animate-pulse motion-reduce:animate-none"
             />
           ))}
         </div>
-      ) : promoProducts.length === 0 ? (
+      ) : groups.length === 0 ? (
         <p className="text-center text-red-500 mt-10 font-bold">
           {t("promotions.notFound")}
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
-          {promoProducts.map((product) => (
-            <PromotionCard
-              key={product.id}
-              product={product}
-              language={language}
-              t={t}
-            />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+          {groups.map((group) => (
+            <PromotionGroupCard key={group.id} group={group} title={titleOf(group)} t={t} />
           ))}
         </div>
       )}
-
-      <SalePlanImages t={t} />
-
-      <BundleImages t={t} />
     </div>
   );
 }

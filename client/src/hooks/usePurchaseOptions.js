@@ -19,13 +19,14 @@ function sanitizeQuantity(raw) {
 // انتخاب‌های خرید یک محصول (واحد، تعداد، نوع پرداخت) و افزودن به سبد؛
 // کارت‌های محصول و صفحه‌ی محصول همه از همین هوک استفاده می‌کنن.
 // vehicle: خودروی انتخاب‌شده (پیش‌فرض از SelectedVehicleContext)
-function usePurchaseOptions(product, { vehicle } = {}) {
+// initialOrderType: واحد اولیه (صفحه‌ی طرح فروش: کارتن)
+function usePurchaseOptions(product, { vehicle, initialOrderType = "number" } = {}) {
   const { addToCart } = useContext(CartContext);
   const contextVehicle = useContext(SelectedVehicleContext);
   const selectedVehicle = vehicle || contextVehicle;
 
   const [quantity, setQuantityState] = useState(1);
-  const [orderType, setOrderType] = useState("number");
+  const [orderType, setOrderType] = useState(initialOrderType);
   const [selectedPaymentType, setPaymentType] = useState("cash");
   const [added, setAdded] = useState(false);
 

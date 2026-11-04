@@ -1,3 +1,2 @@
-export { default as PromotionCard } from "./PromotionCard";
-export { default as BundleImages } from "./BundleImages";
-export { default as SalePlanImages } from "./SalePlanImages";
+export { default as PromotionGroupCard } from "./PromotionGroupCard";
+export { default as PromotionGroupDetail } from "./PromotionGroupDetail";

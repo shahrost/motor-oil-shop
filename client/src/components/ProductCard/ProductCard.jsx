@@ -18,10 +18,10 @@ import { CardImage, CardPurchase, CardSpecs, ProductBrandBadge } from "./section
 // h-full + flex-col + mt-auto: کارت‌های یک ردیف هم‌قد و قیمت و دکمه‌ها ته کارت هم‌تراز.
 // @container: کنترل‌ها و متن دکمه با عرض خود کارت (نه صفحه) جمع‌وجور می‌شن.
 // محصول بی‌قیمت: «استعلام قیمت» + «استعلام در واتساپ» به‌جای کنترل‌های خرید
-function ProductCard({ product }) {
+function ProductCard({ product, defaultOrderType }) {
   const { language, t } = useContext(LanguageContext);
   const vehicle = useContext(SelectedVehicleContext);
-  const purchase = usePurchaseOptions(product);
+  const purchase = usePurchaseOptions(product, { initialOrderType: defaultOrderType });
 
   const name = getProductNameLabel(product.name, language);
   const to = `/product/${product.id}`;
