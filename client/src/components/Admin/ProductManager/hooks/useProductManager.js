@@ -1,64 +1,22 @@
-import { useState } from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ProductContext } from "../../../../context";
+
 function useProductManager() {
   const [editingProduct, setEditingProduct] = useState(null);
-  const [editForm, setEditForm] = useState({});
-  const { products, addProduct, deleteProduct, updateProduct } =
-    useContext(ProductContext);
-
-  function startEdit(product) {
-    setEditingProduct(product);
-
-    setEditForm({
-      ...product,
-    });
-  }
-
-  function saveEdit(id, updatedProduct) {
-    updateProduct(id, updatedProduct);
-
-    setEditingProduct(null);
-    setEditForm({});
-  }
-
-  function cancelEdit() {
-    setEditingProduct(null);
-    setEditForm({});
-  }
-
-  function handleEditChange(e) {
-    const { name, value } = e.target;
-
-    let newValue = value;
-
-    if (name === "price") {
-      newValue = value.replace(/\D/g, "");
-    }
-
-    const updated = {
-      ...editForm,
-      [name]: newValue,
-    };
-
-    updated.name = `${updated.brand || ""} ${
-      updated.viscosity || ""
-    } ${updated.volume || ""}`;
-
-    setEditForm(updated);
-  }
+  const { products, addProduct, deleteProduct, updateProduct, loading, loadError, retryProducts } = useContext(ProductContext);
 
   return {
-    editingProduct,
-    editForm,
-    startEdit,
-    handleEditChange,
-    cancelEdit,
     products,
+    loading,
+    loadError,
+    retryProducts,
     addProduct,
     deleteProduct,
-    updateProduct,
-    saveEdit,
+    editingProduct,
+    startEdit: setEditingProduct,
+    // ProductEditForm closes only after this promise succeeds.
+    saveEdit: updateProduct,
+    cancelEdit: () => setEditingProduct(null),
   };
 }
 

@@ -22,5 +22,3 @@ export function handleProductImageError(product) {
     e.target.src = getBrandLogo(product?.brand);
   };
 }
-
-export default getProductImageSrc;

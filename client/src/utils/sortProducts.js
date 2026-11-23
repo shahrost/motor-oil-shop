@@ -20,7 +20,7 @@ function stripTrailingVolume(name) {
 // Products of the same brand + category (e.g. motorcycle oil, gear oil) form a
 // visual cluster; within that cluster, same line + grade + standards belong
 // together and should be listed together, ordered by volume.
-export function getProductGroupKey(product) {
+function getProductGroupKey(product) {
   return [
     product.brand,
     (product.category || "").trim().toLowerCase(),

@@ -3,6 +3,8 @@ const upload = require("../middleware/upload");
 const importUpload = require("../middleware/importUpload");
 const router = express.Router();
 const { auth } = require("../middleware/auth");
+const { applyMobilePrices } = require("../controllers/mobilePriceController");
+const { listBrandSales, setBrandSale } = require("../controllers/brandSaleController");
 const {
   getProducts,
   createProduct,
@@ -21,6 +23,11 @@ const {
 
 // دریافت همه محصولات
 router.get("/", getProducts);
+
+// قیمت‌های بررسی‌شده در گوشی؛ فقط مدیر و با کنترل قیمت قبلی هر ردیف.
+router.post("/price-changes", auth, applyMobilePrices);
+router.get("/brand-sales", auth, listBrandSales);
+router.put("/brand-sales", auth, setBrandSale);
 
 // ساخت محصول
 router.post("/", auth, upload.single("image"), createProduct);

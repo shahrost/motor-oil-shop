@@ -15,7 +15,7 @@ const ALIASES = {
   fmc: "farda",
 };
 
-export function vehicleBrandSlug(nameEn) {
+function vehicleBrandSlug(nameEn) {
   return (nameEn || "")
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
@@ -37,5 +37,3 @@ export function getVehicleBrandLogo(nameEn) {
 
   return logos[ALIASES[slug] || slug] || "";
 }
-
-export default getVehicleBrandLogo;

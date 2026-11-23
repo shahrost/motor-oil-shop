@@ -1,6 +1,6 @@
 import ProductTable from "./ProductTable";
 
-function ProductList({ products, startEdit, deleteProduct }) {
+function ProductList({ products, startEdit, deleteProduct, emptyMessage = "هنوز محصولی ثبت نشده است." }) {
   if (!products.length) {
     return (
       <section className="mt-10">
@@ -15,7 +15,7 @@ function ProductList({ products, startEdit, deleteProduct }) {
           text-gray-500
           "
         >
-          هنوز محصولی ثبت نشده است.
+          {emptyMessage}
         </div>
       </section>
     );

@@ -128,5 +128,3 @@ export function searchVehicleBrands(brands, search) {
     return wordLists.some((list) => hasAllWords(haystack, list));
   });
 }
-
-export default getVehicleBrands;

@@ -1,17 +1,8 @@
-export { default as OilDropArt } from "./OilDropArt";
-export { default as CarArt } from "./CarArt";
 export { default as LubricantCard } from "./LubricantCard";
-export { default as GearTitle } from "./GearTitle";
-export { default as TrackDescription } from "./TrackDescription";
-export { default as OilJugArt } from "./OilJugArt";
 export { default as VehiclesCard } from "./VehiclesCard";
-export { default as TrackWheel } from "./TrackWheel";
 export { default as GuideButton } from "./GuideButton";
 export { default as InstallAppButton } from "./InstallAppButton";
 export { default as HomeHero } from "./HomeHero";
-export { default as HomeSectionHeader } from "./HomeSectionHeader";
-export { default as EntryCta } from "./EntryCta";
 export { default as BrandStrip } from "./BrandStrip";
 export { default as FeaturedProducts } from "./FeaturedProducts";
 export { default as TrustBar } from "./TrustBar";
-export { default as SalesNotice } from "./SalesNotice";

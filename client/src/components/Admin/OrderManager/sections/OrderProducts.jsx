@@ -101,7 +101,7 @@ function OrderProducts({ items, onToggleUnavailable }) {
 
             {item.giftQty > 0 && (
               <p className="mt-3 bg-amber-100 border border-amber-400 text-amber-800 font-bold rounded-lg p-2">
-                🎁 هدیه این سفارش: {item.giftQty} کارتن
+                🎁 هدیه این سفارش: {item.giftQty} {item.giftUnit === "number" ? "عدد" : "کارتن"}
               </p>
             )}
           </div>

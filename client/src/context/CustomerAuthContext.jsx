@@ -17,23 +17,49 @@ export function CustomerAuthProvider({ children }) {
 
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(hasToken);
+  const [loadError, setLoadError] = useState(false);
+  const [profileRetry, setProfileRetry] = useState(0);
 
   useEffect(() => {
     if (!hasToken) return;
+    let active = true;
+    const token = getCustomerToken();
+    const isCurrent = () => active && getCustomerToken() === token;
 
     fetchCustomerProfile()
-      .then((data) => setCustomer(data))
-      .catch(() => {
-        clearCustomerToken();
+      .then((data) => {
+        if (!isCurrent()) return;
+        setCustomer(data);
+        setLoadError(false);
       })
-      .finally(() => setLoading(false));
-  }, [hasToken]);
+      .catch((error) => {
+        if (!isCurrent()) return;
+        if ([401, 403, 404].includes(error.response?.status)) {
+          setLoading(false);
+          clearCustomerToken();
+          setCustomer(null);
+          setLoadError(false);
+        } else {
+          setLoadError(true);
+        }
+      })
+      .finally(() => { if (isCurrent()) setLoading(false); });
+    return () => { active = false; };
+  }, [hasToken, profileRetry]);
+
+  function retryProfile() {
+    setLoadError(false);
+    setLoading(true);
+    setProfileRetry((retry) => retry + 1);
+  }
 
   async function register(data) {
     const result = await registerCustomer(data);
 
     saveCustomerToken(result.token);
     setCustomer(result.customer);
+    setLoadError(false);
+    setLoading(false);
   }
 
   async function login(data) {
@@ -41,16 +67,20 @@ export function CustomerAuthProvider({ children }) {
 
     saveCustomerToken(result.token);
     setCustomer(result.customer);
+    setLoadError(false);
+    setLoading(false);
   }
 
   function logout() {
     clearCustomerToken();
     setCustomer(null);
+    setLoadError(false);
+    setLoading(false);
   }
 
   return (
     <CustomerAuthContext.Provider
-      value={{ customer, loading, register, login, logout }}
+      value={{ customer, loading, loadError, retryProfile, register, login, logout }}
     >
       {children}
     </CustomerAuthContext.Provider>

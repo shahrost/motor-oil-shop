@@ -5,7 +5,7 @@ import VEHICLE_PARTS from "../data/vehicleParts";
 const PART_SLUGS = VEHICLE_PARTS.map((part) => part.slug).filter(Boolean);
 
 // محصولات هر دسته برای یک خودرو: { oil: { main, alt }, filter: [], ... }
-export function getVehicleParts(vehicle, products) {
+function getVehicleParts(vehicle, products) {
   const active = products.filter((product) => product.isActive !== false);
   const { main, alt, filters } = getRecommendedOils(vehicle, products);
 

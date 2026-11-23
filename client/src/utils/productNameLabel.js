@@ -95,5 +95,3 @@ export function getProductNameLabel(name, language) {
 
   return name;
 }
-
-export default getProductNameLabel;

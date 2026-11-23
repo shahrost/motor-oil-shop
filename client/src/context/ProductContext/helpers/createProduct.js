@@ -16,7 +16,7 @@ function createProduct(data = {}) {
     priceCheck: Number(data.priceCheck || 0),
     discountPercent: Number(data.discountPercent || 0),
 
-    cartonCount: Number(data.cartonCount || 0),
+    cartonCount: Number(data.cartonCount || 1),
 
     stock: Number(data.stock || 0),
 

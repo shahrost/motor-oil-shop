@@ -10,7 +10,7 @@ import {
 import useProductForm from "./hooks/useProductForm";
 
 function ProductForm({ addProduct }) {
-  const { product, updateField, updatePromotionField, submitProduct } =
+  const { product, error, saving, updateField, updatePromotionField, submitProduct } =
     useProductForm(addProduct);
 
   return (
@@ -36,11 +36,14 @@ function ProductForm({ addProduct }) {
 
       <ImageSection product={product} updateField={updateField} />
 
+      {error && <p role="alert" className="mt-3 text-red-700">{error}</p>}
+
       <button
         type="submit"
-        className="bg-green-600 text-white px-6 py-3 rounded-lg mt-5"
+        disabled={saving}
+        className="bg-green-600 text-white px-6 py-3 rounded-lg mt-5 disabled:opacity-50"
       >
-        ثبت محصول
+        {saving ? "در حال ثبت…" : "ثبت محصول"}
       </button>
     </form>
   );

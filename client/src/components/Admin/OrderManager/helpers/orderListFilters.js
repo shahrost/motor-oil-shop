@@ -14,7 +14,7 @@ export function sortNewestFirst(orders) {
 }
 
 // «1405-07» ماه شمسی ثبت سفارش؛ بدون createdAt ← ""
-export function orderMonthKey(order) {
+function orderMonthKey(order) {
   const jalali = toJalali(order.createdAt);
 
   return jalali ? jalaliMonthKey(jalali.year, jalali.month) : "";
@@ -38,7 +38,7 @@ export function orderMonthOptions(orders) {
 }
 
 // جستجو در نام، شماره تماس (ارقام فارسی و انگلیسی)، منطقه و نام محصولات
-export function matchesSearch(order, search) {
+function matchesSearch(order, search) {
   const text = toLatinDigits(search).trim().toLowerCase();
 
   if (!text) return true;

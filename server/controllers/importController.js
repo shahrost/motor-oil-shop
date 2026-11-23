@@ -1,7 +1,5 @@
 const apiResponse = require("../utils/apiResponse");
-const AppError = require("../utils/AppError");
-const { getJob } = require("../services/importJobService");
-const { persistImages } = require("../utils/cloudStorage");
+const importJobService = require("../services/importJobService");
 
 // هندلرهای مشترک ایمپورت گروهی (محصولات و خودروها)
 
@@ -12,19 +10,9 @@ async function uploadImagesBatch(req, res, next) {
   try {
     const files = (req.files && req.files.images) || [];
 
-    if (!files.length) {
-      throw new AppError("عکسی ارسال نشده است", 400);
-    }
-
-    const urls = await persistImages(files);
-
     return apiResponse.success(
       res,
-      files.map((f) => ({
-        name: f.originalname,
-        filename: f.filename,
-        url: urls.get(f.filename),
-      })),
+      await importJobService.uploadImagesBatch(files),
       "عکس‌ها آپلود شد",
     );
   } catch (error) {
@@ -35,7 +23,7 @@ async function uploadImagesBatch(req, res, next) {
 // وضعیت job ایمپورتی که پس‌زمینه در حال اجراست
 async function getImportStatus(req, res, next) {
   try {
-    return apiResponse.success(res, await getJob(req.params.jobId));
+    return apiResponse.success(res, await importJobService.getJob(req.params.jobId));
   } catch (error) {
     next(error);
   }

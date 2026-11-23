@@ -1,12 +1,8 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import brands from "../../data/brands";
-import LanguageContext from "../../context/LanguageContext";
-import { usePageMeta } from "../../hooks/usePageMeta";
+import useBrandsPage from "./hooks/useBrandsPage";
 
 function Brands() {
-  const { language, t } = useContext(LanguageContext);
-  usePageMeta(t("brands.title"), t("meta.brands"));
+  const { t, brands, closed } = useBrandsPage();
 
   return (
     <div>
@@ -19,7 +15,7 @@ function Brands() {
 
         <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
           {brands.map((brand) => {
-            const label = language === "en" ? brand.nameEn : brand.name;
+            const { label } = brand;
 
             return (
               <Link
@@ -51,6 +47,7 @@ function Brands() {
                 </div>
 
                 <h3 className="font-bold mt-4">{label}</h3>
+                {closed.has(brand.name) && <p className="mt-3 text-sm font-bold text-amber-800">{t("productCard.inquirySms")}</p>}
               </Link>
             );
           })}

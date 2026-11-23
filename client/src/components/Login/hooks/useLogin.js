@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../../../api/apiClient";
+import { loginAdmin } from "../../../services/authService";
 import { saveAdminToken } from "../../../services/adminTokenStorage";
 
 function useLogin() {
@@ -13,12 +13,10 @@ function useLogin() {
     e.preventDefault();
 
     try {
-      const response = await apiClient.post("/auth/login", {
+      const { token } = await loginAdmin({
         username: username.trim(),
         password,
       });
-
-      const token = response.data.data.token;
 
       saveAdminToken(token);
 

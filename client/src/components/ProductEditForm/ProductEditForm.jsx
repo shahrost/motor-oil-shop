@@ -12,6 +12,8 @@ import {
 function ProductEditForm({ product, updateProduct, closeEdit }) {
   const {
     editForm,
+    error,
+    saving,
     handleEditChange,
     handlePromotionChange,
     saveEdit,
@@ -39,18 +41,22 @@ function ProductEditForm({ product, updateProduct, closeEdit }) {
 
       <ImageEdit editForm={editForm} handleEditChange={handleEditChange} />
 
+      {error && <p role="alert" className="my-3 text-red-700">{error}</p>}
+
       <div className="flex gap-3">
         <button
           type="button"
           onClick={saveEdit}
-          className="bg-green-600 text-white px-6 py-3 rounded-lg"
+          disabled={saving}
+          className="bg-green-600 text-white px-6 py-3 rounded-lg disabled:opacity-50"
         >
-          ذخیره تغییرات
+          {saving ? "در حال ذخیره…" : "ذخیره تغییرات"}
         </button>
 
         <button
           type="button"
           onClick={cancelEdit}
+          disabled={saving}
           className="bg-gray-500 text-white px-6 py-3 rounded-lg"
         >
           انصراف

@@ -22,6 +22,11 @@ const brands = [
     image: brandImages.aidlube,
   },
   {
+    name: "لوکینی",
+    nameEn: "Lookini",
+    image: brandImages.lookini,
+  },
+  {
     name: "ووفر",
     nameEn: "Woofer",
     image: brandImages.woofer,
@@ -55,11 +60,6 @@ const brands = [
     name: "فیلتر گیربکس ATFO",
     nameEn: "ATFO",
     image: brandImages.atfo,
-  },
-  {
-    name: "لوکینی",
-    nameEn: "Lookini",
-    image: brandImages.lookini,
   },
   {
     name: "بهران",

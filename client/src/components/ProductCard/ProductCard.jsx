@@ -69,6 +69,13 @@ function ProductCard({ product, defaultOrderType }) {
 
       <CardSpecs product={product} name={name} to={to} state={state} language={language} t={t} />
 
+      {product.promotion?.supplierPlan && hasActivePromotion(product.promotion) && (
+        <p className="mt-1 rounded-lg bg-amber-50 px-2 py-1 text-[11px] font-bold text-amber-800">
+          {t("common.promotion.paymentTerms")} · {t("common.promotion.every")} {product.promotion.buyQtyCheck}{" "}
+          {t("common.orderUnit.carton")}، {product.promotion.giftQtyCheck} {t("common.orderUnit.carton")} {t("common.promotion.gift")}
+        </p>
+      )}
+
       <CompatibleVehicles product={product} limit={3} compact className="mt-1" />
 
       <div className="mt-auto pt-2">

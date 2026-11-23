@@ -6,6 +6,7 @@ import getBrandLabel from "../../utils/brandLabel";
 import CompatibleVehicles from "../common/CompatibleVehicles";
 import NotFound from "../NotFound";
 import ProductPrice from "../common/ProductPrice";
+import WhatsAppInquiry from "../common/WhatsAppInquiry";
 import useProductDetail from "./hooks/useProductDetail";
 import useGoBack from "./hooks/useGoBack";
 import useProductJsonLd from "./hooks/useProductJsonLd";
@@ -87,11 +88,11 @@ function ProductDetail() {
 
           {/* دکمه‌ی داخل صفحه فقط دسکتاپ؛ موبایل و تبلت نوار ثابت پایین دارن */}
           <div className="hidden lg:block">
-            <ProductPurchase
+            {product.salesClosed ? <WhatsAppInquiry product={product} t={t} className="mt-8" /> : <ProductPurchase
               onAddCart={purchase.handleAddCart}
               added={purchase.added}
               canAdd={purchase.priceAvailable}
-            />
+            />}
           </div>
         </div>
       </div>

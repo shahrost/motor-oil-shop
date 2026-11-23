@@ -3,8 +3,6 @@ import { useContext } from "react";
 import LanguageContext from "../../context/LanguageContext";
 
 import {
-  BrandStrip,
-  FeaturedProducts,
   GuideButton,
   HomeHero,
   InstallAppButton,
@@ -23,7 +21,7 @@ function handleClick(event) {
 
 // صفحه‌ی اصلی از بالا به پایین: بخش معرفی (Hero، با دکمه‌ی «طرح‌های فروش»)
 // ← دسترسی سریع («روغن موتور» و «خودروهای من») ← ردیف کوچیک «نصب اپلیکیشن» / «راهنمای سایت»
-// ← نوار برندها ← محصولات پیشنهادی ← نوار اعتماد.
+// ← نوار اعتماد.
 // ردیف دکمه‌ها: «نصب اپلیکیشن» اول ردیف و «راهنمای سایت» ته ردیف (در فارسی نصب سمت راست
 // و راهنما سمت چپ؛ در انگلیسی برعکس). whitespace-nowrap: تا گوشی ۳۲۰px هر دو یک‌خطی می‌مونن
 function Home() {
@@ -45,7 +43,6 @@ function Home() {
           <VehiclesCard
             to="/vehicles"
             title={t("home.entries.myVehicles.title")}
-            description={t("home.entries.myVehicles.description")}
             shortDescription={t("home.entries.myVehicles.shortDescription")}
             cta={t("home.entries.myVehicles.cta")}
           />
@@ -58,10 +55,6 @@ function Home() {
             <GuideButton label={t("home.guide")} />
           </span>
         </div>
-
-        <BrandStrip />
-
-        <FeaturedProducts />
 
         <TrustBar />
       </div>

@@ -58,6 +58,7 @@ function VehicleImportForm() {
 
       {result && (
         <ResultBox title="نتیجه ایمپورت خودرو">
+          {result.aborted && <p role="alert" className="mb-3 font-bold text-red-700">{result.aborted}</p>}
           <p>خودروی جدید ایجاد شد: {result.created}</p>
           <p>خودروی موجود بروزرسانی شد: {result.updated}</p>
 

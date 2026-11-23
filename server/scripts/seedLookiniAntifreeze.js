@@ -26,7 +26,8 @@ const PRODUCTS = [
     price: 490000,
     cartonCount: 12,
     description: "ضد یخ لوکینی",
-    promotion: festival(60),
+    // حداقل ۶۰ کارتن طبق دستور صاحب فروشگاه در 2026-11-16 حذف شد.
+    promotion: festival(),
   },
   {
     sku: "LK-AF-2.5KG",

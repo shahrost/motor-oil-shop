@@ -8,6 +8,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 import brand from "./src/data/brand.js";
+import priceReaderAssets from "./priceReaderAssets.js";
 
 // نام و توضیح برند در فایل‌هایی که React بهشون دسترسی نداره (index.html، manifest.json، offline.html)
 // به شکل %BRAND_NAME% و … نوشته شده و موقع dev/build از src/data/brand.js پر می‌شه
@@ -69,7 +70,7 @@ function brandFiles() {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), brandFiles()],
+  plugins: [react(), tailwindcss(), brandFiles(), priceReaderAssets()],
 
   server: {
     open: true,

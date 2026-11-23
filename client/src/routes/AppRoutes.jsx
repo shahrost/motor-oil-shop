@@ -37,6 +37,8 @@ const NotFound = lazyPage(() => import("../pages/NotFound"));
 // پنل ادمین حجیمه و مشتری‌ها لازمش ندارن
 const Admin = lazyPage(() => import("../pages/Admin"));
 const AdminOrders = lazyPage(() => import("../pages/AdminOrders"));
+const AdminPrices = lazyPage(() => import("../pages/AdminPrices"));
+const AdminBrandProducts = lazyPage(() => import("../pages/AdminBrandProducts"));
 
 function AppRoutes() {
   return (
@@ -123,6 +125,32 @@ function AppRoutes() {
             <ErrorBoundary>
               <Suspense fallback={null}>
                 <Admin />
+              </Suspense>
+            </ErrorBoundary>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/products/:brand"
+        element={
+          <ProtectedRoute>
+            <ErrorBoundary>
+              <Suspense fallback={null}>
+                <AdminBrandProducts />
+              </Suspense>
+            </ErrorBoundary>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/prices"
+        element={
+          <ProtectedRoute>
+            <ErrorBoundary>
+              <Suspense fallback={null}>
+                <AdminPrices />
               </Suspense>
             </ErrorBoundary>
           </ProtectedRoute>

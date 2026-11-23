@@ -1,37 +1,38 @@
-// پله‌ی خرید هر نوع پرداخت؛ اگر جدا تعریف نشده باشد buyQty مشترک استفاده می‌شود
 function getBuyQty(promotion, paymentType) {
-  const specific =
-    paymentType === "cash" ? promotion?.buyQtyCash : promotion?.buyQtyCheck;
-
-  return Number(specific || promotion?.buyQty || 0);
-}
-
-function getGiftQty(promotion, paymentType) {
-  return Number(
-    (paymentType === "cash" ? promotion?.giftQtyCash : promotion?.giftQtyCheck) ||
-      0,
-  );
+  return Number((paymentType === "cash" ? promotion?.buyQtyCash : promotion?.buyQtyCheck) || promotion?.buyQty || 0);
 }
 
 export function hasActivePromotion(promotion) {
-  return Boolean(
-    promotion?.isActive &&
-      (getBuyQty(promotion, "cash") > 0 || getBuyQty(promotion, "check") > 0),
-  );
+  return Boolean(promotion?.isActive && (getBuyQty(promotion, "cash") > 0 || getBuyQty(promotion, "check") > 0));
 }
 
-export function calcPromotionGift(promotion, orderType, quantity, paymentType) {
-  if (!hasActivePromotion(promotion) || orderType !== "carton") return 0;
-
-  const qty = Number(quantity || 0);
-  if (qty < Number(promotion.minQty || 0)) return 0;
-
+// در طرح‌های پلکانی، زیر حدنصاب هدیه عددی و از حدنصاب به بالا هدیه کارتنی است.
+export function calcPromotionGiftDetails(promotion, orderType, quantity, paymentType) {
+  const none = { giftQty: 0, giftUnit: "carton" };
+  const qty = Number(quantity);
+  if (!hasActivePromotion(promotion) || orderType !== "carton" || !Number.isSafeInteger(qty) || qty < 1 || qty < Number(promotion.minQty || 0)) return none;
   const buy = getBuyQty(promotion, paymentType);
-  const giftPerStep = getGiftQty(promotion, paymentType);
+  const gift = Number((paymentType === "cash" ? promotion.giftQtyCash : promotion.giftQtyCheck) || 0);
+  if (!(buy > 0) || !(gift > 0)) return none;
+  if (qty >= buy) return { giftQty: Math.floor(qty / buy) * gift, giftUnit: "carton" };
 
-  if (!buy || !giftPerStep) return 0;
+  const rules = paymentType === "check" ? promotion.belowThresholdRulesCheck : promotion.belowThresholdRulesCash;
+  let remainder = qty;
+  let giftQty = 0;
+  for (const rule of [...(rules || [])].sort((a, b) => b.buyQty - a.buyQty)) {
+    if (!(rule.buyQty > 0) || !(rule.giftQty > 0)) continue;
+    giftQty += Math.floor(remainder / rule.buyQty) * rule.giftQty;
+    remainder %= rule.buyQty;
+  }
+  return { giftQty, giftUnit: giftQty > 0 ? "number" : "carton" };
+}
 
-  return Math.floor(qty / buy) * giftPerStep;
+export function calcPromotionGift(...args) {
+  return calcPromotionGiftDetails(...args).giftQty;
+}
+
+function getGiftQty(promotion, paymentType) {
+  return Number((paymentType === "cash" ? promotion?.giftQtyCash : promotion?.giftQtyCheck) || 0);
 }
 
 export function getPromotionRuleLines(promotion, t) {
@@ -50,6 +51,17 @@ export function getPromotionRuleLines(promotion, t) {
   const checkQty = getGiftQty(promotion, "check");
 
   const lines = [];
+
+  if (promotion.supplierPlan) {
+    lines.push(`${t("common.promotion.paymentTerms")}: ${rule(checkBuy, checkQty)}`);
+    const rules = promotion.belowThresholdRulesCheck || [];
+    if (rules.length) {
+      lines.push(`${t("common.promotion.below")} ${checkBuy} ${cartonLabel}: ${rules.map((step) =>
+        `${every} ${step.buyQty} ${cartonLabel}، ${step.giftQty} ${t("common.orderUnit.number")} ${gift}`,
+      ).join("؛ ")}`);
+    }
+    return lines;
+  }
 
   if (cashQty && cashQty === checkQty && cashBuy === checkBuy) {
     lines.push(rule(cashBuy, cashQty));

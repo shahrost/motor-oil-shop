@@ -4,7 +4,7 @@ import LanguageContext from "../context/LanguageContext";
 import formatPrice from "../utils/formatPrice";
 import getBrandLabel from "../utils/brandLabel";
 import { getProductNameLabel } from "../utils/productNameLabel";
-import { calcPromotionGift } from "../utils/promotionCalc";
+import { calcPromotionGiftDetails } from "../utils/promotionCalc";
 import { getProductPrice } from "../utils/productPrice";
 import { getItemTotal } from "../utils/cartItemCalc";
 
@@ -13,16 +13,16 @@ import { getItemTotal } from "../utils/cartItemCalc";
 function useCartItem(item, index) {
   const { removeFromCart, updateQuantity, changeOrderType, changePaymentType } =
     useContext(CartContext);
-  const { language } = useContext(LanguageContext);
+  const { language, t } = useContext(LanguageContext);
 
   return {
     name: getProductNameLabel(item.name, language),
     brandLabel: getBrandLabel(item.brand, language),
-    priceLabel: formatPrice(getProductPrice(item, item.paymentType), language),
-    totalLabel: formatPrice(getItemTotal(item), language),
-    giftQty: calcPromotionGift(
+    priceLabel: item.salesClosed ? t("productCard.inquirySms") : formatPrice(getProductPrice(item, item.paymentType), language),
+    totalLabel: item.salesClosed ? t("productCard.inquirySms") : formatPrice(getItemTotal(item), language),
+    ...calcPromotionGiftDetails(
       item.promotion,
-      item.orderType,
+      item.salesClosed ? "number" : item.orderType,
       item.quantity,
       item.paymentType,
     ),

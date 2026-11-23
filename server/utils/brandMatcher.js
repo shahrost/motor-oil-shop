@@ -115,4 +115,4 @@ function matchBrand(rawBrand) {
   );
 }
 
-module.exports = { matchBrand, normalizeText, findClosestBrand };
+module.exports = { matchBrand };

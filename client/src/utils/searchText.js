@@ -24,5 +24,3 @@ export function searchWords(search) {
 
   return text ? text.split(" ") : [];
 }
-
-export default normalizeSearchText;

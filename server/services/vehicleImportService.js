@@ -29,13 +29,6 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
   const imagesByName = new Map(imageFiles.map((f) => [f.originalname, f]));
   const usedFilenames = new Set();
 
-  log("انتقال عکس‌ها به فضای ابری");
-  const urlsByFilename = await persistImages(
-    [...new Set(entries.map(({ imageName }) => imageName).filter(Boolean))]
-      .map((name) => imagesByName.get(name))
-      .filter(Boolean),
-  );
-
   const results = {
     created: 0,
     updated: 0,
@@ -44,6 +37,7 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
     missingImages: [],
     linksCount: 0,
     missingProducts: [],
+    aborted: "",
   };
 
   const linkedSkus = new Set();
@@ -64,7 +58,6 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
 
         if (imageFile) {
           usedFilenames.add(imageFile.filename);
-          doc.image = urlsByFilename.get(imageFile.filename);
         } else {
           results.missingImages.push({ row, sku: doc.sku, image: imageName });
         }
@@ -81,6 +74,23 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
         error: err.message,
       });
     }
+  });
+
+  // مثل ایمپورت محصول: با حذف موارد غایب، حتی یک ردیف نامعتبر باید کل عملیات را متوقف کند.
+  if (options.removeMissing && results.failed.length) {
+    results.aborted = "به‌دلیل ردیف‌های ناموفق، هیچ خودرویی ثبت، بروزرسانی یا حذف نشد. خطاها را اصلاح کنید و دوباره اجرا کنید.";
+    results.linksCount = 0;
+    await Promise.all(imageFiles.filter((file) => file.path).map((file) => removeFileQuietly(file.path)));
+    return results;
+  }
+
+  log("انتقال عکس‌ها به فضای ابری");
+  const urlsByFilename = await persistImages(
+    imageFiles.filter((file) => usedFilenames.has(file.filename)),
+  );
+  entries.forEach(({ doc, imageName }) => {
+    const imageFile = imagesByName.get(imageName);
+    if (validDocs.includes(doc) && imageFile) doc.image = urlsByFilename.get(imageFile.filename);
   });
 
   // یک درخواست گروهی به‌جای صدها رفت‌وبرگشت جدا به دیتابیس (سرعت و جلوگیری از timeout)
@@ -110,9 +120,7 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
   }
 
   if (options.removeMissing) {
-    const skusInFile = entries
-      .map(({ doc }) => String((doc && doc.sku) || "").trim().toUpperCase())
-      .filter(Boolean);
+    const skusInFile = validDocs.map((doc) => doc.sku);
 
     const removed = await vehicleRepository.deleteWhereSkuNotIn(skusInFile);
 
@@ -121,7 +129,7 @@ async function persistVehicles(entries, failed, imageFiles, options, log) {
 
   await Promise.all(
     imageFiles
-      .filter((f) => !usedFilenames.has(f.filename))
+      .filter((f) => f.path && !usedFilenames.has(f.filename))
       .map((f) => removeFileQuietly(f.path)),
   );
 

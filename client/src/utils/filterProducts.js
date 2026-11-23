@@ -115,5 +115,3 @@ export function filterProducts(products, filters, compatibility = null) {
 
   return SORTERS[sort] ? result.sort(SORTERS[sort]) : result;
 }
-
-export default filterProducts;

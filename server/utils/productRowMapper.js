@@ -113,4 +113,4 @@ function rowToProductDoc(row) {
   return doc;
 }
 
-module.exports = { rowToProductDoc, splitList, splitGrade, gradeFromText, normalizeBrand, parseStock };
+module.exports = { rowToProductDoc, splitList };

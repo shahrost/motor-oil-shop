@@ -135,6 +135,12 @@ const OrderSchema = new mongoose.Schema(
           default: 0,
         },
 
+        giftUnit: {
+          type: String,
+          enum: ["carton", "number"],
+          default: "carton",
+        },
+
         // تیک «ناموجود» ادمین: قلمی که مشتری خواسته ولی در انبار نیست (از فاکتور PDF کنار می‌ره)
         unavailable: {
           type: Boolean,

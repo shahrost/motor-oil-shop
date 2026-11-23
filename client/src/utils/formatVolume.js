@@ -49,5 +49,3 @@ export function formatVolume(volume, language) {
     ? `${amount} ${unit.en}${note}`
     : `${toPersianDigits(amount)} ${unit.fa}${toPersianDigits(note)}`;
 }
-
-export default formatVolume;

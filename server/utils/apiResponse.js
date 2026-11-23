@@ -18,18 +18,4 @@ function created(res, data, message = "ایجاد شد") {
   });
 }
 
-function error(res, message, statusCode = 500) {
-  return res.status(statusCode).json({
-    success: false,
-
-    message,
-  });
-}
-
-module.exports = {
-  success,
-
-  created,
-
-  error,
-};
+module.exports = { success, created };

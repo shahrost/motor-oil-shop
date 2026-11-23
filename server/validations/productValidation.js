@@ -1,4 +1,4 @@
-function validateProduct(data) {
+function validateProduct(data = {}) {
   const errors = [];
 
   if (!data.name) {
@@ -9,16 +9,17 @@ function validateProduct(data) {
     errors.push("برند محصول الزامی است");
   }
 
-  if (data.price && isNaN(data.price)) {
-    errors.push("قیمت باید عدد باشد");
+  for (const [field, label] of [["price", "قیمت"], ["priceCheck", "قیمت اعتباری"], ["stock", "موجودی"]]) {
+    if (data[field] == null || data[field] === "") continue;
+    const value = Number(data[field]);
+    if (!Number.isFinite(value) || value < 0) errors.push(`${label} باید عدد نامنفی باشد`);
   }
 
-  if (data.priceCheck && isNaN(data.priceCheck)) {
-    errors.push("قیمت اعتباری باید عدد باشد");
-  }
-
-  if (data.stock && isNaN(data.stock)) {
-    errors.push("موجودی باید عدد باشد");
+  if (data.cartonCount != null && data.cartonCount !== "") {
+    const count = Number(data.cartonCount);
+    if (!Number.isSafeInteger(count) || count < 1) {
+      errors.push("تعداد در کارتن باید عدد صحیح مثبت باشد");
+    }
   }
 
   return {

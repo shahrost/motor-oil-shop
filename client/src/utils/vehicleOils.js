@@ -10,7 +10,7 @@ const FILTER_KIND = "فیلتر";
 //   نوع توصیه: «اصلی» ← main، «جایگزین» ← alt، «فیلتر» ← filters.
 // - وگرنه روغن موتورهای بنزینیِ فعال که ویسکوزیته‌شون جزو ویسکوزیته‌های پیشنهادی
 //   خودرو باشه.
-export function getRecommendedOils(vehicle, products) {
+function getRecommendedOils(vehicle, products) {
   if (!vehicle) return { main: [], alt: [], filters: [] };
 
   const active = products.filter((product) => product.isActive !== false);

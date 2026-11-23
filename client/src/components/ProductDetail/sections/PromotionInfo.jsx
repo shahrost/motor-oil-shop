@@ -2,14 +2,14 @@ import { Gift } from "lucide-react";
 import {
   hasActivePromotion,
   getPromotionRuleLines,
-  calcPromotionGift,
+  calcPromotionGiftDetails,
 } from "../../../utils/promotionCalc";
 import GiftBadge from "../../common/GiftBadge";
 
 // شرایط طرح فروش محصول و هدیه‌ای که با انتخاب فعلی خریدار تعلق می‌گیره؛
 // id="promotion-info": نشان «طرح فروش ویژه» بالای اسم (ProductSpecs) به اینجا اسکرول می‌کنه
 function PromotionInfo({ product, orderType, quantity, paymentType, t }) {
-  const giftQty = calcPromotionGift(product.promotion, orderType, quantity, paymentType);
+  const gift = calcPromotionGiftDetails(product.promotion, orderType, quantity, paymentType);
 
   return (
     <>
@@ -33,7 +33,7 @@ function PromotionInfo({ product, orderType, quantity, paymentType, t }) {
         </div>
       )}
 
-      <GiftBadge giftQty={giftQty} className="mt-5 rounded-2xl p-5" />
+      <GiftBadge {...gift} className="mt-5 rounded-2xl p-5" />
     </>
   );
 }

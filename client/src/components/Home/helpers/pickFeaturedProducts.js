@@ -30,7 +30,7 @@ function roundRobinByBrand(products) {
 
 // محصولات «پیشنهادی» صفحه‌ی اصلی: فهرست دستی data/featuredProducts (id یا SKU) اگه پر باشه،
 // وگرنه خودکار count محصول دارای عکس و قیمت به ترتیب priority و از برندهای مختلف
-export function pickFeaturedProducts(products, ids, count) {
+function pickFeaturedProducts(products, ids, count) {
   if (ids.length > 0) {
     return ids
       .map((key) => products.find((product) => product.id === key || product.sku === key))

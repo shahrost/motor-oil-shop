@@ -70,8 +70,3 @@ export async function setItemUnavailableService(id, index, unavailable) {
 export async function deleteOrderService(id) {
   await apiClient.delete(`/orders/${id}`);
 }
-
-// حذف همه سفارش‌ها (ادمین)
-export async function deleteAllOrders() {
-  await apiClient.delete("/orders");
-}

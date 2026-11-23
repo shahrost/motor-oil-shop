@@ -57,7 +57,7 @@ export async function fallingDrip(layer, x, fromY, toY) {
 }
 
 // اندازه‌ی گالن و جای دهانه‌اش در viewBox (110×130)
-export const JUG_SCALE = 0.85;
+const JUG_SCALE = 0.85;
 export const JUG_W = 110 * JUG_SCALE;
 export const JUG_H = 130 * JUG_SCALE;
 const SPOUT = { x: 81 * JUG_SCALE, y: 9 * JUG_SCALE };

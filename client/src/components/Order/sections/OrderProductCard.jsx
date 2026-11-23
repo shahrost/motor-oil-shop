@@ -7,6 +7,7 @@ import GiftBadge from "../../common/GiftBadge";
 import { OrderUnitOptions } from "../../common/OrderOptions";
 import { getItemUnitCount } from "../../../utils/cartItemCalc";
 import { formatViscosity } from "../../../utils/specLabel";
+import WhatsAppInquiry from "../../common/WhatsAppInquiry";
 
 function OrderProductCard({ item, index }) {
   const { language, t } = useContext(LanguageContext);
@@ -16,6 +17,7 @@ function OrderProductCard({ item, index }) {
     priceLabel,
     totalLabel,
     giftQty,
+    giftUnit,
     setQuantity,
     setOrderType,
     setPaymentType,
@@ -24,6 +26,7 @@ function OrderProductCard({ item, index }) {
   return (
     <div className="border border-gray-200 rounded-2xl p-5 bg-gray-50">
       <h3 className="text-xl font-extrabold text-black">{name}</h3>
+      {item.salesClosed && <WhatsAppInquiry product={item} t={t} />}
 
       <div className="mt-3 space-y-2 text-gray-700">
         <p>
@@ -97,7 +100,7 @@ function OrderProductCard({ item, index }) {
         </div>
       </div>
 
-      <GiftBadge giftQty={giftQty} className="mt-3 rounded-2xl p-3" />
+      <GiftBadge giftQty={giftQty} giftUnit={giftUnit} className="mt-3 rounded-2xl p-3" />
     </div>
   );
 }

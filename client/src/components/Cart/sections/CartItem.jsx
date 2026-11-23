@@ -2,6 +2,7 @@ import { useContext } from "react";
 import LanguageContext from "../../../context/LanguageContext";
 import GiftBadge from "../../common/GiftBadge";
 import ProductPrice from "../../common/ProductPrice";
+import WhatsAppInquiry from "../../common/WhatsAppInquiry";
 import { formatViscosity } from "../../../utils/specLabel";
 import { untranslatedProps } from "../../../utils/untranslatedText";
 import CartItemOptions from "./CartItemOptions";
@@ -17,6 +18,7 @@ function CartItem({ item, index }) {
     name,
     brandLabel,
     giftQty,
+    giftUnit,
     setQuantity,
     setOrderType,
     setPaymentType,
@@ -70,7 +72,8 @@ function CartItem({ item, index }) {
           className="text-gray-950 text-xl sm:text-2xl font-extrabold"
         />
 
-        <GiftBadge giftQty={giftQty} className="rounded-lg p-2 text-sm" />
+        {item.salesClosed && <WhatsAppInquiry product={item} t={t} />}
+        <GiftBadge giftQty={giftQty} giftUnit={giftUnit} className="rounded-lg p-2 text-sm" />
 
         <button
           onClick={remove}

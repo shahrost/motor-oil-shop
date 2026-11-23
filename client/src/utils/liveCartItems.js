@@ -7,6 +7,7 @@ const LIVE_FIELDS = [
   "promotion",
   "image",
   "isActive",
+  "salesClosed",
 ];
 
 // سبد در localStorage نسخه‌ی محصول لحظه‌ی افزودن رو داره؛ با این تابع قیمت و طرح فروش هر ردیف
@@ -21,7 +22,7 @@ function liveCartItems(cart, products) {
     const live = byId.get(item.id);
     if (!live) return item;
 
-    const fresh = { ...item };
+    const fresh = { ...item, salesClosed: live.salesClosed === true };
     LIVE_FIELDS.forEach((field) => {
       if (field in live) fresh[field] = live[field];
     });

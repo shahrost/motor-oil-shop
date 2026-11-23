@@ -1,13 +1,16 @@
-// عنوان کارت «روانکار» وسط یک چرخ‌دنده‌ی فلزی؛ دندونه‌های پایینش با زنجیر تانک درگیرن
+import { useId } from "react";
+
+// عنوان کارت ورودی وسط یک چرخ‌دنده‌ی فلزی؛ دندونه‌های پایینش با زنجیر تانک درگیرن
 // (روی موبایل کوچیک‌تر تا کارت کوتاه بمونه)
 function GearTitle({ title }) {
+  const metalId = useId();
   const bolts = [[70, 19], [114.2, 44.5], [114.2, 95.5], [70, 121], [25.8, 95.5], [25.8, 44.5]];
 
   return (
     <div data-oil="gear" className="relative z-[1] w-[104px] h-[104px] sm:w-[140px] sm:h-[140px] mt-2.5">
       <svg data-oil="gear-body" viewBox="0 0 140 140" aria-hidden="true" className="block w-full h-full">
         <defs>
-          <radialGradient id="oilGearMetal" cx="40%" cy="35%" r="75%">
+          <radialGradient id={metalId} cx="40%" cy="35%" r="75%">
             <stop offset="0" stopColor="#98a1b0" />
             <stop offset=".6" stopColor="#4d5769" />
             <stop offset="1" stopColor="#1f2d44" />
@@ -16,7 +19,7 @@ function GearTitle({ title }) {
 
         <g data-oil="gear-rotor">
           <circle cx="70" cy="70" r="60" fill="none" stroke="#374154" strokeWidth="16" strokeDasharray="11.78 11.78" />
-          <circle cx="70" cy="70" r="56" fill="url(#oilGearMetal)" />
+          <circle cx="70" cy="70" r="56" fill={`url(#${metalId})`} />
           <g fill="#cbd0d9">
             {bolts.map(([cx, cy]) => (
               <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.6" />

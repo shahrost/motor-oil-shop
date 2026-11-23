@@ -22,14 +22,6 @@ function PromotionGroupDetail({ group, title, t }) {
         <h1 className="text-2xl sm:text-3xl font-extrabold">{title}</h1>
       </div>
 
-      {group.products.length > 0 && (
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mt-6">
-          {group.products.map((product) => (
-            <PromotionProduct key={product.id} product={product} t={t} />
-          ))}
-        </div>
-      )}
-
       {group.images.length > 0 && (
         <div
           className={`mt-6 ${
@@ -43,6 +35,15 @@ function PromotionGroupDetail({ group, title, t }) {
           ))}
         </div>
       )}
+
+      {group.products.length > 0 && (
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mt-6">
+          {group.products.map((product) => (
+            <PromotionProduct key={product.id} product={product} t={t} />
+          ))}
+        </div>
+      )}
+
     </div>
   );
 }

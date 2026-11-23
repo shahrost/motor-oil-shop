@@ -101,7 +101,9 @@ const translations = {
         check: "چکی",
       },
       promotion: {
-        badge: "طرح فروش ویژه",
+        badge: "طرح فروش + هدیه",
+        paymentTerms: "نقدی و اعتباری ۱، ۲ و ۳ ماهه",
+        below: "خرید زیر",
         every: "هر",
         gift: "هدیه",
         giftEarned: "هدیه این خرید:",
@@ -157,16 +159,12 @@ const translations = {
         myVehicles: {
           title: "خودروهای من",
           description: "برند و مدل خودروتون رو انتخاب کنید و روغن موتور و فیلتر مناسبش رو ببینید",
-          shortDescription: "روغن و فیلتر مناسب خودروتون",
+          shortDescription: "روغن موتور و فیلتر مناسب خودروتون",
           cta: "انتخاب خودرو",
         },
       },
       guide: "راهنمای سایت",
       installApp: "نصب اپلیکیشن",
-      notice: {
-        title: "توجه توجه:",
-        text: "فروش محصولات سمن شیمی، ایدلوب و ووفر تا اطلاع ثانوی بسته شده است.",
-      },
       hero: {
         promotions: "طرح فروش و سبد کالا",
       },
@@ -192,6 +190,7 @@ const translations = {
       featured: {
         title: "محصولات پیشنهادی",
         viewAll: "مشاهده همه",
+        behtamPurchaseNotice: "خرید این محصول مستلزم خرید ۱ کارتن بغل باری می‌باشد",
       },
       search: {
         placeholder: "جستجوی سریع محصول، برند یا گرید...",
@@ -246,6 +245,7 @@ const translations = {
       view: "مشخصات",
       cartonShort: "کارتن {count}تایی",
       inquiry: "استعلام در واتساپ",
+      inquirySms: "استعلام قیمت با پیامک",
       inquiryShort: "استعلام قیمت",
       inquiryMessage: "سلام، قیمت «{name}» رو می‌خواستم.",
       inquirySku: "کد کالا: {sku}",
@@ -561,23 +561,6 @@ const translations = {
       notFound: "محصولی با این گرید پیدا نشد",
     },
 
-    homeSlider: {
-      prev: "قبلی",
-      next: "بعدی",
-      slide1: {
-        title: "ارسال سریع روغن موتور",
-        text: "تامین روغن موتور برای لوازم یدکی‌ها و اتوسرویس‌ها در منطقه",
-      },
-      slide2: {
-        title: "شرایط همکاری ویژه",
-        text: "فروش عمده و تک  با شرایط پرداخت مناسب",
-      },
-      slide3: {
-        title: "محصولات ویژه ",
-        text: "قیمت روز روغن موتور و تخفیف مخصوص همکاران",
-      },
-    },
-
     notFoundPage: {
       title: "صفحه پیدا نشد",
       text: "آدرسی که باز کردید وجود ندارد یا جابه‌جا شده است.",
@@ -684,7 +667,9 @@ const translations = {
         check: "Cheque",
       },
       promotion: {
-        badge: "Special Offer",
+        badge: "Offer + free gift",
+        paymentTerms: "Cash and 1, 2 or 3-month credit",
+        below: "Orders under",
         every: "Every",
         gift: "free",
         giftEarned: "Gift for this order:",
@@ -746,10 +731,6 @@ const translations = {
       },
       guide: "Site Guide",
       installApp: "Install App",
-      notice: {
-        title: "Attention:",
-        text: "Sales of Seman Chimie, Aidlube and Woofer products are closed until further notice.",
-      },
       hero: {
         promotions: "Promotions & Bundles",
       },
@@ -775,6 +756,7 @@ const translations = {
       featured: {
         title: "Recommended Products",
         viewAll: "View All",
+        behtamPurchaseNotice: "Purchasing this product requires purchasing 1 carton of accompanying goods.",
       },
       search: {
         placeholder: "Quick search for a product, brand, or grade...",
@@ -830,6 +812,7 @@ const translations = {
       view: "Specs",
       cartonShort: "{count} per carton",
       inquiry: "Ask on WhatsApp",
+      inquirySms: "Ask for price by SMS",
       inquiryShort: "Ask price",
       inquiryMessage: "Hello, I'd like the price of \"{name}\".",
       inquirySku: "SKU: {sku}",
@@ -1143,23 +1126,6 @@ const translations = {
       titlePrefix: "Buy Engine Oil",
       countText: "products with grade",
       notFound: "No products found for this grade",
-    },
-
-    homeSlider: {
-      prev: "Previous",
-      next: "Next",
-      slide1: {
-        title: "Fast Engine Oil Delivery",
-        text: "Supplying engine oil to auto-parts stores and auto service centers in the area",
-      },
-      slide2: {
-        title: "Special Partnership Terms",
-        text: "Wholesale and retail sales with convenient payment terms",
-      },
-      slide3: {
-        title: "Featured Products",
-        text: "Today's engine oil prices and special discounts for partners",
-      },
     },
 
     notFoundPage: {

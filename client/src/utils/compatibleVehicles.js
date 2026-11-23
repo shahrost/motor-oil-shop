@@ -19,5 +19,3 @@ export function getCompatibleVehicleNames(vehicles, language) {
 
   return [...new Set(names.filter(Boolean))];
 }
-
-export default getCompatibleVehicleNames;

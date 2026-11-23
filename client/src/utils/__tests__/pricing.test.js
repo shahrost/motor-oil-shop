@@ -57,9 +57,27 @@ describe("calcPromotionGift", () => {
 describe("قیمت و مبلغ ردیف", () => {
   const product = { price: 100000, priceCheck: 110000, cartonCount: 12 };
 
+  it("محصول غیرفعال برای هیچ روش پرداخت قابل خرید نیست", () => {
+    for (const type of ["cash", "check"]) {
+      expect(getProductPrice({ ...product, isActive: false }, type)).toBe(0);
+      expect(serverPricing.getUnitPrice({ ...product, isActive: false }, type)).toBe(0);
+    }
+  });
+
   it("چکی خالی ← قیمت نقدی (مثل سرور)", () => {
     expect(getProductPrice({ price: 5000 }, "check")).toBe(5000);
     expect(serverPricing.getUnitPrice({ price: 5000 }, "check")).toBe(5000);
+  });
+
+  it("بستن برند هر دو روش خرید را می‌بندد و بازکردن آن قیمت‌های قبلی را برمی‌گرداند", () => {
+    for (const type of ["cash", "check"]) {
+      expect(getProductPrice({ ...product, salesClosed: true }, type)).toBe(0);
+      expect(serverPricing.getUnitPrice({ ...product, salesClosed: true }, type)).toBe(0);
+      expect(getProductPrice({ ...product, salesClosed: false }, type)).toBe(product[type === "cash" ? "price" : "priceCheck"]);
+    }
+    const cart = [{ id: "a", ...product, salesClosed: true }];
+    expect(liveCartItems(cart, [{ id: "a", ...product }])[0].salesClosed).toBe(false);
+    expect(liveCartItems(cart, [{ id: "a", ...product, salesClosed: true }])[0].salesClosed).toBe(true);
   });
 
   it("کارتنی = تعداد × تعداد در کارتن", () => {

@@ -39,7 +39,7 @@ export async function createProductService(product) {
 
   formData.append("priceCheck", Number(product.priceCheck || 0));
 
-  formData.append("cartonCount", Number(product.cartonCount || 0));
+  formData.append("cartonCount", Number(product.cartonCount || 1));
 
   formData.append("stock", Number(product.stock || 0));
 
@@ -61,7 +61,7 @@ export async function createProductService(product) {
     },
   });
 
-  return response.data;
+  return response.data.data;
 }
 
 // ویرایش محصول
@@ -70,7 +70,7 @@ export async function updateProductService(id, product) {
   if (!product.image?.file) {
     const response = await apiClient.put(`/products/${id}`, product);
 
-    return response.data;
+    return response.data.data;
   }
 
   const formData = new FormData();
@@ -96,7 +96,7 @@ export async function updateProductService(id, product) {
     },
   });
 
-  return response.data;
+  return response.data.data;
 }
 
 // حذف محصول

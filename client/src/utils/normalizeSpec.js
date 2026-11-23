@@ -36,7 +36,7 @@ export function normalizeVolume(value) {
 // { family, value } pair so volumes can be sorted numerically ascending.
 // `family` keeps unrelated units (liquid volume vs. weight) from interleaving;
 // `value` is the numeric size normalized within that family (e.g. cc -> liters).
-export function getVolumeSortValue(volume) {
+function getVolumeSortValue(volume) {
   const normalized = normalizeVolume(volume);
   const match = normalized.match(/^([\d.]+)(cc|l|kg|g|lb)?$/);
 

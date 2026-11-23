@@ -6,7 +6,7 @@ function ReviewManager() {
   const manager = useReviewManager();
 
   return (
-    <section className="bg-white p-6 rounded-xl shadow-lg mt-8" dir="rtl">
+    <section id="admin-reviews" className="bg-white p-6 rounded-xl shadow-lg mt-8 scroll-mt-24" dir="rtl">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-xl font-bold">نظرات خودروها</h2>
 

@@ -60,6 +60,10 @@ function useOrderForm() {
     e.preventDefault();
 
     if (submitting) return;
+    if (cart.some((item) => item.salesClosed)) {
+      setSubmitError(t("productCard.inquirySms"));
+      return;
+    }
 
     if (!isValidPhone(customer.phone)) {
       setPhoneError(t("order.invalidPhone"));

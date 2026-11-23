@@ -3,7 +3,7 @@ import TrackWheel from "./TrackWheel";
 // توضیح کارت «روانکار» داخل زنجیر تانک (چون متنش طولانیه) با دو چرخ سر و ته
 function TrackDescription({ description }) {
   return (
-    <div data-oil="track" className="relative w-[340px] max-w-full -mt-1.5">
+    <div data-oil="track" className="@container relative w-[340px] max-w-full -mt-1.5">
       <svg viewBox="0 0 340 64" aria-hidden="true" className="block w-full h-auto">
         <rect x="6" y="6" width="328" height="52" rx="26" fill="none" stroke="#1f2d44" strokeWidth="9" />
         <rect
@@ -26,7 +26,7 @@ function TrackDescription({ description }) {
 
       <p
         className={`absolute inset-0 m-0 px-[15%] flex items-center justify-center whitespace-nowrap font-bold text-gray-600 ${
-          description.length > 36 ? "text-[12px]" : "text-[14.5px]"
+          description.length > 36 ? "text-[min(12px,4cqw)]" : "text-[min(14.5px,4.6cqw)]"
         }`}
       >
         {description}

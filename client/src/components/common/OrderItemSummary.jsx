@@ -44,7 +44,7 @@ function OrderItemSummary({ item }) {
         </span>
       </div>
 
-      <GiftBadge giftQty={item.giftQty} className="mt-3 rounded-xl p-2 text-sm" />
+      <GiftBadge giftQty={item.giftQty} giftUnit={item.giftUnit} className="mt-3 rounded-xl p-2 text-sm" />
     </div>
   );
 }

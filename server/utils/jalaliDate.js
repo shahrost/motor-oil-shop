@@ -81,12 +81,4 @@ function approxGregorianRange(year, month) {
   };
 }
 
-module.exports = {
-  MONTH_NAMES,
-  toPersianDigits,
-  toJalali,
-  formatJalaliDateTime,
-  jalaliMonthLabel,
-  isInJalaliMonth,
-  approxGregorianRange,
-};
+module.exports = { toPersianDigits, formatJalaliDateTime, jalaliMonthLabel, isInJalaliMonth, approxGregorianRange };

@@ -1,24 +1,17 @@
 const mongoose = require("mongoose");
 
 const Product = require("../models/Product");
-const productListCache = require("../utils/productListCache");
 const leanToJSON = require("../utils/leanToJSON");
-const { gzipSuccessBody } = require("../utils/gzipJson");
-const compactProduct = require("../utils/compactProduct");
 
-// جواب کامل GET /api/products به شکل بافر gzip‌شده (toJSON هر محصول، فشرده با compactProduct)؛ فقط همین
-// بافر کش می‌شه. محصولات با cursor و lean یکی‌یکی به JSON تبدیل می‌شن تا موقع پر شدن
-// کش هزار آبجکت محصول هم‌زمان در حافظه نباشه
-async function getAllProductsBody() {
-  return productListCache.get(async () => {
-    const parts = [];
+// خواندن یکی‌یکی محصولات، بدون ساختن لیست کامل در حافظه‌ی محدود سرور.
+async function* iterateProducts() {
+  for await (const product of Product.find().lean().cursor()) {
+    yield leanToJSON(Product, product);
+  }
+}
 
-    for await (const product of Product.find().lean().cursor()) {
-      parts.push(JSON.stringify(compactProduct(leanToJSON(Product, product))));
-    }
-
-    return gzipSuccessBody(`[${parts.join(",")}]`);
-  });
+function hasBrand(brand) {
+  return Product.exists({ brand });
 }
 
 async function createProduct(data) {
@@ -32,6 +25,7 @@ async function getProductById(id) {
 async function updateProduct(id, data) {
   return await Product.findOneAndUpdate({ _id: id }, data, {
     new: true,
+    runValidators: true,
   });
 }
 
@@ -67,7 +61,7 @@ async function findPricingByIds(ids) {
   const validIds = [...new Set(ids)].filter((id) => mongoose.isValidObjectId(id));
 
   return Product.find({ _id: { $in: validIds } })
-    .select("name sku brand category viscosity volume api acea oilType price priceCheck cartonCount promotion")
+    .select("name sku brand category viscosity volume api acea oilType price priceCheck cartonCount promotion isActive")
     .lean();
 }
 
@@ -86,11 +80,30 @@ async function getSitemapEntries() {
 }
 
 async function setFieldsById(id, fields) {
-  return Product.updateOne({ _id: id }, { $set: fields });
+  return Product.updateOne({ _id: id }, { $set: fields }, { runValidators: true });
 }
 
 async function bulkWrite(ops) {
   return Product.bulkWrite(ops);
+}
+
+async function updatePriceIfCurrent(id, field, expectedPrice, price) {
+  const filter = { _id: id, [field]: expectedPrice };
+  if (expectedPrice === 0) {
+    delete filter[field];
+    filter.$or = [{ [field]: 0 }, { [field]: { $exists: false } }];
+  }
+  return Product.findOneAndUpdate(filter, { $set: { [field]: price } }, { new: true })
+    .select("_id")
+    .lean();
+}
+
+async function updateBothPricesIfCurrent(row) {
+  const expected = (field, value) => value === 0
+    ? { $or: [{ [field]: 0 }, { [field]: { $exists: false } }] } : { [field]: value };
+  return Product.findOneAndUpdate({ _id: row.id, $and: [
+    expected("price", row.expectedPrice), expected("priceCheck", row.expectedPriceCheck),
+  ] }, { $set: { price: row.price, priceCheck: row.priceCheck } }, { new: true }).select("_id").lean();
 }
 
 // از بین کدهای داده‌شده، آن‌هایی که در دیتابیس محصول دارند
@@ -119,7 +132,8 @@ async function deleteWhereSkuNotIn(skus) {
 }
 
 module.exports = {
-  getAllProductsBody,
+  iterateProducts,
+  hasBrand,
   findDuplicate,
   findBySkus,
   findByBrands,
@@ -128,6 +142,8 @@ module.exports = {
   getSitemapEntries,
   setFieldsById,
   bulkWrite,
+  updatePriceIfCurrent,
+  updateBothPricesIfCurrent,
   findExistingSkus,
   findWhereSkuNotIn,
   deleteWhereSkuNotIn,

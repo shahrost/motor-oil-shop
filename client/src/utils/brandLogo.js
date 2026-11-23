@@ -13,5 +13,3 @@ export function findBrandLogo(brandName) {
 export function getBrandLogo(brandName) {
   return findBrandLogo(brandName) || getBrandPlaceholder(brandName);
 }
-
-export default getBrandLogo;

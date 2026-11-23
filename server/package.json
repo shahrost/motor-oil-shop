@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node --max-semi-space-size=2 server.js",
-    "test": "node --test tests/*.test.js"
+    "pretest": "npm run check:architecture",
+    "test": "node --test tests/*.test.js",
+    "check:architecture": "node scripts/checkArchitecture.js --server"
   },
   "keywords": [],
   "author": "",

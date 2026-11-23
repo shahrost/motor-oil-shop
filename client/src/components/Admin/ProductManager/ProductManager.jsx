@@ -1,41 +1,24 @@
 import ProductForm from "../../ProductForm";
-import ProductEditForm from "../../ProductEditForm";
-import ProductList from "../ProductList";
+import ProductBrandPicker from "./ProductBrandPicker";
+import BrandProductEditor from "./BrandProductEditor";
 import BulkTools from "./BulkTools";
 
 import useProductManager from "./hooks/useProductManager";
 
-function ProductManager() {
-  const {
-    products,
-    addProduct,
-    deleteProduct,
+function ProductManager({ brand }) {
+  const manager = useProductManager();
+  const { products, addProduct, loading, loadError, retryProducts } = manager;
 
-    editingProduct,
-    startEdit,
-    saveEdit,
-    cancelEdit,
-  } = useProductManager();
+  if (loading) return <p role="status" className="p-5" dir="rtl">در حال دریافت محصولات…</p>;
+  if (loadError) return <div role="alert" className="p-5 text-red-700" dir="rtl">دریافت محصولات انجام نشد.<button type="button" onClick={retryProducts} className="m-3 underline">تلاش دوباره</button></div>;
+  if (brand !== undefined) return <BrandProductEditor key={brand} brand={brand} manager={manager} />;
 
   return (
     <section>
+      <ProductBrandPicker products={products} />
       <BulkTools />
 
       <ProductForm addProduct={addProduct} />
-
-      {editingProduct && (
-        <ProductEditForm
-          product={editingProduct}
-          updateProduct={saveEdit}
-          closeEdit={cancelEdit}
-        />
-      )}
-
-      <ProductList
-        products={products}
-        startEdit={startEdit}
-        deleteProduct={deleteProduct}
-      />
     </section>
   );
 }

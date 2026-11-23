@@ -87,7 +87,7 @@ const OrderInvoice = forwardRef(function OrderInvoice({ order }, ref) {
                 <div style={{ fontWeight: 700 }} dir="auto">{itemTitle(item)}</div>
                 {item.giftQty > 0 && (
                   <div style={{ color: "#b45309", fontWeight: 700 }}>
-                    🎁 هدیه: {toPersianDigits(item.giftQty)} کارتن
+                    🎁 هدیه: {toPersianDigits(item.giftQty)} {item.giftUnit === "number" ? "عدد" : "کارتن"}
                   </div>
                 )}
               </td>

@@ -25,7 +25,7 @@ const productModel = {
   priceCheck: 0,
   discountPercent: 0,
 
-  cartonCount: 0,
+  cartonCount: 1,
 
   stock: 0,
 
@@ -38,6 +38,7 @@ const productModel = {
 
   isBestSeller: false,
   isActive: true,
+  salesClosed: false,
 
   promotion: {
     isActive: false,

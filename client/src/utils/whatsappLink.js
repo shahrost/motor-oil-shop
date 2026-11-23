@@ -4,5 +4,3 @@ import { WHATSAPP_URL } from "../data/contact";
 export function whatsappMessageUrl(text) {
   return `${WHATSAPP_URL}?text=${encodeURIComponent(text)}`;
 }
-
-export default whatsappMessageUrl;

@@ -57,15 +57,9 @@ function useProducts() {
   }, []);
 
   async function addProduct(product) {
-    try {
-      const newProduct = await createProductService(product);
-
-      setProducts((prev) =>
-        sortProductsDefault([...prev, createProduct(newProduct)]),
-      );
-    } catch (error) {
-      alert(error.response?.data?.message || "خطا در ثبت محصول");
-    }
+    const newProduct = await createProductService(product);
+    setProducts((prev) => sortProductsDefault([...prev, createProduct(newProduct)]));
+    return newProduct;
   }
 
   async function deleteProduct(id) {
@@ -79,19 +73,16 @@ function useProducts() {
   }
 
   async function updateProduct(id, updatedProduct) {
-    try {
-      const updated = await updateProductService(id, updatedProduct);
+    const updated = await updateProductService(id, updatedProduct);
 
-      setProducts((prev) =>
-        sortProductsDefault(
-          prev.map((product) =>
-            product.id === id ? createProduct(updated) : product,
-          ),
+    setProducts((prev) =>
+      sortProductsDefault(
+        prev.map((product) =>
+          product.id === id ? createProduct({ ...updated, salesClosed: product.salesClosed }) : product,
         ),
-      );
-    } catch (error) {
-      alert(error.response?.data?.message || "خطا در ویرایش محصول");
-    }
+      ),
+    );
+    return updated;
   }
 
   async function resetProducts() {

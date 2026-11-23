@@ -80,6 +80,8 @@ const ProductSchema = new mongoose.Schema(
     cartonCount: {
       type: Number,
       default: 1,
+      min: 1,
+      validate: Number.isSafeInteger,
     },
 
     stock: {

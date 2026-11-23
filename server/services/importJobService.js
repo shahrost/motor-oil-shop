@@ -2,6 +2,17 @@ const path = require("path");
 const fs = require("fs");
 const AppError = require("../utils/AppError");
 const importJobRepository = require("../repositories/importJobRepository");
+const { persistImages } = require("../utils/cloudStorage");
+
+async function uploadImagesBatch(files) {
+  if (!files.length) throw new AppError("عکسی ارسال نشده است", 400);
+  const urls = await persistImages(files);
+  return files.map((file) => ({
+    name: file.originalname,
+    filename: file.filename,
+    url: urls.get(file.filename),
+  }));
+}
 
 // ایمپورت ممکنه از زمان مجاز پروکسی بیشتر طول بکشه، پس به‌صورت job پس‌زمینه
 // اجرا می‌شه: درخواست فوراً jobId برمی‌گردونه و کلاینت وضعیت رو پیگیری می‌کنه.
@@ -101,4 +112,4 @@ function resolveUploadedImages(rawMap) {
     .filter((f) => f.url || fs.existsSync(f.path));
 }
 
-module.exports = { startJob, getJob, resolveUploadedImages };
+module.exports = { startJob, getJob, resolveUploadedImages, uploadImagesBatch };

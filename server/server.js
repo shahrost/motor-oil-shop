@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 
 const connectDB = require("./config/db");
 const startProcessMonitor = require("./utils/processMonitor");
-const productRepository = require("./repositories/productRepository");
+const productService = require("./services/productService");
 const routes = require("./routes");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -20,8 +20,8 @@ connectDB();
 // لیست محصولات از همان ابتدا در کش آماده می‌شود تا اولین بازدیدکننده منتظر دیتابیس نماند.
 // (لیست کامل خودروها دیگر کش نمی‌شود؛ هر صفحه داده‌ی خودش را از دیتابیس می‌گیرد)
 mongoose.connection.once("open", async () => {
-  await productRepository
-    .getAllProductsBody()
+  await productService
+    .getProductsBody()
     .catch((error) => console.error("Product cache warm-up failed:", error.message));
 });
 

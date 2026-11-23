@@ -4,13 +4,26 @@ const validateProduct = require("../validations/productValidation");
 const AppError = require("../utils/AppError");
 const { removeProductImages, removeUploadedImage } = require("../utils/removeUploadedImage");
 const { persistImage } = require("../utils/cloudStorage");
+const productListCache = require("../utils/productListCache");
+const compactProduct = require("../utils/compactProduct");
+const { gzipSuccessBody } = require("../utils/gzipJson");
+const { listBrandSales } = require("./brandSaleService");
+const { applySupplierPromotion } = require("../utils/supplierPromotion");
 
 
 // بافر gzip‌شده‌ی جواب کامل (کنترلر مستقیم می‌فرسته)
 async function getProductsBody() {
-
-  return await productRepository.getAllProductsBody();
-
+  return productListCache.get(async () => {
+    const parts = [];
+    const closed = new Set((await listBrandSales()).map((row) => row.brand));
+    for await (const product of productRepository.iterateProducts()) {
+      parts.push(JSON.stringify(compactProduct(applySupplierPromotion({
+        ...product,
+        salesClosed: closed.has(product.brand),
+      }))));
+    }
+    return gzipSuccessBody(`[${parts.join(",")}]`);
+  });
 }
 
 
@@ -77,7 +90,7 @@ async function createProduct(data, file) {
     );
   }
 
-  return await productRepository.createProduct(data);
+  return applySupplierPromotion(await productRepository.createProduct(data));
 
 }
 
@@ -140,7 +153,7 @@ async function updateProduct(id, data, file) {
     removeProductImages(previousImages);
   }
 
-  return product;
+  return applySupplierPromotion(product);
 
 }
 

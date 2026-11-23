@@ -8,5 +8,3 @@ export function untranslatedProps(text, language) {
 
   return { dir: "rtl", lang: "fa" };
 }
-
-export default untranslatedProps;

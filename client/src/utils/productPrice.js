@@ -1,4 +1,5 @@
 export function getProductPrice(product, paymentType) {
+  if (product?.salesClosed || product?.isActive === false) return 0;
   if (paymentType === "check") {
     return Number(product?.priceCheck || product?.price || 0);
   }
@@ -31,5 +32,3 @@ export function getUnitTotalPrice(product, paymentType, orderType) {
 
   return orderType === "carton" ? price * Number(product?.cartonCount || 1) : price;
 }
-
-export default getProductPrice;

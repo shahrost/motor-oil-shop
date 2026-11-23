@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import buildProductData from "../helpers/buildProductData";
 
 const initialState = {
@@ -34,6 +34,9 @@ const initialState = {
 
 function useProductForm(addProduct) {
   const [product, setProduct] = useState(initialState);
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+  const pending = useRef(false);
 
   function updateField(name, value) {
     let newValue = value;
@@ -65,18 +68,25 @@ function useProductForm(addProduct) {
   async function submitProduct(e) {
     e.preventDefault();
 
-    const finalProduct = buildProductData(product);
-
-    await addProduct(finalProduct);
-
-    setProduct({
-      ...initialState,
-      image: null,
-    });
+    if (pending.current) return;
+    pending.current = true;
+    setSaving(true);
+    setError("");
+    try {
+      await addProduct(buildProductData(product));
+      setProduct({ ...initialState, image: null });
+    } catch (err) {
+      setError(err.response?.data?.message || "ثبت محصول انجام نشد؛ اطلاعات فرم حفظ شده است.");
+    } finally {
+      pending.current = false;
+      setSaving(false);
+    }
   }
 
   return {
     product,
+    error,
+    saving,
     updateField,
     updatePromotionField,
     submitProduct,

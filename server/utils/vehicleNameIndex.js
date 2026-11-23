@@ -52,4 +52,4 @@ function buildVehicleNameIndex(vehicles) {
   };
 }
 
-module.exports = { normalizeName, splitVehicleNames, buildVehicleNameIndex };
+module.exports = { splitVehicleNames, buildVehicleNameIndex };

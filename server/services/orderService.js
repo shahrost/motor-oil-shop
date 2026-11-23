@@ -4,13 +4,15 @@ const orderRepository = require("../repositories/orderRepository");
 
 const productRepository = require("../repositories/productRepository");
 
-const { getUnitPrice, getUnitCount, calcPromotionGift } = require("../utils/orderPricing");
+const { getUnitPrice, getUnitCount, calcPromotionGiftDetails } = require("../utils/orderPricing");
+const { applySupplierPromotion } = require("../utils/supplierPromotion");
 
 const validateOrder = require("../validations/orderValidation");
 
 const AppError = require("../utils/AppError");
 
 const { notifyNewOrder } = require("./orderNotificationService");
+const { applyBrandSales } = require("./brandSaleService");
 
 const SPEC_FIELDS = ["sku", "category", "api", "acea", "oilType"];
 
@@ -49,12 +51,15 @@ async function getOrders() {
 // قیمت، تعداد کل و هدیه‌ی هر قلم و جمع سفارش از روی محصول دیتابیس (نه عددی که مرورگر فرستاده)؛
 // محصول ناموجود یا بدون قیمت برای روش پرداخت انتخاب‌شده ← خطای ۴۰۰ و سفارش ثبت نمی‌شه
 async function priceOrderItems(items) {
-  const products = await productRepository.findPricingByIds(items.map((item) => item.productId));
+  const products = await applyBrandSales(
+    await productRepository.findPricingByIds(items.map((item) => item.productId)),
+  );
   const byId = new Map(products.map((product) => [product._id.toString(), product]));
   const errors = [];
 
   const priced = items.map((item, index) => {
-    const product = byId.get(String(item.productId));
+    const storedProduct = byId.get(String(item.productId));
+    const product = storedProduct && applySupplierPromotion(storedProduct);
     const orderType = item.orderType || "number";
     const paymentType = item.paymentType || "cash";
     const quantity = Number(item.quantity);
@@ -64,9 +69,24 @@ async function priceOrderItems(items) {
       return item;
     }
 
-    const price = getUnitPrice(product, paymentType);
+    if (product.isActive === false) {
+      errors.push(`ردیف ${index + 1} (${product.name}): محصول غیرفعال است و قابل سفارش نیست`);
+      return item;
+    }
 
-    if (!(price > 0)) {
+    const price = getUnitPrice(product, paymentType);
+    const totalCount = getUnitCount(product, orderType, quantity);
+
+    const cartonCount = Number(product.cartonCount || 1);
+    if ((orderType === "carton" && !Number.isSafeInteger(cartonCount)) || !Number.isSafeInteger(totalCount) || totalCount < 1) {
+      errors.push(`ردیف ${index + 1} (${product.name}): تعداد در کارتن نامعتبر است`);
+    }
+
+    if (product.salesClosed) {
+      errors.push(`ردیف ${index + 1} (${product.name}): فروش این برند بسته است؛ استعلام قیمت با پیامک`);
+    }
+
+    if (!Number.isFinite(price) || !(price > 0)) {
       errors.push(`ردیف ${index + 1} (${product.name}): قیمت ندارد؛ برای قیمت تماس بگیرید`);
     }
 
@@ -87,8 +107,8 @@ async function priceOrderItems(items) {
       paymentType,
       quantity,
       price,
-      totalCount: getUnitCount(product, orderType, quantity),
-      giftQty: calcPromotionGift(product.promotion, orderType, quantity, paymentType),
+      totalCount,
+      ...calcPromotionGiftDetails(product.promotion, orderType, quantity, paymentType),
     };
   });
 

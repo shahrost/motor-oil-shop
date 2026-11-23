@@ -10,5 +10,3 @@ export function getBrandPlaceholder(brandName) {
 
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
-
-export default getBrandPlaceholder;
