@@ -37,6 +37,43 @@ export async function withRetry(send, stepLabel, onRetry) {
   }
 }
 
+// آپلود عکس‌ها به‌صورت دسته‌ای (هر بار چند فایل) تا درخواست حجیم نشه و قطع نشه.
+// هر دسته روی سرور به فضای ابری هم منتقل می‌شه، پس دسته‌ها کوچیک‌ن تا درخواست طول نکشه.
+// خروجی: { "نام فایل اصلی": "نام فایل روی سرور" }
+const IMAGE_BATCH_SIZE = 8;
+
+export async function uploadImagesInBatches(path, imageFiles, onProgress) {
+  const uploaded = {};
+
+  for (let i = 0; i < imageFiles.length; i += IMAGE_BATCH_SIZE) {
+    const formData = new FormData();
+
+    imageFiles
+      .slice(i, i + IMAGE_BATCH_SIZE)
+      .forEach((file) => formData.append("images", file));
+
+    const response = await withRetry(
+      () =>
+        apiClient.post(path, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }),
+      "آپلود عکس‌ها",
+    );
+
+    (response.data.data || []).forEach((item) => {
+      uploaded[item.name] = item.url || item.filename;
+    });
+
+    if (onProgress) {
+      onProgress(Math.min(i + IMAGE_BATCH_SIZE, imageFiles.length));
+    }
+  }
+
+  return uploaded;
+}
+
 // منتظر پایان job می‌مونه. قطعی کوتاه سرور تحمل می‌شه؛ اگه job گم شده باشه (ری‌استارت) خطای jobLost می‌ده
 async function waitForJob(statusPath, onStage) {
   const startedAt = Date.now();
