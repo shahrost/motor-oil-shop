@@ -1,7 +1,8 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CustomerAuthContext from "../../../../context/CustomerAuthContext";
+import useClickOutside from "../../../../hooks/useClickOutside";
 import useEscapeKey from "../../../../hooks/useEscapeKey";
 
 // منوی پروفایل مشتری: باز/بسته (کلیک بیرون و Escape می‌بندن)، نمایش شماره‌ی پشتیبانی، خروج
@@ -20,17 +21,7 @@ function useAccountMenu() {
 
   useEscapeKey(close);
 
-  useEffect(() => {
-    if (!open) return undefined;
-
-    function handlePointerDown(e) {
-      if (rootRef.current && !rootRef.current.contains(e.target)) close();
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [open, close]);
+  useClickOutside(rootRef, open, close);
 
   function toggle() {
     if (open) close();

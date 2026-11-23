@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import useClickOutside from "../../../../hooks/useClickOutside";
 import useEscapeKey from "../../../../hooks/useEscapeKey";
 import { buildShareLinks, copyText } from "../helpers/shareLinks";
 
@@ -17,17 +18,7 @@ function useShare(text) {
 
   useEscapeKey(close);
 
-  useEffect(() => {
-    if (!open) return undefined;
-
-    function handlePointerDown(e) {
-      if (rootRef.current && !rootRef.current.contains(e.target)) close();
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [open, close]);
+  useClickOutside(rootRef, open, close);
 
   useEffect(() => {
     if (!copied) return undefined;
