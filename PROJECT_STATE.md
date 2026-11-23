@@ -4,7 +4,8 @@
 
 ## پاک‌سازی و حذف تکرار (branch `refactor/cleanup`) — 2026-11-23
 
-- مبنا: commit `11a6607` روی `cleanup` که سورس محلیِ منتشرشده روی production (۱۱۱ فایل تغییرکرده و ۸۷ فایل جدید شامل قیمت‌خوان، فروش برند و تست‌ها) را برای اولین بار ثبت کرد؛ refactor در commitهای جدا روی `refactor/cleanup` است. رفتار برنامه عمداً تغییر نکرد؛ دیپلوی انجام نشد.
+- مبنا: commit `11a6607` روی `cleanup` که سورس محلیِ منتشرشده روی production (۱۱۱ فایل تغییرکرده و ۸۷ فایل جدید شامل قیمت‌خوان، فروش برند و تست‌ها) را برای اولین بار ثبت کرد؛ refactor در commitهای جدا روی `refactor/cleanup` است. رفتار برنامه عمداً تغییر نکرد.
+- **انتشار (همان روز، به دستور مالک):** `refactor/cleanup` به‌صورت fast-forward در `cleanup` merge شد و فقط فایل‌های همین refactor به frontend رفت: image **659242**، ورودی `/assets/index-D0cgZE8f.js`؛ backend **v61** حفظ شد. شرح، تطبیق نسخهٔ production فایل‌ها و rollback در `DEPLOYMENT.md` و `.claude/refactor-cleanup-2026-11-23/`.
 - تحلیل AST (importهای static/lazy/require، re-exportها با نام واقعی، تست‌ها و اسکریپت‌ها جدا): پس از تغییر، فایل اجرایی بی‌مصرف یا import چرخشی وجود ندارد.
 - **حذف:** `Home/sections/BrandStrip.jsx`، `FeaturedProducts.jsx`، `HomeSectionHeader.jsx`، `Home/hooks/useFeaturedProducts.js`، `useHomeBrands.js`، `Home/helpers/pickFeaturedProducts.js` و `data/featuredProducts.js` (از 2026-11-15 به دستور مالک رندر نمی‌شدند) + ترجمهٔ `home.featured.title` در fa/en. `viewAll` و `behtamPurchaseNotice` همچنان مصرف دارند.
 - **خصوصی شد (export بی‌مصرف بیرونی):** `UNBRANDED`/`adminBrandKey` در `adminProductCatalog.js`، `carEllipse` در `logoOrbit.js`، `getBuyQty`/`hasActivePromotion` در `server/utils/promotionGift.js`.

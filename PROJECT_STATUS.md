@@ -4,7 +4,7 @@
 
 ## پاک‌سازی کد (branch `refactor/cleanup`) — 2026-11-23
 
-سورس منتشرشده ابتدا در commit `11a6607` ثبت شد. سپس کد بی‌مصرف محصولات پیشنهادی/نوار برندها (۷ فایل) حذف، ۵ export بی‌مصرف خصوصی و سه تکرار در `services/importJobClient.js`، `hooks/useClickOutside.js` و `hooks/useFilterCompatibility.js` ادغام شد. رفتار سایت تغییر نکرد: تست‌ها (سرور ۳۲/۳۲، کلاینت ۱۰۸/۱۰۹ با همان شکست قدیمی)، lint، معماری، build و مقایسهٔ مرورگرِ قبل/بعد موفق؛ دیپلوی نشد. جزئیات در بخش اول `PROJECT_STATE.md`.
+سورس منتشرشده ابتدا در commit `11a6607` ثبت شد. سپس کد بی‌مصرف محصولات پیشنهادی/نوار برندها (۷ فایل) حذف، ۵ export بی‌مصرف خصوصی و سه تکرار در `services/importJobClient.js`، `hooks/useClickOutside.js` و `hooks/useFilterCompatibility.js` ادغام شد. رفتار سایت تغییر نکرد: تست‌ها (سرور ۳۲/۳۲، کلاینت ۱۰۸/۱۰۹ با همان شکست قدیمی)، lint، معماری، build و مقایسهٔ مرورگرِ قبل/بعد موفق. در `cleanup` merge و همان روز frontend با image **659242** (ورودی `/assets/index-D0cgZE8f.js`) منتشر شد؛ کاتالوگ بدون تغییر و مرورگر زنده بدون خطا. جزئیات در بخش اول `PROJECT_STATE.md` و `DEPLOYMENT.md`.
 
 ## قیمت‌های جدید فیلترهای لوکومبیل — 2026-11-22
 
