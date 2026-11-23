@@ -31,4 +31,4 @@ function calcPromotionGift(...args) {
   return calcPromotionGiftDetails(...args).giftQty;
 }
 
-module.exports = { getBuyQty, hasActivePromotion, calcPromotionGift, calcPromotionGiftDetails };
+module.exports = { calcPromotionGift, calcPromotionGiftDetails };

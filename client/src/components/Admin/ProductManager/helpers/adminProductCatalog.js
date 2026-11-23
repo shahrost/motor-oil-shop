@@ -1,7 +1,7 @@
 import { normalizeSearchText, searchWords } from "../../../../utils/searchText";
 
-export const UNBRANDED = "~unbranded";
-export const adminBrandKey = (brand) => String(brand || "").trim() || UNBRANDED;
+const UNBRANDED = "~unbranded";
+const adminBrandKey = (brand) => String(brand || "").trim() || UNBRANDED;
 export const adminBrandLabel = (brand) => brand === UNBRANDED ? "بدون برند" : brand;
 export const adminBrandPath = (brand) => `/admin/products/${encodeURIComponent(brand)}`;
 

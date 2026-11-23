@@ -25,7 +25,7 @@ export function artSize(art) {
 // بیضی مدار دور بدنه‌ی ماشین: مستطیل بدنه + فاصله‌ی لوگو کامل داخل بیضی می‌افته، پس لوگوها
 // هیچ‌جای مسیر روی چرخ‌ها و بدنه نمی‌رن. اگه عرض کارت کم باشه rx کوچیک‌تر و ry بلندتر می‌شه
 // (هنوز دور مستطیل)؛ اندازه‌ی ماشین با عرض کارت کم می‌شه (CarArt) تا این حالت پیش نیاد.
-export function carEllipse({ w, h, car }) {
+function carEllipse({ w, h, car }) {
   if (!car) return { cx: w / 2, cy: h / 2 + 4, rx: Math.min(w / 2 - 26, 175), ry: 66 };
 
   const hw = car.w * BODY.halfW + CHIP_CLEARANCE;
