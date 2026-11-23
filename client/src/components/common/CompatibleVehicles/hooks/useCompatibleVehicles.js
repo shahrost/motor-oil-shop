@@ -1,10 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import LanguageContext from "../../../../context/LanguageContext";
-import {
-  getCachedCompatibility,
-  loadCompatibility,
-} from "../../../../services/filterCompatibilityCache";
+import useFilterCompatibility from "../../../../hooks/useFilterCompatibility";
 import {
   showsCompatibleVehicles,
   getCompatibleVehicleNames,
@@ -17,22 +14,8 @@ function useCompatibleVehicles(product, { limit, defaultOpen = false }) {
   const enabled = showsCompatibleVehicles(product);
   const sku = enabled ? String(product.sku).toUpperCase() : "";
 
-  const [data, setData] = useState(getCachedCompatibility);
+  const data = useFilterCompatibility(enabled);
   const [open, setOpen] = useState(defaultOpen);
-
-  useEffect(() => {
-    if (!enabled || data) return undefined;
-
-    let active = true;
-
-    loadCompatibility()
-      .then((result) => active && setData(result))
-      .catch(() => {});
-
-    return () => {
-      active = false;
-    };
-  }, [enabled, data]);
 
   const names = data ? getCompatibleVehicleNames(data[sku], language) : [];
   const collapsible = names.length > limit;
