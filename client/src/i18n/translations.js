@@ -188,7 +188,6 @@ const translations = {
         title: "برندهای موجود",
       },
       featured: {
-        title: "محصولات پیشنهادی",
         viewAll: "مشاهده همه",
         behtamPurchaseNotice: "خرید این محصول مستلزم خرید ۱ کارتن بغل باری می‌باشد",
       },
@@ -754,7 +753,6 @@ const translations = {
         title: "Available Brands",
       },
       featured: {
-        title: "Recommended Products",
         viewAll: "View All",
         behtamPurchaseNotice: "Purchasing this product requires purchasing 1 carton of accompanying goods.",
       },
