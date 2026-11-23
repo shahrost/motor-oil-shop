@@ -1,6 +1,17 @@
 # Shahram Roghan Project State
 
-آخرین بروزرسانی مستندات: **2026-11-22**.
+آخرین بروزرسانی مستندات: **2026-11-23**.
+
+## پاک‌سازی و حذف تکرار (branch `refactor/cleanup`) — 2026-11-23
+
+- مبنا: commit `11a6607` روی `cleanup` که سورس محلیِ منتشرشده روی production (۱۱۱ فایل تغییرکرده و ۸۷ فایل جدید شامل قیمت‌خوان، فروش برند و تست‌ها) را برای اولین بار ثبت کرد؛ refactor در commitهای جدا روی `refactor/cleanup` است. رفتار برنامه عمداً تغییر نکرد؛ دیپلوی انجام نشد.
+- تحلیل AST (importهای static/lazy/require، re-exportها با نام واقعی، تست‌ها و اسکریپت‌ها جدا): پس از تغییر، فایل اجرایی بی‌مصرف یا import چرخشی وجود ندارد.
+- **حذف:** `Home/sections/BrandStrip.jsx`، `FeaturedProducts.jsx`، `HomeSectionHeader.jsx`، `Home/hooks/useFeaturedProducts.js`، `useHomeBrands.js`، `Home/helpers/pickFeaturedProducts.js` و `data/featuredProducts.js` (از 2026-11-15 به دستور مالک رندر نمی‌شدند) + ترجمهٔ `home.featured.title` در fa/en. `viewAll` و `behtamPurchaseNotice` همچنان مصرف دارند.
+- **خصوصی شد (export بی‌مصرف بیرونی):** `UNBRANDED`/`adminBrandKey` در `adminProductCatalog.js`، `carEllipse` در `logoOrbit.js`، `getBuyQty`/`hasActivePromotion` در `server/utils/promotionGift.js`.
+- **ادغام تکرار (نام‌های عمومی حفظ شدند):** `uploadImagesInBatches(path, files, onProgress)` در `services/importJobClient.js` حلقهٔ مشترک `uploadProductImagesService` و `uploadVehicleImagesService` است؛ `hooks/useClickOutside.js` بستن منوی اشتراک و منوی پروفایل با کلیک بیرون؛ `hooks/useFilterCompatibility.js` بارگیری تنبل و کش‌شدهٔ سازگاری فیلترها در `useCompatibleVehicles` و `useProductsPage`.
+- **عمداً دست‌نخورده:** تکرار `promotionCalc.js` کلاینت و `promotionGift.js` سرور (دو package جدا؛ تست برابری دارند)؛ try/catch کنترلرها؛ endpointهای بی‌مصرف در UI (`POST /api/vehicles/import`، `GET /api/vehicles`، `DELETE /api/orders`)؛ اسکریپت‌های تاریخی `fix*Images`؛ شمارهٔ تلفن داخل ترجمه‌ها.
+- کنترل‌ها: معماری کامل موفق؛ سرور ۳۲/۳۲؛ کلاینت ۱۰۸/۱۰۹ (۱۱ تست جدید برای آپلود دسته‌ای، `useClickOutside` و `useFilterCompatibility`؛ تنها شکست همان تست قدیمی لیست تیرهٔ `priceDigitReader`)؛ lint و build موفق. مرورگر Edge headless، بیلد قبل (`11a6607`) و بعد را با API واقعی (فقط GET) در ۸ مسیر و دو عرض ۳۹۰/۱۴۴۰ مقایسه کرد: متن رندرشده یکسان، بدون خطای JS، اسکرول افقی یا درخواست نوشتن؛ باز و بسته‌شدن منوی اشتراک با کلیک بیرون تأیید شد.
+- حجم: سورس کلاینت ۲۳٬۹۸۱ ← ۲۳٬۷۲۹ خط، سرور ۶٬۴۸۳ بدون تغییر، تست‌ها ۱٬۶۴۰ ← ۱٬۷۸۲.
 
 ## قیمت‌های جدید فیلترهای لوکومبیل (لیست ۱۵ آبان ۱۴۰۵) — 2026-11-22
 
